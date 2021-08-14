@@ -1,3 +1,45 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from rest_framework import generics, status, permissions, viewsets
+from rest_framework.fields import DateField
+from .serializers import *
+from .models import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from knox.models import AuthToken
+import datetime
 
-# Create your views here.
+# class AccountViewSet(viewsets.ModelViewSet):
+#     permission_classes = [
+#         permissions.IsAuthenticated
+#     ]
+#     serializer_class = AccountSerializer
+#     def get_queryset(self):
+#         return self.request.user.accounts.all()
+
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
+
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.objects.all()
+    permission_classes=[
+        permissions.AllowAny
+    ]
+    serializer_class = AccountSerializer
+    
+
+
+class RegisterView(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+     
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.save()
+
+        return Response({
+            "user": AccountSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)
+        })
+
