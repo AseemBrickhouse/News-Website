@@ -16,6 +16,9 @@ module.exports = {
         use: {
           loader: "babel-loader",
         },
+        alias: {
+          react: path.resolve('./node_modules/react')
+        },
       },
     ],
   },

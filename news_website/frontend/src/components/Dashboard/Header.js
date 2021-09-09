@@ -33,8 +33,8 @@ export default function ButtonAppBar() {
             </Menu>
             { /*Icon Here*/ }
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
+          <Typography variant="h6" className='header1'>
+            Test
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
