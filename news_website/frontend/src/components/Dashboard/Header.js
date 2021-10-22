@@ -24,21 +24,28 @@ export default function ButtonAppBar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" style={{background: 'rgba(181, 98, 111, 1)'}}>
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <Menu>
+    <Fragment className={classes.root}>
+      <ul>
+        <li><a> Name </a></li>
+        <li><a> About Us </a></li>
+        <li><a> Login</a></li>
+        <li><a> Sign Up </a></li>
+      </ul>
+    </Fragment>
+    // <div className={classes.root}>
+    //   <AppBar position="static" style={{background: 'rgba(181, 98, 111, 1)'}}>
+    //     <Toolbar>
+    //         <Menu>
 
-            </Menu>
-            { /*Icon Here*/ }
-          </IconButton>
-          <Typography variant="h6" className='header1'>
-            Test
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
+    //         </Menu>
+    //         { /*Icon Here*/ }
+    //       </IconButton>
+    //       <Typography variant="h6" className='header1'>
+    //         Test
+    //       </Typography>
+    //       <Button color="inherit">Login</Button>
+    //     </Toolbar>
+    //   </AppBar>
+    // </div>
   );
 }
