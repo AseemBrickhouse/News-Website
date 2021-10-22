@@ -10,7 +10,9 @@ class Article(models.Model):
     headline = models.CharField(max_length=100)
     reporter = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(null=True)
-
+    isPrivate = models.BooleanField(null=True, default=False)
+    article_description = models.CharField(max_length=200, null=True)
+    
 class Followers(models.Model):
     user = models.ForeignKey(User, related_name="following", on_delete=models.CASCADE)
     following_user = models.ForeignKey(User, related_name="followers", on_delete=models.CASCADE)

@@ -43,3 +43,17 @@ class RegisterView(generics.GenericAPIView):
             "token": AuthToken.objects.create(user)
         })
 
+class ArticleViewSet(viewsets.ModelViewSet):
+    articles = []
+    aa = Article.objects.all()
+    for entry in aa:
+        if entry.isPrivate == False:
+            articles.append(entry)
+
+    def get(self, request):
+        return self.request.articles
+
+    
+
+
+    

@@ -22,17 +22,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    } 
+  }
   return (
-    <Fragment className={classes.root}>
-      <ul>
-        <li><a> Name </a></li>
-        <li><a> About Us </a></li>
-        <li><a> Login</a></li>
-        <li><a> Sign Up </a></li>
-      </ul>
-    </Fragment>
-    // <div className={classes.root}>
+    <React.Fragment className={classes.root}>
+      <div className='topnav' id = "myTopnav">
+        <img alt="No Image"></img>
+        <aTitle className='active'>Lorem</aTitle>
+        <a href="#About us"> About Us </a>
+        <a href="#Login"> Login</a>
+        <a href="#Sign Up"> Sign Up</a>
+        <a href="javascript:void(0);" className="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      <div className='headFull' id='myheadFull'>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
+            quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
+            lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
+            Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
+            dignissim libero interdum bibendum.</p>
+        <div className='HFL'><a href="#Start Now">Start Now</a></div>
+      </div>
+    </React.Fragment>
+  );
+}
+
+    {/* // <div className={classes.root}>
     //   <AppBar position="static" style={{background: 'rgba(181, 98, 111, 1)'}}>
     //     <Toolbar>
     //         <Menu>
@@ -46,6 +69,4 @@ export default function ButtonAppBar() {
     //       <Button color="inherit">Login</Button>
     //     </Toolbar>
     //   </AppBar>
-    // </div>
-  );
-}
+    // </div> */}

@@ -83,8 +83,7 @@ export default function Articles(){
       DateCreate: newdate,
       Reporter: "John Doe",
       Rating: 60,
-      Description:
-        "A narrative that provides other details about the product, such as possible uses. A narrative for inclusion in an HTS heading in chapter 99 that is sufficient to distinguish your article.",
+      Description: "yes",
       Tags: ["Tech", "something", "test", "science", "life", "gaming", "store"],
       Socials: [
         { Name: "Twitter", Has: false, Link: "NA" },

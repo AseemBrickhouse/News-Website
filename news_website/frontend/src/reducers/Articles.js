@@ -1,7 +1,7 @@
-import { GET_ACCOUNT } from '../actions/types.js';
+import { GET_ARTICLES } from '../actions/types.js';
 
 const initialState = {
-    account: []
+    articles: []
 };
 
 export default function(state=initialState, action){
@@ -9,12 +9,8 @@ export default function(state=initialState, action){
         case GET_ACCOUNT:
             return {
                 ...state,
-                account: action.payload,       
+                articles: action.payload,       
             };
-        case DELETE_ACCOUNT:
-            return{
-
-            }
             default:
                 return state;
     }

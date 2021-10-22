@@ -100,6 +100,7 @@ body{
 
 .headFull{
     margin-top: -20px;
+    background-image: linear-gradient(to left, #ccb9b1 , #212123);
     background-color: #212123;
     height: 300px;
     width: 100%;
@@ -110,7 +111,7 @@ body{
     color: white;
     top: 20px;
     position: relative;
-    left: 50px;
+    left: 25%;
     max-width: 500px;
     text-align: left;
 }
@@ -119,7 +120,7 @@ body{
     position: relative;
     max-width: 500px;
     top: 30px;
-    left: 60px;
+    left: 26%;
 }
 .HFL{
     background-color: #ccb9b1;
@@ -130,7 +131,7 @@ body{
     position: relative;
     width: 100px;
     top: 40px;
-    left: 60px;
+    left: 26%;
 }
 .HFL a{
     color: #f2f2f2;

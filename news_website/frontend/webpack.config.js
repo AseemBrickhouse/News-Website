@@ -1,6 +1,5 @@
-
 const path = require("path");
-const webpack = require("webpack");
+const webpack = require('webpack');
 
 module.exports = {
   entry: "./src/index.js",
@@ -16,9 +15,9 @@ module.exports = {
         use: {
           loader: "babel-loader",
         },
-        alias: {
-          react: path.resolve('./node_modules/react')
-        },
+        // alias: {
+        //   react: path.resolve('./node_modules/react')
+        // },
       },
     ],
   },

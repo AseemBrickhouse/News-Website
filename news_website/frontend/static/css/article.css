@@ -2,3 +2,88 @@ body{
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
+.article{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-left: 125px;
+    margin-top: 50px;
+    width: 45%;
+    height: 150px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.recomended:hover {
+  box-shadow: 0 8px 16px 0 #ccb9b1;
+}
+.footer:hover {
+  box-shadow: 0 8px 16px 0 #ccb9b1;
+}
+.people:hover {
+  box-shadow: 0 8px 16px 0 #ccb9b1;
+}
+.popTags:hover {
+  box-shadow: 0 8px 16px 0 #ccb9b1;
+}
+.article:hover {
+    box-shadow: 0 8px 16px 0 #ccb9b1;
+  }
+.recomended{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-left: 55%;
+    margin-top: -100px;
+    width: 20%;
+    height: 350px;
+    border-radius: 5px;
+}
+.people{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-left: 78%;
+    margin-top: -350px;
+    width: 15%;
+    height: 160px;
+    border-radius: 5px;
+}
+.popTags{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-left: 78%;
+    margin-top: 30px;
+    width: 15%;
+    height: 160px;
+    border-radius: 5px;
+    border-bottom: 10px solid #212123;
+}
+.popTags tag{
+    background-color: white;
+    border: solid #616063 2px;
+    padding: 5px 0 5px;
+    text-align: center;
+    border-radius: 10px;
+    display: inline;
+}
+.popTags tagA{
+    color: #212123;
+    font-size: 17px;
+    text-decoration: none;
+}
+.footer{
+    text-align: left;
+    margin-top: 160px;
+}
+.footer a{
+    padding: 5px;
+    color: #212123;
+    text-decoration: none;
+    font-size: 12px;
+}
+.article left{
+
+}
+.article description{
+    width: 10%;
+}
+.article right{
+
+}

@@ -5,7 +5,7 @@ from rest_framework import routers, urlpatterns
 
 router = routers.DefaultRouter()
 router.register('account', AccountViewSet, 'account')
-
+router.register('article', ArticleViewSet, 'article')
 
 urlpatterns = router.urls
 # urlpatterns = [
