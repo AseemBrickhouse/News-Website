@@ -38,7 +38,7 @@ export default function ButtonAppBar() {
         <a href="#About us"> About Us </a>
         <a href="#Login"> Login</a>
         <a href="#Sign Up"> Sign Up</a>
-        <a href="javascript:void(0);" className="icon" onclick="myFunction()">
+        <a href="javascript:void(0);" className="icon" onclick={myFunction()}>
             <i class="fa fa-bars"></i>
         </a>
       </div>

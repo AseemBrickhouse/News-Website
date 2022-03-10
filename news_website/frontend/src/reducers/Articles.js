@@ -6,7 +6,7 @@ const initialState = {
 
 export default function(state=initialState, action){
     switch(action.type){
-        case GET_ACCOUNT:
+        case GET_ARTICLES:
             return {
                 ...state,
                 articles: action.payload,       
