@@ -20,40 +20,49 @@ import datetime
 #     def perform_create(self, serializer):
 #         serializer.save(owner=self.request.user)
 
-class AccountViewSet(viewsets.ModelViewSet):
-    queryset = Account.objects.all()
-    permission_classes=[
-        permissions.AllowAny
-    ]
-    serializer_class = AccountSerializer
+# class AccountViewSet(viewsets.ModelViewSet):
+#     queryset = Account.objects.all()
+#     permission_classes=[
+#         permissions.AllowAny
+#     ]
+#     serializer_class = AccountSerializer
     
 
 
-class RegisterView(generics.GenericAPIView):
-    serializer_class = RegisterSerializer
+# class RegisterView(generics.GenericAPIView):
+#     serializer_class = RegisterSerializer
      
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
 
-        user = serializer.save()
+#         user = serializer.save()
 
-        return Response({
-            "user": AccountSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)
-        })
+#         return Response({
+#             "user": AccountSerializer(user, context=self.get_serializer_context()).data,
+#             "token": AuthToken.objects.create(user)
+#         })
 
-class ArticleViewSet(viewsets.ModelViewSet):
-    articles = []
-    aa = Article.objects.all()
-    for entry in aa:
-        if entry.isPrivate == False:
-            articles.append(entry)
+# class ArticleViewSet(viewsets.ModelViewSet):
+#     articles = []
+#     aa = Article.objects.all()
+#     for entry in aa:
+#         if entry.isPrivate == False:
+#             articles.append(entry)
 
-    def get(self, request):
-        return self.request.articles
+#     def get(self, request):
+#         return self.request.articles
 
     
+class AccountViewSet(generics.ListCreateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
+class ArticleViewSet(generics.ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    
+    
 
+    
     

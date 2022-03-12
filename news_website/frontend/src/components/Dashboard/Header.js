@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  window.onscroll = function(){
+    myFunction();
+  };
   function myFunction() {
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {
@@ -30,6 +33,14 @@ export default function ButtonAppBar() {
       x.className = "topnav";
     } 
   }
+  var modal = document.getElementById("myModal");
+  var btn = document.getElementById("myBtn");
+  var span = document.getElementById("close")[0];
+
+  btn.onclick = function(){
+    
+  }
+
   return (
     <React.Fragment className={classes.root}>
       <div className='topnav' id = "myTopnav">
@@ -38,7 +49,7 @@ export default function ButtonAppBar() {
         <a href="#About us"> About Us </a>
         <a href="#Login"> Login</a>
         <a href="#Sign Up"> Sign Up</a>
-        <a href="javascript:void(0);" className="icon" onclick={myFunction()}>
+        <a href="javascript:void(0);" className="icon" onclick={document.getElementById('myTopnav')}>
             <i class="fa fa-bars"></i>
         </a>
       </div>
