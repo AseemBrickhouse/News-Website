@@ -79,9 +79,9 @@ ul#menu li {
     text-align: left;
 }
 body{
-    background-color: rgb(180, 180, 180);
+    /* background-color: rgb(180, 180, 180); 
     width:100%;
-    height:100%;
+    height:100%; */
 }
 .back {
     background-color: black;

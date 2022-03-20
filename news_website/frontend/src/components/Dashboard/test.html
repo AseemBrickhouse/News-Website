@@ -145,10 +145,58 @@
                             <p3>Lorem ipsum</p3> 
                         </div>
                     </div>
+                    <div class="article">
+                        <description>
+                            <h1>Lorem ipsum dolor</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
+                                quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
+                                lacinia laoreet lorem.
+                            </p>
+                        </decription>
+                        <div class="bottom">
+                            <p1>Oct 27</p1>
+                            <p2>tag1</p2>
+                            <p2>tag2</p2>
+                            <p3>Lorem ipsum</p3> 
+                        </div>
+                    </div>
+                    <div class="article">
+                        <description>
+                            <h1>Lorem ipsum dolor</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
+                                quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
+                                lacinia laoreet lorem.
+                            </p>
+                        </decription>
+                        <div class="bottom">
+                            <p1>Oct 27</p1>
+                            <p2>tag1</p2>
+                            <p2>tag2</p2>
+                            <p3>Lorem ipsum</p3> 
+                        </div>
+                    </div>
+                    <div class="article">
+                        <description>
+                            <h1>Lorem ipsum dolor</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
+                                quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
+                                lacinia laoreet lorem.
+                            </p>
+                        </decription>
+                        <div class="bottom">
+                            <p1>Oct 27</p1>
+                            <p2>tag1</p2>
+                            <p2>tag2</p2>
+                            <p3>Lorem ipsum</p3> 
+                        </div>
+                    </div>
                     
                 </div> 
-                <div class = "item-middle">
-                    <div class="popTags">
+                <div class = "item-middle" id="item-middle">
+                    <div class="popTags" id="popTags">
                         <div class = "tag"> 
                             <a href="#Tech"> Technology </a>
                         </div>  
@@ -159,23 +207,52 @@
                         <div class = "tag"> <a href="#Word"> Work </a></div>
                         <div class = "tag"> <a href="#Long"> Long </a></div> 
                         <div class = "tag"> <a href="#Sciecne"> Science </a></div> 
-                        <div class = "tag"> <a href="#School"> School </a></div>    
+                        <div class = "tag"> <a href="#School"> School </a></div>  
+                        <script>
+                            var tags = document.getElementById("item-middle");
+                            var sticky = tags.offsetTop;
+
+                            function StickyTags(){
+                                if (window.pageYOffset >= sticky) {
+                                    tags.classList.add("sticky")
+                                  } else {
+                                    tags.classList.remove("sticky");
+                                  }
+                            }
+
+                        </script>
+                        
                     </div>
                     <div class="footer">
                         <a href="#About us">About Us</a>
                         <a href="#Contact us">Contact Us</a>
                         <a href="#Careeres">Careeres</a>
                         <a href="#Account">Account</a>
-                        
                         <a href="#Terms of Service">Terms of Service</a>
                         <a href="#Find Us">Find Us</a>
                     </div>
                 </div>
-                <div class = "item-right">
+                <div class = "item-right" id = "item-right">
                     <div class = "content">
-                        <p>Something here</p>
+                        <p>dsa</p>
                     </div>
                 </div>
+                <script>
+                    window.onscroll = function(){
+                        StickyAD();
+                        StickyTags();
+                    };
+                    var ad = document.getElementById("item-right");
+                    var stickyad = ad.offsetTop;
+
+                    function StickyAD(){
+                        if (window.pageYOffset >= stickyad) {
+                            ad.classList.add("stickyAD")
+                          } else {
+                            ad.classList.remove("stickyAD");
+                          }
+                    }
+                </script>
             </div>
     </body>
 </html>

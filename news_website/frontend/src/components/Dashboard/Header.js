@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
+import SignUp from '../Buttons/SignUp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,13 +34,6 @@ export default function ButtonAppBar() {
       x.className = "topnav";
     } 
   }
-  var modal = document.getElementById("myModal");
-  var btn = document.getElementById("myBtn");
-  var span = document.getElementById("close")[0];
-
-  btn.onclick = function(){
-    
-  }
 
   return (
     <React.Fragment className={classes.root}>
@@ -47,8 +41,8 @@ export default function ButtonAppBar() {
         <img alt="No Image"></img>
         <aTitle className='active'>Lorem</aTitle>
         <a href="#About us"> About Us </a>
-        <a href="#Login"> Login</a>
-        <a href="#Sign Up"> Sign Up</a>
+        <a href="#Login"> Login </a>
+        <SignUp />
         <a href="javascript:void(0);" className="icon" onclick={document.getElementById('myTopnav')}>
             <i class="fa fa-bars"></i>
         </a>

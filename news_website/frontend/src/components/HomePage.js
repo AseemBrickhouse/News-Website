@@ -28,22 +28,20 @@ export default class HomePage extends Component{
     
     render(){
         return (
-            <div className='background'>
+            <div>
                 <Provider store={store}>
                     <Router>
                         <Header/>
-                        <br/>
-                        <Grid xs={14}>
-                            <Grid Item xs={10}>
+                        {/* <Grid xs={14}>
+                            <Grid Item xs={10}> */}
                                 <Articles/>
-                            </Grid>
-                        </Grid>
-                            <Switch>
+                            {/* </Grid>
+                        </Grid> */}
+                            {/* <Switch> */}
                                 {/* <Route exact path='/' component={this.renderHomePage}/> */}
-                                <Route path='/signup' component={SignUp} />
+                                {/* <Route path='/signup' component={SignUp} />
                                 <Route path='/login' component={Login}/>
-                            </Switch>
-                        
+                            </Switch>   */}
                     </Router>
                 </Provider>
             </div>
