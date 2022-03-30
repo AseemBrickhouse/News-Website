@@ -30,7 +30,7 @@ export default class Article extends Component{
   }
 
   componentDidMount(){
-    fetch("api/articles/")
+    fetch("api/")
         .then(response =>{
             if(response.status > 400){
                 return this.setState(() => {

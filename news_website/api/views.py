@@ -4,7 +4,7 @@ from rest_framework import generics, status, permissions, viewsets
 from rest_framework.fields import DateField
 from .serializers import *
 from .models import *
-from rest_framework.views import APIView
+# from rest_framework.views import APIViews
 from rest_framework.response import Response
 from knox.models import AuthToken
 import datetime
@@ -54,15 +54,17 @@ import datetime
 #         return self.request.articles
 
     
-class AccountViewSet(generics.ListCreateAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+# class AccountViewSet(generics.ListCreateAPIView):
+#     queryset = Account.objects.all()
+#     serializer_class = AccountSerializer
 
-class ArticleViewSet(generics.ListCreateAPIView):
+# class ArticleViewSet(generics.ListCreateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+    
+class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    
-    
 
     
     

@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import SignUp from '../Buttons/SignUp';
+import TwitterIcon from '@material-ui/icons/Twitter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +56,7 @@ export default function ButtonAppBar() {
             Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
             dignissim libero interdum bibendum.</p>
         <div className='HFL'><a href="#Start Now">Start Now</a></div>
+
       </div>
     </React.Fragment>
   );

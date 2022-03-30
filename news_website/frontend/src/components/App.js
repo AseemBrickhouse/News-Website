@@ -1,25 +1,16 @@
-import React,{ Component}  from 'react';
-//import {ReactDOM, render} from 'react-dom';
+import React, { Component }  from 'react';
 import HomePage from './HomePage';
-import { render } from "react-dom";
 
-class App extends Component{
+export default class App extends Component{
     render(){
         return( 
-            //<Provider store={store} >
-                // <Fragment>
-                //     <div className="container">
-                //         <Header /> 
-                //          {/* <Account />  */}
-                //          {/* <HomePage />  */}
-                //     </div>
-                // </Fragment>
-             //</Provider>  
-             <div><HomePage/></div>
+             <div>
+                 <HomePage />
+             </div>
         );
     }
 }
 
 //ReactDOM.render(<App />, document.getElementById('app'));
-const appDiv = document.getElementById("app");
-render(<App />, appDiv);
+// const appDiv = document.getElementById("app");
+// render(<App />, appDiv);

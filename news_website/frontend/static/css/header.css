@@ -173,8 +173,7 @@ body{
 .sticky + .content {
   padding-top: 60px;
 }
-.modal {
-  display: none; /* Hidden by default */
+.modal2 {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
@@ -185,8 +184,15 @@ body{
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
 
+}
+.modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin-left: 25%;
+}
 /* Modal Content */
 .modal-content {
   position: relative;

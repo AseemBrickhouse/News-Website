@@ -129,6 +129,8 @@ body{
     color: #212123;
     text-decoration: none;
     font-size: 12px;
+    display: inline-flex;
+
 }
 
 .article .description{
