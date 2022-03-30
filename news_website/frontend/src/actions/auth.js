@@ -1,6 +1,6 @@
 import { SettingsSystemDaydream } from '@material-ui/icons';
 import * as actionTypes from './types';
-import axios from axios
+import axios from 'axios';
 
 export const authStart = () =>{
     return{
@@ -76,9 +76,27 @@ export const checkTimeout = expirationTime=> {
 
 
 export const authLOGOUT = () =>{
-    localStorage.removeItem('user');s
+    localStorage.removeItem('user');
     localStorage.removeItem('expirationDate');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
+}
+
+export const authCheckState = () => {
+    return dispatch =>{
+        const token = localStorage.getItem('token');
+        if(token == undefined){
+            dispatch(authLOGOUT())
+        }
+        else{
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if(expirationDate <= new Date()){
+                dispatch(authLOGOUT())
+            }else{
+                dispatch(authSUCCESS(token));
+                dipatch(checkTimeout( (expirationDate.getTime() - new Date().getTime() )/ 1000));
+            }
+        }
+    }
 }

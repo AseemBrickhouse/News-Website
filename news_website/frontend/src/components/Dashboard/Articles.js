@@ -48,7 +48,6 @@ export default class Article extends Component{
             });
         });
   }
-
   render(){
     return(
       <React.Fragment>

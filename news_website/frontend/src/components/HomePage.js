@@ -22,10 +22,15 @@ export default class HomePage extends Component{
     render(){
         return (
             <div>
-                        <Header/>
+                <Articles/>
+            </div>
+        );
+    }
+}
+
                         {/* <Grid xs={14}>
                             <Grid Item xs={10}> */}
-                                <Articles/>
+
                             {/* </Grid>
                         </Grid> */}
                             {/* <Switch> */}
@@ -33,7 +38,3 @@ export default class HomePage extends Component{
                                 {/* <Route path='/signup' component={SignUp} />
                                 <Route path='/login' component={Login}/>
                             </Switch>   */}
-            </div>
-        );
-    }
-}
