@@ -1,0 +1,57 @@
+body{
+    background-color: lightgray;
+}
+.Login{
+    background-color: solid #616063;
+}
+.MuiFormControl.root{
+    /* font-family: arial;
+    font-size: 24px; */
+    /* Setup */
+        /* border: 0; */
+    /* margin: 0; */
+    /* display: inline-flex; */
+    /* padding: 0; */
+    /* position: relative; */
+    min-width: 0;
+    flex-direction: column;
+    vertical-align: top;
+    position: relative;
+    display: contents;
+}
+.box{
+    background-image: linear-gradient(to top, #ccb9b1 , #212123);
+    background-color: #212123;
+    border-radius: 25px;
+    height: 500px;
+    width: 25%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.box-top{
+    background-color: aqua;
+    height: 20%;
+}
+
+.box-mid{
+    background-color: rgb(167, 8, 230);
+    height: 60%;
+    display: inline-grid;
+    align-items: center;
+}
+.box-bot{
+    background-color: crimson;
+    height: 20%;
+}
+.box-mid-item{
+    background-color: white;
+    border-radius: 25px;
+    margin: auto;
+    text-decoration: none;
+
+}

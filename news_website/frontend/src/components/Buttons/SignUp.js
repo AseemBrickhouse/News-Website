@@ -59,7 +59,6 @@ export default function SignUp(){
               </Modal>
           </div>
       )
-    
 
 }
 {/* <div class = "modal" id="myModal">

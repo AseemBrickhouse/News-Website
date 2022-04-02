@@ -7,7 +7,7 @@ import YouTubeIcon from "@material-ui/icons/YouTube";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
-
+import Advertisments from './Advertisments';
             // <ul>
             //     {this.state.data.map(Article => {
             //         return(
@@ -48,6 +48,7 @@ export default class Article extends Component{
             });
         });
   }
+
   render(){
     return(
       <React.Fragment>
@@ -99,7 +100,7 @@ export default class Article extends Component{
             </div>
               <div className = 'item-right' id = 'item-right'>
                   <div className = 'content'>
-                      <p>dsa</p>
+                      <Advertisments/>
                   </div>
               </div>
           </div>

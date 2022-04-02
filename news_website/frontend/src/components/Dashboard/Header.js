@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,6 +10,12 @@ import Menu from '@material-ui/core/Menu';
 import SignUp from '../Buttons/SignUp';
 import Login from '../Buttons/Login';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {
+  Switch, 
+  Route,
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +57,8 @@ class Header extends Component{
               <a href="#Logout">Logout</a>
             :
             <div>
-              <Login/>
+              <Link to="Login">Login</Link>
+              {/* <Route path={"http://127.0.0.1:8000/Login"}>Login</Route> */}
               <SignUp />
             </div>
           }

@@ -1,8 +1,15 @@
 import React, { Component }  from 'react';
 import HomePage from './HomePage';
 import Header from './Dashboard/Header';
+import Login from './Buttons/Login';
 import { connect } from 'react-redux';
 import * as actions from '../actions/auth';
+import {
+    BrowserRouter as Router,
+    Switch, 
+    Route,
+    Link
+  } from "react-router-dom";
 
 class App extends Component{
 
@@ -11,10 +18,23 @@ class App extends Component{
     }
     render(){
         return( 
-             <div>
-                <Header {...this.props}/>
-                 <HomePage/>
-             </div>
+            <Router>
+                <div>
+                    <Switch>
+                        <Route exact path="/">
+                            <Header {...this.props}/>
+                            <HomePage/>
+                        </Route>
+                        <Route exact path="/Login">
+                            <Login/>
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
+            //  <div>
+            //     <Header {...this.props}/>
+            //     <HomePage/>
+            //  </div>
         );
     }
 }
