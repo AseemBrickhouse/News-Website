@@ -4,6 +4,7 @@ import Header from './Dashboard/Header';
 import Login from './Buttons/Login';
 import { connect } from 'react-redux';
 import * as actions from '../actions/auth';
+
 import {
     BrowserRouter as Router,
     Switch, 
@@ -51,7 +52,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 //ReactDOM.render(<App />, document.getElementById('app'));
 // const appDiv = document.getElementById("app");
 // render(<App />, appDiv);

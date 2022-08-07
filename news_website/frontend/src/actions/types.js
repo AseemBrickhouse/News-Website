@@ -1,5 +1,6 @@
 export const GET_ACCOUNT = 'GET_ACCOUNT';
 export const GET_ARTICLES = 'GET_ARTICLES';
+
 export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';

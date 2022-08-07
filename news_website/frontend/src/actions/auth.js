@@ -1,4 +1,3 @@
-import { SettingsSystemDaydream } from '@material-ui/icons';
 import * as actionTypes from './types';
 import axios from 'axios';
 
@@ -25,7 +24,7 @@ export const authFAIL = (error) =>{
 export const authLogin = (username, password) => {
     return dispatch =>{
         dispatch(authStart());
-        axios.post('https://127.0.0.1:8000/rest-auth/login/', {
+        axios.post('http://127.0.0.1:8000/rest-auth/login/', {
             username: username,
             password: password
         })
@@ -35,7 +34,7 @@ export const authLogin = (username, password) => {
             localStorage.setItem('token', token);
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSUCCESS(token));
-            dipatch(checkTimeout(3600));
+            dispatch(checkTimeout(3600));
         })
         .catch(error => {
             dispatch(authFAIL(error))
@@ -46,7 +45,7 @@ export const authLogin = (username, password) => {
 export const authSignUp = (username, email, password1, password2) => {
     return dispatch =>{
         dispatch(authStart());
-        axios.post('https://127.0.0.1:8000/rest-auth/registration/', {
+        axios.post('http://127.0.0.1:8000/rest-auth/registration/', {
             username: username,
             email: email,
             password1: password1,
@@ -58,7 +57,7 @@ export const authSignUp = (username, email, password1, password2) => {
             localStorage.setItem('token', token);
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSUCCESS(token));
-            dipatch(checkTimeout(3600));
+            dispatch(checkTimeout(3600));
         })
         .catch(error => {
             dispatch(authFAIL(error))
@@ -95,7 +94,7 @@ export const authCheckState = () => {
                 dispatch(authLOGOUT())
             }else{
                 dispatch(authSUCCESS(token));
-                dipatch(checkTimeout( (expirationDate.getTime() - new Date().getTime() )/ 1000));
+                dispatch(checkTimeout( (expirationDate.getTime() - new Date().getTime() )/ 1000));
             }
         }
     }

@@ -30,11 +30,11 @@ export default class Article extends Component{
   }
 
   componentDidMount(){
-    fetch("api/")
+    fetch("api/AllArticles")
         .then(response =>{
             if(response.status > 400){
                 return this.setState(() => {
-                    return{ placeholder: "Soemthing went wrong!" };
+                    return{ placeholder: "Something went wrong!" };
                 });
             }
             return response.json();

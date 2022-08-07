@@ -10,11 +10,13 @@ import Menu from '@material-ui/core/Menu';
 import SignUp from '../Buttons/SignUp';
 import Login from '../Buttons/Login';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import { connect } from 'react-redux';
 import {
   Switch, 
   Route,
   BrowserRouter as Router,
-  Link
+  Link,
+  withRouter
 } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,11 +56,12 @@ class Header extends Component{
           <a href="#About us"> About Us </a>
           {
             this.props.isAuthenticated ? 
-              <a href="#Logout">Logout</a>
+              <div>
+                <button onclick={this.props.logout}>Logout</button>
+              </div>
             :
             <div>
-              <Link to="Login">Login</Link>
-              {/* <Route path={"http://127.0.0.1:8000/Login"}>Login</Route> */}
+              <Link to="/Login" {...this.props}>Login</Link>
               <SignUp />
             </div>
           }
@@ -81,8 +84,12 @@ class Header extends Component{
     );
   }
 }
-
-export default Header;
+const mapDispatchToProps = dispatch => {
+  return {
+    logout : () => dispatch(actions.logout())
+  }
+}
+export default withRouter(connect(null,mapDispatchToProps)(Header));
     {/* // <div className={classes.root}>
     //   <AppBar position="static" style={{background: 'rgba(181, 98, 111, 1)'}}>
     //     <Toolbar>

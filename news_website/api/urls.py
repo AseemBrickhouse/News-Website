@@ -1,10 +1,24 @@
+from django.contrib import admin
+from django.urls import include, path
+# from django.urls import re_path as url
 from rest_framework.routers import DefaultRouter
 from api.views import *
 
 router = DefaultRouter()
-router.register(r'', ArticleViewSet)
-urlpatterns = router.urls
+router.register(r'AllArticles', ArticleViewSet)
+router.register(r'Accounts', AccountViewSet)
+# router.register(r'rest-auth/registration/', include('rest_auth.registration.urls'))
+# router.register('rest-auth/', include('rest_auth.urls'))
 
+urlpatterns = [
+    # path('rest-auth/', include('rest_auth.urls')),
+    # path('admin/clearcache/', include('clearcache.urls')),
+    # path('admin/', admin.site.urls),
+    # path(r'rest-auth/registration/', include('rest_auth.registration.urls'))
+    ]
+urlpatterns += router.urls
+
+    # path(r'^rest-auth/', include('rest_auth.urls'))
 # urlpatterns = router.urls
 #     # path('user', UserView.as_view()),
 #     # path('SignUp', SignUpView.as_view()),

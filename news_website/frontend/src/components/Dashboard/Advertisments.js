@@ -4,7 +4,7 @@ export default class Advertisments extends Component{
     componentDidMount(){
         const installGoogleAds = () => {
             const elem = document.createElement("script");
-            elem.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+            elem.src = "http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
             elem.async = true;
             elem.defer = true;
             document.body.insertBefore(elem, document.body.firstChild); 
