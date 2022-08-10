@@ -46,28 +46,28 @@ class Login extends React.Component{
       email: data.get('email'),
       password: data.get('password'),
     });
-    try {
-      this.props.onAuth(data.get('email'), data.get('password')); 
-      <Redirect to= {{pathname: '/articles'}}/>
-    }catch(error){
-      console.log(error);
-    }
-    // <Navigate to='' replace={true}/>
+    this.props.loading = true;
+    //FIX ERROR HANDLE
+    this.props.onAuth(data.get('email'), data.get('password'));
     this.props.history.push('/');
-    // if(this.props.isAuthenticated){
-    //   console.log(this.props.isAuthenticated);
+    localStorage.getItem('token') != null ? this.props.history.push('/') : console.log( localStorage.getItem('token') + "NULLLLL") ;
+    // this.props.onAuth(data.get('email'), data.get('password'));
+    // if(localStorage.getItem('token') != null ){
+    //   console.log("Here");
+    //   this.props.history.push('/');
+    // }else{
+    //   localStorage.getItem('token') != null ? this.props.history.push('/') : console.log( localStorage.getItem('token') + "NULLLLL") ;
     // }
   };
 render(){
     let errMsg = null;
     if(this.props.error){
-      errMsg = (
-          <p>{this.props.message}</p>
+       errMsg = (
+           <p>Invalid Username and/or password</p>
       )
     }
   return (
     <div>
-        {errMsg} 
     {
         this.props.loading ? 
         <Box sx={{ display: 'flex' }}>
@@ -90,6 +90,9 @@ render(){
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
+          </Typography>
+          <Typography component="h1" variant="h5" style={{color: "red"}}>
+            {errMsg}
           </Typography>
           <Box component="form" onSubmit={this.handleSubmit} noValidate sx={{ mt: 1 }}>
            <CSRFToken />
@@ -156,7 +159,7 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, password) => dispatch(actions.authLogin(username, password)) 
+      onAuth: (username, password) => dispatch(actions.authLogin(username, password))
     }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

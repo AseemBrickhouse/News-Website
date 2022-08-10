@@ -11,6 +11,7 @@ import SignUp from '../Buttons/SignUp';
 import Login from '../Buttons/Login';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { connect } from 'react-redux';
+import MyAccount from './MyAccount';
 import {
   Switch, 
   Route,
@@ -18,6 +19,7 @@ import {
   Link,
   withRouter
 } from "react-router-dom";
+import * as actions from '../../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +59,7 @@ class Header extends Component{
           {
             this.props.isAuthenticated ? 
               <div>
-                <button onclick={this.props.logout}>Logout</button>
+                <MyAccount {...this.props}/>
               </div>
             :
             <div>
@@ -86,7 +88,7 @@ class Header extends Component{
 }
 const mapDispatchToProps = dispatch => {
   return {
-    logout : () => dispatch(actions.logout())
+    logout : () => dispatch(actions.authLOGOUT())
   }
 }
 export default withRouter(connect(null,mapDispatchToProps)(Header));

@@ -29,12 +29,15 @@ export const authLogin = (username, password) => {
             password: password
         })
         .then(response => {
+            console.log(response.data.key);
             const token = response.data.key;
             const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-            localStorage.setItem('token', token);
+            // window.localStorage.setItem("token",token);
+            localStorage.setItem('token', response.data.key);
+            // axios.defaults.headers.common['Authorization'] = token ;
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSUCCESS(token));
-            dispatch(checkTimeout(3600));
+            dispatch(checkTimeout(3600));   
         })
         .catch(error => {
             dispatch(authFAIL(error))
@@ -68,14 +71,14 @@ export const authSignUp = (username, email, password1, password2) => {
 export const checkTimeout = expirationTime=> {
     return dispatch => {
         setTimeout(() => {
-            dispatch(authLOGOUT);
-        }), expirationTime * 1000
-    };
+            dispatch(authLOGOUT());   
+        }, expirationTime * 1000)
+    }
 }
 
 
 export const authLOGOUT = () =>{
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
     return {
         type: actionTypes.AUTH_LOGOUT
