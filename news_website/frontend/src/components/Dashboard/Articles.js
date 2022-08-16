@@ -68,6 +68,7 @@ export default class Article extends Component{
                           <p1>{Article.date}</p1>
                           <p2>tag1</p2>
                           <p2>tag2</p2>
+                          {console.log(Article.reporter_account)}
                           <p3>{Article.reporter_account}</p3> 
                         </div>
                       </div>

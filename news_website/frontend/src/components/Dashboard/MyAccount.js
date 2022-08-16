@@ -4,12 +4,17 @@ import * as actions from '../../actions/auth';
 import { connect } from 'react-redux';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+import { func } from 'prop-types';
 
 class MyAccount extends React.Component {
     constructor(props){
         super(props);
-        //this.handleOpen = this.handleOpen.bind(this);
+        this.state = {
+            Account: null,
+        };
         this.fn = this.fn.bind(this);
+        // this.getUser = this.getUser.bind(this);
     }
     fn = () =>{
         const [open, setOpen] = React.useState(null);
@@ -19,6 +24,34 @@ class MyAccount extends React.Component {
         handleOpen = () => {
             setOpen(true);
         };
+    }
+
+    getUser = () =>{
+        fetch("/api/current_user/", {
+            method:"POST",
+            headers:{
+              'Accept':'application/json',
+              'Content-Type': 'application/json',
+            },
+                body: JSON.stringify({
+                    token: localStorage.getItem('token')
+                })
+            })
+            .then(response =>{
+                if(response.status > 400){
+                    return this.setState(() => {
+                        return{ placeholder: "Something went wrong!" };
+                    });
+                }
+                return response.json();
+            })
+            .then(data =>{
+                console.log(data)
+                return {
+                    data
+                };
+            });
+            
     }
     render(){
         const drop = () =>{
@@ -30,14 +63,15 @@ class MyAccount extends React.Component {
                 setOpen(true);
             };
         }
+        var person = this.getUser();
+        console.log(person);
         return(
             <div>
                 <div>
-                    <button 
-                        onClick={this.fn}
-                    >
-                        MyAccount
-                    </button>
+                    {console.log(this.props)}
+                    <button> </button>
+                    <button onClick={this.fn} ><MenuIcon/></button>
+
                     <Menu
                         
                     >

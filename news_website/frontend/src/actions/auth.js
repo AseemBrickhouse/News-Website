@@ -44,7 +44,6 @@ export const authLogin = (username, password) => {
         })
     };
 }
-
 export const authSignUp = (username, email, password1, password2) => {
     return dispatch =>{
         dispatch(authStart());
@@ -57,7 +56,7 @@ export const authSignUp = (username, email, password1, password2) => {
         .then(response => {
             const token = response.data.key;
             const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-            localStorage.setItem('token', token);
+            localStorage.setItem('token', response.data.key);
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSUCCESS(token));
             dispatch(checkTimeout(3600));
@@ -100,5 +99,16 @@ export const authCheckState = () => {
                 dispatch(checkTimeout( (expirationDate.getTime() - new Date().getTime() )/ 1000));
             }
         }
+    }
+}
+
+export const accountCreation = (username, password) =>{
+    return dispatch => {
+        axios.get('http://127.0.0.1:8000/api/Accounts/', {
+            user: username,
+            password: password
+        }).then(response =>{
+            console.log(response);
+        })
     }
 }

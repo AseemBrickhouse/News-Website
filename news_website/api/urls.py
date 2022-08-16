@@ -7,14 +7,15 @@ from api.views import *
 router = DefaultRouter()
 router.register(r'AllArticles', ArticleViewSet)
 router.register(r'Accounts', AccountViewSet)
+# router.register(r'current_user', current_user)
 # router.register(r'rest-auth/registration/', include('rest_auth.registration.urls'))
-# router.register('rest-auth/', include('rest_auth.urls'))
+#router.register('rest-auth/', include('rest_auth.urls'))
 
 urlpatterns = [
-    # path('rest-auth/', include('rest_auth.urls')),
-    # path('admin/clearcache/', include('clearcache.urls')),
-    # path('admin/', admin.site.urls),
-    # path(r'rest-auth/registration/', include('rest_auth.registration.urls'))
+        path('rest-auth/', include('rest_auth.urls')),
+        path('rest-auth/registration/', include('rest_auth.registration.urls')),
+        path('AccountCreation/', AccountCreation, name="AccountCreation"),
+        path('current_user/', current_user.as_view()),
     ]
 urlpatterns += router.urls
 

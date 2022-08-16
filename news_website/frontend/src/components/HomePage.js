@@ -27,14 +27,3 @@ export default class HomePage extends Component{
         );
     }
 }
-
-                        {/* <Grid xs={14}>
-                            <Grid Item xs={10}> */}
-
-                            {/* </Grid>
-                        </Grid> */}
-                            {/* <Switch> */}
-                                {/* <Route exact path='/' component={this.renderHomePage}/> */}
-                                {/* <Route path='/signup' component={SignUp} />
-                                <Route path='/login' component={Login}/>
-                            </Switch>   */}

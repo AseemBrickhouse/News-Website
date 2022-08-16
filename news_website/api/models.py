@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
 
 ROLES = (
     ("ADMIN", "ADMIN"),
@@ -9,8 +13,7 @@ ROLES = (
 )
 
 class Account(models.Model):
-    username = models.CharField(max_length=26)
-    password = models.CharField(max_length=12)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=26)
     last_name = models.CharField(max_length=26)
     creation_date = models.DateTimeField(auto_now_add=True)

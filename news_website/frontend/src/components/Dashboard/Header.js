@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import SignUp from '../Buttons/SignUp';
 import Login from '../Buttons/Login';
@@ -55,7 +54,6 @@ class Header extends Component{
         <div className='topnav' id = "myTopnav">
           <img alt="No Image"></img>
           <aTitle className='active'>Lorem</aTitle>
-          <a href="#About us"> About Us </a>
           {
             this.props.isAuthenticated ? 
               <div>
@@ -64,7 +62,8 @@ class Header extends Component{
             :
             <div>
               <Link to="/Login" {...this.props}>Login</Link>
-              <SignUp />
+              <Link to="/SignUp" {...this.props}>SignUp</Link>
+              <a href="#About us"> About Us </a>
             </div>
           }
 
