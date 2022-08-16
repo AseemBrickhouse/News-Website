@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {withRouter} from "react-router-dom";
-import * as actions from '../../actions/auth';
+import * as actions from '../../store/actions/auth';
 import { connect } from 'react-redux';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';

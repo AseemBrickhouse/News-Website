@@ -2,7 +2,7 @@ import App from './components/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
-import reducer from './reducers/auth';
+import reducer from './store/reducers/auth';
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';

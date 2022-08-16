@@ -4,7 +4,7 @@ import Header from './Dashboard/Header';
 import Login from './Buttons/Login';
 import SignUp from './Buttons/SignUp';
 import { connect } from 'react-redux';
-import * as actions from '../actions/auth';
+import * as actions from '../store/actions/auth';
 
 import {
     BrowserRouter as Router,

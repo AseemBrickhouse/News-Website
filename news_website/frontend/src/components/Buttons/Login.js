@@ -1,38 +1,22 @@
 import * as React from 'react';
-import * as actions from '../../actions/auth';
+import * as actions from '../../store/actions/auth';
+import CSRFToken from '../../store/actions/csrfToken';
+import {  withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import { 
-    Grid, ButtonGroup, 
-    Typography, TextField, 
-    FormControl, FormControlLabel, FormHelperText,
-    FormGroup, Avatar, Button, CssBaseline,
-    Link, Box, Container, Checkbox, Form,
-  } from "@material-ui/core";
+    Grid, Typography, TextField, 
+    FormControlLabel, Avatar, 
+    Button, CssBaseline, Link, Box, 
+    Container, Checkbox,
+} from "@material-ui/core";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import CSRFToken from '../../actions/csrfToken';
-import { browserHistory } from 'react-router';
-import { Redirect, useHistory, Navigate, withRouter } from 'react-router-dom';
-import App from '../App';
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const theme = createTheme();
 class Login extends React.Component{
-// export default function NormalLoginForm(){
     constructor(props){
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,13 +35,6 @@ class Login extends React.Component{
     this.props.onAuth(data.get('email'), data.get('password'));
     this.props.history.push('/');
     localStorage.getItem('token') != null ? this.props.history.push('/') : console.log( localStorage.getItem('token') + "NULLLLL") ;
-    // this.props.onAuth(data.get('email'), data.get('password'));
-    // if(localStorage.getItem('token') != null ){
-    //   console.log("Here");
-    //   this.props.history.push('/');
-    // }else{
-    //   localStorage.getItem('token') != null ? this.props.history.push('/') : console.log( localStorage.getItem('token') + "NULLLLL") ;
-    // }
   };
 render(){
     let errMsg = null;
@@ -142,7 +119,6 @@ render(){
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
     }
@@ -150,7 +126,6 @@ render(){
   );
  }
 }
-// const WrappedNormalLoginForm = Form.create()(Login);
 const mapStateToProps = (state) =>{
     return{
         loading: state.loading,

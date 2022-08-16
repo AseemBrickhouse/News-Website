@@ -1,37 +1,15 @@
 import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import SignUp from '../Buttons/SignUp';
-import Login from '../Buttons/Login';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import { connect } from 'react-redux';
 import MyAccount from './MyAccount';
 import {
-  Switch, 
-  Route,
   BrowserRouter as Router,
   Link,
   withRouter
 } from "react-router-dom";
-import * as actions from '../../actions/auth';
+import * as actions from '../../store/actions/auth';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
+//Prob can remove
 window.onscroll = function(){
   myFunction();
 };
