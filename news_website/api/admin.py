@@ -17,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-# admin.site.register(Account)
-# admin.site.register(Settings)
-# admin.site.register(Followers)
-# admin.site.register(Article)
+admin.site.register(Account)
+admin.site.register(Settings)
+admin.site.register(Followers)
+admin.site.register(Article)
