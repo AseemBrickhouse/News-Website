@@ -48,10 +48,11 @@ class Header extends Component{
   constructor(props){
     super(props);
   }
-  render(){
+  render(){ 
     return (
       <React.Fragment>
         <div className='topnav' id = "myTopnav">
+          {/* src="../../static/images/what.png" */}
           <img alt="No Image"></img>
           <aTitle className='active'>Lorem</aTitle>
           {

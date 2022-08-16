@@ -1,23 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Box, Container, Typography, makeStyles, Grid, Chip} from '@material-ui/core';
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import YouTubeIcon from "@material-ui/icons/YouTube";
-import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import ThumbsUpDownIcon from "@material-ui/icons/ThumbsUpDown";
 import Advertisments from './Advertisments';
-            // <ul>
-            //     {this.state.data.map(Article => {
-            //         return(
-            //             <li key = {Article.id}>
-            //                 {Article.headline}
-            //                 {Article.article_description}
-            //             </li>
-            //         );
-            //     })}
-            // </ul> 
 
 export default class Article extends Component{
   constructor(props){
