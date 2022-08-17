@@ -32,7 +32,7 @@ class Header extends Component{
         <div className='topnav' id = "myTopnav">
           {/* src="../../static/images/what.png" */}
           <img alt="No Image"></img>
-          <aTitle className='active'>Lorem</aTitle>
+          <aTitle>Lorem</aTitle>
           {
             this.props.isAuthenticated ? 
               <div>
@@ -50,16 +50,21 @@ class Header extends Component{
               <i class="fa fa-bars"></i>
           </a>
         </div>
-        <div className='headFull' id='myheadFull'>
-          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
-              quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
-              lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
-              Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
-              dignissim libero interdum bibendum.</p>
-          <div className='HFL'><a href="#Start Now">Start Now</a></div>
-
-        </div>
+        {
+          this.props.location.pathname == '/' ? 
+          <div>            
+            <div className='headFull' id='myheadFull'>
+            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
+                quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
+                lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
+                Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
+                dignissim libero interdum bibendum.</p>
+            <div className='HFL'><a href="#Start Now">Start Now</a></div>
+            </div>
+          </div>
+          : console.log("false")
+        }
       </React.Fragment>
     );
   }
@@ -70,18 +75,3 @@ const mapDispatchToProps = dispatch => {
   }
 }
 export default withRouter(connect(null,mapDispatchToProps)(Header));
-    {/* // <div className={classes.root}>
-    //   <AppBar position="static" style={{background: 'rgba(181, 98, 111, 1)'}}>
-    //     <Toolbar>
-    //         <Menu>
-
-    //         </Menu>
-    //         { /*Icon Here*/ }
-    //       </IconButton>
-    //       <Typography variant="h6" className='header1'>
-    //         Test
-    //       </Typography>
-    //       <Button color="inherit">Login</Button>
-    //     </Toolbar>
-    //   </AppBar>
-    // </div> */}

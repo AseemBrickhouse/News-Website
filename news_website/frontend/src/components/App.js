@@ -5,7 +5,8 @@ import Login from './Buttons/Login';
 import SignUp from './Buttons/SignUp';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
-
+import Account from './Dashboard/AccountHome/Account';
+import BaseRouter from '../routes';
 import {
     BrowserRouter as Router,
     Switch, 
@@ -20,12 +21,16 @@ class App extends Component{
     }
     render(){
         return( 
+            <div>
             <Router>
                 <div>
+                <Header {...this.props}/>
                     <Switch>
                         <Route exact path="/">
-                            <Header {...this.props}/>
                             <HomePage/>
+                        </Route>
+                        <Route exact path ="/Account">
+                            <Account {...this.props}/>
                         </Route>
                         <Route exact path="/SignUp">
                             <SignUp/>
@@ -36,6 +41,7 @@ class App extends Component{
                     </Switch>
                 </div>
             </Router>
+            </div>
         );
     }
 }

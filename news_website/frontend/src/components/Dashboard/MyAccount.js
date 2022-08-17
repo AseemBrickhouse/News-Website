@@ -1,10 +1,16 @@
 import * as React from 'react';
-import {withRouter} from "react-router-dom";
+import {withRouter, Link, Route} from "react-router-dom";
 import * as actions from '../../store/actions/auth';
 import { connect } from 'react-redux';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
+import Divider from '@mui/material/Divider';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import Avatar from '@mui/material/Avatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import HomeIcon from '@mui/icons-material/Home';
 
 class MyAccount extends React.Component {
     constructor(props){
@@ -78,9 +84,32 @@ class MyAccount extends React.Component {
                     horizontal: 'left',
                   }}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={this.props.logout}>Logout</MenuItem>
+                  <MenuItem onClick={handleClose}>
+                      <ListItemIcon>
+                        <HomeIcon fontSize="small"/>
+                      </ListItemIcon>
+                    <Link to="/" style={{ textDecoration: 'none' }} underline="none">Home</Link>
+                  </MenuItem>
+                    <MenuItem onClick={handleClose} >
+                      <ListItemIcon>
+                        <Avatar sx={{ width: 22, height: 22 }}/>
+                      </ListItemIcon>
+                      <Link to ="/Account" {...this.props} style={{ textDecoration: 'none' }}>Profile</Link>
+                    </MenuItem>
+                    {/* <MenuItem onClick={handleClose}>About Us</MenuItem> */}
+                    <Divider/>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <Settings fontSize="small" />
+                      </ListItemIcon>
+                      Settings
+                    </MenuItem>
+                  <MenuItem onClick={this.props.logout}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
                 </Menu>
             </div>
         )
