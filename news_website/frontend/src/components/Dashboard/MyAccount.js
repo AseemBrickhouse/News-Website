@@ -68,7 +68,7 @@ class MyAccount extends React.Component {
                 >
                   <MenuIcon/>
                 </button>
-                <text> Welcome, {this.state.first_name}</text>
+                <text> Welcome,       {this.state.first_name}</text>
                 <Menu
                   id="demo-positioned-menu"
                   aria-labelledby="demo-positioned-button"
@@ -94,7 +94,7 @@ class MyAccount extends React.Component {
                       <ListItemIcon>
                         <Avatar sx={{ width: 22, height: 22 }}/>
                       </ListItemIcon>
-                      <Link to ="/Account" {...this.props} style={{ textDecoration: 'none' }}>Profile</Link>
+                      <Link to ="/Account/Profile" {...this.props} style={{ textDecoration: 'none' }}>Profile</Link>
                     </MenuItem>
                     {/* <MenuItem onClick={handleClose}>About Us</MenuItem> */}
                     <Divider/>

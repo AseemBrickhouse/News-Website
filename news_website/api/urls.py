@@ -15,6 +15,8 @@ urlpatterns = [
         path('rest-auth/registration/', include('rest_auth.registration.urls')),
         path('AccountCreation/', AccountCreation, name="AccountCreation"),
         path('current_user/', current_user.as_view()),
+        path('AllUserArticles/', AllUserArticles.as_view()),
+        # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls
 

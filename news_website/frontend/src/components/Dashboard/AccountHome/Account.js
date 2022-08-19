@@ -1,14 +1,14 @@
 import * as React from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MenuIcon from '@mui/icons-material/Menu';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Redirect } from "react-router-dom";
+import { Redirect, Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import Menu from './Menu';
+import Profile from './Profile';
+import Articles from './Articles';
 
 class Account extends React.Component {
     constructor(props){
@@ -123,32 +123,29 @@ class Account extends React.Component {
         )
     }
     render(){
-        console.log(this.state)
         return(
             <div className='ProfileContainer'> 
             {
                 this.props.isAuthenticated ? 
                 <div>
-                    <this.Menu/>
-                    <this.Profile/>
-                    <div className='ProfileBottom'>
-                        <div className="followersContent">
-                            <div className='followers'>
-                                <p>Followers</p>
-                                <p>53,256</p>
-                                <p>Following</p>
-                                <p>843</p>
-                                <p>Written Articles</p>
-                                <p>67</p>
-                            </div>
-                            <div class='popArticles'>
-                                <p>Popular Articles</p>
-                            </div>
-                        </div>
-                    </div>
+                    <Router>
+                    <Menu {...this.props}/>
+                        <Switch>
+                            <Route exact path ='/Account/Profile'>
+                                <Profile {...this.props}/>
+                            </Route>
+                            <Route exact path ='/Account/Articles'>
+                                <Articles {...this.props}/>
+                            </Route>
+                            <Route>
+
+                            </Route>
+                        </Switch>
+                    </Router>
                 </div>
                 :
-                <Redirect to="/"/>
+                console.log('None')
+                // <Redirect to="/"/>
             }
             </div>
         )

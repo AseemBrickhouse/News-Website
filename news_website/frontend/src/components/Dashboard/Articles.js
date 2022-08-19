@@ -60,17 +60,17 @@ export default class Article extends Component{
             </div>
             <div className = 'item-middle' id='item-middle'>
               <div className='popTags' id='popTags'>
-                  <div className = 'tag'> 
+                  <div className = 'tagHome'> 
                       <a href='#Tech'> Technology </a>
                   </div>  
-                  <div className = 'tag'>
+                  <div className = 'tagHome'>
                       <a href='#Life'> Life </a>
                   </div>   
-                  <div className = 'tag'> <a href='#Earth'> Earth </a></div>   
-                  <div className = 'tag'> <a href='#Word'> Work </a></div>
-                  <div className = 'tag'> <a href='#Long'> Long </a></div> 
-                  <div className = 'tag'> <a href='#Sciecne'> Science </a></div> 
-                  <div className = 'tag'> <a href='#School'> School </a></div>  
+                  <div className = 'tagHome'> <a href='#Earth'> Earth </a></div>   
+                  <div className = 'tagHome'> <a href='#Word'> Work </a></div>
+                  <div className = 'tagHome'> <a href='#Long'> Long </a></div> 
+                  <div className = 'tagHome'> <a href='#Sciecne'> Science </a></div> 
+                  <div className = 'tagHome'> <a href='#School'> School </a></div>  
               </div>
               <div className='footer'>
                   <a href='#About us'>About Us</a>

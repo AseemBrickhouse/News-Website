@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 }
 
 .topnav {
@@ -70,23 +70,27 @@ body{
     border: none;
   } 
   .topnav button:hover {
-    background-color: #ccb9b1;
+    /* background-color: #ccb9b1; */
+    background-color: #90323D;
     color: white;
   }
   
   .topnav button.active {
-    background-color: rgba(181, 98, 111, 1);
+    /* background-color: rgba(181, 98, 111, 1); */
+    background-color: #90323D;
     color: white;
     float: left;
   }
   
   .topnav a:hover {
-    background-color: #ccb9b1;
+    /* background-color: #ccb9b1; */
+    background-color: #90323D;
     color: white;
   }
   
   .topnav a.active {
-    background-color: rgba(181, 98, 111, 1);
+    /* background-color: rgba(181, 98, 111, 1); */
+    background-color: #90323D;
     color: white;
     float: left;
   }
@@ -135,7 +139,8 @@ body{
 
 .headFull{
     margin-top: -20px;
-    background-image: linear-gradient(to left, #ccb9b1 , #212123);
+    /* background-image: linear-gradient(to left, #ccb9b1 , #212123); */
+    background-image: linear-gradient(to left, #d9cab3 , #212123);
     background-color: #212123;
     height: 300px;
     width: 100%;
@@ -158,7 +163,8 @@ body{
     left: 26%;
 }
 .HFL{
-    background-color: #ccb9b1;
+    /* background-color: #ccb9b1; */
+    background-color: #90323D;
     border: solid #616063 2px;
     padding: 5px 0 5px;
     text-align: center;
@@ -167,6 +173,9 @@ body{
     width: 100px;
     top: 40px;
     left: 26%;
+}
+.HFL:hover{
+  box-shadow: 0px 0px 5px 5px #d9cab3;
 }
 .HFL a{
     color: #f2f2f2;

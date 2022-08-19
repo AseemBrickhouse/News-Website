@@ -8,6 +8,7 @@ import {
   withRouter
 } from "react-router-dom";
 import * as actions from '../../store/actions/auth';
+import { getTableHeadUtilityClass } from '@mui/material';
 
 //Prob can remove
 window.onscroll = function(){
@@ -60,7 +61,7 @@ class Header extends Component{
                 lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
                 Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
                 dignissim libero interdum bibendum.</p>
-            <div className='HFL'><a href="#Start Now">Start Now</a></div>
+            <div className='HFL'><Link to="/SignUp" {...this.props}>Start Now</Link></div>
             </div>
           </div>
           : console.log("false")

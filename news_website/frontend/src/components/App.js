@@ -29,7 +29,7 @@ class App extends Component{
                         <Route exact path="/">
                             <HomePage/>
                         </Route>
-                        <Route exact path ="/Account">
+                        <Route exact path ="/Account/Profile">
                             <Account {...this.props}/>
                         </Route>
                         <Route exact path="/SignUp">

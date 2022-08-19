@@ -1,8 +1,7 @@
 body{
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
     background-color: rgb(217, 217, 217);
-
 }
 .container {
     display: flex;
@@ -50,7 +49,8 @@ body{
     /* background-color: rebeccapurple; */
 }
 .recomended:hover {
-  box-shadow: 0 8px 16px 0 #ccb9b1;
+  /* box-shadow: 0 8px 16px 0 #ccb9b1; */
+  box-shadow: 0 8px 16px 0 #90323D;
 }
 /* .footer:hover {
   box-shadow: 0 8px 16px 0 #ccb9b1;
@@ -62,7 +62,9 @@ body{
   box-shadow: 0 8px 16px 0 #ccb9b1;
 } */
 .article:hover {
-    box-shadow: 0 8px 16px 0 #ccb9b1;
+    /* box-shadow: 0 8px 16px 0 #ccb9b1; */
+    box-shadow: 0px 8px 16px 0 #8C7A6B;
+
   }
 .recomended{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -99,7 +101,7 @@ body{
     gap: 10px 15px;
 }
 
-.popTags .tag{
+.popTags .tagHome{
     margin-left: 10px;
     color: #212123;
     font-size: 17px;
@@ -110,13 +112,14 @@ body{
     /* background-color: lightblue; */
 }
 
-.tag:hover {
-    box-shadow: 0px 0px 5px 5px #ccb9b1;
+.tagHome:hover {
+    /* box-shadow: 0px 0px 5px 5px #ccb9b1; */
+    box-shadow: 0px 0px 5px 5px #8C7A6B;
     transform: scale(1.2);
     text-decoration: none;
     /* background-color: lightblue;  */
 }
-.tag a{
+.tagHome a{
     text-decoration: none;
     color: black;
 }
