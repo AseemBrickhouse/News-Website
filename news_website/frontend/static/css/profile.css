@@ -97,6 +97,7 @@ body{
 }
 .popArticles{
     /* background-color: chartreuse; */
+    display: grid;
     width: 70%;
     margin-left: 30%;
     position: absolute;
@@ -146,10 +147,6 @@ body{
 .options{
     display: inline-flex;
     text-align: center;
-}
-.ArticleCards{
-  display: inline-block;
-  margin-top: 10%;
 }
 @media only screen and (max-width: 1920px) {
   .Cardcontainer {
@@ -229,4 +226,17 @@ body{
 }
 .user-info small {
   color: #545d7a;
+}
+
+.ArticleCards{
+  display: inline-block;
+  margin-top: 15%;
+  margin-left: 17%;
+  width: 100%;
+}
+.createArticle{
+  position: absolute;
+  margin-top: 5%;
+  margin-left: 41.5%;
+  align-items: center;
 }

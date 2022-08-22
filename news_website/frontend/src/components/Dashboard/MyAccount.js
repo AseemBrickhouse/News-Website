@@ -68,7 +68,7 @@ class MyAccount extends React.Component {
                 >
                   <MenuIcon/>
                 </button>
-                <text> Welcome,       {this.state.first_name}</text>
+                <text> Welcome, {this.state.first_name}</text>
                 <Menu
                   id="demo-positioned-menu"
                   aria-labelledby="demo-positioned-button"

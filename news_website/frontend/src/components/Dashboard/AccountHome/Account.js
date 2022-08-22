@@ -9,6 +9,7 @@ import { Redirect, Switch, BrowserRouter as Router, Route } from "react-router-d
 import Menu from './Menu';
 import Profile from './Profile';
 import Articles from './Articles';
+import CreateArticle from './CreateArticle';
 
 class Account extends React.Component {
     constructor(props){
@@ -137,8 +138,8 @@ class Account extends React.Component {
                             <Route exact path ='/Account/Articles'>
                                 <Articles {...this.props}/>
                             </Route>
-                            <Route>
-
+                            <Route exact path ='/Account/CreateArticle'>
+                                <CreateArticle {...this.props}/>
                             </Route>
                         </Switch>
                     </Router>

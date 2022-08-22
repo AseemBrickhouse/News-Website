@@ -17,21 +17,22 @@ class Menu extends React.Component{
             // letterSpacing: ".1rem",
             textTransform: "none",
             textUnderlineOffset: "3px",
-            padding: "10px 25px"
+            padding: "10px 25px",
+            textDecoration: "none",
           });
 
         return(
             <div>
                 <div className='menu'>
-                <div  className='items'>
-                    <Link to ='/Account/Profile' {...this.props}><StyledButton href="#text-buttons">My Profile</StyledButton></Link>
-                </div>
-                <div  className='items'>
-                    <Link to ='/Account/Articles'  {...this.props}><StyledButton href="#text-buttons">My Articles</StyledButton></Link>
-                </div>
-                <div  className='items'>
-                    <Link to ='/Account/Followers'  {...this.props}><StyledButton href="#text-buttons">Followers</StyledButton></Link>
-                </div>
+                    <div  className='items'>
+                        <Link to ='/Account/Profile' {...this.props}><StyledButton href="#text-buttons">My Profile</StyledButton></Link>
+                    </div>
+                    <div  className='items'>
+                        <Link to ='/Account/Articles'  {...this.props}><StyledButton href="#text-buttons">My Articles</StyledButton></Link>
+                    </div>
+                    <div  className='items'>
+                        <Link to ='/Account/Followers'  {...this.props}><StyledButton href="#text-buttons">Followers</StyledButton></Link>
+                    </div>
                 </div>
             </div>
         )

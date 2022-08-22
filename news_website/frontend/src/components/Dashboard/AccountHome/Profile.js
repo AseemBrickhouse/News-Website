@@ -16,6 +16,9 @@ class Profile extends React.Component{
             last_name: "",
             account_role: "",
             phone: "",
+            bio: "",
+            occupation: "",
+            email: "",
             popular_articles: [],
         };
     }
@@ -44,11 +47,26 @@ class Profile extends React.Component{
                     last_name: data.last_name,
                     account_role: data.role,
                     phone: data.phone,
+                    bio: data.bio,
+                    email: data.email,
+                    occupation: data.occupation,
                     popular_articles: data.popular_articles,
                 })
             });    
     }
-
+    getTags = (Article) =>{
+        var send = []
+        if (Array.isArray(Article.tags)) {
+            for(let i = 0; i < Article.tags.length; i++){
+                send.push(<span class="tag tag-teal">{Article.tags[i]}</span>)
+            }
+        }else{
+            send.push(<span class="tag tag-teal">{Article.tags}</span>)
+        }
+        return(
+            <div>{send}</div>
+        )
+    }
     Articles = () =>{
         // console.log(Object.entries(this.state.popular_articles));
         // var Articles = Object.entries(this.state.popular_articles);
@@ -58,43 +76,22 @@ class Profile extends React.Component{
         return(
             <div>
                 {
-                    Object.entries(this.state.popular_articles).map( ([Article, ArticleInfo]) => {
+                    Object.entries(this.state.popular_articles).map( ([_, ArticleInfo]) => {
                         return(
-                            // <div className='cardBox'>
-                            //     <Card sx={{ maxWidth: 300 }}>
-                            //       <CardMedia
-                            //         component="img"
-                            //         alt="green iguana"
-                            //         height="250vw"
-                            //         // image="/static/images/cards/contemplative-reptile.jpg"
-                            //       />
-                            //       <CardContent>
-                            //         <Typography gutterBottom variant="h5" component="div">
-                            //             {ArticleInfo.healine}
-                            //         </Typography>
-                            //         <Typography variant="body2" color="text.secondary">
-                            //             {ArticleInfo.article_description}
-                            //         </Typography>
-                            //       </CardContent>
-                            //       <CardActions>
-                            //         <p>{ArticleInfo.rating}</p>
-                            //         <Button size="small">Learn More</Button>
-                            //       </CardActions>
-                            //     </Card>
-                            // </div>
+
                             <div class="Cardcontainer">
                                 <div class="card">
                                     <div class="card-header">
                                       {/* <img src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg" alt="rover" /> */}
                                     </div>
                                     <div class="card-body">
-                                      <span class="tag tag-teal">Technology</span>
+                                      {this.getTags(ArticleInfo)}
                                       <h4>{ArticleInfo.headline}</h4>
                                       <p>{ArticleInfo.article_description}</p>
                                       <div class="user">
                                         <div class="user-info">
                                           <h5>July Dec</h5>
-                                          <small>2h ago</small>
+                                          <small>{ArticleInfo.rating} %</small>
                                         </div>
                                       </div>
                                     </div>
@@ -117,8 +114,8 @@ class Profile extends React.Component{
                     <div className="middle">
                         <div className="middleContent">
                             <p>Name<br/><br/><span> {this.state.first_name} {this.state.last_name}</span></p>
-                            <p>Email<br/><br/><span> JoeBrown@gmail.com</span></p>
-                            <p>Role<br/><br/><span> {this.state.account_role}</span></p>
+                            <p>Email<br/><br/><span> {this.state.email}</span></p>
+                            <p>Occupation<br/><br/><span> {this.state.occupation}</span></p>
                             <p>Phone<br/><br/><span> {this.state.phone}</span></p>
                         </div>
                     </div>
@@ -127,10 +124,8 @@ class Profile extends React.Component{
                             Bio
                         </div>
                         <bio>  
-                           <span>"Lorem</span> ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                           {/* <span>"Lorem</span>  */}
+                            {this.state.bio}
                         </bio>
                     </div>
                 </div>
@@ -145,7 +140,7 @@ class Profile extends React.Component{
                             <p>67</p>
                         </div>
                         <div class='popArticles'>
-                            <p>Popular Articles</p>
+                            <p style={{marginLeft: "10px"}}>Popular Articles</p>
                             <this.Articles/>
                         </div>
                     </div>

@@ -12,32 +12,66 @@ export default class Article extends Component{
   }
 
   componentDidMount(){
-    fetch("api/AllArticles")
-        .then(response =>{
-            if(response.status > 400){
-                return this.setState(() => {
-                    return{ placeholder: "Something went wrong!" };
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            this.setState(() =>{
-                return{
-                    data,
-                    loaded: true
-                };
-            });
+    fetch("api/AllArticles/", {
+      method: "GET",
+      headers:{
+        'Accept':'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(response =>{
+      if(response.status > 400){
+          return this.setState(()=>{
+              return{ placeholder: "Something went wrong!" };
+          });
+      }
+      return response.json();
+    }).then(data =>{
+      console.log(data)
+        this.setState(() =>{
+          return{
+              data,
+              loaded: true
+          };
         });
+    })
+    // fetch("api/AllArticles/")
+    //     .then(response =>{
+    //         if(response.status > 400){
+    //             return this.setState(() => {
+    //                 return{ placeholder: "Something went wrong!" };
+    //             });
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         this.setState(() =>{
+    //             return{
+    //                 data,
+    //                 loaded: true
+    //             };
+    //         });
+    //     });
   }
-
-  render(){
-    console.log(this.state.data)
+  getTags = (Article) =>{
+    var send = []
+    if (Array.isArray(Article.tags)) {
+        for(let i = 0; i < Article.tags.length; i++){
+            send.push(<span class="tag tag-teal">{Article.tags[i]}</span>)
+        }
+    }else{
+        send.push(<span class="tag tag-teal">{Article.tags}</span>)
+    }
+    return(
+        <div>{send}</div>
+    )
+  }
+  Articles = () =>{
+    const [articles, SetArticles] = React.useState();
     return(
       <React.Fragment>
           <div className = 'container'>
             <div className = 'item-left'>
-              {this.state.data.map(Article => {
+              {Object.entries(this.state.data).map(([_,Article]) => {
                   return(
                     <div className ='content'>
                       <div className ='article'>
@@ -49,8 +83,7 @@ export default class Article extends Component{
                         </div>
                         <div className = 'bottom'>
                           <p1>{Article.date}</p1>
-                          <p2>tag1</p2>
-                          <p2>tag2</p2>
+                            {this.getTags(Article)}
                           <p3>{Article.reporter_account}</p3> 
                         </div>
                       </div>
@@ -88,6 +121,12 @@ export default class Article extends Component{
               </div>
           </div>
       </React.Fragment>
+    )
+  }
+  render(){
+    console.log(this.state.data)
+    return(
+      <this.Articles/>
     ); 
   }  
 }
