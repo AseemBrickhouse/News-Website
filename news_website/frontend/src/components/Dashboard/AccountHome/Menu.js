@@ -25,13 +25,13 @@ class Menu extends React.Component{
             <div>
                 <div className='menu'>
                     <div  className='items'>
-                        <Link to ='/Account/Profile' {...this.props}><StyledButton href="#text-buttons">My Profile</StyledButton></Link>
+                        <Link to ='/Account/Profile' {...this.props}><StyledButton>My Profile</StyledButton></Link>
                     </div>
                     <div  className='items'>
-                        <Link to ='/Account/Articles'  {...this.props}><StyledButton href="#text-buttons">My Articles</StyledButton></Link>
+                        <Link to ='/Account/Articles'  {...this.props}><StyledButton>My Articles</StyledButton></Link>
                     </div>
                     <div  className='items'>
-                        <Link to ='/Account/Followers'  {...this.props}><StyledButton href="#text-buttons">Followers</StyledButton></Link>
+                        <Link to ='/Account/Followers'  {...this.props}><StyledButton>Followers</StyledButton></Link>
                     </div>
                 </div>
             </div>

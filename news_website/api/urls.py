@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from api.views import *
 
 router = DefaultRouter()
-# router.register(r'AllArticles', ArticleViewSet)
+router.register(r'Articles', ArticleViewSet)
 router.register(r'Accounts', AccountViewSet)
 # router.register(r'CreateNewArticle/', CreateNewArticle.as_view(), basename='CreateNewArticle')
 # router.register(r'current_user', current_user)

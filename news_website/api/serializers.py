@@ -14,7 +14,7 @@ class AccountSerializer(serializers.ModelSerializer):
                    'bio',
                    'email',
                    'occupation',
-                   'popular_articles',
+                #    'popular_articles',
                    )
 
 class ArticleSerializer(serializers.ModelSerializer):

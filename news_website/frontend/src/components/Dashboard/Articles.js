@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Advertisments from './Advertisments';
+import { Redirect, Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 export default class Article extends Component{
   constructor(props){
@@ -67,11 +69,21 @@ export default class Article extends Component{
   }
   Articles = () =>{
     const [articles, SetArticles] = React.useState();
+    const handleView = (id)=>{
+      fetch("api/Articles/" + id +"/")
+      .then(response =>{
+        console.log(response)
+        return response.json()
+      })
+      .then(data=>{
+        console.log(data)
+      })
+    }
     return(
       <React.Fragment>
           <div className = 'container'>
             <div className = 'item-left'>
-              {Object.entries(this.state.data).map(([_,Article]) => {
+              {Object.entries(this.state.data).map(([id,Article]) => {
                   return(
                     <div className ='content'>
                       <div className ='article'>
@@ -86,6 +98,11 @@ export default class Article extends Component{
                             {this.getTags(Article)}
                           <p3>{Article.reporter_account}</p3> 
                         </div>
+                        <Link to={'/Articles/' + id + '/'}>
+                          <Button onClick={ () => handleView(id)}>
+                            View
+                          </Button>
+                        </Link>
                       </div>
                   </div>
                 );

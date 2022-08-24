@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import Account from './Dashboard/AccountHome/Account';
 import BaseRouter from '../routes';
+import ArticleID from './Dashboard/ArticleID';
+
 import {
     BrowserRouter as Router,
     Switch, 
@@ -37,6 +39,9 @@ class App extends Component{
                         </Route>
                         <Route exact path="/Login">
                             <Login/>
+                        </Route>
+                        <Route exact path={'/Articles/${id}'}>
+                            <ArticleID/>
                         </Route>
                     </Switch>
                 </div>

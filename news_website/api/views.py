@@ -119,3 +119,10 @@ def PopularUserArticles(account):
             popular_articles[convertedArticle.data['id']] = convertedArticle.data
         # print(popular_articles)
         return(popular_articles)
+
+class ArticleID(APIView):
+    def post(self, request, *args, **kwargs):
+        pass
+
+    def get(self, request, *args, **kwargs):
+        pass
