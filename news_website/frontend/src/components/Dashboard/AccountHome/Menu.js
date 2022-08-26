@@ -26,6 +26,7 @@ class Menu extends React.Component{
                 <div className='menu'>
                     <div  className='items'>
                         <Link to ='/Account/Profile' {...this.props}><StyledButton>My Profile</StyledButton></Link>
+                        <Link to ='/Account/EditAccount' {...this.props}><StyledButton>Edit Account</StyledButton></Link>
                     </div>
                     <div  className='items'>
                         <Link to ='/Account/Articles'  {...this.props}><StyledButton>My Articles</StyledButton></Link>

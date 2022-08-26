@@ -215,8 +215,19 @@ article{
     width: 100%;
 }
 article header box{
-    background-color: rgb(217, 217, 217);
+    color: #212123;
+    font-size: 20px;
+    width: 150%;
     height: 50%;
+}
+article header box p{
+    background-color: rgb(217, 217, 217);
+    color: #212123;
+    width: 10%;
+    height: auto;
+    pointer-events: none;
+    font-weight: bold;
+    text-decoration: none;
 }
 article header{
     background-color: #90323D;
@@ -226,12 +237,15 @@ article header{
     width: 60%;
 }
 article header .headline{
+    width: fit-content;
     padding: 10px;
     font-size: 70px;
     font-weight: bold;
+    border-top: solid rgb(217, 217, 217);
 }
 
 article header sub{
+    border-bottom: solid rgb(217, 217, 217);
     display: block;
     padding-left: 50px;
     padding: 10px;
@@ -247,12 +261,20 @@ article authHeader {
 
 }
 article authHeader author{
+    background-color: #90323D;
+    border-radius: 0px 0px 5px 5px;
+    height: max-content;
+    width: fit-content;
+    font-weight: 500;
     font-size: 20px;
-    width: 30%;
 }
 article authHeader dateline{
+    background-color: #90323D;
+    border-radius: 0px 0px 5px 5px;
     font-size: 20px;
-    width: auto;
+    height: max-content;
+    width: fit-content;
+    font-weight: 500;
 }
 article main{
     margin-left: 10%;
@@ -266,5 +288,8 @@ article main .description{
     text-decoration: none;
 }
 article main body{
+    margin-top: 5%;
+    margin-left: 5%;
+    white-space: pre-wrap;
     font-size: 23px;
 }

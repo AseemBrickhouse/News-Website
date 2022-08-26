@@ -58,20 +58,25 @@ class SignUp extends React.Component{
         });
         if (this.Checker(data.get('email'), data.get('password1'), data.get('password2') ) ){
           this.props.onAuth(data.get('username'), data.get('email'), data.get('password1'), data.get('password2'))
-          fetch("/api/AccountCreation/", {
-            method:"POST",
-            headers:{
-              'Accept':'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: data.get('username'),
-                email: data.get('email'),
-                password: data.get('password1'),
-                token: localStorage.getItem('token')
+          setTimeout(()=>{
+            fetch("/api/AccountCreation/", {
+              method:"POST",
+              headers:{
+                'Accept':'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  first_name: data.get('first_name'),
+                  last_name:data.get('last_name'),
+                  email: data.get('email'),
+                  token: localStorage.getItem('token')
+              })
+            }).then(response =>{
+              console.log(response)
+              window.location.reload()
             })
-          })
-          this.props.history.push('/')
+            this.props.history.push('/')
+          }, 1000)
         }else{
           console.log("Invalid credentials");
         }
@@ -145,6 +150,28 @@ class SignUp extends React.Component{
                   type="password"
                   id="password2"
                   autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="first_name"
+                  label="first_name"
+                  type="first_name"
+                  id="first_name"
+                  autoComplete="first_name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="last_name"
+                  label="last_name"
+                  type="last_name"
+                  id="last_name"
+                  autoComplete="last_name"
                 />
               </Grid>
               <Grid item xs={12}>

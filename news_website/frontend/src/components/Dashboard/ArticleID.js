@@ -36,14 +36,23 @@ class ArticleID extends React.Component {
             <div>{send}</div>
         )
     }
+    scrollToTop() {
+        window.scrollTo(0, 0);
+    }
     Article = () => {
+        this.scrollToTop()
         const location = useLocation().state;
         const info = {
             ID: location.ArticleID,
-            Article: location.Article
+            Article: location.Article,
+            ArticleBody: location.Article.article_body,
+            ArticleDate: new Date(location.Article.date).getMonth() + '-' + new Date(location.Article.date).getDate() + '-' + new Date(location.Article.date).getFullYear(),
         }
+        console.log(info.ArticleDate)
+        console.log(new Date(info.Article.date).getMonth())
         const StyledButton = styled(Button)({
             // fontFamily: "Inter",
+            fontFamily: ['Neue Haas Grotesk Display Pro', 'sans-serif'],
             color: "black",
             textDecoration: "underline",
             fontSize: "18px",
@@ -61,12 +70,14 @@ class ArticleID extends React.Component {
                 		<article>
                 			<header>
                                 <box>
-                				<Link to='/' class="btn-arrow-left fw-700 text-decoration-none mb-5 d-inline-block">
-                                    <StyledButton>
-                                        <ArrowBackIcon/>
-                                        All posts
-                                    </StyledButton>
-                                </Link>
+                				    <Link to='/' style={{textDecoration: 'none', width:'10%'}}>
+                                        {/* <StyledButton> */}
+                                        <p>
+                                            <ArrowBackIcon style={{textDecoration: 'none'}} />
+                                            All posts
+                                        </p>
+                                        {/* </StyledButton> */}
+                                    </Link>
                                 </box>
                 				<div className='headline'>{info.Article.headline}</div>
                 				<sub>{info.Article.sub_title}</sub>
@@ -78,11 +89,11 @@ class ArticleID extends React.Component {
 				                <div>
 				                	<author>By {info.Article.reporter_account}</author>
 				                </div>
-				                    <dateline>{info.Article.date}</dateline>
+				                    <dateline>{info.ArticleDate}</dateline>
                             </authHeader>
                                 <main>
 				                    <div className='description'>{info.Article.article_description}</div>
-                                    <body>{info.Article.article_body}</body>
+                                    <body>{info.ArticleBody}</body>
                                 </main>
                         </article>
                     </div>

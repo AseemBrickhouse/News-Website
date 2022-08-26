@@ -56,7 +56,7 @@ class Article(models.Model):
     isPrivate = models.BooleanField(null=True, default=False)
     visibility = models.CharField(choices=VISIBILITY, null=True, default=False, max_length=24)
     article_description = models.CharField(max_length=500, null=True)
-    article_body = models.TextField(max_length=10000, null=True, strip=False)
+    article_body = models.TextField(max_length=10000, null=True)
     tags = MultiSelectField(choices=TAGS, max_choices=7, max_length=20000, null=True)
 
     def str(self):

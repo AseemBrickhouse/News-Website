@@ -18,6 +18,8 @@ class AccountSerializer(serializers.ModelSerializer):
                    )
 
 class ArticleSerializer(serializers.ModelSerializer):
+    article_body = serializers.CharField(trim_whitespace=False)
+
     class Meta:
         model = Article
         fields = ('id',

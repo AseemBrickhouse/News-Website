@@ -41,10 +41,10 @@ class MyAccount extends React.Component {
                 return response.json();
             })
             .then(data =>{
-                return this.setState({
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                })
+              return this.setState({
+                  first_name: data.first_name,
+                  last_name: data.last_name,
+              })            
             });
             
     }

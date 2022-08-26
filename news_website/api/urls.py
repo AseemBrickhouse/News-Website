@@ -14,7 +14,8 @@ router.register(r'Accounts', AccountViewSet)
 urlpatterns = [
         path('rest-auth/', include('rest_auth.urls')),
         path('rest-auth/registration/', include('rest_auth.registration.urls')),
-        path('AccountCreation/', AccountCreation, name="AccountCreation"),
+        path('AccountCreation/', AccountCreation.as_view()),
+        path('EditAccount/', EditAccount.as_view()),
         path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
         path('CreateNewArticle/', CreateNewArticle.as_view()),

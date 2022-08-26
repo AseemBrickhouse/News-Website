@@ -37,7 +37,7 @@ export const authLogin = (username, password) => {
             // axios.defaults.headers.common['Authorization'] = token ;
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSUCCESS(token));
-            dispatch(checkTimeout(3600));   
+            dispatch(checkTimeout(3600));  
         })
         .catch(error => {
             dispatch(authFAIL(error))

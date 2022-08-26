@@ -37,14 +37,47 @@ class AllArticles(APIView):
         pass
 
 #Useless can remove
-@api_view(['GET', 'POST']) 
-def AccountCreation(request):
-    if request.method == 'POST':
-        queryset = User.objects.all()
-        account = queryset[0]
+class AccountCreation(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token'])
+        currentUser = User.objects.all().filter(id=token.user_id)[0]
+        print(currentUser , "-------------------------------------------------------------------------")
+        account = Account.objects.create(
+            user=currentUser,
+            first_name=request.data['first_name'],
+            last_name=request.data['last_name'],
+            email=request.data['email'],
+        )
+        account.save()
+        # account = User.objects.all().filter(id=token.user_id)[0].account
+        # print(AccountSerializer(account).data)
+        print(account)
+        return Response(request.data)
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+class EditAccount(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data['token'])
+        currentUser = User.objects.all().filter(id=token.user_id)[0].account
+        # account = Account.objects.create(
+        #     user=currentUser,
+        #     first_name=request.data['first_name'],
+        #     last_name=request.data['last_name'],
+        #     phone=request.data['phone'],
+        #     bio=request.data['bio'],
+        #     email=request.data['email'],
+        #     occupation=request.data['occupation']
+        # )
+        # account.save()
+        print(currentUser)
         # print(account)
-        # print(account.first_name)
-    return Response(request.data)
+        # account = User.objects.all().filter(id=token.user_id)[0].account
+        return Response(request.data)
+
+    def get(self, request, *args, **kwargs):
+        pass
 
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -69,20 +102,23 @@ class CreateNewArticle(ObtainAuthToken):
 class current_user(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token'])
-        account = User.objects.all().filter(id=token.user_id)[0].account
-        popularArticles = PopularUserArticles(account)
-        data = {
-            'first_name' : account.first_name,
-            'last_name' : account.last_name,
-            'creation_date' : account.creation_date,
-            'role' : account.role,
-            'phone' : account.phone,
-            'bio': account.bio,
-            'email': account.email,
-            'occupation': account.occupation,
-            'popular_articles': popularArticles,
-        }
-        return Response(data)
+        try:
+            account = User.objects.all().filter(id=token.user_id)[0].account
+            popularArticles = PopularUserArticles(account)
+            data = {
+                'first_name' : account.first_name,
+                'last_name' : account.last_name,
+                'creation_date' : account.creation_date,
+                'role' : account.role,
+                'phone' : account.phone,
+                'bio': account.bio,
+                'email': account.email,
+                'occupation': account.occupation,
+                'popular_articles': popularArticles,
+            }
+            return Response(data)
+        except:
+            return Response(request.data)
 
     def get(self, request):
         pass
@@ -110,15 +146,13 @@ def PopularUserArticles(account):
     queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:4]
     #FIX THIS -> Throws error when there are no articles to get. Might not be this but the ACCOUNT detail is never inputed
     #Add fields to forum
-    if len(queryset) < 4:
-        return queryset
-    else:
-        popular_articles = {}
-        for article in queryset:
-            convertedArticle = ArticleSerializer(article)
-            popular_articles[convertedArticle.data['id']] = convertedArticle.data
-        # print(popular_articles)
-        return(popular_articles)
+    #Fixed I think?
+    popular_articles = {}
+    for article in queryset:
+        convertedArticle = ArticleSerializer(article)
+        popular_articles[convertedArticle.data['id']] = convertedArticle.data
+    # print(popular_articles)
+    return(popular_articles)
 
 class ArticleID(APIView):
     def post(self, request, *args, **kwargs):
