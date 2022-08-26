@@ -55,7 +55,8 @@ class CreateArticle extends React.Component{
                     })
                 }).then(response => {
                     console.log(response)
-                })
+                });
+                <Redirect to='/'/>
             }
             //Add Functionalty to save and finish later
             const handleSave = (event) =>{

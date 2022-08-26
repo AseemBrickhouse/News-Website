@@ -40,7 +40,7 @@ class App extends Component{
                         <Route exact path="/Login">
                             <Login/>
                         </Route>
-                        <Route exact path={'/Articles/${id}'}>
+                        <Route exact path={'/Articles/:id'}>
                             <ArticleID/>
                         </Route>
                     </Switch>

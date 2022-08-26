@@ -50,12 +50,13 @@ class Settings(models.Model):
 class Article(models.Model):
     date = models.DateTimeField(auto_now_add=True, null=True) ##change to date field 
     headline = models.CharField(max_length=100)
+    sub_title = models.CharField(max_length=200, null=True)
     reporter_account = models.ForeignKey(Account, on_delete=models.CASCADE) #Reporter
     rating = models.IntegerField(null=True)
     isPrivate = models.BooleanField(null=True, default=False)
     visibility = models.CharField(choices=VISIBILITY, null=True, default=False, max_length=24)
-    article_description = models.CharField(max_length=200, null=True)
-    article_body = models.TextField(max_length=2000, null=True)
+    article_description = models.CharField(max_length=500, null=True)
+    article_body = models.TextField(max_length=10000, null=True, strip=False)
     tags = MultiSelectField(choices=TAGS, max_choices=7, max_length=20000, null=True)
 
     def str(self):

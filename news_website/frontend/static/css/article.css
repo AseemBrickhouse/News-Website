@@ -209,3 +209,62 @@ body{
         font-size: 12px;
     }
 }
+article{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+article header box{
+    background-color: rgb(217, 217, 217);
+    height: 50%;
+}
+article header{
+    background-color: #90323D;
+    display: inline-block;
+    height: 500px;
+    margin-left: 10%;
+    width: 60%;
+}
+article header .headline{
+    padding: 10px;
+    font-size: 70px;
+    font-weight: bold;
+}
+
+article header sub{
+    display: block;
+    padding-left: 50px;
+    padding: 10px;
+    font-size: 40px;
+    margin-left: 5%;
+}
+article authHeader {
+    display: inline-flex;
+    width: 60%;
+    margin-left: 10%;
+    /* background-color: #8C7A6B; */
+    justify-content: space-between;
+
+}
+article authHeader author{
+    font-size: 20px;
+    width: 30%;
+}
+article authHeader dateline{
+    font-size: 20px;
+    width: auto;
+}
+article main{
+    margin-left: 10%;
+    /* background-color:#616063; */
+    width: 60%;
+}
+article main .description{
+    margin-left: 2vw;
+    margin-top: 2%;
+    font-size: 32px;
+    text-decoration: none;
+}
+article main body{
+    font-size: 23px;
+}

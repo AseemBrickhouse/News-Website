@@ -23,6 +23,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'date', 
                   'headline', 
+                  'sub_title',
                   'reporter_account', 
                   'rating',
                   'isPrivate',

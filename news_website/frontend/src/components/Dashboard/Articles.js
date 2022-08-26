@@ -2,14 +2,21 @@ import React, { Component } from 'react';
 import Advertisments from './Advertisments';
 import { Redirect, Link } from "react-router-dom";
 import Button from '@mui/material/Button';
+import {
+  BrowserRouter as Router,
+  Switch, 
+  Route,
+} from "react-router-dom";
+import ArticleID from './ArticleID';
 
 export default class Article extends Component{
   constructor(props){
       super(props);
       this.state = {
           data: [],
+          article: [],
           loaded: false,
-          placeholder: "Loading"
+          placeholder: "Loading",
       };
   }
 
@@ -28,7 +35,7 @@ export default class Article extends Component{
       }
       return response.json();
     }).then(data =>{
-      console.log(data)
+      // console.log(data)
         this.setState(() =>{
           return{
               data,
@@ -67,17 +74,26 @@ export default class Article extends Component{
         <div>{send}</div>
     )
   }
-  Articles = () =>{
-    const [articles, SetArticles] = React.useState();
+  Articles = () => {
+    // const [current, setArt] = React.useState(null);
+    // var x = []
+    // const setData=(data) => {
+    //   console.log(data)
+    //   setArt(data)
+    //   console.log(setArt);
+    //   console.log(x)
+    // }
     const handleView = (id)=>{
-      fetch("api/Articles/" + id +"/")
-      .then(response =>{
-        console.log(response)
-        return response.json()
-      })
-      .then(data=>{
-        console.log(data)
-      })
+      // fetch("api/Articles/" + id +"/")
+      // .then(response =>{
+      //   return response.json()
+      // })
+      // .then(data=>{
+      //   setData(data)
+      // });
+      <Route exact path={'/Articles/' + id + '/'}>
+          <ArticleID/>
+      </Route>
     }
     return(
       <React.Fragment>
@@ -98,11 +114,19 @@ export default class Article extends Component{
                             {this.getTags(Article)}
                           <p3>{Article.reporter_account}</p3> 
                         </div>
-                        <Link to={'/Articles/' + id + '/'}>
+                        <Link to={{
+                          pathname: '/Articles/' + id + '/',
+                          state: { 
+                            ArticleID: id,
+                            Article: Article,
+                          },
+                          }}>
                           <Button onClick={ () => handleView(id)}>
                             View
                           </Button>
                         </Link>
+
+
                       </div>
                   </div>
                 );
@@ -141,7 +165,6 @@ export default class Article extends Component{
     )
   }
   render(){
-    console.log(this.state.data)
     return(
       <this.Articles/>
     ); 

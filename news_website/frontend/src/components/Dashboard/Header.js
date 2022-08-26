@@ -33,7 +33,8 @@ class Header extends Component{
         <div className='topnav' id = "myTopnav">
           {/* src="../../static/images/what.png" */}
           <img alt="No Image"></img>
-          <aTitle>Lorem</aTitle>
+          {/* <aTitle><Link to="/">Lorem</Link></aTitle> */}
+          <home><Link to="/">Lorem</Link></home>
           {
             this.props.isAuthenticated ? 
               <div>

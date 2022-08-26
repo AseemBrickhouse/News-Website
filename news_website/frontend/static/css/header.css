@@ -11,7 +11,6 @@ body{
     position: sticky;
     top: 0;
     z-index: 500;
-
 }
 .topnav img{
     float: left;
@@ -26,6 +25,11 @@ body{
     font-size: 17px;
     background-color: #ccb9b1;
     color: white;
+}
+.topnav home{
+  float:left;
+  text-decoration: none;
+  display: block;
 }
 .topnav aTitle{
     float: left;

@@ -30,7 +30,7 @@ class AllArticles(APIView):
             querysetSend[tmpArt.data['id']] = tmpArt.data
             querysetSend[tmpArt.data['id']]['reporter_account'] = account[0].first_name + " " + account[0].last_name
 
-        print(querysetSend)     
+        # print(querysetSend)     
         return Response(querysetSend)
 
     def post(self, request, *args, **kwargs):
@@ -42,15 +42,15 @@ def AccountCreation(request):
     if request.method == 'POST':
         queryset = User.objects.all()
         account = queryset[0]
-        print(account)
-        print(account.first_name)
+        # print(account)
+        # print(account.first_name)
     return Response(request.data)
 
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token'])
         account = User.objects.all().filter(id=token.user_id)[0].account
-        print(request.data)
+        # print(request.data)
         Article.objects.create(
             headline=request.data['headline'],
             reporter_account=account,
