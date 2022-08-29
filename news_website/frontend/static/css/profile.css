@@ -4,13 +4,13 @@ body{
     margin: 0;
     font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   }
-.ProfileContainer {
-    display: flex; /* or inline-flex */
+/* .ProfileContainer {
+    display: flex; 
     flex-direction: column;
     justify-content: flex-start;
     align-content: flex-start;
     flex-wrap: wrap;
-}
+} */
 .menu{
     /* background-color: aqua; */
     position: absolute;
@@ -243,4 +243,29 @@ body{
 .editaccount{
   position: absolute;
   margin-top: 10%;
+}
+
+.profileContainerTest{
+  position: absolute;
+  /* background-color: #cd5b9f; */
+  margin-left: 25vw;
+  top: 5vh;
+}
+.profileLeft{
+  margin-top: 3vh;
+  background-color: #AD343E;
+  margin-left: 15vw;
+  max-width: 11vw;
+}
+.profileMiddle{
+  margin-top: 3vh;
+  background-color: #E0E0CE;
+  border-radius: 0px , 25px, 25px, 25px;
+  margin-left: 1vw;
+  border-right: solid 1px #AD343E;
+}
+
+.profileRight{
+  margin-top: 3vh;
+  background-color: #E0E0CE;
 }

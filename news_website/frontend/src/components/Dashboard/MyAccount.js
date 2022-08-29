@@ -88,7 +88,7 @@ class MyAccount extends React.Component {
                       <ListItemIcon>
                         <HomeIcon fontSize="small"/>
                       </ListItemIcon>
-                    <Link to="/" style={{ textDecoration: 'none' }} underline="none">Home</Link>
+                    <Link to="/" style={{ textDecoration: 'none' }} underline="none" Icon={HomeIcon}>Home</Link>
                   </MenuItem>
                     <MenuItem onClick={handleClose} >
                       <ListItemIcon>

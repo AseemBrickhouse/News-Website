@@ -6,7 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Redirect, Switch, Link } from "react-router-dom";
-import Menu from './Menu';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from "@material-ui/core/styles";
 import Article from '../Articles';

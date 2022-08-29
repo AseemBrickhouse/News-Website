@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Redirect, Switch, BrowserRouter as Router, Route } from "react-router-dom";
-import Menu from './Menu';
+import ProfileMenu from './ProfileMenu';
 import Profile from './Profile';
 import Articles from './Articles';
 import CreateArticle from './CreateArticle';
@@ -126,12 +126,12 @@ class Account extends React.Component {
     }
     render(){
         return(
-            <div className='ProfileContainer'> 
+            <div> 
             {
                 this.props.isAuthenticated ? 
                 <div>
                     <Router>
-                    <Menu {...this.props}/>
+                    <ProfileMenu {...this.props}/>
                         <Switch>
                             <Route exact path ='/Account/Profile'>
                                 <Profile {...this.props}/>

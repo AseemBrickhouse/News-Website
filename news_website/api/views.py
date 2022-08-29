@@ -49,8 +49,6 @@ class AccountCreation(ObtainAuthToken):
             email=request.data['email'],
         )
         account.save()
-        # account = User.objects.all().filter(id=token.user_id)[0].account
-        # print(AccountSerializer(account).data)
         print(account)
         return Response(request.data)
 
@@ -60,20 +58,15 @@ class AccountCreation(ObtainAuthToken):
 class EditAccount(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=request.data['token'])
-        currentUser = User.objects.all().filter(id=token.user_id)[0].account
-        # account = Account.objects.create(
-        #     user=currentUser,
-        #     first_name=request.data['first_name'],
-        #     last_name=request.data['last_name'],
-        #     phone=request.data['phone'],
-        #     bio=request.data['bio'],
-        #     email=request.data['email'],
-        #     occupation=request.data['occupation']
-        # )
-        # account.save()
-        print(currentUser)
-        # print(account)
-        # account = User.objects.all().filter(id=token.user_id)[0].account
+        currentUser = User.objects.all().filter(id=token.user_id)[0]
+        Account.objects.filter(user=currentUser).update(
+            first_name=request.data['first_name'] if request.data['first_name'] != "" else currentUser.account.first_name,
+            last_name=request.data['last_name'] if request.data['last_name'] != "" else currentUser.account.last_name,
+            phone=request.data['phone'] if request.data['phone'] != "" else currentUser.account.phone,
+            bio=request.data['bio'] if request.data['bio'] != "" else currentUser.account.bio,
+            email=request.data['email'] if request.data['email'] != "" else currentUser.account.email,
+            occupation=request.data['occupation'] if request.data["occupation"] != "" else currentUser.account.email,
+        )
         return Response(request.data)
 
     def get(self, request, *args, **kwargs):
