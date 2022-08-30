@@ -156,16 +156,29 @@ body{
     /* justify-content: space-evenly; */
   }
 }
+/* .CardContainer {
+  display: grid;
+  flex-direction: row;
+  position: absolute;
+  margin-left: 25vw;
+  top: 10vh;
+  width: 75%;
+  border-top: 4px #90323D;
+  background-color: #47bcd4;
+} */
 .CardContainer {
   display: flex;
-  flex-direction: row;
-  /* margin-left: 2vw; */
-  /* margin-top: -1vw; */
-  /* width: 600px; */
-  /* justify-content: space-evenly; */
-  border-top: 4px #90323D;
+  flex-direction: row;  
+  position: absolute;
+  margin-left: 26vw;
+  height: 75vh;
+  top: 10vh;
+  width: 65%;
+  /* background-color: #47bcd4; */
 }
-
+.CCitem{
+  align-items: start;
+}
 .card {
   /* margin: 10px; */
   background-color: #fff;

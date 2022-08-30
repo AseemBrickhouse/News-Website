@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 
 #Fixed in ALlARticles
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all().filter(isPrivate = False)
+    queryset = Article.objects.all().filter(isPrivate = False).order_by('rating')
     serializer_class = ArticleSerializer
 
 class AccountViewSet(viewsets.ModelViewSet):

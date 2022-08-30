@@ -3,12 +3,17 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Redirect, Switch, Link } from "react-router-dom";
+import { Redirect, Switch, Link, Route } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from "@material-ui/core/styles";
 import Article from '../Articles';
+import ArticleID from '../ArticleID';
+import { 
+    Grid, Typography, TextField, 
+    FormControlLabel, Avatar, 
+    CssBaseline, Box, MenuList, Button,
+    Container, Checkbox, MenuItem, NestedMenuItem,
+  } from "@material-ui/core";
 
 class Articles extends React.Component{
     constructor(props){
@@ -80,33 +85,50 @@ class Articles extends React.Component{
         )
     }
     printArticles = () =>{
+        const handleView = (id) =>{
+            <Route exact path={'/Articles/' + id + '/'}>
+                <ArticleID/>
+            </Route>
+        }
         return(
             <div>
-                <this.Button/>
-                <div className='ArticleCards'>
-                {Object.entries(this.state.articles).map( ([_, ArticleInfo]) =>{
+                {/* <this.Button/> */}
+                <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+                {
+                Object.entries(this.state.articles).map( ([id, ArticleInfo]) =>{
                     return(
-                        <div class="Cardcontainer">
-                            <div class="card">
-                                <div class="card-header">
-                                  {/* <img src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg" alt="rover" /> */}
-                                </div>
-                                <div class="card-body">
-                                    {this.getTags(ArticleInfo)}
-                                  <h4>{ArticleInfo.headline}</h4>
-                                  <p>{ArticleInfo.article_description}</p>
-                                  <div class="user">
-                                    <div class="user-info">
-                                      <h5>July Dec</h5>
-                                      <small>{ArticleInfo.rating}%</small>
-                                    </div>
-                                  </div>
-                                </div>
+                        <Box sx={{marginLeft:"1vw", marginTop: "1vh"}}>
+                            <div className="card">
+                                 <div class="card-body">
+                                     {this.getTags(ArticleInfo)}
+                                       <h4>{ArticleInfo.headline}</h4>
+                                       <p>{ArticleInfo.article_description}</p>
+                                       <div class="user">
+                                         <div class="user-info">
+                                           <h5>July Dec</h5>
+                                           <small>{ArticleInfo.rating}%</small>
+                                         </div>
+                                       </div>
+                                       <div>
+                                       <Link to={{
+                                        pathname: '/Articles/' + id + '/',
+                                        state: { 
+                                          ArticleID: id,
+                                          Article: ArticleInfo,
+                                        },
+                                        }}>
+                                            <Button onClick={() => handleView(id)}>
+                                                {console.log(id)}
+                                                View
+                                            </Button>
+                                        </Link>
+                                       </div>
+                                 </div>
                             </div>
-                        </div>
+                        </Box>
                     );
                 })}
-                </div>
+                </Box>
             </div>
         )
     }
@@ -114,14 +136,9 @@ class Articles extends React.Component{
     render(){
         console.log(this.state);
         return(
-            <div>
-                {
-                    this.props.isAuthenticated ?
-                        <this.printArticles/>
-                    :
-                        console.log('here')
-                }
-            </div>
+            <div className='CardContainer'>
+                <this.printArticles/>
+            </div> 
         )
     }
 }

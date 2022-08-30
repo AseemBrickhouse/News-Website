@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as actions from '../../store/actions/auth';
 import CSRFToken from '../../store/actions/csrfToken';
-import {  withRouter } from 'react-router-dom';
+import {  withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { 
     Grid, Typography, TextField, 
     FormControlLabel, Avatar, 
-    Button, CssBaseline, Link, Box, 
+    Button, CssBaseline, Box, 
     Container, Checkbox,
 } from "@material-ui/core";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -66,6 +66,31 @@ class Login extends React.Component{
         </div>
       )
   }
+  signUp = () =>{
+    const StyledButton = styled(Button)({
+      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+      color: "black",
+      textDecoration: "none",
+      fontSize: "18px",
+      fontWeight: "bold",
+      // letterSpacing: ".1rem",
+      textTransform: "none",
+      textDecoration: "none",
+      backgroundColor: "#E0E0CE",
+
+    });
+    return(
+    <Box sx={{marginLeft: "50%", width: "100%"}}>
+      <Box sx={{marginRight: "2vw", marginLeft: "2vw", marginTop:"1vh"}}>
+          <Link to ="/SignUp" style={{textDecoration:"none"}}>
+            <StyledButton>
+              Don't have an account? Sign up today!
+            </StyledButton>
+          </Link> 
+      </Box>
+    </Box>
+    )
+  }
 render(){
     let errMsg = null;
     if(this.props.error){
@@ -83,7 +108,7 @@ render(){
         :
         <Box>
               <Container component="main">
-                <Box sx={{backgroundColor: "white", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh"}}>
+                <Box sx={{backgroundColor: "#E0E0CE", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh"}}>
                   <Box sx={{backgroundColor: "#F2AF29", width: "30%",}}>
                       <Box component="h1" variant="h5" style={{marginLeft: "0vw", fontSize: "150px"}}>
                         Lorem
@@ -103,26 +128,33 @@ render(){
                       <Box sx={{display: "flex", flexDirection:"row", marginLeft:"50%", width: "100%",  marginTop: "2vh"}}>
                           <Box sx={{marginRight: "2vw", marginLeft: "-2vw"}}>
                             <TextField
-                            hiddenLabel
-                            name="username"
+                            margin="normal"
                             required
-                            id="username"
+                            fullWidth
+                            id="email"
+                            label="Email Address or Username"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
                             variant="outlined"
-                            label="Username"
                             />
                           </Box>
                           <Box>
                             <TextField
+                            margin="normal"
                             required
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
                             variant='outlined'
                             />
                           </Box>
                       </Box>
                       <this.submitButton/>
+                      <this.signUp/>
                   </Box>
                 </Box>
               </Container>

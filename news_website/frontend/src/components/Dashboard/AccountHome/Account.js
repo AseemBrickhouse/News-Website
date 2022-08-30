@@ -11,6 +11,7 @@ import Profile from './Profile';
 import Articles from './Articles';
 import CreateArticle from './CreateArticle';
 import EditAccount from './EditAccount';
+import ArticleID from '../ArticleID';
 
 class Account extends React.Component {
     constructor(props){
@@ -131,21 +132,24 @@ class Account extends React.Component {
                 this.props.isAuthenticated ? 
                 <div>
                     <Router>
-                    <ProfileMenu {...this.props}/>
-                        <Switch>
-                            <Route exact path ='/Account/Profile'>
-                                <Profile {...this.props}/>
+                            <ProfileMenu {...this.props}/>
+                                <Switch>
+                                    <Route exact path ='/Account/Profile'>
+                                        <Profile {...this.props}/>
+                                    </Route>
+                                    <Route exact path ='/Account/EditAccount'>
+                                        <EditAccount {...this.props}/>
+                                    </Route>
+                                    <Route exact path ='/Account/Articles'>
+                                        <Articles {...this.props}/>
+                                    </Route>
+                                    <Route exact path ='/Account/CreateArticle'>
+                                        <CreateArticle {...this.props}/>
+                                    </Route>
+                                 </Switch>
+                        <Route exact path={'/Articles/:id'}>
+                                <ArticleID/>
                             </Route>
-                            <Route exact path ='/Account/EditAccount'>
-                                <EditAccount {...this.props}/>
-                            </Route>
-                            <Route exact path ='/Account/Articles'>
-                                <Articles {...this.props}/>
-                            </Route>
-                            <Route exact path ='/Account/CreateArticle'>
-                                <CreateArticle {...this.props}/>
-                            </Route>
-                        </Switch>
                     </Router>
                 </div>
                 :
