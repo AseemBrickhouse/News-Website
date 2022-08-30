@@ -136,7 +136,7 @@ class AllUserArticles(ObtainAuthToken):
 
 
 def PopularUserArticles(account):
-    queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:4]
+    queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:2]
     #FIX THIS -> Throws error when there are no articles to get. Might not be this but the ACCOUNT detail is never inputed
     #Add fields to forum
     #Fixed I think?

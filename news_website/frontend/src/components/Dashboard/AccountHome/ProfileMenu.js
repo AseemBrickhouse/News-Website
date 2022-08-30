@@ -24,34 +24,37 @@ class ProfileMenu extends React.Component{
         const StyledButton = styled(Button)({
             // fontFamily: "Inter",
             color: "black",
-            textDecoration: "underline",
+            textDecoration: "none",
             fontSize: "18px",
             fontWeight: "bold",
             // letterSpacing: ".1rem",
             textTransform: "none",
-            textUnderlineOffset: "3px",
-            padding: "10px 25px",
             textDecoration: "none",
+
           });
 
         return(
             <div>
-                {/* <div className='menu'>
-                    <div  className='items'>
-                        <Link to ='/Account/Profile' {...this.props}><StyledButton>My Profile</StyledButton></Link>
-                        <Link to ='/Account/EditAccount' {...this.props}><StyledButton>Edit Account</StyledButton></Link>
-                    </div>
-                    <div  className='items'>
-                        <Link to ='/Account/Articles'  {...this.props}><StyledButton>My Articles</StyledButton></Link>
-                    </div>
-                    <div  className='items'>
-                        <Link to ='/Account/Followers'  {...this.props}><StyledButton>Followers</StyledButton></Link>
-                    </div>
-                </div> */}
-                <div>
-
-                </div>
-
+                <Box className="profileLeft"sx={{ flexDirection: 'column', height: "77vh"}}>
+                    <MenuList>
+                        <MenuItem>
+                            <Link to ='/Account/Profile' style={{textDecoration: "none"}} {...this.props}><div className='styledButton'>My Profile</div></Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link to ='/Account/EditAccount' style={{textDecoration: "none"}} {...this.props}><div className = "styledButton">Edit Account</div></Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Typography>
+                                <Link to ='/Account/Articles' style={{textDecoration: "none"}} {...this.props}><div className = "styledButton">My Articles</div></Link>
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem>
+                            <Typography>
+                                <Link to ='/Account/Followers' style={{textDecoration: "none"}} {...this.props}><div className = "styledButton">Followers</div></Link>
+                            </Typography>
+                        </MenuItem>
+                    </MenuList>
+                </Box>
             </div>
         )
     }
@@ -141,30 +144,22 @@ class ProfileMenu extends React.Component{
     render(){
         return(
             <div>
-                {/* <this.Menu /> */}
+                <this.Menu />
                 {/* <this.test/> */}
-                <Box className="profileLeft"sx={{ flexDirection: 'column'}}>
-                        <MenuList>
-                            <MenuItem>
-                                    Profile
-                            </MenuItem>
-                            <MenuItem>
-                                    Edit Profile
-                            </MenuItem>
-                            <MenuItem>
-                                <Typography>
-                                    My Articles
-                                </Typography>
-                            </MenuItem>
-                            <MenuItem>
-                                <Typography>
-                                    Followers
-                                </Typography>
-                            </MenuItem>
-                        </MenuList>
-                </Box>
             </div>
         )
+                        {/* <div className='menu'>
+                    <div  className='items'>
+                        <Link to ='/Account/Profile' {...this.props}><StyledButton>My Profile</StyledButton></Link>
+                        <Link to ='/Account/EditAccount' {...this.props}><StyledButton>Edit Account</StyledButton></Link>
+                    </div>
+                    <div  className='items'>
+                        <Link to ='/Account/Articles'  {...this.props}><StyledButton>My Articles</StyledButton></Link>
+                    </div>
+                    <div  className='items'>
+                        <Link to ='/Account/Followers'  {...this.props}><StyledButton>Followers</StyledButton></Link>
+                    </div>
+                </div> */}
     }
 }
 export default ProfileMenu;

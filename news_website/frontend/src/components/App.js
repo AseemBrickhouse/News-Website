@@ -23,9 +23,7 @@ class App extends Component{
     }
     render(){
         return( 
-            <div>
             <Router>
-                <div>
                 <Header {...this.props}/>
                     <Switch>
                         <Route exact path="/">
@@ -44,9 +42,7 @@ class App extends Component{
                             <ArticleID/>
                         </Route>
                     </Switch>
-                </div>
             </Router>
-            </div>
         );
     }
 }

@@ -150,27 +150,30 @@ body{
 }
 @media only screen and (max-width: 1920px) {
   .Cardcontainer {
-    display: inline-block;
+    display: inline-flex;
     margin-left: 0%;
     /* width: 1040px; */
     /* justify-content: space-evenly; */
   }
 }
-.Cardcontainer {
-  display: inline-block;
-  /* margin-left: 10%; */
-  /* width: 1040px; */
+.CardContainer {
+  display: flex;
+  flex-direction: row;
+  /* margin-left: 2vw; */
+  /* margin-top: -1vw; */
+  /* width: 600px; */
   /* justify-content: space-evenly; */
   border-top: 4px #90323D;
 }
 
 .card {
-  margin: 10px;
+  /* margin: 10px; */
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   width: 300px;
+  margin-left: 1vw;
 }
 .card-header img {
   width: 100%;
@@ -208,7 +211,6 @@ body{
 
 .card-body p {
   font-size: 13px;
-  margin: 0 0 40px;
 }
 .user {
   display: flex;
@@ -262,10 +264,24 @@ body{
   background-color: #E0E0CE;
   border-radius: 0px , 25px, 25px, 25px;
   margin-left: 1vw;
-  border-right: solid 1px #AD343E;
+  border-right: solid 2px #AD343E;
 }
 
 .profileRight{
   margin-top: 3vh;
   background-color: #E0E0CE;
+}
+.styledButton{
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}
+.styledButton:active{
+  color:rgb(217, 217, 217)
+}
+.styledButton:visited, .styleButton:link, .styledButton:hover, .styledButton:focus{
+  text-decoration: none;
+  color: inherit;
 }

@@ -22,6 +22,7 @@ class Profile extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            name: "",
             first_name: "",
             last_name: "",
             account_role: "",
@@ -53,6 +54,7 @@ class Profile extends React.Component{
             })
             .then(data =>{
                 return this.setState({
+                    name: data.first_name + " " + data.last_name,
                     first_name: data.first_name,
                     last_name: data.last_name,
                     account_role: data.role,
@@ -78,22 +80,12 @@ class Profile extends React.Component{
         )
     }
     Articles = () =>{
-        // console.log(Object.entries(this.state.popular_articles));
-        // var Articles = Object.entries(this.state.popular_articles);
-        // for (const [key, value] of Articles){
-        //     console.log(key , value.headline);
-        // }
         return(
-            <div>
+            <Box sx={{display: "flex", flexDirection: "row", marginTop: "2vh"}}>
                 {
                     Object.entries(this.state.popular_articles).map( ([_, ArticleInfo]) => {
                         return(
-
-                            <div class="Cardcontainer">
                                 <div class="card">
-                                    <div class="card-header">
-                                      {/* <img src="https://c0.wallpaperflare.com/preview/483/210/436/car-green-4x4-jeep.jpg" alt="rover" /> */}
-                                    </div>
                                     <div class="card-body">
                                       {this.getTags(ArticleInfo)}
                                       <h4>{ArticleInfo.headline}</h4>
@@ -106,14 +98,13 @@ class Profile extends React.Component{
                                       </div>
                                     </div>
                                 </div>
-                            </div>
                         );
                     })
                 }
-            </div>
+            </Box>
         )
     }
-    test =() =>{
+    Profile =() =>{
         return (
             <div>
                 <Box className = "profileContainerTest" sx={{ display: 'inline-flex', flexDirection: 'row', marginTop: "1vh", width:"75%"}}>
@@ -149,28 +140,44 @@ class Profile extends React.Component{
                             </Box>
                         </Box>
                     </Box>
-                    <Box className="profileRight"sx={{ flexDirection: 'column', marginLeft: "3vw"}}>
-                        <Box sx={{ width:"30vw", marginTop: "5vh"}}>
+                    <Box className="profileRight"sx={{ flexDirection: 'column', marginLeft: "0vw"}}>
+                        <Box sx={{ width:"30vw", marginTop: "5vh", marginLeft: "3vw"}}>
                             <Grid container>
                                 <Grid xs={6}>
-                                  <Box sx={{height: "15vh"}}>Name</Box>
+                                  <Box sx={{height: "15vh"}}>Name
+                                    <Box sx={{marginLeft: "2vw", marginTop: "2vh"}}>{this.state.name}</Box>
+                                  </Box>
                                 </Grid>
                                 <Grid xs={6}>
-                                  <Box sx={{height: "15vh"}}>Email</Box>
+                                  <Box sx={{height: "15vh"}}>Email
+                                    <Box sx={{marginLeft: "2vw", marginTop: "2vh"}}>{this.state.email}</Box>                    
+                                  </Box>
                                 </Grid>
                                 <Grid xs={6}>
-                                  <Box sx={{height: "15vh"}}>Occupation</Box>
+                                  <Box sx={{height: "15vh"}}>Occupation
+                                  <Box sx={{marginLeft: "2vw", marginTop: "2vh"}}>{this.state.occupation}</Box>
+                                  </Box>
                                 </Grid>
                                 <Grid xs={6}>
-                                  <Box sx={{height: "15vh"}}>Account Level</Box>
+                                  <Box sx={{height: "15vh"}}>Account Level
+                                  <Box sx={{marginLeft: "2vw", marginTop: "2vh"}}>tmp</Box>
+                                  </Box>
                                 </Grid>
                                 <Grid xs={6}>
-                                  <Box sx={{height: "15vh"}}>Phone</Box>
+                                  <Box sx={{height: "15vh"}}>Phone
+                                  <Box sx={{marginLeft: "2vw", marginTop: "2vh"}}>{this.state.phone}</Box>
+                                  </Box>
                                 </Grid>
                                 <Grid xs={6}>
-                                  <Box sx={{height: "15vh"}}>Role</Box>
+                                  <Box sx={{height: "15vh"}}>Role
+                                  <Box sx={{marginLeft: "2vw", marginTop: "2vh"}}>{this.state.account_role}</Box>
+                                  </Box>
                                 </Grid>
                             </Grid>
+                            <Box sx={{marginLeft: "-2vw"}}>
+                                <Box sx={{marginTop: "-3vh", marginLeft: "2vw"}}>Popular Articles</Box>
+                                <Box><this.Articles/></Box>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
@@ -180,8 +187,13 @@ class Profile extends React.Component{
     render(){
         return(
             <div>
-                <this.test/>
-            </div>
+                <this.Profile/>
+            </div> 
+        )
+    }
+}
+export default Profile;
+
             // <div>
             //     <div className='profile'>
             //         <div className="left">
@@ -222,8 +234,4 @@ class Profile extends React.Component{
             //             </div>
             //         </div>
             //     </div>
-            // </div>    
-        )
-    }
-}
-export default Profile;
+            // </div>   
