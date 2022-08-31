@@ -8,7 +8,7 @@ import * as actions from '../store/actions/auth';
 import Account from './Dashboard/AccountHome/Account';
 import BaseRouter from '../routes';
 import ArticleID from './Dashboard/ArticleID';
-
+import Articles from './Dashboard/AccountHome/Articles';
 import {
     BrowserRouter as Router,
     Switch, 
@@ -16,6 +16,14 @@ import {
     Link
   } from "react-router-dom";
 
+
+function getHome() {
+  return <HomePage/>;
+}
+function getProfile() {
+    console.log("here")
+    return <Account/>;
+  }
 class App extends Component{
 
     componentDidMount(){
@@ -29,7 +37,7 @@ class App extends Component{
                         <Route exact path="/">
                             <HomePage/>
                         </Route>
-                        <Route exact path ="/Account/Profile">
+                        <Route path ='/Account/Profile'>
                             <Account {...this.props}/>
                         </Route>
                         <Route exact path="/SignUp">
@@ -38,9 +46,10 @@ class App extends Component{
                         <Route exact path="/Login">
                             <Login/>
                         </Route>
-                        <Route exact path={'/Articles/:id'}>
-                            <ArticleID/>
+                        <Route exact path ='/Account/Articles'>
+                            <Articles {...this.props}/>
                         </Route>
+                        <Route exact path={'/Articles/:id'} component={ArticleID} />
                     </Switch>
             </Router>
         );

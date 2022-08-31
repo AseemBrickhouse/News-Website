@@ -132,7 +132,7 @@ class Account extends React.Component {
                 this.props.isAuthenticated ? 
                 <div>
                     <Router>
-                            <ProfileMenu {...this.props}/>
+                            {/* <ProfileMenu {...this.props}/> */}
                                 <Switch>
                                     <Route exact path ='/Account/Profile'>
                                         <Profile {...this.props}/>
@@ -147,9 +147,9 @@ class Account extends React.Component {
                                         <CreateArticle {...this.props}/>
                                     </Route>
                                  </Switch>
-                        <Route exact path={'/Articles/:id'}>
-                                <ArticleID/>
-                            </Route>
+                                    <Route exact path={'/Articles/:id'}>
+                                        <ArticleID/>
+                                    </Route>
                     </Router>
                 </div>
                 :
