@@ -195,13 +195,14 @@ class EditAccount extends React.Component{
     render(){
         return(
             <div>
-                {/* <this.Form/> */}
+                {console.log("here")}
+                    <this.Form/>
                 {/* <this.test/> */}
             </div>
         )
     }
 }
-export default EditAccount
+export default EditAccount;
 
 
 // <div className='container rounded bg-white mt-5 mb-5'>

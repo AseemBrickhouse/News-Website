@@ -9,6 +9,8 @@ import Account from './Dashboard/AccountHome/Account';
 import BaseRouter from '../routes';
 import ArticleID from './Dashboard/ArticleID';
 import Articles from './Dashboard/AccountHome/Articles';
+import EditAccount from './Dashboard/AccountHome/EditAccount';
+
 import {
     BrowserRouter as Router,
     Switch, 
@@ -16,14 +18,6 @@ import {
     Link
   } from "react-router-dom";
 
-
-function getHome() {
-  return <HomePage/>;
-}
-function getProfile() {
-    console.log("here")
-    return <Account/>;
-  }
 class App extends Component{
 
     componentDidMount(){
@@ -48,6 +42,9 @@ class App extends Component{
                         </Route>
                         <Route exact path ='/Account/Articles'>
                             <Articles {...this.props}/>
+                        </Route>
+                        <Route exact path ='/Account/EditAccount'>
+                            <EditAccount/>
                         </Route>
                         <Route exact path={'/Articles/:id'} component={ArticleID} />
                     </Switch>

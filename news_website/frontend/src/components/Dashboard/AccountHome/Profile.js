@@ -92,7 +92,7 @@ class Profile extends React.Component{
                                       <p>{ArticleInfo.article_description}</p>
                                       <div class="user">
                                         <div class="user-info">
-                                          <h5>July Dec</h5>
+                                          <h5>{new Date(ArticleInfo.date).getMonth() + '-' + new Date(ArticleInfo.date).getDate() + '-' + new Date(ArticleInfo.date).getFullYear()}</h5>
                                           <small>{ArticleInfo.rating} %</small>
                                         </div>
                                       </div>
@@ -195,7 +195,7 @@ class Profile extends React.Component{
 export default Profile;
 
             // <div>
-            //     <div className='profile'>
+            //     <div className='profile'>    
             //         <div className="left">
             //             <div className="iconBack">    
             //             </div>

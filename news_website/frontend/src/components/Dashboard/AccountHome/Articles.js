@@ -105,7 +105,7 @@ class Articles extends React.Component{
                                        <p>{ArticleInfo.article_description}</p>
                                        <div class="user">
                                          <div class="user-info">
-                                           <h5>July Dec</h5>
+                                           <h5>{new Date(ArticleInfo.date).getMonth() + '-' + new Date(ArticleInfo.date).getDate() + '-' + new Date(ArticleInfo.date).getFullYear()}</h5>
                                            <small>{ArticleInfo.rating}%</small>
                                          </div>
                                        </div>
@@ -117,7 +117,9 @@ class Articles extends React.Component{
                                           Article: ArticleInfo,
                                         },
                                         }}>
-                                            <Button onClick={() => handleView(id)}>
+                                            <Button 
+                                            sx={{margiLeft: "1vw"}}
+                                            onClick={() => handleView(id)}>
                                                 {console.log(id)}
                                                 View
                                             </Button>

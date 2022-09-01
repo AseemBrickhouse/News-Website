@@ -3,8 +3,6 @@ import Advertisments from './Advertisments';
 import { Redirect, Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import {
-  BrowserRouter as Router,
-  Switch, 
   Route,
 } from "react-router-dom";
 import ArticleID from './ArticleID';
@@ -35,7 +33,6 @@ export default class Article extends Component{
       }
       return response.json();
     }).then(data =>{
-      // console.log(data)
         this.setState(() =>{
           return{
               data,
@@ -43,23 +40,6 @@ export default class Article extends Component{
           };
         });
     })
-    // fetch("api/AllArticles/")
-    //     .then(response =>{
-    //         if(response.status > 400){
-    //             return this.setState(() => {
-    //                 return{ placeholder: "Something went wrong!" };
-    //             });
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         this.setState(() =>{
-    //             return{
-    //                 data,
-    //                 loaded: true
-    //             };
-    //         });
-    //     });
   }
   getTags = (Article) =>{
     var send = []
@@ -75,22 +55,7 @@ export default class Article extends Component{
     )
   }
   Articles = () => {
-    // const [current, setArt] = React.useState(null);
-    // var x = []
-    // const setData=(data) => {
-    //   console.log(data)
-    //   setArt(data)
-    //   console.log(setArt);
-    //   console.log(x)
-    // }
     const handleView = (id)=>{
-      // fetch("api/Articles/" + id +"/")
-      // .then(response =>{
-      //   return response.json()
-      // })
-      // .then(data=>{
-      //   setData(data)
-      // });
       <Route exact path={'/Articles/' + id + '/'}>
           <ArticleID/>
       </Route>
@@ -110,7 +75,7 @@ export default class Article extends Component{
                           </p>
                         </div>
                         <div className = 'bottom'>
-                          <p1>{Article.date}</p1>
+                          <p1>{new Date(Article.date).getMonth() + '-' + new Date(Article.date).getDate() + '-' + new Date(Article.date).getFullYear()}</p1>
                             {this.getTags(Article)}
                           <p3>{Article.reporter_account}</p3> 
                         </div>
