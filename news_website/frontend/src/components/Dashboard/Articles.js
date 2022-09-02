@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import Advertisments from './Advertisments';
 import { Redirect, Link } from "react-router-dom";
-import Button from '@mui/material/Button';
 import {
   Route,
 } from "react-router-dom";
 import ArticleID from './ArticleID';
+
+
+import { 
+  Grid, Typography, TextField, 
+  FormControlLabel, Avatar, 
+  CssBaseline, Box, MenuList, Button,
+  Container, Checkbox, MenuItem, NestedMenuItem,
+} from "@material-ui/core";
+
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
 
 export default class Article extends Component{
   constructor(props){
@@ -15,6 +28,7 @@ export default class Article extends Component{
           article: [],
           loaded: false,
           placeholder: "Loading",
+          popularTags: [],
       };
   }
 
@@ -36,6 +50,26 @@ export default class Article extends Component{
         this.setState(() =>{
           return{
               data,
+          };
+        });
+    })
+    fetch("api/PopularTags/", {
+      method: "GET",
+      headers:{
+        'Accept':'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(response =>{
+      if(response.status > 400){
+          return this.setState(()=>{
+              return{ placeholder: "Something went wrong!" };
+          });
+      }
+      return response.json();
+    }).then(data =>{
+        this.setState(() =>{
+          return{
+              popularTags: data,
               loaded: true
           };
         });
@@ -71,7 +105,7 @@ export default class Article extends Component{
                         <h1>{Article.headline}</h1>
                         <div className = 'description'>
                           <p>
-                              {Article.article_description}
+                              {Article.sub_title}
                           </p>
                         </div>
                         <div className = 'bottom'>
@@ -90,8 +124,6 @@ export default class Article extends Component{
                             View
                           </Button>
                         </Link>
-
-
                       </div>
                   </div>
                 );
@@ -129,9 +161,99 @@ export default class Article extends Component{
       </React.Fragment>
     )
   }
+  test = () =>{
+    const handleView = (id)=>{
+      <Route exact path={'/Articles/' + id + '/'}>
+          <ArticleID/>
+      </Route>
+    }
+    return(
+      <React.Fragment>
+        <div className= 'container'>
+        <Box sx={{display: "flex", marginLeft: "25vw", flexDirection: "column", marginTop:"45px",}}>
+          {
+            Object.entries(this.state.data).map(([id,Article]) => {
+              return(
+                  <Link 
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      underline: "none",
+                    }}
+                    to={{
+                      pathname: '/Articles/' + id + '/',
+                      state: { 
+                        ArticleID: id,
+                        Article: Article,
+                    },   
+                  }}>
+                    <Box onClick={() => handleView(id)} 
+                      sx={{
+                        backgroundColor: "black", width: "35vw", height: "20vh", marginTop: "5px",
+                         display: "flex", flexDirection:"column", borderTop: "solid 1px black", borderBottom: "solid 1px black"
+                      }}>
+                        <Box sx={{backgroundColor: "yellow", width: "100%", height: "20%", flexDirection: "row", display:"flex"}}>
+                            <Box>
+                              {Article.reporter_account}
+                            </Box>
+                            <Box>
+                              {new Date(Article.date).getMonth() + '-' + new Date(Article.date).getDate() + '-' + new Date(Article.date).getFullYear()}
+                            </Box>
+                        </Box>
+                        <Box sx={{backgroundColor: "white", width: "100%", height: "60%"}}>
+                              <div>
+                                  {Article.headline}
+                                  {Article.article_description}
+                              </div>
+                        </Box>
+                        <Box sx={{backgroundColor: "blue", width: "100%", height: "20%"}}>
+                              <div>
+                                  {this.getTags(Article)}
+                              </div>
+                        </Box>
+                    </Box>
+                  </Link>
+              )
+            })
+          }
+        </Box>
+        <div className = 'item-middle' id='item-middle'>
+          <div className='popTags' id='popTags'>
+              <div className = 'tagHome'> 
+                  <a href='#Tech'> Technology </a>
+              </div>  
+              <div className = 'tagHome'>
+                  <a href='#Life'> Life </a>
+              </div>   
+              <div className = 'tagHome'> <a href='#Earth'> Earth </a></div>   
+              <div className = 'tagHome'> <a href='#Word'> Work </a></div>
+              <div className = 'tagHome'> <a href='#Long'> Long </a></div> 
+              <div className = 'tagHome'> <a href='#Sciecne'> Science </a></div> 
+              <div className = 'tagHome'> <a href='#School'> School </a></div>  
+          </div>
+          <div className='footer'>
+              <a href='#About us'>About Us</a>
+              <a href='#Contact us'>Contact Us</a>
+              <a href='#Careeres'>Careeres</a>
+              <a href='#Account'>Account</a>
+              <a href='#Terms of Service'>Terms of Service</a>
+              <a href='#Find Us'>Find Us</a>
+          </div>
+        </div>
+        <div className = 'item-right' id = 'item-right'>
+            <div className = 'content'>
+                <Advertisments/>
+            </div>
+        </div>
+        </div>
+      </React.Fragment>
+    )
+  }
+
   render(){
     return(
-      <this.Articles/>
+      <this.test/>
+      // <this.Articles/>
     ); 
   }  
 }

@@ -134,6 +134,26 @@ class AllUserArticles(ObtainAuthToken):
         def get(self, request, *args, **kwargs):
             pass
 
+class PopularTags(APIView):
+    def get(self, request, *args, **kwargs):
+        data = {}
+        queryset = Article.objects.all()
+
+        for article in queryset:
+            for tag in article.tags:
+                if tag in data:
+                    data[tag] = data[tag]+1
+                else: 
+                    data[tag] = 1
+
+        print(data)
+        sorted_keys = sorted(data, key=data.get)  
+        print(sorted_keys)
+        #format result and send back 
+        return Response(request.data)
+    def post(self, request, *args, **kwargs):
+        pass
+
 
 def PopularUserArticles(account):
     queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:2]
@@ -153,3 +173,4 @@ class ArticleID(APIView):
 
     def get(self, request, *args, **kwargs):
         pass
+

@@ -10,6 +10,12 @@ import {
 import * as actions from '../../store/actions/auth';
 import { getTableHeadUtilityClass } from '@mui/material';
 
+import { 
+  Grid, Typography, TextField, 
+  FormControlLabel, Avatar, 
+  CssBaseline, Box, MenuList, Button,
+  Container, Checkbox, MenuItem, NestedMenuItem,
+} from "@material-ui/core";
 //Prob can remove
 window.onscroll = function(){
   myFunction();
@@ -53,19 +59,22 @@ class Header extends Component{
           </a>
         </div>
         {
-          this.props.location.pathname == '/' ? 
-          <div>            
-            <div className='headFull' id='myheadFull'>
-            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
-                quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
-                lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
-                Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
-                dignissim libero interdum bibendum.</p>
-            <div className='HFL'><Link to="/SignUp" {...this.props}>Start Now</Link></div>
+          this.props.location.pathname == '/' && !this.props.isAuthenticated ? 
+            <div>            
+              <div className='headFull' id='myheadFull'>
+              <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, 
+                  quis commodo ipsum. Curabitur libero purus, tincidunt vitae urna malesuada, 
+                  lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
+                  Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
+                  dignissim libero interdum bibendum.</p>
+              <div className='HFL'><Link to="/SignUp" {...this.props}>Start Now</Link></div>
+              </div>
             </div>
-          </div>
-          : console.log("false")
+          :
+          <Box>
+
+          </Box>
         }
       </React.Fragment>
     );
