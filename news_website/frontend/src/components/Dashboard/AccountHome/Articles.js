@@ -8,9 +8,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { styled } from "@material-ui/core/styles";
 import Article from '../Articles';
 import ArticleID from '../ArticleID';
+import Util from '../../Utility';
 import { 
     Grid, Typography, TextField, 
-    FormControlLabel, Avatar, 
+    FormControlLabel, Avatar, Chip,
     CssBaseline, Box, MenuList, Button,
     Container, Checkbox, MenuItem, NestedMenuItem,
   } from "@material-ui/core";
@@ -85,6 +86,7 @@ class Articles extends React.Component{
         )
     }
     printArticles = () =>{
+        const Utility = new Util();
         const handleView = (id) =>{
             <Route exact path={'/Articles/' + id + '/'}>
                 <ArticleID/>
@@ -95,18 +97,53 @@ class Articles extends React.Component{
                 {/* <this.Button/> */}
                 <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
                 {
-                Object.entries(this.state.articles).map( ([id, ArticleInfo]) =>{
+                Object.entries(this.state.articles).map( ([id, Article]) =>{
                     return(
                         <Box sx={{marginLeft:"1vw", marginTop: "1vh"}}>
                             <div className="card">
                                  <div class="card-body">
-                                     {this.getTags(ArticleInfo)}
-                                       <h4>{ArticleInfo.headline}</h4>
-                                       <p>{ArticleInfo.article_description}</p>
+                                    <Box sx={{                            
+                                        width: "100%", 
+                                        height: "20%", 
+                                        display: "flex", 
+                                        flexDirection: "row",
+                                        alignContent: "center",
+                                    }}>
+                                    {
+                                    Array.isArray(Article.tags) ?
+                                        Article.tags.map(tag =>{
+                                          return(
+                                            <Box sx={{margin: "5px"}}>
+                                              <Chip style={{
+                                                backgroundColor: "#C1BDBD",
+                                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                                fontSize: "15px",
+                                                textDecoration: "none",
+                                              }}
+                                              label={tag}
+                                              />
+                                            </Box>
+                                          )
+                                        })
+                                        :
+                                        <Box sx={{margin: "5px"}}>
+                                          <Chip style={{
+                                            backgroundColor: "#C1BDBD",
+                                            fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                            fontSize: "15px",
+                                            textDecoration: "none",
+                                          }}
+                                          label={Article.tags}
+                                          />
+                                        </Box>
+                                    }
+                                    </Box>                                      
+                                       <h4>{Article.headline}</h4>
+                                       <p>{Article.article_description}</p>
                                        <div class="user">
                                          <div class="user-info">
-                                           <h5>{new Date(ArticleInfo.date).getMonth() + '-' + new Date(ArticleInfo.date).getDate() + '-' + new Date(ArticleInfo.date).getFullYear()}</h5>
-                                           <small>{ArticleInfo.rating}%</small>
+                                           <h5>{ Utility.getDate(Article.date)}</h5>
+                                           <small>{Article.rating}%</small>
                                          </div>
                                        </div>
                                        <div>
@@ -114,7 +151,7 @@ class Articles extends React.Component{
                                         pathname: '/Articles/' + id + '/',
                                         state: { 
                                           ArticleID: id,
-                                          Article: ArticleInfo,
+                                          Article: Article,
                                         },
                                         }}>
                                             <Button 

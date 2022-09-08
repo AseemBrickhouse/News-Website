@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import ArticleID from './ArticleID';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
-
+import Util from '../Utility';
 import { 
   Grid, Typography, TextField, 
   FormControlLabel, Avatar, Chip,
@@ -19,7 +19,6 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { display } from '@mui/system';
-
 
 export default class Article extends Component{
   constructor(props){
@@ -34,6 +33,12 @@ export default class Article extends Component{
   }
 
   componentDidMount(){
+    const Utility= new Util();
+    // this.setState(() =>{
+    //  return{
+    //    data: Utility.GETAllArticles()        
+    //  };
+    // });
     fetch("api/AllArticles/", {
       method: "GET",
       headers:{
@@ -54,6 +59,7 @@ export default class Article extends Component{
           };
         });
     })
+
     fetch("api/PopularTags/", {
       method: "GET",
       headers:{
@@ -77,14 +83,12 @@ export default class Article extends Component{
     })
   }
   Articles = () =>{
+    console.log(this.state)
+    const Utility= new Util();
     const handleView = (id)=>{
       <Route exact path={'/Articles/' + id + '/'}>
           <ArticleID/>
       </Route>
-    }
-    const getMon = (num) =>{
-      const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-      return Months[num]
     }
     return(
       <React.Fragment>
@@ -117,7 +121,7 @@ export default class Article extends Component{
                             </Box>
                             <Box sx={{marginLeft: "5px"}}>•</Box>
                             <Box sx={{marginLeft: "5px"}}>
-                              {getMon(new Date(Article.date).getMonth()) + ' ' + new Date(Article.date).getDate() + ', ' + new Date(Article.date).getFullYear()}
+                              {Utility.getDate(Article.date)}
                             </Box>
                             <Box>
                               {/* Center the items*/}
