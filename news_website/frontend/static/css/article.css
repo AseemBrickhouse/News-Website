@@ -1,7 +1,8 @@
 body{
     margin: 0;
     font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
-    background-color: rgb(217, 217, 217);
+    background-color: white;
+
 }
 .container {
     display: flex;
@@ -9,7 +10,7 @@ body{
     flex-flow: center;
     align-items: flex-start;
     flex-wrap: wrap;
-    /* background-color: black; */
+    background-color: white;
 
 }
 .article{
@@ -292,4 +293,6 @@ article main body{
     margin-left: 5%;
     white-space: pre-wrap;
     font-size: 23px;
+    background-color: white;
+
 }

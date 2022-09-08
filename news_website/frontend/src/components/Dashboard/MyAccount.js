@@ -57,18 +57,17 @@ class MyAccount extends React.Component {
 
     DropDown = () => {
         const [anchorEl, setAnchorEl] = React.useState(null);
-        const [NestedOpen, NestedSetOpen] = React.useState(false)
+        const [NestedProfileOpen, NestedSetProfileOpen] = React.useState(false)
+        const [NestedArticleOpen, NestedSetArticleOpen] = React.useState(false)
+        
         const open = Boolean(anchorEl);
         const handleClick = (event) => {
           setAnchorEl(event.currentTarget);
         };
-        const handleClose = () => {
-          setAnchorEl(null);
-        };
-      
-        function handleNestedClick() {
-          NestedSetOpen(!NestedOpen)
-        }
+        const handleClose = () => {setAnchorEl(null)};
+        const handleNestedProfileClick = () =>{NestedSetProfileOpen(!NestedProfileOpen)}
+        const handleNestedArticleClick = () =>{NestedSetArticleOpen(!NestedArticleOpen)}
+
         return(
             <div>
               <button
@@ -98,11 +97,11 @@ class MyAccount extends React.Component {
                         </ListItemIcon>
                       <Link to="/" style={{color: "black", textDecoration: "none"}} underline="none" Icon={HomeIcon}>Home</Link>
                     </MenuItem>
-                    <ListItem button onClick={handleNestedClick}>
+                    <ListItem button onClick={handleNestedProfileClick}>
                       <ListItemText primary="Profile" />
-                      {NestedOpen ? <IconExpandLess /> : <IconExpandMore />}
+                      {NestedProfileOpen ? <IconExpandLess /> : <IconExpandMore />}
                     </ListItem>
-                    <Collapse in={NestedOpen} timeout="auto" unmountOnExit>
+                    <Collapse in={NestedProfileOpen} timeout="auto" unmountOnExit>
                       <Divider />
                       <List component="div" disablePadding>
                         <ListItem>
@@ -111,8 +110,23 @@ class MyAccount extends React.Component {
                         <ListItem >
                           <Link to="/Account/EditAccount" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Edit Profile</Typography></Link>
                         </ListItem>
+                      </List>
+                    </Collapse>
+                    <ListItem button onClick={handleNestedArticleClick}>
+                      <ListItemText primary="Articles" />
+                      {NestedArticleOpen ? <IconExpandLess /> : <IconExpandMore />}
+                    </ListItem>
+                    <Collapse in={NestedArticleOpen} timeout="auto" unmountOnExit>
+                      <Divider />
+                      <List component="div" disablePadding>
                         <ListItem>
-                          <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>My Articles</Typography></Link>
+                            <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>My Articles</Typography></Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to="/Account/CreateArticle/" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Create Article</Typography></Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Saved Articles</Typography></Link>
                         </ListItem>
                       </List>
                     </Collapse>

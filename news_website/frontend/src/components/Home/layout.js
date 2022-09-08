@@ -1,31 +1,11 @@
-import React, { Component }  from 'react';
-import HomePage from './HomePage';
-import Header from './Dashboard/Header';
-import Login from './Buttons/Login';
-import SignUp from './Buttons/SignUp';
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../store/actions/auth';
-import Account from './Dashboard/AccountHome/Account';
-import BaseRouter from '../routes';
-import ArticleID from './Dashboard/ArticleID';
-import Articles from './Dashboard/AccountHome/Articles';
-import EditAccount from './Dashboard/AccountHome/EditAccount';
-import CreateArticle from './Dashboard/AccountHome/CreateArticle';
-import {
-    BrowserRouter as Router,
-    Switch, 
-    Route,
-    Link
-  } from "react-router-dom";
-import Layout from './Home/layout';
+import * as actions from '../../store/actions/auth';
 
-class App extends Component{
-
-    componentDidMount(){
-        this.props.AutoTrySignUp();
-    }
+class Layout extends React.Component{
     render(){
-        return( 
+        return(
             <Router>
                 <Header {...this.props}/>
                     <Switch>
@@ -53,20 +33,14 @@ class App extends Component{
                         <Route exact path={'/Articles/:id'} component={ArticleID} />
                     </Switch>
             </Router>
-        );
+        )
     }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = dispatch =>{
     return{
-        isAuthenticated: state.token !== null
+        logout:() => dispatch(actions.authLOGOUT())
     }
 }
+export default withRouter(connect(null, mapDispatchToProps)(Layout));
 
-const mapDispatchToProps = dispatch => {
-    return{
-        AutoTrySignUp: () => dispatch(actions.authCheckState())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
