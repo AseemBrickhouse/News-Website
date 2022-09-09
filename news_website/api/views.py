@@ -1,3 +1,4 @@
+import re
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
@@ -21,9 +22,30 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
 
 class AllArticles(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         querysetSend = {}
+        # queryset= []
+
+        # if request.data['tags'] != [None]:
+        #     queryset = Article.objects.all().filter(isPrivate = False)
+        #     for article in queryset:
+        #         tags = {}
+        #         for tag in article.tags:
+        #             tags[tag] = tag
+        #     print(tags)
+
+                # print(article.tags[0])
+                # if article.tags[0] == request.data['tags'][0]:
+                #     print(len(request.data['tags']))
+                #create new dict/map
+                #store all article tags from that article 
+                #run contains to check if the article has those tags
+                #if the do return new set
+                #else return nothing
+
+        # else:
         queryset = Article.objects.all().filter(isPrivate = False)
+
         for article in queryset:
             tmpArt = ArticleSerializer(article)
             account = Account.objects.all().filter(id=tmpArt.data['reporter_account'])
@@ -33,7 +55,7 @@ class AllArticles(APIView):
         # print(querysetSend)     
         return Response(querysetSend)
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         pass
 
 #Useless can remove

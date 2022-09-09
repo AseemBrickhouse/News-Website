@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import Advertisments from './Advertisments';
 import { Redirect, Link } from "react-router-dom";
 import {
@@ -13,77 +13,49 @@ import {
   CssBaseline, Box, MenuList, Button,
   Container, Checkbox, MenuItem, NestedMenuItem,
 } from "@material-ui/core";
+import StickyBox from "react-sticky-box";
+import { styled } from "@material-ui/core/styles";
 
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { display } from '@mui/system';
 
-export default class Article extends Component{
-  constructor(props){
-      super(props);
-      this.state = {
-          data: [],
-          article: [],
-          loaded: false,
-          placeholder: "Loading",
-          popularTags: [],
-      };
-  }
+const Article = () => {
+  // const Articles = () => {
+    const StyledButton = styled(Button)({
+      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+      backgroundColor: "black",
+      width: "75%",
+      height: "70%",
+      color: "white",
+      textDecoration: "none",
+      fontSize: "15px",
+      fontWeight: "300",
+      borderRadius: "50px",
+      textTransform: "none",
+      textDecoration: "none",
 
-  componentDidMount(){
-    const Utility= new Util();
-    // this.setState(() =>{
-    //  return{
-    //    data: Utility.GETAllArticles()        
-    //  };
-    // });
-    fetch("api/AllArticles/", {
-      method: "GET",
-      headers:{
-        'Accept':'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(response =>{
-      if(response.status > 400){
-          return this.setState(()=>{
-              return{ placeholder: "Something went wrong!" };
-          });
-      }
-      return response.json();
-    }).then(data =>{
-        this.setState(() =>{
-          return{
-              data,
-          };
-        });
-    })
+    });
+    const [data, setAllArticles] = useState(null);
+    const [tags, setTags] = useState(null);
+    useEffect(async () => {
+      await fetch("api/AllArticles/", {
+        method: "POST",
+        headers:{
+          'Accept':'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            tags: [tags]
+        })
+      }).then(response =>{
+        return response.json();
+      }).then(data => setAllArticles(data));
+    }, [tags]);
 
-    fetch("api/PopularTags/", {
-      method: "GET",
-      headers:{
-        'Accept':'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then(response =>{
-      if(response.status > 400){
-          return this.setState(()=>{
-              return{ placeholder: "Something went wrong!" };
-          });
-      }
-      return response.json();
-    }).then(data =>{
-        this.setState(() =>{
-          return{
-              popularTags: data,
-              loaded: true
-          };
-        });
-    })
-  }
-  Articles = () =>{
-    console.log(this.state)
+    // console.log(this.state)
+    // console.log(data)
     const Utility= new Util();
     const handleView = (id)=>{
       <Route exact path={'/Articles/' + id + '/'}>
@@ -92,10 +64,10 @@ export default class Article extends Component{
     }
     return(
       <React.Fragment>
-        <div className= 'container'>
-        <Box sx={{display: "flex", marginLeft: "25vw", flexDirection: "column", marginTop:"1px",}}>
+        <div className='container'>
+        <Box sx={{display: "flex", marginLeft: "20vw", flexDirection: "column", marginTop:"1px",}}>
           {
-            Object.entries(this.state.data).map(([id,Article]) => {
+            data != null ? Object.entries(data).map(([id,Article]) => {
               return(
                   <Link 
                     style={{
@@ -112,8 +84,8 @@ export default class Article extends Component{
                   }}>
                     <Box onClick={() => handleView(id)} 
                       sx={{
-                         width: "35vw", height: "25vh", backgroundColor: "white",
-                         display: "flex", flexDirection:"column", borderTop: "solid 1px black", borderBottom: "solid 1px black"
+                         width: "40vw", height: "25vh",
+                         display: "flex", flexDirection:"column", borderTop: "solid 1px black", borderBottom: "solid 1px black",borderRight: "solid 2px black", paddingRight: "2vw"
                       }}>
                         <Box sx={{width: "100%", height: "20%", flexDirection: "row", display:"flex", whiteSpace:"pre-wrap", marginTop: "4px"}}>
                             <Box>
@@ -145,7 +117,7 @@ export default class Article extends Component{
                               <Box sx={{
                                 fontSize: "16px",
                                 marginLeft: "5%",
-                                marginRight: "4%",
+                                marginRight: "10%",
                                 mt: "1%"
                               }}>
                                 {Article.article_description}
@@ -196,7 +168,7 @@ export default class Article extends Component{
                               </Box>
                             }
                           </Box>
-                          <Box sx={{alignContent: "right"}}>
+                          <Box sx={{alignContent: "right", marginRight: "10%"}}>
                             <BookmarkAddOutlinedIcon sx={{color: "#C1BDBD", fontSize: "35px"}}/>
                           </Box>
                         </Box>
@@ -204,9 +176,30 @@ export default class Article extends Component{
                   </Link>
               )
             })
+            : console.log(data)
           }
         </Box>
-        <div className = 'item-middle' id='item-middle'>
+          <StickyBox offsetTop={50}>
+            <Box sx= {{display: "flex", flexDirection:"column", backgroundColor: "orange", width:"20vw", height:"90vh", marginTop: "1px"}}>
+              <Box sx={{width: "100%", height:"20%", display: "flex", flexDirection:"column"}}>
+                <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
+                  <StyledButton>
+                    Subscribe Today
+                  </StyledButton>
+                </Box>
+                <Box>
+                    Search
+                </Box>
+              </Box>
+              <Box sx={{backgroundColor: "grey", width: "100%", height:"20%"}}>
+                popular picks
+              </Box>
+              <Box sx={{backgroundColor: "purple", width: "100%", height:"20%"}}>
+                connect account
+              </Box>
+            </Box>
+          </StickyBox>
+        {/* <div className = 'item-middle' id='item-middle'>
           <div className='popTags' id='popTags'>
               <div className = 'tagHome'> 
                   <a href='#Tech'> Technology </a>
@@ -215,7 +208,9 @@ export default class Article extends Component{
                   <a href='#Life'> Life </a>
               </div>   
               <div className = 'tagHome'> <a href='#Earth'> Earth </a></div>   
-              <div className = 'tagHome'> <a href='#Word'> Work </a></div>
+              <div className = 'tagHome'> 
+                <a onClick={ () => setTags('Work')}> Work </a>
+              </div>
               <div className = 'tagHome'> <a href='#Long'> Long </a></div> 
               <div className = 'tagHome'> <a href='#Sciecne'> Science </a></div> 
               <div className = 'tagHome'> <a href='#School'> School </a></div>  
@@ -229,19 +224,83 @@ export default class Article extends Component{
               <a href='#Find Us'>Find Us</a>
           </div>
         </div>
-        <div className = 'item-right' id = 'item-right'>
-            <div className = 'content'>
-                <Advertisments/>
-            </div>
-        </div>
+          <div className = 'item-right' id = 'item-right'>
+              <div className = 'content'>
+                  <Advertisments/>
+              </div>
+          </div> */}
+
+
         </div>
       </React.Fragment>
     )
   }
 
-  render(){
-    return(
-      <this.Articles/>
-    ); 
-  }  
-}
+    // return(
+    //   <Articles/>
+    // );   
+// }
+export default Article;
+
+// constructor(props){
+//   super(props);
+//   this.state = {
+//       data: [],
+//       article: [],
+//       loaded: false,
+//       placeholder: "Loading",
+//       popularTags: [],
+//   };
+// }
+
+// componentDidMount(){
+// const Utility= new Util();
+// this.setState(() =>{
+//  return{
+//    data: Utility.GETAllArticles(),
+//    popularTags: Utility.GETPopularTags()        
+//  };
+// });
+// fetch("api/AllArticles/", {
+//   method: "GET",
+//   headers:{
+//     'Accept':'application/json',
+//     'Content-Type': 'application/json',
+//   },
+// }).then(response =>{
+//   if(response.status > 400){
+//       return this.setState(()=>{
+//           return{ placeholder: "Something went wrong!" };
+//       });
+//   }
+//   return response.json();
+// }).then(data =>{
+//     this.setState(() =>{
+//       return{
+//           data,
+//       };
+//     });
+// })
+
+// fetch("api/PopularTags/", {
+//   method: "GET",
+//   headers:{
+//     'Accept':'application/json',
+//     'Content-Type': 'application/json',
+//   },
+// }).then(response =>{
+//   if(response.status > 400){
+//       return this.setState(()=>{
+//           return{ placeholder: "Something went wrong!" };
+//       });
+//   }
+//   return response.json();
+// }).then(data =>{
+//     this.setState(() =>{
+//       return{
+//           popularTags: data,
+//           loaded: true
+//       };
+//     });
+// })
+// }

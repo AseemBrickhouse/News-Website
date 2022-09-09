@@ -27,9 +27,33 @@ export default class Util {
             }
             return response.json();
           }).then(data =>{
-                return data.json()
+                request = data
           })
           console.log(request)
           return []
     }
+    GETPopularTags = () =>{
+        fetch("api/PopularTags/", {
+          method: "GET",
+          headers:{
+            'Accept':'application/json',
+            'Content-Type': 'application/json',
+          },
+        }).then(response =>{
+          if(response.status > 400){
+              return this.setState(()=>{
+                  return{ placeholder: "Something went wrong!" };
+              });
+          }
+          return response.json();
+        }).then(data =>{
+            this.setState(() =>{
+              return{
+                  popularTags: data,
+                  loaded: true
+              };
+            });
+        })
+    }
+    
 }
