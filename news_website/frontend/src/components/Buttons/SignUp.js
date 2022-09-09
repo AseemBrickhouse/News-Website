@@ -77,7 +77,7 @@ class SignUp extends React.Component{
               window.location.reload()
             })
             this.props.history.push('/')
-          }, 1000)
+          }, 2000)
         }else{
           console.log("Invalid credentials");
         }

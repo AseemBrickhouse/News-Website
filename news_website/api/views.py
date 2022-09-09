@@ -1,16 +1,12 @@
-import re
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
 from rest_framework.response import Response
-import datetime
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from django.views import View
-from django.views.generic.edit  import CreateView
 from rest_framework.views import APIView
+from .APIUtility import *
 
 #Fixed in ALlARticles
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -48,9 +44,10 @@ class AllArticles(APIView):
 
         for article in queryset:
             tmpArt = ArticleSerializer(article)
-            account = Account.objects.all().filter(id=tmpArt.data['reporter_account'])
+            # attachNameToArticle(tmpArt)
+            # account = Account.objects.all().filter(id=tmpArt.data['reporter_account'])
             querysetSend[tmpArt.data['id']] = tmpArt.data
-            querysetSend[tmpArt.data['id']]['reporter_account'] = account[0].first_name + " " + account[0].last_name
+            querysetSend[tmpArt.data['id']]['reporter_account'] = attachNameToArticle(tmpArt)
 
         # print(querysetSend)     
         return Response(querysetSend)
@@ -58,11 +55,25 @@ class AllArticles(APIView):
     def get(self, request, *args, **kwargs):
         pass
 
-#Useless can remove
+class PopularArticles(APIView):
+    def get(self, request, *args, **kwargs):
+        querysetRequest = {}
+        queryset = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:3]
+
+        for article in queryset:
+            articleJson = ArticleSerializer(article)
+            querysetRequest[articleJson.data['id']] = articleJson.data
+            querysetRequest[articleJson.data['id']]['reporter_account'] = attachNameToArticle(articleJson)
+
+        return Response(querysetRequest)
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+
 class AccountCreation(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        token = Token.objects.get(key=request.data['token'])
-        currentUser = User.objects.all().filter(id=token.user_id)[0]
+        currentUser = getCurrentUser(request.data['token'], "CREATEACCOUNT")
         print(currentUser , "-------------------------------------------------------------------------")
         account = Account.objects.create(
             user=currentUser,
@@ -79,8 +90,7 @@ class AccountCreation(ObtainAuthToken):
 
 class EditAccount(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        token = Token.objects.get(key=request.data['token'])
-        currentUser = User.objects.all().filter(id=token.user_id)[0]
+        currentUser = getCurrentUser(request.data['token'], "EDITACCOUNT")
         Account.objects.filter(user=currentUser).update(
             first_name=request.data['first_name'] if request.data['first_name'] != "" else currentUser.account.first_name,
             last_name=request.data['last_name'] if request.data['last_name'] != "" else currentUser.account.last_name,
@@ -96,9 +106,7 @@ class EditAccount(ObtainAuthToken):
 
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        token = Token.objects.get(key=request.data['token'])
-        account = User.objects.all().filter(id=token.user_id)[0].account
-        # print(request.data)
+        account = getCurrentUser(request.data['token'], "CREATEARTICLE")
         Article.objects.create(
             headline=request.data['headline'],
             reporter_account=account,
@@ -116,9 +124,9 @@ class CreateNewArticle(ObtainAuthToken):
 
 class current_user(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        token = Token.objects.get(key=request.data['token'])
+        account = getCurrentUser(request.data['token'], "CURRENTACCOUNT")
+        print(account)
         try:
-            account = User.objects.all().filter(id=token.user_id)[0].account
             popularArticles = PopularUserArticles(account)
             data = {
                 'first_name' : account.first_name,
@@ -141,16 +149,13 @@ class current_user(ObtainAuthToken):
 
 class AllUserArticles(ObtainAuthToken):
         def post(self, request, *args, **kwargs):
-            token = Token.objects.get(key=request.data['token'])
-            account = User.objects.all().filter(id=token.user_id)[0].account
+            account = getCurrentUser(request.data['token'], "USERARTICLES")
             queryset = Article.objects.all().filter(reporter_account=account)
-            # serializer_class = ArticleSerializer(data[0])
             AllArticles = {}
             for article in queryset:
                 data = ArticleSerializer(article)
                 AllArticles[data.data['id']] = data.data
 
-            # print(AllArticles)
             return Response(AllArticles)
         
         def get(self, request, *args, **kwargs):
@@ -179,14 +184,10 @@ class PopularTags(APIView):
 
 def PopularUserArticles(account):
     queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:2]
-    #FIX THIS -> Throws error when there are no articles to get. Might not be this but the ACCOUNT detail is never inputed
-    #Add fields to forum
-    #Fixed I think?
     popular_articles = {}
     for article in queryset:
         convertedArticle = ArticleSerializer(article)
         popular_articles[convertedArticle.data['id']] = convertedArticle.data
-    # print(popular_articles)
     return(popular_articles)
 
 class ArticleID(APIView):

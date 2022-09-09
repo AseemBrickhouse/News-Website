@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import { styled } from "@material-ui/core/styles";
-
+import SearchBar from "material-ui-search-bar";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -39,6 +39,7 @@ const Article = () => {
     });
     const [data, setAllArticles] = useState(null);
     const [tags, setTags] = useState(null);
+    const [picks, setPicks] = useState(null);
     useEffect(async () => {
       await fetch("api/AllArticles/", {
         method: "POST",
@@ -54,6 +55,17 @@ const Article = () => {
       }).then(data => setAllArticles(data));
     }, [tags]);
 
+    useEffect(async () =>{
+      await fetch("api/PopularArticles/", {
+        method: "GET",
+        headers:{
+          'Accept':'application/json',
+          'Content-Type': 'application/json',
+        },
+      }).then(response =>{
+        return response.json();
+      }).then(data => setPicks(data));
+    },[])
     // console.log(this.state)
     // console.log(data)
     const Utility= new Util();
@@ -66,7 +78,7 @@ const Article = () => {
       <React.Fragment>
         <div className='container'>
         <Box sx={{display: "flex", marginLeft: "20vw", flexDirection: "column", marginTop:"1px",}}>
-          {
+          { 
             data != null ? Object.entries(data).map(([id,Article]) => {
               return(
                   <Link 
@@ -187,12 +199,44 @@ const Article = () => {
                     Subscribe Today
                   </StyledButton>
                 </Box>
-                <Box>
-                    Search
+                <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
+                    <SearchBar
+                        style={{
+                          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                          width: "75%",
+                          height: "70%",
+                          borderRadius: "25px",
+                        }}
+                    />
                 </Box>
               </Box>
               <Box sx={{backgroundColor: "grey", width: "100%", height:"20%"}}>
-                popular picks
+                {
+                  picks != null ? Object.entries(picks).map(([id,Article]) => {
+                    return(
+                        <Link 
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            underline: "none",
+                          }}
+                          to={{
+                            pathname: '/Articles/' + id + '/',
+                            state: { 
+                              ArticleID: id,
+                              Article: Article,
+                          },   
+                        }}>
+                          <Box onClick={() => handleView(id)} sx={{width:"100%"}}>
+                              <Box>
+                                  {Article.headline}
+                              </Box>  
+                          </Box>
+                      </Link>
+                    )
+                  })
+                  : <></>
+                }
               </Box>
               <Box sx={{backgroundColor: "purple", width: "100%", height:"20%"}}>
                 connect account
@@ -229,7 +273,11 @@ const Article = () => {
                   <Advertisments/>
               </div>
           </div> */}
-
+          <div className = 'item-right' id = 'item-right'>
+              <div className = 'content'>
+                  <Advertisments/>
+              </div>
+          </div>
 
         </div>
       </React.Fragment>

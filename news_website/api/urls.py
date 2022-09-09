@@ -19,6 +19,7 @@ urlpatterns = [
         path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
         path('CreateNewArticle/', CreateNewArticle.as_view()),
+        path('PopularArticles/', PopularArticles.as_view()),
         path('AllArticles/', AllArticles.as_view()),
         path('PopularTags/', PopularTags.as_view()),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
