@@ -16,7 +16,8 @@ import EditAccount from '../Dashboard/AccountHome/EditAccount';
 import CreateArticle from '../Dashboard/AccountHome/CreateArticle';
 import Login from '../Buttons/Login';
 import SignUp from '../Buttons/SignUp';
-
+import FindPeople from '../Dashboard/People/FindPeople';
+import FindPeopleAccount from '../Dashboard/People/Account';
 class Routes extends React.Component{
         componentDidMount(){
         this.props.AutoTrySignUp();
@@ -33,7 +34,8 @@ class Routes extends React.Component{
                     <Route exact path ='/Account/EditAccount' component={EditAccount}/>
                     <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
                     <Route exact path={'/Articles/:id'} component={ArticleID}/>
-
+                    <Route exact path='/Account/FindPeople' component={FindPeople}/>
+                    <Route exact path={'/Account/FindPeople/:id'} component={FindPeopleAccount}/>
                     <Route exact path ='/Account/Articles'>
                         <Articles {...this.props}/>
                     </Route>

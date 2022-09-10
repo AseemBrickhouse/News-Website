@@ -22,6 +22,7 @@ urlpatterns = [
         path('PopularArticles/', PopularArticles.as_view()),
         path('AllArticles/', AllArticles.as_view()),
         path('PopularTags/', PopularTags.as_view()),
+        path('AllAccounts/', AllAccounts.as_view()),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls

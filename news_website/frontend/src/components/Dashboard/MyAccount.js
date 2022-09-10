@@ -59,6 +59,8 @@ class MyAccount extends React.Component {
         const [anchorEl, setAnchorEl] = React.useState(null);
         const [NestedProfileOpen, NestedSetProfileOpen] = React.useState(false)
         const [NestedArticleOpen, NestedSetArticleOpen] = React.useState(false)
+        const [NestedPeopleOpen, NestedSetPeopleOpen] = React.useState(false)
+
         
         const open = Boolean(anchorEl);
         const handleClick = (event) => {
@@ -67,6 +69,8 @@ class MyAccount extends React.Component {
         const handleClose = () => {setAnchorEl(null)};
         const handleNestedProfileClick = () =>{NestedSetProfileOpen(!NestedProfileOpen)}
         const handleNestedArticleClick = () =>{NestedSetArticleOpen(!NestedArticleOpen)}
+        const handleNestedPeopleClick = () =>{NestedSetPeopleOpen(!NestedPeopleOpen)}
+
 
         return(
             <div>
@@ -112,6 +116,7 @@ class MyAccount extends React.Component {
                         </ListItem>
                       </List>
                     </Collapse>
+                    
                     <ListItem button onClick={handleNestedArticleClick}>
                       <ListItemText primary="Articles" />
                       {NestedArticleOpen ? <IconExpandLess /> : <IconExpandMore />}
@@ -130,6 +135,26 @@ class MyAccount extends React.Component {
                         </ListItem>
                       </List>
                     </Collapse>
+        
+                    <ListItem button onClick={handleNestedPeopleClick}>
+                      <ListItemText primary="People" />
+                      {NestedPeopleOpen ? <IconExpandLess /> : <IconExpandMore />}
+                    </ListItem>
+                    <Collapse in={NestedPeopleOpen} timeout="auto" unmountOnExit>
+                      <Divider />
+                      <List component="div" disablePadding>
+                        <ListItem>
+                            <Link to="/Account/FindPeople" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Find People</Typography></Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to="/Account/CreateArticle/" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>My Followers</Typography></Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Following</Typography></Link>
+                        </ListItem>
+                      </List>
+                    </Collapse>
+
                      <MenuItem onClick={this.props.logout}>
                       <ListItemIcon>
                         <Logout fontSize="small" />

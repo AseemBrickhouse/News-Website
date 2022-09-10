@@ -4,6 +4,7 @@ import { Redirect, Link } from "react-router-dom";
 import {
   Route,
 } from "react-router-dom";
+import AdSense from 'react-adsense';
 import ArticleID from './ArticleID';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Util from '../Utility';
@@ -77,7 +78,7 @@ const Article = () => {
     return(
       <React.Fragment>
         <div className='container'>
-        <Box sx={{display: "flex", marginLeft: "20vw", flexDirection: "column", marginTop:"1px",}}>
+        <Box sx={{display: "flex", marginLeft: "15vw", flexDirection: "column", marginTop:"1px",}}>
           { 
             data != null ? Object.entries(data).map(([id,Article]) => {
               return(
@@ -192,7 +193,7 @@ const Article = () => {
           }
         </Box>
           <StickyBox offsetTop={50}>
-            <Box sx= {{display: "flex", flexDirection:"column", backgroundColor: "orange", width:"20vw", height:"90vh", marginTop: "1px"}}>
+            <Box sx= {{display: "flex", flexDirection:"column", width:"25vw", height:"90vh", marginTop: "1px", marginLeft: "1vw"}}>
               <Box sx={{width: "100%", height:"20%", display: "flex", flexDirection:"column"}}>
                 <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
                   <StyledButton>
@@ -202,6 +203,7 @@ const Article = () => {
                 <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
                     <SearchBar
                         style={{
+                          borderStyle: "inset",
                           fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                           width: "75%",
                           height: "70%",
@@ -210,10 +212,51 @@ const Article = () => {
                     />
                 </Box>
               </Box>
-              <Box sx={{backgroundColor: "grey", width: "100%", height:"20%"}}>
+              <Box sx={{width: "100%", height:"40%"}}>
+                <Box sx={{marginBottom: "3px"}}>
+                  <Typography 
+                    style={{
+                      color: "black", 
+                      marginLeft: "25%", 
+                      textDecoration: "none",
+                      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                      fontWeight: "600",
+                    }}>
+                    Top rated Articles
+                  </Typography>
+                </Box>
                 {
                   picks != null ? Object.entries(picks).map(([id,Article]) => {
                     return(
+                      <Box>
+                        <Link
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            underline: "none",
+                          }}
+                          // Need to create account pages for viewing other accounts
+                          // to={{
+                          //   pathname: '/tmp/' + id + '/',
+                          //   state: { 
+                          //     ArticleID: id,
+                          //     Article: Article,
+                          // },   
+                          // }}
+                        >
+                          <Box sx={{marginLeft: "10%", marginBottom: "3px"}}>
+                            <Typography 
+                              style={{
+                                color: "black", 
+                                textDecoration: "none",
+                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                fontWeight: "400",
+                              }}
+                              >
+                                {Article.reporter_account}
+                            </Typography>
+                          </Box>
+                        </Link>
                         <Link 
                           style={{
                             textDecoration: "none",
@@ -228,57 +271,41 @@ const Article = () => {
                           },   
                         }}>
                           <Box onClick={() => handleView(id)} sx={{width:"100%"}}>
-                              <Box>
+                              <Box sx={{marginLeft: "5%", marginBottom: "3%"}}>
+                                <Typography 
+                                  style={{
+                                    color: "black", 
+                                    textDecoration: "none",
+                                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                    fontWeight: "600",
+                                  }}
+                                >
                                   {Article.headline}
+                                </Typography>
                               </Box>  
                           </Box>
-                      </Link>
+                        </Link>
+                      </Box>
                     )
                   })
                   : <></>
                 }
               </Box>
-              <Box sx={{backgroundColor: "purple", width: "100%", height:"20%"}}>
+              {/* <Box sx={{backgroundColor: "purple", width: "100%", height:"20%"}}>
                 connect account
-              </Box>
+              </Box> */}
             </Box>
           </StickyBox>
-        {/* <div className = 'item-middle' id='item-middle'>
-          <div className='popTags' id='popTags'>
-              <div className = 'tagHome'> 
-                  <a href='#Tech'> Technology </a>
-              </div>  
-              <div className = 'tagHome'>
-                  <a href='#Life'> Life </a>
-              </div>   
-              <div className = 'tagHome'> <a href='#Earth'> Earth </a></div>   
-              <div className = 'tagHome'> 
-                <a onClick={ () => setTags('Work')}> Work </a>
-              </div>
-              <div className = 'tagHome'> <a href='#Long'> Long </a></div> 
-              <div className = 'tagHome'> <a href='#Sciecne'> Science </a></div> 
-              <div className = 'tagHome'> <a href='#School'> School </a></div>  
-          </div>
-          <div className='footer'>
-              <a href='#About us'>About Us</a>
-              <a href='#Contact us'>Contact Us</a>
-              <a href='#Careeres'>Careeres</a>
-              <a href='#Account'>Account</a>
-              <a href='#Terms of Service'>Terms of Service</a>
-              <a href='#Find Us'>Find Us</a>
-          </div>
-        </div>
-          <div className = 'item-right' id = 'item-right'>
-              <div className = 'content'>
-                  <Advertisments/>
-              </div>
-          </div> */}
-          <div className = 'item-right' id = 'item-right'>
-              <div className = 'content'>
-                  <Advertisments/>
-              </div>
-          </div>
-
+          <StickyBox offsetTop={50}>
+            <Box sx={{backgroundColor: "tansparent", marginLeft: "10px", marginTop: "1vh"}}>
+            <AdSense.Google
+              client='ca-pub-7292810486004926'
+              slot='7806394673'
+              style={{ width: 250, height: 600, float: 'left' }}
+              format='fluid'
+            />
+            </Box>
+          </StickyBox>
         </div>
       </React.Fragment>
     )

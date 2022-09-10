@@ -16,3 +16,8 @@ def getCurrentUser(token, command):
         print("In Except getting account")
         return User.objects.all().filter(id=token.user_id)[0].account
 
+def setQuerySetData(key, op):
+    pass
+    # queryset= {}
+    # queryset[op.data[key]] = op.data
+    # return (queryset,op.data[key])

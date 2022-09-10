@@ -17,6 +17,21 @@ class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
+
+class AllAccounts(APIView):
+    def get(self, request, *args, **kwargs):
+        queryset = {}
+        for account in Account.objects.all():
+            queryset[AccountSerializer(account).data['user']] = AccountSerializer(account).data
+            queryset[AccountSerializer(account).data['user']]['written_articles'] = len(Article.objects.all().filter(reporter_account=account))
+            # queryset.append(setQuerySetData('user', AccountSerializer(account)))
+        print(queryset)
+        return Response(queryset)
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+
 class AllArticles(APIView):
     def post(self, request, *args, **kwargs):
         querysetSend = {}
@@ -138,6 +153,7 @@ class current_user(ObtainAuthToken):
                 'email': account.email,
                 'occupation': account.occupation,
                 'popular_articles': popularArticles,
+                'written_articles': len(Article.objects.all().filter(reporter_account=account))
             }
             return Response(data)
         except:

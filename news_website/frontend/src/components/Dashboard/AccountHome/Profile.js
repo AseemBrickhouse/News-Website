@@ -31,6 +31,7 @@ class Profile extends React.Component{
             occupation: "",
             email: "",
             popular_articles: [],
+            written_articles: "",
         };
     }
     componentDidMount(){
@@ -63,6 +64,7 @@ class Profile extends React.Component{
                     email: data.email,
                     occupation: data.occupation,
                     popular_articles: data.popular_articles,
+                    written_articles: data.written_articles,
                 })
             });    
     }
@@ -136,7 +138,7 @@ class Profile extends React.Component{
                             </Box>
                             <Box sx={{display: "inline-flex"}}>
                                 <Box sx={{flexGrow: "1", marginLeft: "25%", marginBottom:"3vh"}}>Written Articles</Box>
-                                <Box sx = {{marginRight: "25%"}}>67</Box>
+                                <Box sx = {{marginRight: "25%"}}>{this.state.written_articles}</Box>
                             </Box>
                         </Box>
                     </Box>

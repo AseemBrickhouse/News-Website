@@ -9,8 +9,10 @@ urlpatterns = [
     path('Account/EditAccount', index),
     path('Account/Articles', index),
     path('Account/CreateArticle/', index),
+    path('Account/FindPeople', index),
     path('Account/Followers', index),
     path('Login', index),
     path('Account', index),
-    url(r'Articles/(?P<id>[a-zA-Z0-9]+.*)', index)
+    url(r'Articles/(?P<id>[a-zA-Z0-9]+.*)', index),
+    url(r'Account/FindPeople/(?P<id>[a-zA-Z0-9]+.*)', index)
 ]

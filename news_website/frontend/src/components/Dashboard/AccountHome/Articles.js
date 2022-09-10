@@ -99,6 +99,19 @@ class Articles extends React.Component{
                 {
                 Object.entries(this.state.articles).map( ([id, Article]) =>{
                     return(
+                        <Link 
+                        style={{
+                          textDecoration: "none",
+                          color: "black",
+                          underline: "none",
+                        }}
+                        to={{
+                          pathname: '/Articles/' + id + '/',
+                          state: { 
+                            ArticleID: id,
+                            Article: Article,
+                        },   
+                      }}>
                         <Box sx={{marginLeft:"1vw", marginTop: "1vh"}}>
                             <div className="card">
                                  <div class="card-body">
@@ -143,28 +156,13 @@ class Articles extends React.Component{
                                        <div class="user">
                                          <div class="user-info">
                                            <h5>{ Utility.getDate(Article.date)}</h5>
-                                           <small>{Article.rating}%</small>
                                          </div>
-                                       </div>
-                                       <div>
-                                       <Link to={{
-                                        pathname: '/Articles/' + id + '/',
-                                        state: { 
-                                          ArticleID: id,
-                                          Article: Article,
-                                        },
-                                        }}>
-                                            <Button 
-                                            sx={{margiLeft: "1vw"}}
-                                            onClick={() => handleView(id)}>
-                                                {console.log(id)}
-                                                View
-                                            </Button>
-                                        </Link>
+                                         <small>{Article.rating}%</small>
                                        </div>
                                  </div>
                             </div>
                         </Box>
+                        </Link>
                     );
                 })}
                 </Box>
