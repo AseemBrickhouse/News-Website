@@ -35,6 +35,7 @@ class Header extends Component{
   }
   render(){ 
     return (
+      this.props.location.pathname != '/Login' && this.props.location.pathname != '/SignUp' ?
       <React.Fragment>
         <div className='topnav' id = "myTopnav">
           {/* src="../../static/images/what.png" */}
@@ -77,6 +78,7 @@ class Header extends Component{
           </Box>
         }
       </React.Fragment>
+      : <></>
     );
   }
 }

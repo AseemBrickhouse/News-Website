@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as actions from '../../store/actions/auth';
 import CSRFToken from '../../store/actions/csrfToken';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { styled } from "@material-ui/core/styles";
 
 import { 
   Grid, Typography, TextField, 
   FormControlLabel, Avatar, 
-  Button, CssBaseline, Link, Box, 
+  Button, CssBaseline, Box, 
   Container, Checkbox,
 } from "@material-ui/core";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -74,7 +74,7 @@ class SignUp extends React.Component{
               })
             }).then(response =>{
               console.log(response)
-              window.location.reload()
+              // window.location.reload()
             })
             this.props.history.push('/')
           }, 2000)
@@ -122,12 +122,12 @@ class SignUp extends React.Component{
           :
             <Box>
               <Container component="main">
-                <Box sx={{backgroundColor: "white", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh"}}>
-                  <Box sx={{backgroundColor: "#F2AF29", width: "30%",}}>
+                <Box sx={{backgroundColor: "#E0E0CE", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh", borderRadius: "25px"}}>
+                  <Box sx={{backgroundColor: "#F2AF29", width: "30%", borderRadius: "25px 0 0 25px"}}>
                       <Box component="h1" variant="h5" style={{marginLeft: "0vw", fontSize: "150px"}}>
-                        Lorem
+                          Lorem
                       </Box>
-                      <Box>
+                      <Box sx={{marginLeft: "5px"}}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, quis commodo ipsum. 
                       </Box>
                   </Box>

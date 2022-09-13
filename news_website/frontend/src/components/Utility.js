@@ -1,4 +1,4 @@
-
+import React, {useEffect} from "react";
 export default class Util {
     NumberToMonth = (num) => {
         const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -7,7 +7,24 @@ export default class Util {
     getDate = (date) =>{
         return this.NumberToMonth(new Date(date).getMonth()) + ' ' + new Date(date).getDate() + '-' + new Date(date).getFullYear();
     }
-    
+    // deleteArticle = (key) =>{
+    //   useEffect(async()=>{
+    //     fetch("api/DeleteArticle", {
+    //         method: "POST",
+    //         headers:{
+    //             'Accept':'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             key,
+    //         })
+    //     })
+    //     .then(response=>{
+    //         return response.json()
+    //     })
+    //     .then(data=>{console.log(data)})
+    // },[])
+    // }
     GETAllArticles = () =>{
         console.log("in here")
         let request = {}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -14,20 +14,28 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import CSRFToken from '../../../store/actions/csrfToken';
 import SaveIcon from '@mui/icons-material/Save';
+import Article from '../Articles';
 
-class CreateArticle extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
-    Form = () =>{
-            const defaultValues = {
+const CreateArticle = (props) => {
+            var defaultValues= {
+                key: "-1",    
                 headline: "",
                 article_description: "",
                 article_body: "",
                 visibility: "",
                 isPrivate: false
-            };
+            }
+            if(typeof(props.location.state) !== "undefined"){
+                const Article = props.location.state.props;
+                defaultValues = {
+                    key: Article.key,
+                    headline: Article.headline,
+                    article_description: Article.article_description,
+                    article_body: Article.article_body,
+                    visibility: Article.visibility,
+                    isPrivate: false
+                };
+            }
             const [formValues, setFormValues] = React.useState(defaultValues);
             const handleInputChange = (event) =>{
                 const {name, value} = event.target;
@@ -38,7 +46,6 @@ class CreateArticle extends React.Component{
             };
             const handleSubmit = (event) => {
                 event.preventDefault();
-                console.log(formValues);
                 fetch("/api/CreateNewArticle/",{
                     method: "POST",
                     headers:{
@@ -47,6 +54,7 @@ class CreateArticle extends React.Component{
                     },
                     body: JSON.stringify({
                         token: localStorage.getItem('token'),
+                        key: defaultValues.key,
                         headline: formValues.headline,
                         article_description: formValues.article_description,
                         article_body: formValues.article_body,
@@ -56,7 +64,11 @@ class CreateArticle extends React.Component{
                 }).then(response => {
                     console.log(response)
                 });
-                <Redirect to='/'/>
+                <Redirect 
+                    to={{
+                        pathname: "/",
+                    }}
+                />
             }
             //Add Functionalty to save and finish later
             const handleSave = (event) =>{
@@ -86,6 +98,7 @@ class CreateArticle extends React.Component{
                             <div className='gridItem'>
                                 <FormControl fullWidth>
                                 <TextField
+                                    focused 
                                     id="headline"
                                     name="headline"
                                     label="Headline"
@@ -98,6 +111,7 @@ class CreateArticle extends React.Component{
                             <div className='gridItem'>
                                 <FormControl fullWidth>
                                     <TextField
+                                    focused 
                                     id="article_description"
                                     name="article_description"
                                     label="Article Description"
@@ -114,6 +128,7 @@ class CreateArticle extends React.Component{
                                 <FormControl fullWidth>
                                     <InputLabel id="visibility">Visibility</InputLabel>
                                     <Select
+                                      focused 
                                       labelId="visibility"
                                       name="visibility"
                                       id="visibility"
@@ -132,6 +147,8 @@ class CreateArticle extends React.Component{
                             <div className='gridItem'>
                                 <FormControl fullWidth>
                                     <TextField
+                                        // id="outlined-start-adornment"
+                                        focused 
                                         id="article_body"
                                         name="article_body"
                                         label="Article Body"
@@ -162,15 +179,14 @@ class CreateArticle extends React.Component{
         )
     }
 
-    render(){
-        console.log("Here");
-        return(
-            <div>
-                <this.Form/>
-            </div>
-        )
-    }
-}
+    // render(){
+    //     console.log("Here");
+    //     return(
+    //         <div>
+    //             <this.Form/>
+    //         </div>
+    //     )
+    // }
 export default CreateArticle;
 
                 // visibility: data.get('visibility'),

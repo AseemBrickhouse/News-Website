@@ -108,12 +108,12 @@ render(){
         :
         <Box>
               <Container component="main">
-                <Box sx={{backgroundColor: "#E0E0CE", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh"}}>
-                  <Box sx={{backgroundColor: "#F2AF29", width: "30%",}}>
+                <Box sx={{backgroundColor: "#E0E0CE", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh", borderRadius: "25px"}}>
+                  <Box sx={{backgroundColor: "#F2AF29", width: "30%", borderRadius: "25px 0 0 25px"}}>
                       <Box component="h1" variant="h5" style={{marginLeft: "0vw", fontSize: "150px"}}>
                         Lorem
                       </Box>
-                      <Box>
+                      <Box sx={{marginLeft: "5px"}}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, quis commodo ipsum. 
                       </Box>
                   </Box>

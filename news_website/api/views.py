@@ -64,7 +64,7 @@ class AllArticles(APIView):
             querysetSend[tmpArt.data['id']] = tmpArt.data
             querysetSend[tmpArt.data['id']]['reporter_account'] = attachNameToArticle(tmpArt)
 
-        # print(querysetSend)     
+        print(querysetSend)     
         return Response(querysetSend)
 
     def get(self, request, *args, **kwargs):
@@ -122,20 +122,53 @@ class EditAccount(ObtainAuthToken):
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         account = getCurrentUser(request.data['token'], "CREATEARTICLE")
-        Article.objects.create(
-            headline=request.data['headline'],
-            reporter_account=account,
-            rating=0,
-            isPrivate = False,
-            visibility = request.data['visibility'],
-            article_description=request.data['article_description'],
-            article_body=request.data['article_body'],
-            tags=None,
-        )
-        return Response(request.data)
+        print(request.data)
+        if request.data['key'] != '-1':
+            Article.objects.all().filter(key=request.data['key']).update(
+                headline= request.data['headline'],
+                article_description= request.data['article_description'],
+                article_body= request.data['article_body'],
+                visibility= request.data['visibility'],
+                isPrivate= request.data['isPrivate'],
+            )
+            responseUpdated = {
+                "message" : "Article successfully update!"
+            }
+            return Response(responseUpdated)
+        else:
+            article = Article.objects.create(
+                key= keyGen(),
+                headline=request.data['headline'],
+                reporter_account=account,
+                rating=0,
+                isPrivate = False,
+                visibility = request.data['visibility'],
+                article_description=request.data['article_description'],
+                article_body=request.data['article_body'],
+                tags=None,
+            )
+            article.save()
+            responseCreated = {
+                "message" : "Article successfully update!"
+            }
+            print(article)
+            return Response(responseCreated)
 
     def get(self, request, *args, **kwargs):
         pass
+
+class DeleteArticle(APIView):
+    def post(self, request, *args, **kwargs):
+        print(request.data['key'])
+        article = Article.objects.all().filter(key=request.data['key']).delete()
+        # articleJson = ArticleSerializer(article).data
+        print(article)
+        return Response(request.data)
+        # article = Article.objects.all().filter(key=request.data['key'])
+        # articleJson = ArticleSerializer(article).data
+        # print(articleJson)
+        # return Response(articleJson)
+
 
 class current_user(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -172,6 +205,7 @@ class AllUserArticles(ObtainAuthToken):
                 data = ArticleSerializer(article)
                 AllArticles[data.data['id']] = data.data
 
+            print(AllArticles   )
             return Response(AllArticles)
         
         def get(self, request, *args, **kwargs):

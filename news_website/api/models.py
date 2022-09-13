@@ -48,6 +48,7 @@ class Settings(models.Model):
 
 
 class Article(models.Model):
+    key = models.CharField(max_length=20, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True) ##change to date field 
     headline = models.CharField(max_length=100)
     sub_title = models.CharField(max_length=200, null=True)

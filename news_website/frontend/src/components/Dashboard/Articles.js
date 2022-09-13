@@ -70,8 +70,8 @@ const Article = () => {
     // console.log(this.state)
     // console.log(data)
     const Utility= new Util();
-    const handleView = (id)=>{
-      <Route exact path={'/Articles/' + id + '/'}>
+    const handleView = (key)=>{
+      <Route exact path={'/Articles/' + key + '/'}>
           <ArticleID/>
       </Route>
     }
@@ -89,7 +89,7 @@ const Article = () => {
                       underline: "none",
                     }}
                     to={{
-                      pathname: '/Articles/' + id + '/',
+                      pathname: '/Articles/' + Article.key + '/',
                       state: { 
                         ArticleID: id,
                         Article: Article,
@@ -264,7 +264,7 @@ const Article = () => {
                             underline: "none",
                           }}
                           to={{
-                            pathname: '/Articles/' + id + '/',
+                            pathname: '/Articles/' + Article.key + '/',
                             state: { 
                               ArticleID: id,
                               Article: Article,

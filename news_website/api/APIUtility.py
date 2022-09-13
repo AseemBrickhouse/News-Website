@@ -1,5 +1,7 @@
 from .models import *
 from rest_framework.authtoken.models import Token
+import random
+import string
 
 def attachNameToArticle(Article):
     account = Account.objects.all().filter(id=Article.data['reporter_account'])
@@ -15,6 +17,10 @@ def getCurrentUser(token, command):
     except:
         print("In Except getting account")
         return User.objects.all().filter(id=token.user_id)[0].account
+
+
+def keyGen(chars = string.ascii_uppercase + string.digits, N=20):
+	return ''.join(random.choice(chars) for _ in range(N))
 
 def setQuerySetData(key, op):
     pass

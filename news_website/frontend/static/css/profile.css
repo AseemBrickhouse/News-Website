@@ -1,6 +1,6 @@
 body{
     /* background-color: #E0E0CE; */
-    background-color: rgb(217, 217, 217);
+    background-color: white;
     margin: 0;
     font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
   }
@@ -186,6 +186,7 @@ body{
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   width: 300px;
+  max-height: 30%;
   margin-left: 1vw;
 }
 .card-header img {
@@ -226,6 +227,7 @@ body{
   font-size: 13px;
 }
 .user {
+  justify-content: space-between;
   display: flex;
   margin-top: auto;
 }

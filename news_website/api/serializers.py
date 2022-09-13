@@ -23,6 +23,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ('id',
+                  'key',
                   'date', 
                   'headline', 
                   'sub_title',
