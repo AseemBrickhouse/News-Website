@@ -7,6 +7,7 @@ import {
     Container, Checkbox, MenuItem, NestedMenuItem,
   } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
+import { height, textAlign } from '@mui/system';
 const FindPeople = () => {
     const[people, setPeople] = useState(null);
     const StyledButton = styled(Button)({
@@ -34,6 +35,7 @@ const FindPeople = () => {
     return(
         <Box sx={{
             flexDirection: "row", 
+            justifyContent: "center",
             display: "flex",
             marginLeft: "20vw", 
             marginRight:"20vw", 
@@ -43,19 +45,20 @@ const FindPeople = () => {
                     return(
                         <Box sx={{
                             borderRadius: "25px",
-                            backgroundColor: "grey", 
+                            backgroundColor: "#E0E0CE", 
                             display: "flex",
                             flexDirection: "column",
+                            overflow: "hidden",
                             width: "300px",
-                            height: "300px",
+                            height: "auto",
                             margin: "5px"
                             }}>
                             <Box sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                // backgroundColor: "red",
+                                // backgroundColor: "purple",
                                 width: "100%",
-                                height: "100%"
+                                height: "auto"
                             }}>
                                 <Box sx={{width: "100%",height:"150px", display: "flex", flexDirection: "row"}}>
                                     <Box sx={{width: "35%",}}>
@@ -102,7 +105,7 @@ const FindPeople = () => {
                                     </Box>
                                 </Box>
 
-                                <Box sx={{width: "100%",height:"50%", display: "flex", flexDirection: "row"}}>
+                                <Box sx={{width: "100%",maxHeight:"30%", display: "flex", flexDirection: "row"}}>
                                     <Box sx={{width: "50%", textAlign: "center"}}>
                                         <Typography
                                             style={{
@@ -152,18 +155,21 @@ const FindPeople = () => {
                                 </Box>
 
                                 <Box sx={{
+                                // backgroundColor: "red",
                                 display: "flex",
-                                flexDirection: "column",
+                                flexDirection: "row",
                                 width: "100%",
-                                height: "100%"
+                                height: "50%",
+                                overflow: "hidden",
+                                justifyContent: "center"
                                 }}>
-                                    <Box sx={{width: "100%",height:"10%", display: "flex", flexDirection:"row", justifyContent: "space-between"}}>
-                                        <StyledButton>
+                                    <Box sx={{width: "100%", height:"100%", display: "flex", flexDirection:"row",marginTop: "5px"}}>
+                                        <Box sx ={{width:"50%", backgroundColor: "lightblue", height:"100%", textAlign: "center", margin: "auto"}}>
                                             Follow
-                                        </StyledButton> 
-                                        <StyledButton>
+                                        </Box>
+                                        <Box sx ={{width:"50%", backgroundColor: "lightgreen"}}>  
                                             View Profile
-                                        </StyledButton>
+                                        </Box>
                                     </Box>
                                 </Box>
                             </Box>

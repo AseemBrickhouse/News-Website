@@ -64,11 +64,7 @@ const CreateArticle = (props) => {
                 }).then(response => {
                     console.log(response)
                 });
-                <Redirect 
-                    to={{
-                        pathname: "/",
-                    }}
-                />
+                props.history.push("/Account/Articles")
             }
             //Add Functionalty to save and finish later
             const handleSave = (event) =>{

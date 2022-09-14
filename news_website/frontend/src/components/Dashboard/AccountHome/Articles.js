@@ -16,6 +16,7 @@ import {
     Container, Checkbox, MenuItem, NestedMenuItem,
   } from "@material-ui/core";
 import CreateArticle from './CreateArticle';
+import { padding } from '@mui/system';
 
 const Articles = () =>{
     // constructor(props){
@@ -25,6 +26,7 @@ const Articles = () =>{
     //     };
     // }
     const [articles, setArticles] = React.useState(null);
+    const [load, setLoad] = React.useState(false);
     useEffect(async() =>{
         await fetch("/api/AllUserArticles/", {
             method: "POST",
@@ -44,11 +46,13 @@ const Articles = () =>{
             }
             return response.json();
         })
-        .then(data => setArticles(data));
-    },[])
+        .then(data => {
+            setLoad(true)
+            setArticles(data)
+        });
+    },[load])
 
     const deleteArticle = (Article_key) =>{
-        console.log(Article_key)
         fetch("/api/DeleteArticle/", {
             method: "POST",
             headers:{
@@ -62,8 +66,10 @@ const Articles = () =>{
         .then(response=>{
             return response.json()
         })
-        .then(data=>{console.log(data)})
-        window.location.reload();
+        .then(data=>{
+            setLoad(false)
+        })
+        // window.location.reload();
     }
     const Utility = new Util();
     const handleView = (id) =>{
@@ -98,7 +104,7 @@ const Articles = () =>{
     return(
         <div>
             {/* <this.Button/> */}
-            <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+            <Box sx={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center", alignContent: "center"}}>
             {
             articles != null ? Object.entries(articles).map( ([id, Article]) =>{
                 return(
@@ -117,9 +123,15 @@ const Articles = () =>{
                   }}>
                     <Box sx={{marginLeft:"1vw", marginTop: "1vh"}}>
                         <div className="card">
-                             <div class="card-body">
-                                <Box sx={{                            
+                            <Box sx= {{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                padding: "20px"
+                            }}>
+                                <Box sx={{     
                                     width: "100%", 
+                                    minHeight: "30%",
                                     height: "30%", 
                                     display: "flex", 
                                     flexDirection: "row",
@@ -131,7 +143,7 @@ const Articles = () =>{
                                       return(
                                         <Box sx={{margin: "5px"}}>
                                           <Chip style={{
-                                            backgroundColor: "#C1BDBD",
+                                            backgroundColor: "#E0E0CE",
                                             fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                                             fontSize: "15px",
                                             textDecoration: "none",
@@ -143,14 +155,14 @@ const Articles = () =>{
                                     })
                                     :
                                     <Box sx={{margin: "5px"}}>
-                                      <Chip style={{
-                                        backgroundColor: "#C1BDBD",
-                                        fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                        fontSize: "15px",
-                                        textDecoration: "none",
-                                      }}
-                                      label={Article.tags}
-                                      />
+                                        <Chip style={{
+                                            backgroundColor: "#E0E0CE",
+                                            fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                            fontSize: "15px",
+                                            textDecoration: "none",
+                                          }}
+                                            label={Article.tags}
+                                        />
                                     </Box>
                                 }
                                 </Box>                                      
@@ -164,32 +176,36 @@ const Articles = () =>{
                                             <h5>{Article.rating}%</h5>
                                         </Box>
                                    </Box>
-                                   <Box sx={{justifyContent: "space-between", flexDirection: "row", display: "flex"}}>
-                                        <Link
-                                        style={{
-                                                textDecoration: "none",
-                                                color: "black",
-                                                underline: "none",
-                                        }}
-                                        to={{
-                                            pathname: "/Account/CreateArticle",
-                                            state: {
-                                                props: Article
-                                            } 
-                                        }}
-                                        >
-                                            Edit
-                                        </Link>
-                                        <Link
+                                   <Box sx={{justifyContent: "space-between", flexDirection: "row", display: "flex", width: "100%"}}>
+                                        <Box sx={{backgroundColor: "#E0E0CE", padding: "1px 12px", borderRadius: "25px"}}>
+                                            <Link
                                             style={{
-                                                textDecoration: "none",
-                                                color: "black",
-                                                underline: "none",
+                                                    textDecoration: "none",
+                                                    color: "black",
+                                                    underline: "none",
                                             }}
-                                            onClick={()=> deleteArticle(Article.key)}
-                                        >
-                                            Delete Article
-                                        </Link>
+                                            to={{
+                                                pathname: "/Account/CreateArticle",
+                                                state: {
+                                                    props: Article
+                                                } 
+                                            }}
+                                            >
+                                                Edit
+                                            </Link>
+                                        </Box>
+                                        <Box sx={{backgroundColor: "#AD343E", padding: "1px 12px", borderRadius: "25px"}}>
+                                            <Link
+                                                style={{
+                                                    textDecoration: "none",
+                                                    color: "black",
+                                                    underline: "none",
+                                                }}
+                                                onClick={()=> deleteArticle(Article.key)}
+                                            >
+                                                Delete
+                                            </Link>
+                                        </Box>
                                    </Box>
                                    {/* <div class="user">
                                      <div class="user-info">
@@ -199,9 +215,9 @@ const Articles = () =>{
                                         <small>{Article.rating}%</small>
                                      </div>
                                    </div> */}
-                             </div>
+                             </Box>
                         </div>
-                    </Box>
+                        </Box>
                     </Link>
                 )
             })
