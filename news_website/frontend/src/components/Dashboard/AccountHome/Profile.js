@@ -32,6 +32,8 @@ class Profile extends React.Component{
             email: "",
             popular_articles: [],
             written_articles: "",
+            following: 0,
+            followers: 0,
         };
     }
     componentDidMount(){
@@ -65,6 +67,8 @@ class Profile extends React.Component{
                     occupation: data.occupation,
                     popular_articles: data.popular_articles,
                     written_articles: data.written_articles,
+                    followers: data.followers,
+                    following: data.following,
                 })
             });    
     }
@@ -130,11 +134,11 @@ class Profile extends React.Component{
                         <Box sx={{ display: 'inline-flex', flexDirection: 'column', width:"25vw",  marginTop: "1vh"}}>
                             <Box sx={{display: "inline-flex"}}>
                                 <Box sx={{flexGrow: "1", marginLeft: "25%", marginBottom:"3vh"}}>Followers</Box>
-                                <Box sx = {{marginRight: "25%"}}>53,256</Box>
+                                <Box sx = {{marginRight: "25%"}}>{this.state.followers}</Box>
                             </Box>
                             <Box sx={{display: "inline-flex"}}>
                                 <Box sx={{flexGrow: "1", marginLeft: "25%", marginBottom:"3vh"}}>Following</Box>
-                                <Box sx = {{marginRight: "25%"}}>843</Box>
+                                <Box sx = {{marginRight: "25%"}}>{this.state.following}</Box>
                             </Box>
                             <Box sx={{display: "inline-flex"}}>
                                 <Box sx={{flexGrow: "1", marginLeft: "25%", marginBottom:"3vh"}}>Written Articles</Box>

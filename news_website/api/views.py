@@ -1,3 +1,4 @@
+import email
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
@@ -18,18 +19,15 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
 
 
-class AllAccounts(APIView):
-    def get(self, request, *args, **kwargs):
+class AllAccounts(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
         queryset = {}
-        for account in Account.objects.all():
+        for account in Account.objects.all().exclude(user=getCurrentUser(request.data['token'], "ALLACCOUNTS")):
             queryset[AccountSerializer(account).data['user']] = AccountSerializer(account).data
             queryset[AccountSerializer(account).data['user']]['written_articles'] = len(Article.objects.all().filter(reporter_account=account))
-            # queryset.append(setQuerySetData('user', AccountSerializer(account)))
-        print(queryset)
-        return Response(queryset)
+            queryset[AccountSerializer(account).data['user']]['followers'] = getFollow(account, "FOLLOWERS")
 
-    def post(self, request, *args, **kwargs):
-        pass
+        return Response(queryset)
 
 
 class AllArticles(APIView):
@@ -64,7 +62,7 @@ class AllArticles(APIView):
             querysetSend[tmpArt.data['id']] = tmpArt.data
             querysetSend[tmpArt.data['id']]['reporter_account'] = attachNameToArticle(tmpArt)
 
-        print(querysetSend)     
+        # print(querysetSend)     
         return Response(querysetSend)
 
     def get(self, request, *args, **kwargs):
@@ -97,7 +95,7 @@ class AccountCreation(ObtainAuthToken):
             email=request.data['email'],
         )
         account.save()
-        print(account)
+        # print(account)
         return Response(request.data)
 
     def get(self, request, *args, **kwargs):
@@ -122,7 +120,7 @@ class EditAccount(ObtainAuthToken):
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         account = getCurrentUser(request.data['token'], "CREATEARTICLE")
-        print(request.data)
+        # print(request.data)
         if request.data['key'] != '-1':
             Article.objects.all().filter(key=request.data['key']).update(
                 headline= request.data['headline'],
@@ -151,7 +149,7 @@ class CreateNewArticle(ObtainAuthToken):
             responseCreated = {
                 "message" : "Article successfully update!"
             }
-            print(article)
+            # print(article)
             return Response(responseCreated)
 
     def get(self, request, *args, **kwargs):
@@ -159,21 +157,14 @@ class CreateNewArticle(ObtainAuthToken):
 
 class DeleteArticle(APIView):
     def post(self, request, *args, **kwargs):
-        print(request.data['key'])
         article = Article.objects.all().filter(key=request.data['key']).delete()
-        # articleJson = ArticleSerializer(article).data
-        print(article)
         return Response(request.data)
-        # article = Article.objects.all().filter(key=request.data['key'])
-        # articleJson = ArticleSerializer(article).data
-        # print(articleJson)
-        # return Response(articleJson)
+
 
 
 class current_user(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         account = getCurrentUser(request.data['token'], "CURRENTACCOUNT")
-        print(account)
         try:
             popularArticles = PopularUserArticles(account)
             data = {
@@ -186,7 +177,9 @@ class current_user(ObtainAuthToken):
                 'email': account.email,
                 'occupation': account.occupation,
                 'popular_articles': popularArticles,
-                'written_articles': len(Article.objects.all().filter(reporter_account=account))
+                'written_articles': len(Article.objects.all().filter(reporter_account=account)),
+                'followers': getFollow(account, "FOLLOWERS"),
+                'following': getFollow(account, "FOLLOWING")
             }
             return Response(data)
         except:
@@ -198,14 +191,15 @@ class current_user(ObtainAuthToken):
 
 class AllUserArticles(ObtainAuthToken):
         def post(self, request, *args, **kwargs):
-            account = getCurrentUser(request.data['token'], "USERARTICLES")
-            queryset = Article.objects.all().filter(reporter_account=account)
+            # account = getCurrentUser(request.data['token'], "USERARTICLES")
+            queryset = Article.objects.all().filter(reporter_account=getCurrentUser(request.data['token'], "USERARTICLES"))
+            
             AllArticles = {}
             for article in queryset:
                 data = ArticleSerializer(article)
                 AllArticles[data.data['id']] = data.data
+                AllArticles[data.data['id']]['reporter_account'] = attachNameToArticle(data)
 
-            print(AllArticles   )
             return Response(AllArticles)
         
         def get(self, request, *args, **kwargs):
@@ -239,6 +233,20 @@ def PopularUserArticles(account):
         convertedArticle = ArticleSerializer(article)
         popular_articles[convertedArticle.data['id']] = convertedArticle.data
     return(popular_articles)
+
+class Follow(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        follow = request.data['toFollow']
+        createFollow = Followers.objects.create(
+            account= getCurrentUser(request.data['token'], "FOLLOW"),
+            following_user = Account.objects.all().filter(
+                first_name=follow['first_name'],
+                last_name=follow['last_name'],
+                email=follow['email']
+            )[0]
+        )
+        createFollow.save()
+        return Response(request.data)
 
 class ArticleID(APIView):
     def post(self, request, *args, **kwargs):

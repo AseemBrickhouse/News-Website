@@ -75,6 +75,8 @@ const Article = () => {
           <ArticleID/>
       </Route>
     }
+    console.log(data)
+
     return(
       <React.Fragment>
         <div className='container'>
@@ -91,7 +93,7 @@ const Article = () => {
                     to={{
                       pathname: '/Articles/' + Article.key + '/',
                       state: { 
-                        ArticleID: id,
+                        ArticleID: Article.key,
                         Article: Article,
                     },   
                   }}>

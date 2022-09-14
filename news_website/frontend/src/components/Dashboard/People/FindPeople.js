@@ -7,9 +7,13 @@ import {
     Container, Checkbox, MenuItem, NestedMenuItem,
   } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
-import { height, textAlign } from '@mui/system';
+
 const FindPeople = () => {
     const[people, setPeople] = useState(null);
+    const[load, setLoad] = useState(false);
+    const[followers, setFollowers] = useState(0);
+    const[followCountLoaded, setFollowCountLoaded] = useState(false);
+
     const StyledButton = styled(Button)({
         backgroundColor: "black",
         textDecoration: "none",
@@ -21,17 +25,90 @@ const FindPeople = () => {
         color: "white",
         marginLeft: "10%"
     });
+    var count = {
+        followers: 0,
+    }
         useEffect(async () =>{
         await fetch("/api/AllAccounts/",{
-            method: "GET"
+            method: "POST",
+            headers:{
+                'Accept':'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: localStorage.getItem('token'),
+            })
         })
         .then(response=> {
             return response.json();
         })
-        .then(data=>setPeople(data))
-    },[]);
+        .then(data=>{
+            console.log(data)
+            setLoad(true)
+            setPeople(data)
+        })
+    },[load]);
 
-    console.log(people)
+    const follow = (person) =>{
+            fetch("/api/Follow/", {
+                method: "POST",
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify({
+                    token: localStorage.getItem('token'),
+                    toFollow: person,
+                })
+            })
+            .then(response=>{
+                return response.json()
+            })
+            .then(data=>{
+                setLoad(false)
+                // console.log(data)
+            })
+
+    }
+
+    const getFollowerCount = (person) =>{
+       
+        // fetch("/api/getFollowerCount", {
+        //     method: "POST",
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type': 'application/json',
+        //       },
+        //     body: JSON.stringify({
+        //         toFollow: person,
+        //     })
+        // })
+        // .then(response=> {return response.json()})
+        // .then(data=>{
+        //     // setFollowers(data)
+        // })
+        // console.log(count)
+        // useEffect(async () =>{
+        //     await fetch("/api/getFollowerCount/",{
+        //         method: "POST",
+        //         headers:{
+        //             'Accept':'application/json',
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             toFollow: person,
+        //         })
+        //     })
+        //     .then(response=> {
+        //         return response.json();
+        //     })
+        //     .then(data=>{
+        //         setFollowCountLoaded(true)
+        //         setFollowers(data)
+        //     })
+        // },[followCountLoaded]);
+    
+    }
     return(
         <Box sx={{
             flexDirection: "row", 
@@ -126,7 +203,7 @@ const FindPeople = () => {
                                                 fontWeight: "400",
                                             }}
                                         >
-                                            1249104
+                                            {Person.followers}
                                         </Typography>
                                     </Box>
                                     <Box sx={{width: "50%", textAlign: "center"}}>
@@ -155,7 +232,6 @@ const FindPeople = () => {
                                 </Box>
 
                                 <Box sx={{
-                                // backgroundColor: "red",
                                 display: "flex",
                                 flexDirection: "row",
                                 width: "100%",
@@ -164,11 +240,48 @@ const FindPeople = () => {
                                 justifyContent: "center"
                                 }}>
                                     <Box sx={{width: "100%", height:"100%", display: "flex", flexDirection:"row",marginTop: "5px"}}>
-                                        <Box sx ={{width:"50%", backgroundColor: "lightblue", height:"100%", textAlign: "center", margin: "auto"}}>
-                                            Follow
+                                        <Box sx ={{
+                                            width:"50%", 
+                                            // backgroundColor: "lightblue", 
+                                            height:"100%", 
+                                            textAlign: "center", 
+                                            "&:hover":{
+                                                color: 'gray',
+                                                backgroundColor: "#F2AF29"
+                                            },
+                                        }}
+                                        onClick={()=>follow(Person)}
+                                        >
+                                            <Typography style={{
+                                                marginTop: "25%",
+                                                color: "black", 
+                                                textDecoration: "none",
+                                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                                fontWeight: "600",
+
+                                            }}>
+                                                Follow
+                                            </Typography>
                                         </Box>
-                                        <Box sx ={{width:"50%", backgroundColor: "lightgreen"}}>  
-                                            View Profile
+                                        <Box sx ={{
+                                            width:"50%", 
+                                            // backgroundColor: "lightgreen", 
+                                            height:"100%", 
+                                            textAlign: "center",
+                                            "&:hover":{
+                                              color: 'gray',
+                                              backgroundColor: "#F2AF29"
+                                            },
+                                        }}>  
+                                            <Typography style={{
+                                                marginTop: "25%",
+                                                color: "black", 
+                                                textDecoration: "none",
+                                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                                fontWeight: "600",
+                                            }}>
+                                                View Profile
+                                            </Typography>
                                         </Box>
                                     </Box>
                                 </Box>
