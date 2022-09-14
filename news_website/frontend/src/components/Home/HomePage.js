@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Articles from "./Dashboard/Articles";
-   
+import { Switch } from 'react-router-dom';
+import Articles from "../Dashboard/Articles";
+import Header from '../Dashboard/Header';
+
 export default class HomePage extends Component{
     constructor(props){
         super(props);

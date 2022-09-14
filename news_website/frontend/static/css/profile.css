@@ -1,0 +1,302 @@
+body{
+    /* background-color: #E0E0CE; */
+    background-color: white;
+    margin: 0;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  }
+/* .ProfileContainer {
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+} */
+.menu{
+    /* background-color: aqua; */
+    position: absolute;
+    width: 100%;
+    height: 22%;
+    margin-top: -30px;
+    /* display: inline-flex;
+    grid-template-columns: 100px 300px;
+    align-items: center;
+    text-align: left; */
+    display: grid;
+    grid-template-columns: .5fr .5fr .5fr;
+    grid-gap: 20px;
+}
+.menu .items{
+    padding-left: 30%;
+    margin-top: 15%;
+    align-items: center;
+}
+.profile{
+    display: flex;
+    /* background-color: rgb(92, 18, 18); */
+    width: 100%;
+    margin-top: 180px;
+    height: 30%;
+    position: absolute;
+}
+.left{
+    /* background-color: aliceblue; */
+    width: 30%;
+    justify-content: center;
+}
+.iconBack{
+    flex: 1;
+    margin-left: 25%;
+    display: center;
+    width: 50%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+}
+.middle{
+    width: 35%;
+    /* background-color: #1aaa7a; */
+}
+.middleContent{
+    display: grid;
+    grid-template-columns: 200px 200px;
+    /* background-color: #2196F3; */
+    column-gap: 30%;
+}
+.middleContent span{
+    color: rgb(0, 0, 0);
+}
+.middleContent p{
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding: 20px;
+    font-size: 18px;
+    text-align: left;
+    margin-left: 10%;
+    align-items:center;
+    color: rgb(121, 121, 121);
+}
+.right{
+    /* background-color: darkmagenta; */
+    width: 35%;
+    display: grid;
+}
+.rightTitle{
+    padding-top: 5%;
+    font-size: 18px;
+    align-items: center;
+    margin-left: 5%;
+}
+.right bio{
+    margin-top: -10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: left;
+}
+.right bio span{
+    margin-left: 5%;
+}
+.popArticles{
+    /* background-color: chartreuse; */
+    display: grid;
+    width: 70%;
+    margin-left: 30%;
+    position: absolute;
+    height: 100%;
+
+}
+.followersContainer{
+    /* background-color: rgb(0, 248, 207); */
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    display: grid;
+    text-align: left;
+    grid-template-columns: 300px 200px;
+}
+.followers {
+    position: absolute;
+    margin-left: 10%;
+    width: 30%;
+    height: 100%;
+    display: grid;
+    text-align: left;
+    grid-template-columns: 300px 200px;
+    margin-top: 3%;
+}
+.followers p{
+    color: rgb(121, 121, 121);
+    font-size: 18px;
+    /* margin-top: 10%;
+    margin-left: 70%; */
+}
+.ProfileBottom{
+    /* background-color: rgb(35, 171, 250); */
+    position: absolute;
+    margin-top: 24%;
+    width: 100%;
+    height: 45%;
+}
+.cardBox {
+  width: auto;
+  /* background-color: aqua; */
+  display: inline-block;
+  padding-left: 5%;
+  padding-right: 5%;
+  height: 100%;
+}
+.options{
+    display: inline-flex;
+    text-align: center;
+}
+@media only screen and (max-width: 1920px) {
+  .Cardcontainer {
+    display: inline-flex;
+    margin-left: 0%;
+    /* width: 1040px; */
+    /* justify-content: space-evenly; */
+  }
+}
+/* .CardContainer {
+  display: grid;
+  flex-direction: row;
+  position: absolute;
+  margin-left: 25vw;
+  top: 10vh;
+  width: 75%;
+  border-top: 4px #90323D;
+  background-color: #47bcd4;
+} */
+.CardContainer {
+  display: flex;
+  flex-direction: row;  
+  position: absolute;
+  margin-left: 26vw;
+  height: 75vh;
+  top: 10vh;
+  width: 65%;
+  /* background-color: #47bcd4; */
+}
+.CCitem{
+  align-items: start;
+}
+.card {
+  /* margin: 10px; */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  width: 300px;
+  max-height: 30%;
+  margin-left: 1vw;
+}
+.card-header img {
+  width: 100%;
+  height: 20px;
+  object-fit: cover;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  min-height: 275px;
+}
+
+.tag {
+  background: #cccccc;
+  border-radius: 50px;
+  font-size: 12px;
+  margin: 0;
+  color: #fff;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.tag-teal {
+  background-color: #47bcd4;
+}
+.tag-purple {
+  background-color: #5e76bf;
+}
+.tag-pink {
+  background-color: #cd5b9f;
+}
+
+.card-body p {
+  font-size: 13px;
+}
+.user {
+  justify-content: space-between;
+  display: flex;
+  margin-top: auto;
+}
+
+.user img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+.user-info h5 {
+  margin: 0;
+}
+.user-info small {
+  color: #545d7a;
+}
+
+.ArticleCards{
+  display: inline-block;
+  margin-top: 15%;
+  margin-left: 17%;
+  width: 100%;
+}
+.createArticle{
+  position: absolute;
+  margin-top: 5%;
+  margin-left: 41.5%;
+  align-items: center;
+}
+.editaccount{
+  position: absolute;
+  margin-top: 10%;
+}
+
+.profileContainerTest{
+  position: absolute;
+  /* background-color: #cd5b9f; */
+  margin-left: 25vw;
+  top: 5vh;
+}
+.profileLeft{
+  margin-top: 3vh;
+  background-color: #AD343E;
+  margin-left: 15vw;
+  max-width: 11vw;
+}
+.profileMiddle{
+  margin-top: 3vh;
+  background-color: #E0E0CE;
+  border-radius: 0px , 25px, 25px, 25px;
+  margin-left: 1vw;
+  border-right: solid 2px #AD343E;
+}
+
+.profileRight{
+  margin-top: 3vh;
+  background-color: #E0E0CE;
+}
+.styledButton{
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}
+.styledButton:active{
+  color:rgb(217, 217, 217)
+}
+.styledButton:visited, .styleButton:link, .styledButton:hover, .styledButton:focus{
+  text-decoration: none;
+  color: inherit;
+}

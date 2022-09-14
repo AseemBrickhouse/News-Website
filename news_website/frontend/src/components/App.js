@@ -1,55 +1,16 @@
 import React, { Component }  from 'react';
-import HomePage from './HomePage';
-import Header from './Dashboard/Header';
-import Login from './Buttons/Login';
-import SignUp from './Buttons/SignUp';
-import { connect } from 'react-redux';
-import * as actions from '../store/actions/auth';
-
-import {
-    BrowserRouter as Router,
-    Switch, 
-    Route,
-    Link
-  } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from './Home/Routes';
 
 class App extends Component{
-
-    componentDidMount(){
-        this.props.AutoTrySignUp();
-    }
     render(){
         return( 
-            <Router>
-                <div>
-                    <Switch>
-                        <Route exact path="/">
-                            <Header {...this.props}/>
-                            <HomePage/>
-                        </Route>
-                        <Route exact path="/SignUp">
-                            <SignUp/>
-                        </Route>
-                        <Route exact path="/Login">
-                            <Login/>
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
+            <React.Fragment>
+                <Router>
+                    <Routes/>
+                </Router>
+            </React.Fragment>
         );
     }
 }
-
-const mapStateToProps = state => {
-    return{
-        isAuthenticated: state.token !== null
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return{
-        AutoTrySignUp: () => dispatch(actions.authCheckState())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

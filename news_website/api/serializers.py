@@ -10,19 +10,30 @@ class AccountSerializer(serializers.ModelSerializer):
                    'last_name', 
                    'creation_date', 
                    'role',
-                   'phone'
+                   'phone',
+                   'bio',
+                   'email',
+                   'occupation',
+                #    'popular_articles',
                    )
 
 class ArticleSerializer(serializers.ModelSerializer):
+    article_body = serializers.CharField(trim_whitespace=False)
+
     class Meta:
         model = Article
         fields = ('id',
+                  'key',
                   'date', 
                   'headline', 
+                  'sub_title',
                   'reporter_account', 
                   'rating',
                   'isPrivate',
-                  'article_description'
+                  'visibility',
+                  'article_description',
+                  'article_body',
+                  'tags',
                   )
 
 

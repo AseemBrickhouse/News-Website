@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as actions from '../../store/actions/auth';
 import CSRFToken from '../../store/actions/csrfToken';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { styled } from "@material-ui/core/styles";
 
 import { 
   Grid, Typography, TextField, 
   FormControlLabel, Avatar, 
-  Button, CssBaseline, Link, Box, 
+  Button, CssBaseline, Box, 
   Container, Checkbox,
 } from "@material-ui/core";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,18 +16,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+// function Copyright(props) {
+//     return (
+//       <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//         {'Copyright © '}
+//         <Link color="inherit" href="https://mui.com/">
+//           Your Website
+//         </Link>{' '}
+//         {new Date().getFullYear()}
+//         {'.'}
+//       </Typography>
+//     );
+//   }
 
 const theme = createTheme();
 class SignUp extends React.Component{
@@ -58,34 +59,171 @@ class SignUp extends React.Component{
         });
         if (this.Checker(data.get('email'), data.get('password1'), data.get('password2') ) ){
           this.props.onAuth(data.get('username'), data.get('email'), data.get('password1'), data.get('password2'))
-          fetch("/api/AccountCreation/", {
-            method:"POST",
-            headers:{
-              'Accept':'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: data.get('username'),
-                email: data.get('email'),
-                password: data.get('password1'),
-                token: localStorage.getItem('token')
+          setTimeout(()=>{
+            fetch("/api/AccountCreation/", {
+              method:"POST",
+              headers:{
+                'Accept':'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  first_name: data.get('first_name'),
+                  last_name:data.get('last_name'),
+                  email: data.get('email'),
+                  token: localStorage.getItem('token')
+              })
+            }).then(response =>{
+              console.log(response)
+              // window.location.reload()
             })
-          })
-          this.props.history.push('/')
+            this.props.history.push('/')
+          }, 2000)
         }else{
           console.log("Invalid credentials");
         }
     };
+    submitButton = () =>{
+      const StyledButton = styled(Button)({
+          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+          color: "black",
+          textDecoration: "none",
+          fontSize: "18px",
+          fontWeight: "bold",
+          // letterSpacing: ".1rem",
+          textTransform: "none",
+          textDecoration: "none",
+          backgroundColor: "#F2AF29",
+
+        });
+        return(
+          <div>
+             <Box sx={{display: "flex", flexDirection:"row", marginLeft:"45%", width: "100%", marginTop: "2vh", justifyContent: "center", alignItems:"center"}}>
+                <StyledButton
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{marginLeft: "-1vw"}}
+                >
+                  Sign Up
+                </StyledButton>
+              </Box>
+          </div>
+        )
+    }
 
     render(){
         return(
-        <div>{
+        <div>
+          {
             this.props.loading ? 
             <Box sx={{ display: 'flex' }}>
                 <CircularProgress />
             </Box>
-        :
-<ThemeProvider theme={theme}>
+          :
+            <Box>
+              <Container component="main">
+                <Box sx={{backgroundColor: "#E0E0CE", display: "flex", flexDirection: "row", height: "70vh", marginTop: "10vh", borderRadius: "25px"}}>
+                  <Box sx={{backgroundColor: "#F2AF29", width: "30%", borderRadius: "25px 0 0 25px"}}>
+                      <Box component="h1" variant="h5" style={{marginLeft: "0vw", fontSize: "150px"}}>
+                          Lorem
+                      </Box>
+                      <Box sx={{marginLeft: "5px"}}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in dapibus lacus, quis commodo ipsum. 
+                      </Box>
+                  </Box>
+                  <Box component='form' noValidate onSubmit={this.handleSubmit} xs={{display: "flex", flexDirection:"column", alignItems:"center", justifyContent: "center", width: "100%"}}>
+                    <Box sx={{marginLeft: "50%", marginTop:"20vh", width: "100%"}}>
+                      <Box sx={{marginLeft: "-2vw"}}>
+                        <div className="CreateYourAccount">
+                          Create Your Account
+                        </div>
+                      </Box>
+                    </Box>
+                      <Box sx={{display: "flex", flexDirection:"row", marginLeft:"50%", width: "100%",  marginTop: "2vh"}}>
+                          <Box sx={{marginRight: "2vw", marginLeft: "-2vw"}}>
+                            <TextField
+                            hiddenLabel
+                            name="username"
+                            required
+                            id="username"
+                            variant="outlined"
+                            label="Username"
+                            />
+                          </Box>
+                          <Box>
+                            <TextField
+                            required
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            variant='outlined'
+                            />
+                          </Box>
+                      </Box>
+                      <Box sx={{display: "flex", flexDirection:"row", marginLeft:"50%", width: "100%",  marginTop: "2vh"}}>
+                        <Box sx={{marginRight: "2vw", marginLeft: "-2vw"}}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="password1"
+                          label="Password"
+                          type="password"
+                          id="password1"
+                          autoComplete="new-password"
+                          variant="outlined"
+                        />
+                        </Box>
+                        <Box>
+                        <TextField
+                          required
+                          fullWidth
+                          name="password2"
+                          label="Confirm Password"
+                          type="password"
+                          id="password2"
+                          autoComplete="new-password"
+                          variant="outlined"
+                        />
+                        </Box>
+                      </Box>
+                      <Box sx={{display: "flex", flexDirection:"row", marginLeft:"50%", width: "100%", marginTop: "2vh"}}>
+                        <Box sx={{marginRight: "2vw", marginLeft: "-2vw"}}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="first_name"
+                          label="First Name"
+                          type="first_name"
+                          id="first_name"
+                          autoComplete="first_name"
+                          variant="outlined"
+                        />
+                        </Box>
+                        <Box>
+                        <TextField
+                          required
+                          fullWidth
+                          name="last_name"
+                          label="Last Name"
+                          type="last_name"
+                          id="last_name"
+                          autoComplete="last_name"
+                          variant="outlined"
+                        />
+                        </Box>
+                      </Box>
+                      <this.submitButton/>
+                  </Box>
+                </Box>
+              </Container>
+            </Box>
+          }
+        </div>
+      )
+    }
+}
+{/* <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -148,6 +286,28 @@ class SignUp extends React.Component{
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="first_name"
+                  label="first_name"
+                  type="first_name"
+                  id="first_name"
+                  autoComplete="first_name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="last_name"
+                  label="last_name"
+                  type="last_name"
+                  id="last_name"
+                  autoComplete="last_name"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
@@ -162,13 +322,6 @@ class SignUp extends React.Component{
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
@@ -177,7 +330,8 @@ class SignUp extends React.Component{
     }</div>
         );
     }
-}
+} */}
+
 const mapStateToProps = (state) =>{
     return{
         loading: state.loading,
