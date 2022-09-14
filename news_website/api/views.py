@@ -116,7 +116,11 @@ class EditAccount(ObtainAuthToken):
 
     def get(self, request, *args, **kwargs):
         pass
-
+#test
+#
+#
+#
+#
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         account = getCurrentUser(request.data['token'], "CREATEARTICLE")
