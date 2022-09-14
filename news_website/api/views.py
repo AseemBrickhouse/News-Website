@@ -1,4 +1,5 @@
 import email
+from genericpath import exists
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
@@ -18,7 +19,12 @@ class AccountViewSet(viewsets.ModelViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
-
+class APITEST(APIView):
+    def get(self, request, *args, **kwargs):
+        print(AccountKeyGen)
+        return Response({
+                        'key': AccountKeyGen(3),
+                        })
 class AllAccounts(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         queryset = {}
@@ -26,7 +32,18 @@ class AllAccounts(ObtainAuthToken):
             queryset[AccountSerializer(account).data['user']] = AccountSerializer(account).data
             queryset[AccountSerializer(account).data['user']]['written_articles'] = len(Article.objects.all().filter(reporter_account=account))
             queryset[AccountSerializer(account).data['user']]['followers'] = getFollow(account, "FOLLOWERS")
-
+            try:
+                is_following = Followers.objects.get(
+                   account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
+                    following_user=account,
+                )
+                queryset[AccountSerializer(account).data['user']]['is_following'] = True
+            except Followers.DoesNotExist:
+                queryset[AccountSerializer(account).data['user']]['is_following'] = False
+            # queryset[AccountSerializer(account).data['user']]['is_following'] = Followers.objects.get(
+            #                                                                                 account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
+            #                                                                                 following_user=account[0]
+            #                                                                             )
         return Response(queryset)
 
 
@@ -90,6 +107,7 @@ class AccountCreation(ObtainAuthToken):
         print(currentUser , "-------------------------------------------------------------------------")
         account = Account.objects.create(
             user=currentUser,
+            key=AccountKeyGen(3),
             first_name=request.data['first_name'],
             last_name=request.data['last_name'],
             email=request.data['email'],
@@ -116,11 +134,7 @@ class EditAccount(ObtainAuthToken):
 
     def get(self, request, *args, **kwargs):
         pass
-#test
-#
-#
-#
-#
+
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         account = getCurrentUser(request.data['token'], "CREATEARTICLE")
@@ -139,7 +153,7 @@ class CreateNewArticle(ObtainAuthToken):
             return Response(responseUpdated)
         else:
             article = Article.objects.create(
-                key= keyGen(),
+                key= ArticleKeyGen(),
                 headline=request.data['headline'],
                 reporter_account=account,
                 rating=0,
@@ -241,15 +255,39 @@ def PopularUserArticles(account):
 class Follow(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         follow = request.data['toFollow']
-        createFollow = Followers.objects.create(
-            account= getCurrentUser(request.data['token'], "FOLLOW"),
-            following_user = Account.objects.all().filter(
-                first_name=follow['first_name'],
-                last_name=follow['last_name'],
-                email=follow['email']
-            )[0]
-        )
-        createFollow.save()
+        try:
+            query = Followers.objects.get(
+                account = getCurrentUser(request.data['token'], "FOLLOW"),
+                following_user = Account.objects.all().filter(
+                    first_name=follow['first_name'],
+                    last_name=follow['last_name'],
+                    email=follow['email'],
+                )[0]
+            )
+            print(query)
+
+        except Followers.DoesNotExist:            
+            createFollow = Followers.objects.create(
+                account= getCurrentUser(request.data['token'], "FOLLOW"),
+                following_user = Account.objects.all().filter(
+                    first_name=follow['first_name'],
+                    last_name=follow['last_name'],
+                    email=follow['email']
+                )[0]
+            )
+            createFollow.save()
+        return Response(request.data)
+
+class unFollow(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        following = request.data['toUnFollow']
+        account = getCurrentUser(request.data['token'], "UNFOLLOW")
+        Followers.objects.get(account=account, 
+                                following_user=Account.objects.get(
+                                first_name=following['first_name'],
+                                last_name=following['last_name'],
+                                email=following['email']
+                            )).delete()
         return Response(request.data)
 
 class ArticleID(APIView):

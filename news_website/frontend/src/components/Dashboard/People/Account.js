@@ -6,13 +6,19 @@ import {
     CssBaseline, Box, MenuList, Button,
     Container, Checkbox, MenuItem, NestedMenuItem,
   } from "@material-ui/core";
-const Account = () =>{
 
+const AccountID = (props) =>{
+    console.log(props.location.state)
     return(
-        <Box>
-            here
+        <Box sx={{display: "flex", flexDirection: "row" , backgroundColor: "red"}}>
+            <Box sx={{width: "33%", backgroundColor:"lightblue"}}>
+d
+            </Box>
+            <Box sx={{width: "66%", backgroundColor: "orange", marginLeft: "10px"}}>
+g
+            </Box>
         </Box>
     )
 }
 
-export default Account;
+export default AccountID;

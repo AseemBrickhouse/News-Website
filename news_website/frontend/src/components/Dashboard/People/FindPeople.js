@@ -11,23 +11,7 @@ import { styled } from "@material-ui/core/styles";
 const FindPeople = () => {
     const[people, setPeople] = useState(null);
     const[load, setLoad] = useState(false);
-    const[followers, setFollowers] = useState(0);
-    const[followCountLoaded, setFollowCountLoaded] = useState(false);
 
-    const StyledButton = styled(Button)({
-        backgroundColor: "black",
-        textDecoration: "none",
-        fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-        fontWeight: "300",
-        borderRadius: "50px",
-        width: "auto",
-        fontSize: "15px",
-        color: "white",
-        marginLeft: "10%"
-    });
-    var count = {
-        followers: 0,
-    }
         useEffect(async () =>{
         await fetch("/api/AllAccounts/",{
             method: "POST",
@@ -43,7 +27,7 @@ const FindPeople = () => {
             return response.json();
         })
         .then(data=>{
-            console.log(data)
+            // console.log(data)
             setLoad(true)
             setPeople(data)
         })
@@ -70,45 +54,27 @@ const FindPeople = () => {
             })
 
     }
-
-    const getFollowerCount = (person) =>{
-       
-        // fetch("/api/getFollowerCount", {
-        //     method: "POST",
-        //     headers:{
-        //         'Accept':'application/json',
-        //         'Content-Type': 'application/json',
-        //       },
-        //     body: JSON.stringify({
-        //         toFollow: person,
-        //     })
-        // })
-        // .then(response=> {return response.json()})
-        // .then(data=>{
-        //     // setFollowers(data)
-        // })
-        // console.log(count)
-        // useEffect(async () =>{
-        //     await fetch("/api/getFollowerCount/",{
-        //         method: "POST",
-        //         headers:{
-        //             'Accept':'application/json',
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             toFollow: person,
-        //         })
-        //     })
-        //     .then(response=> {
-        //         return response.json();
-        //     })
-        //     .then(data=>{
-        //         setFollowCountLoaded(true)
-        //         setFollowers(data)
-        //     })
-        // },[followCountLoaded]);
-    
+    const unFollow = (person)=>{
+        fetch("/api/unFollow/", {
+            method: "POST",
+            headers:{
+                'Accept':'application/json',
+                'Content-Type': 'application/json',
+              },
+            body: JSON.stringify({
+                token: localStorage.getItem('token'),
+                toUnFollow: person,
+        })
+        })
+        .then(response=>{
+            return response.json()
+        })
+        .then(data=>{
+            setLoad(false)
+            // console.log(data)
+        })
     }
+
     return(
         <Box sx={{
             flexDirection: "row", 
@@ -240,48 +206,100 @@ const FindPeople = () => {
                                 justifyContent: "center"
                                 }}>
                                     <Box sx={{width: "100%", height:"100%", display: "flex", flexDirection:"row",marginTop: "5px"}}>
-                                        <Box sx ={{
+                                        {
+                                            Person.is_following == true ?
+                                            <Box sx ={{
                                             width:"50%", 
                                             // backgroundColor: "lightblue", 
                                             height:"100%", 
                                             textAlign: "center", 
                                             "&:hover":{
+                                                content: "Following",
+                                                color: 'gray',
+                                                backgroundColor: "#AD343E",
+                                            },
+                                            }}
+                                            onClick={()=>unFollow(Person)}
+                                            >
+                                                <Typography style={{
+                                                    marginTop: "25%",
+                                                    color: "black", 
+                                                    textDecoration: "none",
+                                                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                                    fontWeight: "600",
+
+                                                }}>
+                                                    Unfollow
+                                                </Typography>
+                                            </Box>
+                                            :
+                                            <Box sx ={{
+                                                width:"50%", 
+                                                // backgroundColor: "lightblue", 
+                                                height:"100%", 
+                                                textAlign: "center", 
+                                                "&:hover":{
+                                                    color: 'gray',
+                                                    backgroundColor: "#F2AF29"
+                                                },
+                                            }}
+                                            onClick={()=>follow(Person)}
+                                            >
+                                                <Typography style={{
+                                                    marginTop: "25%",
+                                                    color: "black", 
+                                                    textDecoration: "none",
+                                                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                                    fontWeight: "600",
+    
+                                                }}>
+                                                    Follow
+                                                </Typography>
+                                            </Box>
+                                        }
+                                        <Box sx={{
+                                            width:"50%",
+                                            height:"100%",
+                                            "&:hover":{
                                                 color: 'gray',
                                                 backgroundColor: "#F2AF29"
                                             },
-                                        }}
-                                        onClick={()=>follow(Person)}
-                                        >
-                                            <Typography style={{
-                                                marginTop: "25%",
-                                                color: "black", 
+                                        }}>
+                                        <Link
+                                            style={{
                                                 textDecoration: "none",
-                                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                                fontWeight: "600",
-
-                                            }}>
-                                                Follow
-                                            </Typography>
-                                        </Box>
-                                        <Box sx ={{
-                                            width:"50%", 
-                                            // backgroundColor: "lightgreen", 
-                                            height:"100%", 
-                                            textAlign: "center",
-                                            "&:hover":{
-                                              color: 'gray',
-                                              backgroundColor: "#F2AF29"
-                                            },
-                                        }}>  
-                                            <Typography style={{
-                                                marginTop: "25%",
-                                                color: "black", 
-                                                textDecoration: "none",
-                                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                                fontWeight: "600",
-                                            }}>
-                                                View Profile
-                                            </Typography>
+                                                color: "black",
+                                                underline: "none",
+                                              }}
+                                              to={{
+                                                pathname: '/Account/People/' + Person.key + '/',
+                                                state: { 
+                                                  key: Person.key,
+                                                  person: Person,
+                                                },  
+                                               }}
+                                            >
+                                            <Box sx ={{
+                                                width:"100%", 
+                                                // backgroundColor: "lightgreen", 
+                                                height:"100%", 
+                                                textAlign: "center",
+                                                "&:hover":{
+                                                  color: 'gray',
+                                                  backgroundColor: "#F2AF29"
+                                                },
+                                            }}>  
+                                                <Typography style={{
+                                                    marginTop: "25%",
+                                                    color: "black", 
+                                                    textDecoration: "none",
+                                                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                                    fontWeight: "600",
+                                                }}>
+                                                    View Profile
+                                                </Typography>
+                                            </Box>
+                                        </Link>
                                         </Box>
                                     </Box>
                                 </Box>

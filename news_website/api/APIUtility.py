@@ -19,7 +19,14 @@ def getCurrentUser(token, command):
         return User.objects.all().filter(id=token.user_id)[0].account
 
 
-def keyGen(chars = string.ascii_uppercase + string.digits, N=20):
+def ArticleKeyGen(chars = string.ascii_uppercase + string.digits, N=20):
+	return ''.join(random.choice(chars) for _ in range(N))
+
+def AccountKeyGen(size):
+    key = ""
+    return "-".join(AccountKeyHelp() for _ in range(size))
+
+def AccountKeyHelp(chars = string.ascii_uppercase + string.digits, N=10):
 	return ''.join(random.choice(chars) for _ in range(N))
 
 def getFollow(account, op):

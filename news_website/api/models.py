@@ -30,6 +30,7 @@ VISIBILITY = (
 )
 
 class Account(models.Model):
+    key = models.CharField(max_length=32, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=26)
     last_name = models.CharField(max_length=26)

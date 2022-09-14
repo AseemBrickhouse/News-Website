@@ -12,6 +12,7 @@ router.register(r'Accounts', AccountViewSet)
 #router.register('rest-auth/', include('rest_auth.urls'))
 
 urlpatterns = [
+        path('APITEST/', APITEST.as_view()),
         path('rest-auth/', include('rest_auth.urls')),
         path('rest-auth/registration/', include('rest_auth.registration.urls')),
         path('AccountCreation/', AccountCreation.as_view()),
@@ -25,6 +26,8 @@ urlpatterns = [
         path('AllAccounts/', AllAccounts.as_view()),
         path('DeleteArticle/', DeleteArticle.as_view()),
         path('Follow/', Follow.as_view()),
+        path('unFollow/', unFollow.as_view()),
+
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls

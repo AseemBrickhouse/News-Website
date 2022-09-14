@@ -13,6 +13,7 @@ urlpatterns = [
     path('Account/Followers', index),
     path('Login', index),
     path('Account', index),
-    url(r'Articles/(?P<id>[a-zA-Z0-9]+.*)', index),
-    url(r'Account/FindPeople/(?P<id>[a-zA-Z0-9]+.*)', index)
+    url(r'Articles/(?P<key>[a-zA-Z0-9]+.*)', index),
+    url(r'Account/People/(?P<key>[a-zA-Z0-9]+.*)', index)
+
 ]
