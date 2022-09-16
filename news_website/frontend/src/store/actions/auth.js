@@ -102,13 +102,13 @@ export const authCheckState = () => {
     }
 }
 
-export const accountCreation = (username, password) =>{
-    return dispatch => {
-        axios.get('http://127.0.0.1:8000/api/Accounts/', {
-            user: username,
-            password: password
-        }).then(response =>{
-            console.log(response);
-        })
-    }
-}
+// export const accountCreation = (username, password) =>{
+//     return dispatch => {
+//         axios.get('http://127.0.0.1:8000/api/Accounts/', {
+//             user: username,
+//             password: password
+//         }).then(response =>{
+//             console.log(response);
+//         })
+//     }
+// }

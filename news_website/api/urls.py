@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from api.views import *
+from api.allViews.AccountViews import *
+from api.allViews.FollowViews import *
+from api.allViews.ArticleViews import *
 
 router = DefaultRouter()
 router.register(r'Articles', ArticleViewSet)

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/auth';
+import * as authActions from '../../store/actions/auth';
+import * as articleActions from '../../store/actions/article';
 import {
     BrowserRouter as Router,
     Switch, 
@@ -18,17 +19,22 @@ import Login from '../Buttons/Login';
 import SignUp from '../Buttons/SignUp';
 import FindPeople from '../Dashboard/People/FindPeople';
 import AccountID from '../Dashboard/People/Account';
+
 class Routes extends React.Component{
-        componentDidMount(){
-        this.props.AutoTrySignUp();
+    componentDidMount(){
+        // this.props.AutoTrySignUp();
+        // this.props.articles();
     }
     render(){
+        // console.log(this.props)
         return(
         <React.Fragment>
             <Router>
                 <Header {...this.props}/>
                 <Switch>
-                    <Route exact path="/" component={HomePage}/>
+                    <Route exact path="/">
+                        <HomePage {...this.props}/>
+                    </Route>
                     <Route exact path="/SignUp" component={SignUp}/>
                     <Route exact path="/Login" component={Login}/>
                     <Route exact path ='/Account/EditAccount' component={EditAccount}/>
@@ -49,17 +55,19 @@ class Routes extends React.Component{
     }
 }
 
-const mapStateToProps = state => {
-    return{
-        isAuthenticated: state.token !== null
-    }
-}
+// const mapStateToProps = state => {
+//     // console.log(state.auth)
+//     return{
+//         isAuthenticated: state.auth.token !== null 
+//     }
+// }
 
-const mapDispatchToProps = dispatch => {
-    return{
-        AutoTrySignUp: () => dispatch(actions.authCheckState())
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return{
+//         articles: () => dispatch(articleActions.getARTICLES()),
+//         AutoTrySignUp: () => dispatch(authActions.authCheckState())
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default (Routes);
 

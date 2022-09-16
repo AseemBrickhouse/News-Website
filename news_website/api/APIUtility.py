@@ -1,5 +1,7 @@
 from .models import *
+from .serializers import *
 from rest_framework.authtoken.models import Token
+
 import random
 import string
 
@@ -34,6 +36,14 @@ def getFollow(account, op):
         return len(Followers.objects.all().filter(following_user=account))
     if op == "FOLLOWING":
         return len(Followers.objects.all().filter(account=account))
+
+def PopularUserArticles(account):
+    queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:2]
+    popular_articles = {}
+    for article in queryset:
+        convertedArticle = ArticleSerializer(article)
+        popular_articles[convertedArticle.data['id']] = convertedArticle.data
+    return(popular_articles)
 
 def setQuerySetData(key, op):
     pass

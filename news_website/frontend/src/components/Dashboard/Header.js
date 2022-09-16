@@ -34,6 +34,7 @@ class Header extends Component{
     super(props);
   }
   render(){ 
+    // console.log(this.props)
     return (
       this.props.location.pathname != '/Login' && this.props.location.pathname != '/SignUp' ?
       <React.Fragment>

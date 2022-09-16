@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect}  from 'react';
 import {withRouter, Link } from 'react-router-dom';
 import * as actions from '../../store/actions/auth';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ class MyAccount extends React.Component {
             first_name: "",
             last_name: "",
         };
-    }
+    };
 
    componentDidMount(){
         fetch("/api/current_user/", {
@@ -47,6 +47,7 @@ class MyAccount extends React.Component {
                 return response.json();
             })
             .then(data =>{
+              // console.log(data)
               return this.setState({
                   first_name: data.first_name,
                   last_name: data.last_name,

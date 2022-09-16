@@ -1,13 +1,14 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { Component, useState, useEffect, useSelector } from 'react';
 import Advertisments from './Advertisments';
-import { Redirect, Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import {
-  Route,
+  Route, withRouter, Redirect, Link
 } from "react-router-dom";
 import AdSense from 'react-adsense';
 import ArticleID from './ArticleID';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Util from '../Utility';
+
 import { 
   Grid, Typography, TextField, 
   FormControlLabel, Avatar, Chip,
@@ -21,9 +22,10 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import * as actions from '../../store/actions/article';
 
-const Article = () => {
-  // const Articles = () => {
+const Article = (props) => {
+
     const StyledButton = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
       backgroundColor: "black",
@@ -41,20 +43,11 @@ const Article = () => {
     const [data, setAllArticles] = useState(null);
     const [tags, setTags] = useState(null);
     const [picks, setPicks] = useState(null);
+    
     useEffect(async () => {
-      await fetch("api/AllArticles/", {
-        method: "POST",
-        headers:{
-          'Accept':'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            tags: [tags]
-        })
-      }).then(response =>{
-        return response.json();
-      }).then(data => setAllArticles(data));
-    }, [tags]);
+        props.getArticles();
+        setAllArticles(props.data);
+    },[]);
 
     useEffect(async () =>{
       await fetch("api/PopularArticles/", {
@@ -67,22 +60,20 @@ const Article = () => {
         return response.json();
       }).then(data => setPicks(data));
     },[])
-    // console.log(this.state)
-    // console.log(data)
+
     const Utility= new Util();
     const handleView = (key)=>{
       <Route exact path={'/Articles/' + key + '/'}>
           <ArticleID/>
       </Route>
     }
-    console.log(data)
-
+    console.log(props.allArticles)
     return(
       <React.Fragment>
         <div className='container'>
         <Box sx={{display: "flex", marginLeft: "15vw", flexDirection: "column", marginTop:"1px",}}>
           { 
-            data != null ? Object.entries(data).map(([id,Article]) => {
+            props.allArticles != null ? Object.entries(props.allArticles).map(([id,Article]) => {
               return(
                   <Link 
                     style={{
@@ -228,7 +219,7 @@ const Article = () => {
                   </Typography>
                 </Box>
                 {
-                  picks != null ? Object.entries(picks).map(([id,Article]) => {
+                  props.popArticles != null ? Object.entries(props.popArticles).map(([id,Article]) => {
                     return(
                       <Box>
                         <Link
@@ -313,71 +304,17 @@ const Article = () => {
     )
   }
 
-    // return(
-    //   <Articles/>
-    // );   
-// }
-export default Article;
+const mapStateToProps = (state) => {
+  return{
+        allArticles: state.articles.allArticles,
+        popArticles: state.articles.popArticles,
 
-// constructor(props){
-//   super(props);
-//   this.state = {
-//       data: [],
-//       article: [],
-//       loaded: false,
-//       placeholder: "Loading",
-//       popularTags: [],
-//   };
-// }
+  }
+}
 
-// componentDidMount(){
-// const Utility= new Util();
-// this.setState(() =>{
-//  return{
-//    data: Utility.GETAllArticles(),
-//    popularTags: Utility.GETPopularTags()        
-//  };
-// });
-// fetch("api/AllArticles/", {
-//   method: "GET",
-//   headers:{
-//     'Accept':'application/json',
-//     'Content-Type': 'application/json',
-//   },
-// }).then(response =>{
-//   if(response.status > 400){
-//       return this.setState(()=>{
-//           return{ placeholder: "Something went wrong!" };
-//       });
-//   }
-//   return response.json();
-// }).then(data =>{
-//     this.setState(() =>{
-//       return{
-//           data,
-//       };
-//     });
-// })
-
-// fetch("api/PopularTags/", {
-//   method: "GET",
-//   headers:{
-//     'Accept':'application/json',
-//     'Content-Type': 'application/json',
-//   },
-// }).then(response =>{
-//   if(response.status > 400){
-//       return this.setState(()=>{
-//           return{ placeholder: "Something went wrong!" };
-//       });
-//   }
-//   return response.json();
-// }).then(data =>{
-//     this.setState(() =>{
-//       return{
-//           popularTags: data,
-//           loaded: true
-//       };
-//     });
-// })
-// }
+const mapDispatchToProps = dispatch =>{
+  return{
+    getArticles: () => dispatch(actions.getARTICLES())
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Article));
