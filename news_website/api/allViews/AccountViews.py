@@ -10,6 +10,7 @@ from ..APIUtility import *
 
 class current_user(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        print(request)
         try:
             account = getCurrentUser(request.data['token'], "CURRENTACCOUNT")
         except:

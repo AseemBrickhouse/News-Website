@@ -67,7 +67,7 @@ const Article = (props) => {
           <ArticleID/>
       </Route>
     }
-    console.log(props.allArticles)
+    console.log(props)
     return(
       <React.Fragment>
         <div className='container'>
