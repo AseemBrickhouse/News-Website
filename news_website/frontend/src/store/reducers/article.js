@@ -38,6 +38,7 @@ const reducer = (state=initialState, action) => {
         case actionTypes.GET_ARTICLES: return startGETARTICLES(state, action);
         case actionTypes.GET_ARTICLESSUCCESS: return GETARTICLESSUCCESS(state, action);
         case actionTypes.GET_ARTICLESFAIL: return GETARTICLESFAIL(state, action);
+
         default:
             return state;
     }

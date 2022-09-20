@@ -207,3 +207,26 @@ class MyBookmarkedArticles(ObtainAuthToken):
         print(queryset)
 
         return Response(queryset)
+
+class SavedArticles(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        #Handle error i.e noToken
+        if request.data['token'] == None:
+            return Response({
+                'Message': "Not logged in"
+            })
+        else:
+            account = getCurrentUser(request.data['token'], "SAVEDARTICLES")
+            saved = BookmarkedArticles.objects.all().filter(account=account)
+            queryset = {}
+            for entry in saved:
+                articleInfo = ArticleSerializer(entry.saved).data
+                queryset[articleInfo['key']] = articleInfo
+            if queryset != {}:
+                return Response(queryset)
+            else:
+                return Response({
+                    "Message": "You have no saved articles"
+                })
+            # return Response(queryset) if queryset != None else return Response({ "Message": "you have no saved articles"})
+            # return Response(queryset)

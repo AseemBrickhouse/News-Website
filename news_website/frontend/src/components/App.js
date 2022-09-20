@@ -4,13 +4,17 @@ import Routes from './Home/Routes';
 import { connect } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 import * as articleActions from '../store/actions/article';
+import * as savedAction from '../store/actions/savedArticles';
 
 class App extends Component{
     componentDidMount(){
+        const token = localStorage.getItem('token');
         this.props.AutoTrySignUp();
-        // this.props.AllArticles();
+        this.props.AllArticles(token);
+        this.props.SavedArticles(token);
     }
     render(){
+        // console.log(this.props)
         return( 
             <React.Fragment>
                 <Router>
@@ -21,17 +25,17 @@ class App extends Component{
     }
 }
 const mapStateToProps = (state) => {
-    // console.log(state)
     return{
             account: state.auth.account,
-            isAuthenticated: state.auth.token !== null 
+            isAuthenticated: state.auth.token !== null ,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
-        // AllArticles: () => dispatch(articleActions.getARTICLES()),
-        AutoTrySignUp: () => dispatch(authActions.authCheckState())
+        AllArticles: (token) => dispatch(articleActions.getARTICLES(token)),
+        AutoTrySignUp: () => dispatch(authActions.authCheckState()),
+        SavedArticles: (token) => dispatch(savedAction.getSAVEDARTICLES(token)),
     }
 }
 

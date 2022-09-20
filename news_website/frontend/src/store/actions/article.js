@@ -28,7 +28,7 @@ export const getARTICLES = (token) =>{
             token: token,
         })
         .then(response=>{
-            console.log(response.data['popArticles'])
+            // console.log(response.data['popArticles'])
             dispatch(articleSUCCESS(response.data['allArticles'], response.data['popArticles']))
         })
         .catch(error =>{

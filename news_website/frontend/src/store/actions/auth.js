@@ -1,6 +1,5 @@
 import * as actionTypes from './types';
 import axios from 'axios';
-import Account from '../../components/Dashboard/AccountHome/Account';
 
 export const authStart = () =>{
     return{
@@ -40,7 +39,7 @@ export const getAuthInfo = token =>{
             token: token,
         })
         .then(response =>{
-            console.log(response.data)
+            // console.log(response.data)
             dispatch(getAuthInfoSUCCESS(response.data))
         })
     }
@@ -130,8 +129,8 @@ export const authLOGOUT = () =>{
 export const authCheckState = () => {
     return dispatch =>{
         const token = localStorage.getItem('token');
-        const account = null;
         if(token == undefined){
+            dispatch(getAuthInfoSUCCESS("No user currently logged"))
             dispatch(authLOGOUT())
         }
         else{

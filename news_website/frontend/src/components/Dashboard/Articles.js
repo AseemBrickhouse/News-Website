@@ -42,10 +42,10 @@ const Article = (props) => {
     });
     const [data, setAllArticles] = useState(null);
     const [tags, setTags] = useState(null);
-    const [picks, setPicks] = useState(null);
 
-    const [bookmark, setBookmark] = useState(false);
-    const [load, setLoad] = useState(false);
+    const [load, setLoad] = useState(true);
+  
+    const Utility= new Util();
 
     useEffect(async () => {
         props.getArticles(localStorage.getItem('token'));
@@ -53,14 +53,12 @@ const Article = (props) => {
         setLoad(true)
     },[load]);
 
-
-    const Utility= new Util();
     const handleView = (key)=>{
       <Route exact path={'/Articles/' + key + '/'}>
           <ArticleID/>
       </Route>
     }
-    console.log(props)
+
     const handleBookMark = (key) =>{
         fetch('api/Bookmark/', {
           method: "POST",
@@ -229,7 +227,7 @@ const Article = (props) => {
                     </Box>
               )
             })
-            : console.log(data)
+            : <></>
           }
         </Box>
           <StickyBox offsetTop={50}>
@@ -352,6 +350,7 @@ const Article = (props) => {
   }
 
 const mapStateToProps = (state) => {
+  // console.log(state)
   return{
         allArticles: state.articles.allArticles,
         popArticles: state.articles.popArticles,
@@ -364,4 +363,5 @@ const mapDispatchToProps = dispatch =>{
     getArticles: (token) => dispatch(actions.getARTICLES(token))
   }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Article));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Article));
+

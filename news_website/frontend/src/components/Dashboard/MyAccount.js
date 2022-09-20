@@ -87,7 +87,7 @@ const MyAccount = (props) =>{
                     <Link to="/Account/CreateArticle/" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Create Article</Typography></Link>
                 </ListItem>
                 <ListItem>
-                    <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Saved Articles</Typography></Link>
+                    <Link to="/Account/SavedArticles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Saved Articles</Typography></Link>
                 </ListItem>
               </List>
             </Collapse>

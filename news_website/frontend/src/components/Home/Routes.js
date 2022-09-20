@@ -19,11 +19,15 @@ import Login from '../Buttons/Login';
 import SignUp from '../Buttons/SignUp';
 import FindPeople from '../Dashboard/People/FindPeople';
 import AccountID from '../Dashboard/People/Account';
+import SavedArticles from '../Dashboard/AccountHome/SavedArticles';
 
 class Routes extends React.Component{
+    constructor(props){
+        super(props)
+    };
     componentDidMount(){
         // this.props.AutoTrySignUp();
-        // this.props.articles();
+        //  console.log(this.props);
     }
     render(){
         // console.log(this.props)
@@ -38,6 +42,7 @@ class Routes extends React.Component{
                     <Route exact path="/SignUp" component={SignUp}/>
                     <Route exact path="/Login" component={Login}/>
                     <Route exact path ='/Account/EditAccount'><EditAccount {...this.props}/></Route>
+                    <Route exact path ='/Account/SavedArticles'><SavedArticles {...this.props}/></Route>
                     <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
                     <Route exact path={'/Articles/:id'} component={ArticleID}/>
                     <Route exact path='/Account/FindPeople' component={FindPeople}/>
