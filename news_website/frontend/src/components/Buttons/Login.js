@@ -16,7 +16,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { styled } from "@material-ui/core/styles";
 
 
-const theme = createTheme();
 class Login extends React.Component{
     constructor(props){
         super(props);

@@ -1,12 +1,20 @@
 import * as React from 'react';
 import CSRFToken from '../../../store/actions/csrfToken';
+import * as actions from '../../../store/actions/auth';
 import { 
     Grid, Typography, TextField, 
     FormControlLabel, Avatar, MenuItem,  TextareaAutosize,
-    Button, CssBaseline, Link, Box, FormControl,
+    Button, CssBaseline, Box, FormControl,
     Container, Checkbox, InputLabel, Select,
   } from "@material-ui/core";
+  import { connect } from 'react-redux';
+  import {
+    Route, withRouter, Redirect, Link
+  } from "react-router-dom";
 
+  // wanted to update this file but werid things kept happening
+  //account not updated on refresh
+  //data not being passed around
 class EditAccount extends React.Component{
     constructor(props){
         super(props);
@@ -92,6 +100,7 @@ class EditAccount extends React.Component{
                 })
             }).then(response=>{
                 console.log(response)
+                window.location.reload()
             })
         }
         return(

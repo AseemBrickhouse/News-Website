@@ -3,8 +3,7 @@ import { Switch } from 'react-router-dom';
 import Articles from "../Dashboard/Articles";
 import Header from '../Dashboard/Header';
 
-const HomePage = (props) => { 
-
+const HomePage = (props) => {
     return (
         <Articles {...props}/>
     );

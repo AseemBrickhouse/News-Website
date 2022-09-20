@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from ..APIUtility import *
 
 class AllArticles(APIView):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         querysetSend = {}
         # queryset= []
 
@@ -37,28 +37,35 @@ class AllArticles(APIView):
             tmpArt = ArticleSerializer(article)
             # attachNameToArticle(tmpArt)
             # account = Account.objects.all().filter(id=tmpArt.data['reporter_account'])
-            querysetSend[tmpArt.data['id']] = tmpArt.data
-            querysetSend[tmpArt.data['id']]['reporter_account'] = attachNameToArticle(tmpArt)
+            querysetSend[tmpArt.data['key']] = tmpArt.data
+            querysetSend[tmpArt.data['key']]['reporter_account'] = attachNameToArticle(tmpArt)
+            if request.data['token'] != None:
+                try:
+                    isBookmarked = BookmarkedArticles.objects.get(
+                        account = getCurrentUser(request.data['token'], "isBookmarked"),
+                        saved=article,
+                    )
+                    querysetSend[tmpArt.data['key']]['isBookmarked'] = True
+                except BookmarkedArticles.DoesNotExist:
+                    querysetSend[tmpArt.data['key']]['isBookmarked'] = False
 
         popqueryset = {}
         popQuerySetRequest = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:3]
 
         for article in popQuerySetRequest:
             articleJson = ArticleSerializer(article)
-            popqueryset[articleJson.data['id']] = articleJson.data
-            popqueryset[articleJson.data['id']]['reporter_account'] = attachNameToArticle(articleJson)
-        # print(querysetSend)     
+            popqueryset[articleJson.data['key']] = articleJson.data
+            popqueryset[articleJson.data['key']]['reporter_account'] = attachNameToArticle(articleJson)
         return Response({
                             'allArticles': querysetSend, 
                             'popArticles': popqueryset
                         })
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         pass
 
 class AllUserArticles(ObtainAuthToken):
         def post(self, request, *args, **kwargs):
-            # account = getCurrentUser(request.data['token'], "USERARTICLES")
             queryset = Article.objects.all().filter(reporter_account=getCurrentUser(request.data['token'], "USERARTICLES"))
             
             AllArticles = {}
@@ -149,3 +156,54 @@ class PopularTags(APIView):
         return Response(request.data)
     def post(self, request, *args, **kwargs):
         pass
+
+class Bookmark(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        try:
+            bookmark = BookmarkedArticles.objects.get(
+                account = getCurrentUser(request.data['token'], "BOOKMARKARTICLE"),
+                saved = Article.objects.get(key=request.data['key'])
+            )
+            return Response({
+                "Message" : "Bookmark already exist"
+            })
+        except BookmarkedArticles.DoesNotExist:
+            bookmark = BookmarkedArticles.objects.create(
+                account = getCurrentUser(request.data['token'], "BOOKMARKARTICLE"),
+                saved = Article.objects.get(key=request.data['key'])
+            )
+            bookmark.save()
+            return Response({
+                'Message': "Succesfully Bookmarked",
+                'account': AccountSerializer(getCurrentUser(request.data['token'], "BOOKMARKARTICLE")).data,
+                'article': ArticleSerializer(Article.objects.get(key=request.data['key'])).data
+            })
+
+class RemoveBookmark(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        try:
+            isBookmarked = BookmarkedArticles.objects.get(
+                account=getCurrentUser(request.data['token'], "REMOVEBOOKMARK"),
+                saved=Article.objects.get(key=request.data['key'])
+            ).delete()
+            return Response({
+                'Message': "Successfully removed",
+            })
+        except BookmarkedArticles.DoesNotExist:
+            return Response({
+                'Error': 'Article not Bookmarked!',
+            })
+    
+class MyBookmarkedArticles(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        bookmarked = BookmarkedArticles.objects.all().filter(
+            account= getCurrentUser(request.data['token'], "GETBOOKMARKEDARTICLES"),
+        )
+        print(bookmarked)
+        queryset = {}
+        for entry in bookmarked:
+            queryset[ArticleSerializer(entry.saved).data['key']] = ArticleSerializer(entry.saved).data
+        
+        print(queryset)
+
+        return Response(queryset)

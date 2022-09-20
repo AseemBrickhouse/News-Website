@@ -36,15 +36,33 @@ export const getAuthInfoFAIL = error =>{
 }
 export const getAuthInfo = token =>{
     return dispatch=>{
-        axios.post('http://127.0.0.1:8000/current_user',{
+        axios.post('http://127.0.0.1:8000/api/current_user/',{
             token: token,
         })
         .then(response =>{
             console.log(response.data)
-            dispatch(getAuthInfoSUCCESS(resposne.data))
+            dispatch(getAuthInfoSUCCESS(response.data))
         })
     }
 }
+//Couldnt get working
+// export const getAuthEditSuccess = account =>{
+//     return{
+//         type: actionTypes.GET_AUTH_EDIT,
+//         account,
+//     }
+// }
+// export const getAuthEdit = (token) =>{
+//     console.log(token)
+//     return dispatch=>{
+//         axios.post('http://127.0.0.1:8000/EditAccount/',{
+//             token: token,
+//         })
+//         .then(response =>{
+//             console.log(response.data)
+//         })
+//     }
+// }
 export const authLogin = (username, password) => {
     return dispatch =>{
         dispatch(authStart());

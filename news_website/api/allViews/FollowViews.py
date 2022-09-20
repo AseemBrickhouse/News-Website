@@ -45,3 +45,38 @@ class unFollow(ObtainAuthToken):
                                 email=following['email']
                             )).delete()
         return Response(request.data)
+
+class myFollowers(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        account = getCurrentUser(request.data['token'], "myFollowers")
+        myFollowerList = Followers.objects.all().filter(following_user=account)
+        queryset = {}
+        for follower in myFollowerList:
+            account = follower.account
+            queryset[AccountSerializer(account).data['key']] = AccountSerializer(account).data
+            queryset[AccountSerializer(account).data['key']]['written_articles']= {}
+            articles = Article.objects.all().filter(reporter_account=account)
+            for article in articles:
+                data = ArticleSerializer(article).data
+                queryset[AccountSerializer(account).data['key']]['written_articles'][data['key']] = data
+
+        return Response(queryset)
+
+class myFollowing(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        account = getCurrentUser(request.data['token'], "myFollowers")
+        myFollowingList = Followers.objects.all().filter(account=account)
+        queryset = {}
+        print(myFollowingList)
+        for followering in myFollowingList:
+            account = followering.following_user
+            queryset[AccountSerializer(account).data['key']] = AccountSerializer(account).data
+            queryset[AccountSerializer(account).data['key']]['written_articles']= {}
+            articles = Article.objects.all().filter(reporter_account=account)
+            for article in articles:
+                data = ArticleSerializer(article).data
+                queryset[AccountSerializer(account).data['key']]['written_articles'][data['key']] = data
+
+        return Response(queryset)

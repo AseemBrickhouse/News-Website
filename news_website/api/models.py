@@ -1,3 +1,4 @@
+from pyexpat import model
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
@@ -67,4 +68,9 @@ class Article(models.Model):
 class Followers(models.Model):
     account = models.ForeignKey(Account, related_name="following", on_delete=models.CASCADE)
     following_user = models.ForeignKey(Account, related_name="followers", on_delete=models.CASCADE)
+    create = models.DateTimeField(auto_now_add=True)
+
+class BookmarkedArticles(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    saved = models.ForeignKey(Article, on_delete=models.CASCADE)
     create = models.DateTimeField(auto_now_add=True)

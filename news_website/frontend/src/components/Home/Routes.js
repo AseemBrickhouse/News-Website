@@ -37,7 +37,7 @@ class Routes extends React.Component{
                     </Route>
                     <Route exact path="/SignUp" component={SignUp}/>
                     <Route exact path="/Login" component={Login}/>
-                    <Route exact path ='/Account/EditAccount' component={EditAccount}/>
+                    <Route exact path ='/Account/EditAccount'><EditAccount {...this.props}/></Route>
                     <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
                     <Route exact path={'/Articles/:id'} component={ArticleID}/>
                     <Route exact path='/Account/FindPeople' component={FindPeople}/>

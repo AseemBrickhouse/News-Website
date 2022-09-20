@@ -24,11 +24,11 @@ const MyAccount = (props) =>{
     const [NestedArticleOpen, NestedSetArticleOpen] = React.useState(false)
     const [NestedPeopleOpen, NestedSetPeopleOpen] = React.useState(false)
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {setAnchorEl(event.currentTarget)};
-    const handleClose = () => {setAnchorEl(null)};
-    const handleNestedProfileClick = () =>{NestedSetProfileOpen(!NestedProfileOpen)}
-    const handleNestedArticleClick = () =>{NestedSetArticleOpen(!NestedArticleOpen)}
-    const handleNestedPeopleClick = () =>{NestedSetPeopleOpen(!NestedPeopleOpen)}
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null)
+    const handleNestedProfileClick = () =>NestedSetProfileOpen(!NestedProfileOpen)
+    const handleNestedArticleClick = () =>NestedSetArticleOpen(!NestedArticleOpen)
+    const handleNestedPeopleClick = () =>NestedSetPeopleOpen(!NestedPeopleOpen)
     return(
       <div>
         <button

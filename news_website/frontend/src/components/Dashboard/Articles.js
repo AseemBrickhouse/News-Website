@@ -43,23 +43,16 @@ const Article = (props) => {
     const [data, setAllArticles] = useState(null);
     const [tags, setTags] = useState(null);
     const [picks, setPicks] = useState(null);
-    
-    useEffect(async () => {
-        props.getArticles();
-        setAllArticles(props.data);
-    },[]);
 
-    useEffect(async () =>{
-      await fetch("api/PopularArticles/", {
-        method: "GET",
-        headers:{
-          'Accept':'application/json',
-          'Content-Type': 'application/json',
-        },
-      }).then(response =>{
-        return response.json();
-      }).then(data => setPicks(data));
-    },[])
+    const [bookmark, setBookmark] = useState(false);
+    const [load, setLoad] = useState(false);
+
+    useEffect(async () => {
+        props.getArticles(localStorage.getItem('token'));
+        setAllArticles(props.data);
+        setLoad(true)
+    },[load]);
+
 
     const Utility= new Util();
     const handleView = (key)=>{
@@ -68,6 +61,42 @@ const Article = (props) => {
       </Route>
     }
     console.log(props)
+    const handleBookMark = (key) =>{
+        fetch('api/Bookmark/', {
+          method: "POST",
+          headers:{
+            'Accept':'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              key: key,
+              token: localStorage.getItem('token')
+          })
+        })
+        .then(response => {return response.json()})
+        .then(data => {
+          setLoad(false)
+          console.log(data)
+        })
+    }
+    const handleRemoveBookMark = (key) =>{
+      fetch('api/RemoveBookmark/', {
+        method: "POST",
+        headers:{
+          'Accept':'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            key: key,
+            token: localStorage.getItem('token')
+        })
+      })
+      .then(response => {return response.json() })
+      .then(data => {
+        setLoad(false)
+        console.log(data)
+      })
+  }
     return(
       <React.Fragment>
         <div className='container'>
@@ -75,23 +104,30 @@ const Article = (props) => {
           { 
             props.allArticles != null ? Object.entries(props.allArticles).map(([id,Article]) => {
               return(
-                  <Link 
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      underline: "none",
-                    }}
-                    to={{
-                      pathname: '/Articles/' + Article.key + '/',
-                      state: { 
-                        ArticleID: Article.key,
-                        Article: Article,
-                    },   
-                  }}>
-                    <Box onClick={() => handleView(id)} 
+                    <Box  
                       sx={{
                          width: "40vw", height: "25vh",
-                         display: "flex", flexDirection:"column", borderTop: "solid 1px black", borderBottom: "solid 1px black",borderRight: "solid 2px black", paddingRight: "2vw"
+                        //  backgroundColor: "lightblue",
+                         marginRight: "20px",
+                         display: "flex", 
+                         flexDirection:"row", 
+                         borderTop: "solid 1px black", 
+                         borderBottom: "solid 1px black",
+                         borderRight: "solid 2px black", 
+                         paddingRight: "2vw"
+                      }}>
+                      <Link 
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        underline: "none",
+                      }}
+                      to={{
+                        pathname: '/Articles/' + Article.key + '/',
+                        state: { 
+                          ArticleID: Article.key,
+                          Article: Article,
+                      },   
                       }}>
                         <Box sx={{width: "100%", height: "20%", flexDirection: "row", display:"flex", whiteSpace:"pre-wrap", marginTop: "4px"}}>
                             <Box>
@@ -112,7 +148,9 @@ const Article = (props) => {
                               }
                             </Box>
                         </Box>
-                        <Box sx={{width: "100%", height: "60%", display:"flex", flexDirection:"column"}}>
+                        <Box sx={{width: "40vw", height: "60%", display:"flex", flexDirection:"column",
+                          // backgroundColor: "orange",
+                        }}>
                               <Box sx={{
                                 fontSize: "25px",
                                 fontWeight: "500",
@@ -123,7 +161,7 @@ const Article = (props) => {
                               <Box sx={{
                                 fontSize: "16px",
                                 marginLeft: "5%",
-                                marginRight: "10%",
+                                marginRight: "5%",
                                 mt: "1%"
                               }}>
                                 {Article.article_description}
@@ -174,12 +212,21 @@ const Article = (props) => {
                               </Box>
                             }
                           </Box>
-                          <Box sx={{alignContent: "right", marginRight: "10%"}}>
-                            <BookmarkAddOutlinedIcon sx={{color: "#C1BDBD", fontSize: "35px"}}/>
-                          </Box>
                         </Box>
+                        </Link>
+                        <Box sx={{alignContent: "right", marginTop: "auto", marginRight: "0%"}}>
+                            {
+                              Article.isBookmarked ? 
+                                <Box onClick={() => handleRemoveBookMark(Article.key)}>
+                                  <BookmarkAddOutlinedIcon sx={{color: "yellow", fontSize: "35px"}}/>
+                                </Box>
+                              : 
+                                <Box onClick={() => handleBookMark(Article.key)}>
+                                  <BookmarkAddOutlinedIcon sx={{color: "#C1BDBD", fontSize: "35px"}}/>
+                                </Box>
+                            }
+                          </Box>
                     </Box>
-                  </Link>
               )
             })
             : console.log(data)
@@ -290,7 +337,7 @@ const Article = (props) => {
             </Box>
           </StickyBox>
           <StickyBox offsetTop={50}>
-            <Box sx={{backgroundColor: "tansparent", marginLeft: "10px", marginTop: "1vh"}}>
+            <Box sx={{backgroundColor: "orange", marginLeft: "10px", marginTop: "1vh"}}>
             <AdSense.Google
               client='ca-pub-7292810486004926'
               slot='7806394673'
@@ -314,7 +361,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch =>{
   return{
-    getArticles: () => dispatch(actions.getARTICLES())
+    getArticles: (token) => dispatch(actions.getARTICLES(token))
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Article));
