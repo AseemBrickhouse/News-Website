@@ -8,6 +8,10 @@ import {
   } from "@material-ui/core";
 
 const AccountID = (props) =>{
+    const [load, setLoad] = useState(false)
+    useEffect(()=>{
+        
+    }, [load])
     console.log(props.location.state)
     const person = props.location.state.person
     return(

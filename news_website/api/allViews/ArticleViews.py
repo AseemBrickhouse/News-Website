@@ -159,6 +159,10 @@ class PopularTags(APIView):
 
 class Bookmark(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        if request.data['token'] == None:
+            return Response({
+                "Error" : "No current toke. (Try loggin in or Creating an account! )"
+            })
         try:
             bookmark = BookmarkedArticles.objects.get(
                 account = getCurrentUser(request.data['token'], "BOOKMARKARTICLE"),
@@ -181,6 +185,10 @@ class Bookmark(ObtainAuthToken):
 
 class RemoveBookmark(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        if request.data['token'] == None:
+            return Response({
+                "Error" : "No current toke. (Try loggin in or Creating an account! )"
+            })
         try:
             isBookmarked = BookmarkedArticles.objects.get(
                 account=getCurrentUser(request.data['token'], "REMOVEBOOKMARK"),

@@ -22,7 +22,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import * as actions from '../../store/actions/article';
+import * as articleActions from '../../store/actions/article';
+import * as savedArticleActions from '../../store/actions/savedArticles';
 
 const Article = (props) => {
 
@@ -48,9 +49,12 @@ const Article = (props) => {
     const Utility= new Util();
 
     useEffect(async () => {
-        props.getArticles(localStorage.getItem('token'));
-        setAllArticles(props.data);
-        setLoad(true)
+        console.log(props)
+        const token = localStorage.getItem('token');
+        props.getArticles(token);
+        props.getSavedArticles(token);
+        // setAllArticles(props.data);
+        setLoad(true);
     },[load]);
 
     const handleView = (key)=>{
@@ -250,7 +254,7 @@ const Article = (props) => {
                     />
                 </Box>
               </Box>
-              <Box sx={{width: "100%", height:"40%"}}>
+              <Box sx={{width: "100%", height:"40%",}}>
                 <Box sx={{marginBottom: "3px"}}>
                   <Typography 
                     style={{
@@ -360,7 +364,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch =>{
   return{
-    getArticles: (token) => dispatch(actions.getARTICLES(token))
+    getSavedArticles: (token) => dispatch(savedArticleActions.getSAVEDARTICLES(token)),
+    getArticles: (token) => dispatch(articleActions.getARTICLES(token))
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Article));

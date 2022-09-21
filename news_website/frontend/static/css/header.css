@@ -144,8 +144,8 @@ body{
 .headFull{
     margin-top: -20px;
     /* background-image: linear-gradient(to left, #ccb9b1 , #212123); */
-    background-image: linear-gradient(to left, #d9cab3 , #212123);
-    background-color: #212123;
+    /* background-image: linear-gradient(to left, #d9cab3 , #212123); */
+    background-color: #d9cab3;
     height: 300px;
     width: 100%;
     border-bottom: 2px solid #616063;

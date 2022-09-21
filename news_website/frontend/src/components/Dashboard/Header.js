@@ -1,67 +1,129 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import MyAccount from './MyAccount';
 import {
-  BrowserRouter as Router,
   Link,
   withRouter
 } from "react-router-dom";
 import * as actions from '../../store/actions/auth';
-import { getTableHeadUtilityClass } from '@mui/material';
 
 import { 
-  Grid, Typography, TextField, 
-  FormControlLabel, Avatar, 
-  CssBaseline, Box, MenuList, Button,
-  Container, Checkbox, MenuItem, NestedMenuItem,
+  Box, Button,
 } from "@material-ui/core";
+import { styled } from "@material-ui/core/styles";
+import StickyBox from "react-sticky-box";
+
 //Prob can remove
-window.onscroll = function(){
-  myFunction();
-};
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  } 
-}
 
-class Header extends Component{
-  constructor(props){
-    super(props);
-  }
-  render(){ 
-    // console.log(this.props)
+const Header = (props) =>{
+    const StyledButton = styled(Button)({
+      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+      backgroundColor: "black",
+      width: "110%",
+      height: "100%",
+      color: "white",
+      textDecoration: "none",
+      fontSize: "17px",
+      fontWeight: "300",
+      borderRadius: "50px",
+      textTransform: "none",
+      textDecoration: "none",
+      "&:hover":{
+        fontSize: "15px",
+        fontWeight: "500",
+        color: "white",
+        backgroundColor: "black",
+      }
+    });
     return (
-      this.props.location.pathname != '/Login' && this.props.location.pathname != '/SignUp' ?
+      props.location.pathname != '/Login' && props.location.pathname != '/SignUp' ?
       <React.Fragment>
-        <div className='topnav' id = "myTopnav">
-          {/* src="../../static/images/what.png" */}
-          <img alt="No Image"></img>
-          {/* <aTitle><Link to="/">Lorem</Link></aTitle> */}
-          <home><Link to="/">Lorem</Link></home>
-          {
-            this.props.isAuthenticated ? 
-              <div>
-                <MyAccount {...this.props}/>
-              </div>
-            :
-            <div>
-              <Link to="/Login" {...this.props}>Login</Link>
-              <Link to="/SignUp" {...this.props}>SignUp</Link>
-              <a href="#About us"> About Us </a>
-            </div>
-          }
+        <StickyBox offsetTop={0}>
+          <Box sx={{
+            // zIndex: "100px",
+            backgroundColor: "#d9cab3", 
+            top: "0px", 
+            height: "50px", 
+            borderBottom: "1px solid black", 
+            display: "flex", 
+            flexDirection: "row",
+            textOverflow: "hidden",
+            // justifyContent:"space-between"
+          }}>
+            <Box sx={{display: "flex", flexDirection:"row", marginLeft: "15vw",}}>
+              <Box sx={{marginLeft: "-5vw"}}>
+                <img alt="No Image"></img>
+              </Box>
+              <Box sx= {{padding: "12px", position: "absolute"}}>
+                <Link 
+                  style={{
+                    textDecoration: 'none',
+                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                    color: "black",
+                    fontSize: "20px",
+                    fontWeight: "700",
+                  }}
+                  to="/"
+                >
+                  Lorem
+                </Link>
+              </Box>
+            </Box>
+            {
+                props.isAuthenticated ? 
+                  <Box sx={{display: "flex", flexDirection:"row", textAlign:"center", marginLeft: "46vw"}}>
+                    <MyAccount {...props}/>
+                  </Box>
+                :
+                <Box sx={{display: "flex", flexDirection:"row", padding: "12px", textAlign:"center", marginLeft: "46vw"}}>
+                  <Box sx={{marginRight: "20px"}}>
+                    <Link 
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                      }}
+                      to=""
+                      >
+                        Our Mission
+                    </Link>
+                    {/* <a href="#About us"> About Us </a> */}
+                  </Box>
+                  <Box sx={{marginRight: "20px"}}>
+                    <Link 
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "500",
+                      }}
+                      to="/Login" {...props}>
+                          Sign In
+                    </Link>
+                  </Box>
+                  <Box sx={{marginRight: "20px"}}>
+                    <Link                     
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontSize: "15px",
+                        fontWeight: "600",
+                      }}
+                      to="/SignUp"
+                    >
+                      <StyledButton>
+                          Get Started
+                      </StyledButton>
+                    </Link>
+                  </Box>
+                </Box>
+            }
+          </Box>
+        </StickyBox>
 
-          <a href="javascript:void(0);" className="icon" onclick={document.getElementById('myTopnav')}>
-              <i class="fa fa-bars"></i>
-          </a>
-        </div>
         {
-          this.props.location.pathname == '/' && !this.props.isAuthenticated ? 
+          props.location.pathname == '/' && !props.isAuthenticated ? 
             <div>            
               <div className='headFull' id='myheadFull'>
               <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
@@ -70,7 +132,7 @@ class Header extends Component{
                   lacinia laoreet lorem. Maecenas nisi libero, venenatis nec erat ut, congue tempor lorem. 
                   Phasellus ullamcorper turpis a orci rutrum congue. Curabitur finibus enim lorem, in 
                   dignissim libero interdum bibendum.</p>
-              <div className='HFL'><Link to="/SignUp" {...this.props}>Start Now</Link></div>
+              <div className='HFL'><Link to="/SignUp">Start Now</Link></div>
               </div>
             </div>
           :
@@ -81,7 +143,7 @@ class Header extends Component{
       </React.Fragment>
       : <></>
     );
-  }
+  // }
 }
 const mapDispatchToProps = dispatch => {
   return {
