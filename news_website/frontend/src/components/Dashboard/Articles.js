@@ -1,13 +1,14 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { Component, useState, useEffect, useSelector } from 'react';
 import Advertisments from './Advertisments';
-import { Redirect, Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import {
-  Route,
+  Route, withRouter, Redirect, Link
 } from "react-router-dom";
 import AdSense from 'react-adsense';
 import ArticleID from './ArticleID';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Util from '../Utility';
+
 import { 
   Grid, Typography, TextField, 
   FormControlLabel, Avatar, Chip,
@@ -21,9 +22,11 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import * as articleActions from '../../store/actions/article';
+import * as savedArticleActions from '../../store/actions/savedArticles';
 
-const Article = () => {
-  // const Articles = () => {
+const Article = (props) => {
+
     const StyledButton = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
       backgroundColor: "black",
@@ -40,67 +43,93 @@ const Article = () => {
     });
     const [data, setAllArticles] = useState(null);
     const [tags, setTags] = useState(null);
-    const [picks, setPicks] = useState(null);
+
+    const [load, setLoad] = useState(true);
+  
+    const Utility= new Util();
+
     useEffect(async () => {
-      await fetch("api/AllArticles/", {
+        console.log(props)
+        const token = localStorage.getItem('token');
+        props.getArticles(token);
+        // props.getSavedArticles(token);
+        // setAllArticles(props.data);
+        setLoad(true);
+    },[load]);
+
+    const handleView = (key)=>{
+      <Route exact path={'/Articles/' + key + '/'}>
+          <ArticleID/>
+      </Route>
+    }
+
+    const handleBookMark = (key) =>{
+        fetch('api/Bookmark/', {
+          method: "POST",
+          headers:{
+            'Accept':'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              key: key,
+              token: localStorage.getItem('token')
+          })
+        })
+        .then(response => {return response.json()})
+        .then(data => {
+          setLoad(false)
+          console.log(data)
+        })
+    }
+    const handleRemoveBookMark = (key) =>{
+      fetch('api/RemoveBookmark/', {
         method: "POST",
         headers:{
           'Accept':'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            tags: [tags]
+            key: key,
+            token: localStorage.getItem('token')
         })
-      }).then(response =>{
-        return response.json();
-      }).then(data => setAllArticles(data));
-    }, [tags]);
-
-    useEffect(async () =>{
-      await fetch("api/PopularArticles/", {
-        method: "GET",
-        headers:{
-          'Accept':'application/json',
-          'Content-Type': 'application/json',
-        },
-      }).then(response =>{
-        return response.json();
-      }).then(data => setPicks(data));
-    },[])
-    // console.log(this.state)
-    // console.log(data)
-    const Utility= new Util();
-    const handleView = (key)=>{
-      <Route exact path={'/Articles/' + key + '/'}>
-          <ArticleID/>
-      </Route>
-    }
-    console.log(data)
-
+      })
+      .then(response => {return response.json() })
+      .then(data => {
+        setLoad(false)
+        console.log(data)
+      })
+  }
     return(
       <React.Fragment>
         <div className='container'>
         <Box sx={{display: "flex", marginLeft: "15vw", flexDirection: "column", marginTop:"1px",}}>
           { 
-            data != null ? Object.entries(data).map(([id,Article]) => {
+            props.allArticles != null ? Object.entries(props.allArticles).map(([id,Article]) => {
               return(
-                  <Link 
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      underline: "none",
-                    }}
-                    to={{
-                      pathname: '/Articles/' + Article.key + '/',
-                      state: { 
-                        ArticleID: Article.key,
-                        Article: Article,
-                    },   
-                  }}>
-                    <Box onClick={() => handleView(id)} 
+                    <Box  
                       sx={{
                          width: "40vw", height: "25vh",
-                         display: "flex", flexDirection:"column", borderTop: "solid 1px black", borderBottom: "solid 1px black",borderRight: "solid 2px black", paddingRight: "2vw"
+                        //  backgroundColor: "lightblue",
+                         marginRight: "20px",
+                         display: "flex", 
+                         flexDirection:"row", 
+                         borderTop: "solid 1px black", 
+                         borderBottom: "solid 1px black",
+                         borderRight: "solid 2px black", 
+                         paddingRight: "2vw"
+                      }}>
+                      <Link 
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        underline: "none",
+                      }}
+                      to={{
+                        pathname: '/Articles/' + Article.key + '/',
+                        state: { 
+                          ArticleID: Article.key,
+                          Article: Article,
+                      },   
                       }}>
                         <Box sx={{width: "100%", height: "20%", flexDirection: "row", display:"flex", whiteSpace:"pre-wrap", marginTop: "4px"}}>
                             <Box>
@@ -121,7 +150,9 @@ const Article = () => {
                               }
                             </Box>
                         </Box>
-                        <Box sx={{width: "100%", height: "60%", display:"flex", flexDirection:"column"}}>
+                        <Box sx={{width: "40vw", height: "60%", display:"flex", flexDirection:"column",
+                          // backgroundColor: "orange",
+                        }}>
                               <Box sx={{
                                 fontSize: "25px",
                                 fontWeight: "500",
@@ -132,7 +163,7 @@ const Article = () => {
                               <Box sx={{
                                 fontSize: "16px",
                                 marginLeft: "5%",
-                                marginRight: "10%",
+                                marginRight: "5%",
                                 mt: "1%"
                               }}>
                                 {Article.article_description}
@@ -183,15 +214,24 @@ const Article = () => {
                               </Box>
                             }
                           </Box>
-                          <Box sx={{alignContent: "right", marginRight: "10%"}}>
-                            <BookmarkAddOutlinedIcon sx={{color: "#C1BDBD", fontSize: "35px"}}/>
-                          </Box>
                         </Box>
+                        </Link>
+                        <Box sx={{alignContent: "right", marginTop: "auto", marginRight: "0%"}}>
+                            {
+                              Article.isBookmarked ? 
+                                <Box onClick={() => handleRemoveBookMark(Article.key)}>
+                                  <BookmarkAddOutlinedIcon sx={{color: "#F2AF29", fontSize: "35px"}}/>
+                                </Box>
+                              : 
+                                <Box onClick={() => handleBookMark(Article.key)}>
+                                  <BookmarkAddOutlinedIcon sx={{color: "#C1BDBD", fontSize: "35px"}}/>
+                                </Box>
+                            }
+                          </Box>
                     </Box>
-                  </Link>
               )
             })
-            : console.log(data)
+            : <></>
           }
         </Box>
           <StickyBox offsetTop={50}>
@@ -214,7 +254,7 @@ const Article = () => {
                     />
                 </Box>
               </Box>
-              <Box sx={{width: "100%", height:"40%"}}>
+              <Box sx={{width: "100%", height:"40%",}}>
                 <Box sx={{marginBottom: "3px"}}>
                   <Typography 
                     style={{
@@ -228,7 +268,7 @@ const Article = () => {
                   </Typography>
                 </Box>
                 {
-                  picks != null ? Object.entries(picks).map(([id,Article]) => {
+                  props.popArticles != null ? Object.entries(props.popArticles).map(([id,Article]) => {
                     return(
                       <Box>
                         <Link
@@ -238,15 +278,15 @@ const Article = () => {
                             underline: "none",
                           }}
                           // Need to create account pages for viewing other accounts
-                          // to={{
-                          //   pathname: '/tmp/' + id + '/',
-                          //   state: { 
-                          //     ArticleID: id,
-                          //     Article: Article,
-                          // },   
-                          // }}
+                          to={{
+                            pathname: '/Account/People/' + Article.reporter_account.key + '/',
+                            state: { 
+                              key: Article.reporter_account.key,
+                              person: Article.reporter_account.person,
+                          },   
+                          }}
                         >
-                          <Box sx={{marginLeft: "10%", marginBottom: "3px"}}>
+                          <Box sx={{marginLeft: "10%", marginBottom: "3px"}} onClick={console.log(id)}>
                             <Typography 
                               style={{
                                 color: "black", 
@@ -255,7 +295,7 @@ const Article = () => {
                                 fontWeight: "400",
                               }}
                               >
-                                {Article.reporter_account}
+                                {Article.reporter_account.name}
                             </Typography>
                           </Box>
                         </Link>
@@ -299,7 +339,7 @@ const Article = () => {
             </Box>
           </StickyBox>
           <StickyBox offsetTop={50}>
-            <Box sx={{backgroundColor: "tansparent", marginLeft: "10px", marginTop: "1vh"}}>
+            <Box sx={{backgroundColor: "orange", marginLeft: "10px", marginTop: "1vh"}}>
             <AdSense.Google
               client='ca-pub-7292810486004926'
               slot='7806394673'
@@ -313,71 +353,20 @@ const Article = () => {
     )
   }
 
-    // return(
-    //   <Articles/>
-    // );   
-// }
-export default Article;
+const mapStateToProps = (state) => {
+  console.log(state)
+  return{
+        allArticles: state.articles.allArticles,
+        popArticles: state.articles.popArticles,
 
-// constructor(props){
-//   super(props);
-//   this.state = {
-//       data: [],
-//       article: [],
-//       loaded: false,
-//       placeholder: "Loading",
-//       popularTags: [],
-//   };
-// }
+  }
+}
 
-// componentDidMount(){
-// const Utility= new Util();
-// this.setState(() =>{
-//  return{
-//    data: Utility.GETAllArticles(),
-//    popularTags: Utility.GETPopularTags()        
-//  };
-// });
-// fetch("api/AllArticles/", {
-//   method: "GET",
-//   headers:{
-//     'Accept':'application/json',
-//     'Content-Type': 'application/json',
-//   },
-// }).then(response =>{
-//   if(response.status > 400){
-//       return this.setState(()=>{
-//           return{ placeholder: "Something went wrong!" };
-//       });
-//   }
-//   return response.json();
-// }).then(data =>{
-//     this.setState(() =>{
-//       return{
-//           data,
-//       };
-//     });
-// })
+const mapDispatchToProps = dispatch =>{
+  return{
+    getSavedArticles: (token) => dispatch(savedArticleActions.getSAVEDARTICLES(token)),
+    getArticles: (token) => dispatch(articleActions.getARTICLES(token))
+  }
+}
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Article));
 
-// fetch("api/PopularTags/", {
-//   method: "GET",
-//   headers:{
-//     'Accept':'application/json',
-//     'Content-Type': 'application/json',
-//   },
-// }).then(response =>{
-//   if(response.status > 400){
-//       return this.setState(()=>{
-//           return{ placeholder: "Something went wrong!" };
-//       });
-//   }
-//   return response.json();
-// }).then(data =>{
-//     this.setState(() =>{
-//       return{
-//           popularTags: data,
-//           loaded: true
-//       };
-//     });
-// })
-// }

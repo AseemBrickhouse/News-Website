@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/auth';
+import * as authActions from '../../store/actions/auth';
+import * as articleActions from '../../store/actions/article';
 import {
     BrowserRouter as Router,
     Switch, 
@@ -17,25 +18,37 @@ import CreateArticle from '../Dashboard/AccountHome/CreateArticle';
 import Login from '../Buttons/Login';
 import SignUp from '../Buttons/SignUp';
 import FindPeople from '../Dashboard/People/FindPeople';
-import FindPeopleAccount from '../Dashboard/People/Account';
+import AccountID from '../Dashboard/People/Account';
+import SavedArticles from '../Dashboard/AccountHome/SavedArticles';
+import Followers from '../Dashboard/People/Followers';
+
 class Routes extends React.Component{
-        componentDidMount(){
-        this.props.AutoTrySignUp();
+    constructor(props){
+        super(props)
+    };
+    componentDidMount(){
+        // this.props.AutoTrySignUp();
+        //  console.log(this.props);
     }
     render(){
+        // console.log(this.props)
         return(
         <React.Fragment>
             <Router>
                 <Header {...this.props}/>
                 <Switch>
-                    <Route exact path="/" component={HomePage}/>
+                    <Route exact path="/">
+                        <HomePage {...this.props}/>
+                    </Route>
                     <Route exact path="/SignUp" component={SignUp}/>
                     <Route exact path="/Login" component={Login}/>
-                    <Route exact path ='/Account/EditAccount' component={EditAccount}/>
+                    <Route exact path ='/Account/EditAccount'><EditAccount {...this.props}/></Route>
+                    <Route exact path ='/Account/SavedArticles'><SavedArticles {...this.props}/></Route>
                     <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
                     <Route exact path={'/Articles/:id'} component={ArticleID}/>
                     <Route exact path='/Account/FindPeople' component={FindPeople}/>
-                    <Route exact path={'/Account/FindPeople/:id'} component={FindPeopleAccount}/>
+                    <Route exact path={'/Account/People/:key'} component={AccountID}/>
+                    <Route exact path={'/Account/Followers'} component={Followers}/>
                     <Route exact path ='/Account/Articles'>
                         <Articles {...this.props}/>
                     </Route>
@@ -49,17 +62,19 @@ class Routes extends React.Component{
     }
 }
 
-const mapStateToProps = state => {
-    return{
-        isAuthenticated: state.token !== null
-    }
-}
+// const mapStateToProps = state => {
+//     // console.log(state.auth)
+//     return{
+//         isAuthenticated: state.auth.token !== null 
+//     }
+// }
 
-const mapDispatchToProps = dispatch => {
-    return{
-        AutoTrySignUp: () => dispatch(actions.authCheckState())
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return{
+//         articles: () => dispatch(articleActions.getARTICLES()),
+//         AutoTrySignUp: () => dispatch(authActions.authCheckState())
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default (Routes);
 

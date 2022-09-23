@@ -1,183 +1,166 @@
-import * as React from 'react';
+import React, {useEffect}  from 'react';
 import {withRouter, Link } from 'react-router-dom';
 import * as actions from '../../store/actions/auth';
 import { connect } from 'react-redux';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MenuIcon from '@mui/icons-material/Menu';
-import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
-import Collapse from "@material-ui/core/Collapse";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from '@mui/icons-material/Home';
-import IconExpandLess from "@material-ui/icons/ExpandLess";
-import IconExpandMore from "@material-ui/icons/ExpandMore";
-import { makeStyles, Typography } from '@mui/material';
+import { 
+  Typography, Popover, Box, 
+  Button, MenuItem,
+} from "@material-ui/core";
+import { styled } from "@material-ui/core/styles";
 
-class MyAccount extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            Account: null,
-            first_name: "",
-            last_name: "",
-        };
-    }
+const MyAccount = (props) =>{
 
-   componentDidMount(){
-        fetch("/api/current_user/", {
-            method:"POST",
-            headers:{
-              'Accept':'application/json',
-              'Content-Type': 'application/json',
-            },
-                body: JSON.stringify({
-                    token: localStorage.getItem('token')
-                })
-            })
-            .then(response =>{
-                if(response.status > 400){
-                    return this.setState(() => {
-                        return{ placeholder: "Something went wrong!" };
-                    });
-                }
-                return response.json();
-            })
-            .then(data =>{
-              return this.setState({
-                  first_name: data.first_name,
-                  last_name: data.last_name,
-              })            
-            });
-            
-    }
+    const [ProfileOpen, setProfileOpen] = React.useState(null);
+    const handleProfileClick = (event) => setProfileOpen(event.currentTarget);
+    const handleProfileClose = () => setProfileOpen(null)
 
-    DropDown = () => {
-        const [anchorEl, setAnchorEl] = React.useState(null);
-        const [NestedProfileOpen, NestedSetProfileOpen] = React.useState(false)
-        const [NestedArticleOpen, NestedSetArticleOpen] = React.useState(false)
-        const [NestedPeopleOpen, NestedSetPeopleOpen] = React.useState(false)
+    const [ArticleOpen, setArticleOpen] = React.useState(null);
+    const handleArticleClick = (event) => setArticleOpen(event.currentTarget);
+    const handleArticleClose = () => setArticleOpen(null)
 
-        
-        const open = Boolean(anchorEl);
-        const handleClick = (event) => {
-          setAnchorEl(event.currentTarget);
-        };
-        const handleClose = () => {setAnchorEl(null)};
-        const handleNestedProfileClick = () =>{NestedSetProfileOpen(!NestedProfileOpen)}
-        const handleNestedArticleClick = () =>{NestedSetArticleOpen(!NestedArticleOpen)}
-        const handleNestedPeopleClick = () =>{NestedSetPeopleOpen(!NestedPeopleOpen)}
+    const [PeopleOpen, setPeopleOpen] = React.useState(null);
+    const handlePeopleClick = (event) => setPeopleOpen(event.currentTarget);
+    const handlePeopleClose = () => setPeopleOpen(null)
 
-
-        return(
-            <div>
-              <button
-                id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                <MenuIcon/>
-              </button>
-              <text> Welcome, {this.state.first_name}</text>
-              <Menu
-                   id="demo-positioned-menu"
-                   aria-labelledby="demo-positioned-button"
-                   open={open}
-                   onClose={handleClose}
-                   transformOrigin={{
-                     vertical: 'top',
-                     horizontal: 'center',
-                   }}
-                 >
-                  <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                          <HomeIcon fontSize="small"/>
-                        </ListItemIcon>
-                      <Link to="/" style={{color: "black", textDecoration: "none"}} underline="none" Icon={HomeIcon}>Home</Link>
-                    </MenuItem>
-                    <ListItem button onClick={handleNestedProfileClick}>
-                      <ListItemText primary="Profile" />
-                      {NestedProfileOpen ? <IconExpandLess /> : <IconExpandMore />}
-                    </ListItem>
-                    <Collapse in={NestedProfileOpen} timeout="auto" unmountOnExit>
-                      <Divider />
-                      <List component="div" disablePadding>
-                        <ListItem>
-                          <Link to="/Account/Profile" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>View Profile</Typography></Link>
-                        </ListItem>
-                        <ListItem >
-                          <Link to="/Account/EditAccount" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Edit Profile</Typography></Link>
-                        </ListItem>
-                      </List>
-                    </Collapse>
-                    
-                    <ListItem button onClick={handleNestedArticleClick}>
-                      <ListItemText primary="Articles" />
-                      {NestedArticleOpen ? <IconExpandLess /> : <IconExpandMore />}
-                    </ListItem>
-                    <Collapse in={NestedArticleOpen} timeout="auto" unmountOnExit>
-                      <Divider />
-                      <List component="div" disablePadding>
-                        <ListItem>
-                            <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>My Articles</Typography></Link>
-                        </ListItem>
-                        <ListItem>
-                            <Link to="/Account/CreateArticle/" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Create Article</Typography></Link>
-                        </ListItem>
-                        <ListItem>
-                            <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Saved Articles</Typography></Link>
-                        </ListItem>
-                      </List>
-                    </Collapse>
-        
-                    <ListItem button onClick={handleNestedPeopleClick}>
-                      <ListItemText primary="People" />
-                      {NestedPeopleOpen ? <IconExpandLess /> : <IconExpandMore />}
-                    </ListItem>
-                    <Collapse in={NestedPeopleOpen} timeout="auto" unmountOnExit>
-                      <Divider />
-                      <List component="div" disablePadding>
-                        <ListItem>
-                            <Link to="/Account/FindPeople" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Find People</Typography></Link>
-                        </ListItem>
-                        <ListItem>
-                            <Link to="/Account/CreateArticle/" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>My Followers</Typography></Link>
-                        </ListItem>
-                        <ListItem>
-                            <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none"><Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>Following</Typography></Link>
-                        </ListItem>
-                      </List>
-                    </Collapse>
-
-                     <MenuItem onClick={this.props.logout}>
-                      <ListItemIcon>
-                        <Logout fontSize="small" />
-                      </ListItemIcon>
-                      Logout
-                    </MenuItem>
-                  </Menu>
-              </Menu>
-            </div>
-        )
-    }
-    render(){
-        return(
-            <div>
-                <this.DropDown/>
-            </div>
-        )
-    }
+    const StyledTypography = styled(Typography)({
+      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+      textTransform: "none",
+      textDecoration: "none",
+      fontSize: "17px",
+      fontWeight: "700",
+      textAlign: "center",
+    })
+    return(
+      <Box sx={{display: "flex", flexDirection: "row", textDecoration: "none", padding: "5px"}}>
+        <div>
+          <Button onClick={handleProfileClick} style={{marginRight: "1vw"}}>
+            <StyledTypography>
+              Profile
+            </StyledTypography>
+          </Button>
+          <Popover
+            open={Boolean(ProfileOpen)}
+            anchorEl={ProfileOpen}
+            onClose={handleProfileClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <MenuItem>
+              <Link to="/Account/Profile" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  View Profile
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/Account/EditAccount" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  Edit Profile
+                </Typography>
+              </Link>
+            </MenuItem>
+          </Popover>
+        </div>
+        <div>
+          <Button onClick={handleArticleClick} style={{marginRight: "1vw"}}>
+            <StyledTypography>
+              Articles
+            </StyledTypography>
+          </Button>
+          <Popover
+            open={Boolean(ArticleOpen)}
+            anchorEl={ArticleOpen}
+            onClose={handleArticleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <MenuItem>
+              <Link to="/Account/Articles" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  My Articles
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/Account/CreateArticle" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  Create Article
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/Account/SavedArticles" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  Saved Articles
+                </Typography>
+              </Link>
+            </MenuItem>
+          </Popover>
+        </div>
+        <div>
+          <Button onClick={handlePeopleClick} style={{marginRight: "1vw"}}>
+            <StyledTypography>
+              Explore
+            </StyledTypography>
+          </Button>
+          <Popover
+            open={Boolean(PeopleOpen)}
+            anchorEl={PeopleOpen}
+            onClose={handlePeopleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <MenuItem>
+              <Link to="/Account/FindPeople" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  Find People
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/Account/Followers" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  My Followers
+                </Typography>
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/Account/Following" style={{ textDecoration: 'none' }} underline="none">
+                <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
+                  Following
+                </Typography>
+              </Link>
+            </MenuItem>
+          </Popover>
+        </div>
+        <div>
+          <Button onClick={props.logout} style={{marginRight: "1vw"}}>
+            <StyledTypography>
+            <div 
+              style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}>
+              <Logout />
+              <span>Logout</span>
+            </div>  
+            </StyledTypography>
+          </Button>
+        </div>
+      </Box>
+    )
 }
-
 const mapDispatchToProps = dispatch => {
     return {
       logout : () => dispatch(actions.authLOGOUT())
     }
-  }
-  export default withRouter(connect(null,mapDispatchToProps)(MyAccount));
+}
+export default withRouter(connect(null,mapDispatchToProps)(MyAccount));

@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from api.views import *
+from api.allViews.AccountViews import *
+from api.allViews.FollowViews import *
+from api.allViews.ArticleViews import *
 
 router = DefaultRouter()
 router.register(r'Articles', ArticleViewSet)
@@ -12,6 +15,7 @@ router.register(r'Accounts', AccountViewSet)
 #router.register('rest-auth/', include('rest_auth.urls'))
 
 urlpatterns = [
+        path('APITEST/', APITEST.as_view()),
         path('rest-auth/', include('rest_auth.urls')),
         path('rest-auth/registration/', include('rest_auth.registration.urls')),
         path('AccountCreation/', AccountCreation.as_view()),
@@ -25,6 +29,14 @@ urlpatterns = [
         path('AllAccounts/', AllAccounts.as_view()),
         path('DeleteArticle/', DeleteArticle.as_view()),
         path('Follow/', Follow.as_view()),
+        path('unFollow/', unFollow.as_view()),
+        path('myFollowers/', myFollowers.as_view()),
+        path('myFollowing/', myFollowing.as_view()),
+        path('Bookmark/', Bookmark.as_view()),
+        path('RemoveBookmark/', RemoveBookmark.as_view()),
+        path('MyBookmarkedArticles/', MyBookmarkedArticles.as_view()),
+        path('SavedArticles/', SavedArticles.as_view()),
+        path('GetUserArticles/', GetUserArticles.as_view()),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls

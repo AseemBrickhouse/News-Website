@@ -1,5 +1,7 @@
 from .models import *
+from .serializers import *
 from rest_framework.authtoken.models import Token
+
 import random
 import string
 
@@ -19,7 +21,14 @@ def getCurrentUser(token, command):
         return User.objects.all().filter(id=token.user_id)[0].account
 
 
-def keyGen(chars = string.ascii_uppercase + string.digits, N=20):
+def ArticleKeyGen(chars = string.ascii_uppercase + string.digits, N=20):
+	return ''.join(random.choice(chars) for _ in range(N))
+
+def AccountKeyGen(size):
+    key = ""
+    return "-".join(AccountKeyHelp() for _ in range(size))
+
+def AccountKeyHelp(chars = string.ascii_uppercase + string.digits, N=10):
 	return ''.join(random.choice(chars) for _ in range(N))
 
 def getFollow(account, op):
@@ -27,6 +36,14 @@ def getFollow(account, op):
         return len(Followers.objects.all().filter(following_user=account))
     if op == "FOLLOWING":
         return len(Followers.objects.all().filter(account=account))
+
+def PopularUserArticles(account):
+    queryset = Article.objects.all().filter(reporter_account=account).order_by('rating').reverse()[:2]
+    popular_articles = {}
+    for article in queryset:
+        convertedArticle = ArticleSerializer(article)
+        popular_articles[convertedArticle.data['id']] = convertedArticle.data
+    return(popular_articles)
 
 def setQuerySetData(key, op):
     pass
