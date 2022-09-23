@@ -20,6 +20,7 @@ import SignUp from '../Buttons/SignUp';
 import FindPeople from '../Dashboard/People/FindPeople';
 import AccountID from '../Dashboard/People/Account';
 import SavedArticles from '../Dashboard/AccountHome/SavedArticles';
+import Followers from '../Dashboard/People/Followers';
 
 class Routes extends React.Component{
     constructor(props){
@@ -47,6 +48,7 @@ class Routes extends React.Component{
                     <Route exact path={'/Articles/:id'} component={ArticleID}/>
                     <Route exact path='/Account/FindPeople' component={FindPeople}/>
                     <Route exact path={'/Account/People/:key'} component={AccountID}/>
+                    <Route exact path={'/Account/Followers'} component={Followers}/>
                     <Route exact path ='/Account/Articles'>
                         <Articles {...this.props}/>
                     </Route>

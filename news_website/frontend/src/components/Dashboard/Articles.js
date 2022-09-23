@@ -52,7 +52,7 @@ const Article = (props) => {
         console.log(props)
         const token = localStorage.getItem('token');
         props.getArticles(token);
-        props.getSavedArticles(token);
+        // props.getSavedArticles(token);
         // setAllArticles(props.data);
         setLoad(true);
     },[load]);
@@ -220,7 +220,7 @@ const Article = (props) => {
                             {
                               Article.isBookmarked ? 
                                 <Box onClick={() => handleRemoveBookMark(Article.key)}>
-                                  <BookmarkAddOutlinedIcon sx={{color: "yellow", fontSize: "35px"}}/>
+                                  <BookmarkAddOutlinedIcon sx={{color: "#F2AF29", fontSize: "35px"}}/>
                                 </Box>
                               : 
                                 <Box onClick={() => handleBookMark(Article.key)}>
@@ -278,15 +278,15 @@ const Article = (props) => {
                             underline: "none",
                           }}
                           // Need to create account pages for viewing other accounts
-                          // to={{
-                          //   pathname: '/tmp/' + id + '/',
-                          //   state: { 
-                          //     ArticleID: id,
-                          //     Article: Article,
-                          // },   
-                          // }}
+                          to={{
+                            pathname: '/Account/People/' + Article.reporter_account.key + '/',
+                            state: { 
+                              key: Article.reporter_account.key,
+                              person: Article.reporter_account.person,
+                          },   
+                          }}
                         >
-                          <Box sx={{marginLeft: "10%", marginBottom: "3px"}}>
+                          <Box sx={{marginLeft: "10%", marginBottom: "3px"}} onClick={console.log(id)}>
                             <Typography 
                               style={{
                                 color: "black", 
@@ -295,7 +295,7 @@ const Article = (props) => {
                                 fontWeight: "400",
                               }}
                               >
-                                {Article.reporter_account}
+                                {Article.reporter_account.name}
                             </Typography>
                           </Box>
                         </Link>
@@ -354,7 +354,7 @@ const Article = (props) => {
   }
 
 const mapStateToProps = (state) => {
-  // console.log(state)
+  console.log(state)
   return{
         allArticles: state.articles.allArticles,
         popArticles: state.articles.popArticles,

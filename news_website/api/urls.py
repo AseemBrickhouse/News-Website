@@ -36,6 +36,7 @@ urlpatterns = [
         path('RemoveBookmark/', RemoveBookmark.as_view()),
         path('MyBookmarkedArticles/', MyBookmarkedArticles.as_view()),
         path('SavedArticles/', SavedArticles.as_view()),
+        path('GetUserArticles/', GetUserArticles.as_view()),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls

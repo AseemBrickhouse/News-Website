@@ -8,12 +8,12 @@ import {
   } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 
-const FindPeople = () => {
+const Followers = () => {
     const[people, setPeople] = useState(null);
     const[load, setLoad] = useState(false);
 
         useEffect(async () =>{
-        await fetch("/api/AllAccounts/",{
+        await fetch("/api/myFollowers/",{
             method: "POST",
             headers:{
                 'Accept':'application/json',
@@ -27,7 +27,7 @@ const FindPeople = () => {
             return response.json();
         })
         .then(data=>{
-            // console.log(data)
+            console.log(data)
             setLoad(true)
             setPeople(data)
         })
@@ -79,7 +79,7 @@ const FindPeople = () => {
             // console.log(data)
         })
     }
-
+    console.log(people)
     return(
         <Box sx={{
             flexDirection: "row", 
@@ -87,15 +87,13 @@ const FindPeople = () => {
             display: "flex",
             marginLeft: "20vw", 
             marginRight:"20vw", 
-            marginTop:"1vh",
-            flexWrap: "wrap",
-            }}>
+            marginTop:"1vh"}}>
             {
-                people != null ? Object.entries(people).map(([id, Person]) =>{
+                people != null ? Object.entries(people).map(([key, Person]) =>{
                     return(
                         <Box sx={{
                             borderRadius: "25px",
-                            backgroundColor: "#D9CAB3", 
+                            backgroundColor: "#E0E0CE", 
                             display: "flex",
                             flexDirection: "column",
                             overflow: "hidden",
@@ -285,10 +283,10 @@ const FindPeople = () => {
                         </Box>
                     )
                 })
-                : console.log(people)
+                : <></>
             }
         </Box>
     )
 }
 
-export default FindPeople;
+export default Followers;

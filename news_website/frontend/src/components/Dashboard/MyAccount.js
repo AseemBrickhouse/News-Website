@@ -125,7 +125,7 @@ const MyAccount = (props) =>{
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link to="/Account/MyFollowers" style={{ textDecoration: 'none' }} underline="none">
+              <Link to="/Account/Followers" style={{ textDecoration: 'none' }} underline="none">
                 <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
                   My Followers
                 </Typography>

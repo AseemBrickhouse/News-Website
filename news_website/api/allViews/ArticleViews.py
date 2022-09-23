@@ -32,7 +32,6 @@ class AllArticles(APIView):
 
         # else:
         queryset = Article.objects.all().filter(isPrivate = False)
-
         for article in queryset:
             tmpArt = ArticleSerializer(article)
             # attachNameToArticle(tmpArt)
@@ -55,7 +54,11 @@ class AllArticles(APIView):
         for article in popQuerySetRequest:
             articleJson = ArticleSerializer(article)
             popqueryset[articleJson.data['key']] = articleJson.data
-            popqueryset[articleJson.data['key']]['reporter_account'] = attachNameToArticle(articleJson)
+            popqueryset[articleJson.data['key']]['reporter_account'] = {
+                'name': attachNameToArticle(articleJson),
+                'key': Account.objects.all().filter(id=articleJson.data['reporter_account'])[0].key,
+                'person' : AccountSerializer(Account.objects.all().filter(id=articleJson.data['reporter_account'])[0]).data,
+            }
         return Response({
                             'allArticles': querysetSend, 
                             'popArticles': popqueryset
@@ -78,7 +81,25 @@ class AllUserArticles(ObtainAuthToken):
         
         def get(self, request, *args, **kwargs):
             pass
+
+class GetUserArticles(APIView):
+    def post(self, request, *args, **kwargs):
+        if request.data['key'] == None:
+            return Response({
+                "Message": "No valid key",
+            })
+        key = request.data['key']
+        userArticles = Article.objects.all().filter(
+            reporter_account = Account.objects.all().get(key=key)
+        )[:6]
+        print(userArticles)
+        queryset={}
+        for article in userArticles:
+            articlesJson = ArticleSerializer(article).data
+            queryset[articlesJson['key']] = articlesJson
         
+        return Response(queryset)
+
 class PopularArticles(APIView):
     def get(self, request, *args, **kwargs):
         querysetRequest = {}
@@ -87,7 +108,10 @@ class PopularArticles(APIView):
         for article in queryset:
             articleJson = ArticleSerializer(article)
             querysetRequest[articleJson.data['id']] = articleJson.data
-            querysetRequest[articleJson.data['id']]['reporter_account'] = attachNameToArticle(articleJson)
+            querysetRequest[articleJson.data['id']]['reporter_account']={
+                'name': attachNameToArticle(articleJson),
+                'key': Account.objects.all().filter(id=articleJson.data['reporter_account'])[0].key
+            }
 
         return Response(querysetRequest)
 

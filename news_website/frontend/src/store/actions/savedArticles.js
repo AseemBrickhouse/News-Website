@@ -26,7 +26,6 @@ export const getSAVEDARTICLES = (token) =>{
             token: token,
         })
         .then(response=>{
-            // console.log(response.data)
             dispatch(getSAVEDSUCCESS(response.data))
         }).catch(error =>{
             dispatch(getSAVEDFAIL(error))

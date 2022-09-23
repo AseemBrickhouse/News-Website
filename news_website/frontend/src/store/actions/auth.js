@@ -1,5 +1,6 @@
 import * as actionTypes from './types';
 import axios from 'axios';
+import { getSAVEDARTICLES } from './savedArticles';
 
 export const authStart = () =>{
     return{
@@ -79,6 +80,7 @@ export const authLogin = (username, password) => {
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(getAuthInfo(token));
             dispatch(authSUCCESS(token));
+            dispatch(getSAVEDARTICLES(token));
             dispatch(checkTimeout(3600));  
         })
         .catch(error => {
