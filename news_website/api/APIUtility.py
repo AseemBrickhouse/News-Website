@@ -14,10 +14,10 @@ def getCurrentUser(token, command):
     commands = ["CREATEACCOUNT", "EDITACCOUNT", "ALLACCOUNTS"]
     try: 
         commands.index(command)
-        print("Command needed user obj: ", command)
+        # print("Command needed user obj: ", command)
         return User.objects.all().filter(id=token.user_id)[0]
     except:
-        print("Command needed account: ", command)
+        # print("Command needed account: ", command)
         return User.objects.all().filter(id=token.user_id)[0].account
 
 

@@ -48,5 +48,10 @@ const mapStateToProps = (state) => {
           savedArticles: state.savedArticles.saved,
     }
 }
+const mapDispatchToProps = dispatch =>{
+  return{
+    getSavedArticles: (token) => dispatch(savedArticleActions.getSAVEDARTICLES(token)),
+  }
+}
 
-export default withRouter(connect(mapStateToProps,null)(SavedArticles));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(SavedArticles));

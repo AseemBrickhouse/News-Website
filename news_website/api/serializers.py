@@ -15,6 +15,7 @@ class AccountSerializer(serializers.ModelSerializer):
                    'bio',
                    'email',
                    'occupation',
+                   'profile_pic',
                 #    'popular_articles',
                    )
 
@@ -38,20 +39,20 @@ class ArticleSerializer(serializers.ModelSerializer):
                   )
 
 
-class RegisterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ('id', 
-                  'username', 
-                  'password', 
-                  'email'
-                  )
-        extra_kwargs = {'password': {'write_only': True}}
+# class RegisterSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Account
+#         fields = ('id', 
+#                   'username', 
+#                   'password', 
+#                   'email'
+#                   )
+#         extra_kwargs = {'password': {'write_only': True}}
 
-    def create(self, validated_data):
-        Account = Account.objects.create_user(
-            validated_data['username'],
-            validated_data['password'],
-            validated_data['email'],
-        )
-        return Account
+#     def create(self, validated_data):
+#         Account = Account.objects.create_user(
+#             validated_data['username'],
+#             validated_data['password'],
+#             validated_data['email'],
+#         )
+#         return Account

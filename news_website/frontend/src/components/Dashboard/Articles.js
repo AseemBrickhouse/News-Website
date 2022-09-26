@@ -1,5 +1,4 @@
 import React, { Component, useState, useEffect, useSelector } from 'react';
-import Advertisments from './Advertisments';
 import { connect } from 'react-redux';
 import {
   Route, withRouter, Redirect, Link
@@ -8,20 +7,15 @@ import AdSense from 'react-adsense';
 import ArticleID from './ArticleID';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Util from '../Utility';
-
 import { 
-  Grid, Typography, TextField, 
-  FormControlLabel, Avatar, Chip,
-  CssBaseline, Box, MenuList, Button,
-  Container, Checkbox, MenuItem, NestedMenuItem,
+  Typography, 
+  Chip,
+  Box, Button,
+  
 } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import { styled } from "@material-ui/core/styles";
 import SearchBar from "material-ui-search-bar";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import * as articleActions from '../../store/actions/article';
 import * as savedArticleActions from '../../store/actions/savedArticles';
 
@@ -41,8 +35,6 @@ const Article = (props) => {
       textDecoration: "none",
 
     });
-    const [data, setAllArticles] = useState(null);
-    const [tags, setTags] = useState(null);
 
     const [load, setLoad] = useState(true);
   
@@ -52,7 +44,7 @@ const Article = (props) => {
         console.log(props)
         const token = localStorage.getItem('token');
         props.getArticles(token);
-        // props.getSavedArticles(token);
+        props.getSavedArticles(token);
         // setAllArticles(props.data);
         setLoad(true);
     },[load]);

@@ -93,7 +93,7 @@ const Followers = () => {
                     return(
                         <Box sx={{
                             borderRadius: "25px",
-                            backgroundColor: "#E0E0CE", 
+                            backgroundColor: "#D9CAB3", 
                             display: "flex",
                             flexDirection: "column",
                             overflow: "hidden",
@@ -109,21 +109,43 @@ const Followers = () => {
                                 height: "auto"
                             }}>
                                 <Box sx={{width: "100%",height:"150px", display: "flex", flexDirection: "row"}}>
-                                    <Box sx={{width: "35%",}}>
+                                <Box sx={{width: "35%", height: "100%"}}>
                                         <Box sx={{
-                                            marginLeft: "25%",
+                                            marginLeft: "50%",
                                             marginTop: "25%",
                                             height: "50px",
                                             width: "50px",
-                                            backgroundColor: "black",
+                                            // backgroundColor: "black",
                                             borderRadius: "50%",
                                         }}>  
+                                        {
+                                            Person.profile_pic != null ?
+                                            <Avatar 
+                                                alt={Person.first_name = Person.last_name} 
+                                                src={Person.profile_pic}
+                                                sx={{
+                                                    width: 125,
+                                                    height: 125,
+                                                }}
+                                            />
+                                            :
+                                            <Avatar 
+                                                alt={Person.first_name = Person.last_name} 
+                                                src="/images/defaultProfilePic.png"
+                                                sx={{
+                                                    margin: "auto",
+                                                    width: 1250,
+                                                    height: 125,
+                                                }}
+                                            />
+                                        }
                                         </Box>
                                     </Box>
                                     <Box sx={{
                                         width: "75%",
-                                        height: "auto",
+                                        height: "100%",
                                         // backgroundColor: "lightskyblue",
+                                        marginTop: "5%"
                                     }}>
                                         <Box sx={{textAlign: "center"}}>
                                             <StyledTypography>

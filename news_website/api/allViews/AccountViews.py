@@ -19,6 +19,7 @@ class current_user(ObtainAuthToken):
         try:
             popularArticles = PopularUserArticles(account)
             data = {
+                'key' : account.key,
                 'first_name' : account.first_name,
                 'last_name' : account.last_name,
                 'creation_date' : account.creation_date,
@@ -27,6 +28,7 @@ class current_user(ObtainAuthToken):
                 'bio': account.bio,
                 'email': account.email,
                 'occupation': account.occupation,
+                'profile_pic': account.profile_pic.url,
                 'popular_articles': popularArticles,
                 'written_articles': len(Article.objects.all().filter(reporter_account=account)),
                 'followers': getFollow(account, "FOLLOWERS"),

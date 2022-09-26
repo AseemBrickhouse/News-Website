@@ -49,16 +49,16 @@ class unFollow(ObtainAuthToken):
 class myFollowers(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         print(request.data)
-        account = getCurrentUser(request.data['token'], "myFollowers")
-        myFollowerList = Followers.objects.all().filter(following_user=account)
+        myAccount = getCurrentUser(request.data['token'], "myFollowers")
+        myFollowerList = Followers.objects.all().filter(following_user=myAccount)
         queryset = {}
         for follower in myFollowerList:
             account = follower.account
             queryset[AccountSerializer(account).data['key']] = AccountSerializer(account).data
             queryset[AccountSerializer(account).data['key']]['followers'] = getFollow(account, "FOLLOWERS")
             try:
-                is_following = Followers.objects.get(
-                   account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
+                is_follower = Followers.objects.get(
+                    account=myAccount, 
                     following_user=account,
                 )
                 queryset[AccountSerializer(account).data['key']]['is_following'] = True
@@ -72,17 +72,23 @@ class myFollowers(ObtainAuthToken):
 class myFollowing(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         print(request.data)
-        account = getCurrentUser(request.data['token'], "myFollowers")
-        myFollowingList = Followers.objects.all().filter(account=account)
+        myAccount = getCurrentUser(request.data['token'], "myFollowers")
+        myFollowingList = Followers.objects.all().filter(account=myAccount)
         queryset = {}
         print(myFollowingList)
-        for followering in myFollowingList:
-            account = followering.following_user
+        for following in myFollowingList:
+            account = following.following_user
             queryset[AccountSerializer(account).data['key']] = AccountSerializer(account).data
-            queryset[AccountSerializer(account).data['key']]['written_articles']= {}
-            articles = Article.objects.all().filter(reporter_account=account)
-            for article in articles:
-                data = ArticleSerializer(article).data
-                queryset[AccountSerializer(account).data['key']]['written_articles'][data['key']] = data
+            queryset[AccountSerializer(account).data['key']]['followers'] = getFollow(account, "FOLLOWERS")
+            try:
+                is_following = Followers.objects.get(
+                    account=myAccount, 
+                    following_user=account,
+                )
+                queryset[AccountSerializer(account).data['key']]['is_following'] = True
+            except Followers.DoesNotExist:
+                queryset[AccountSerializer(account).data['key']]['is_following'] = False            
+                
+            queryset[AccountSerializer(account).data['key']]['written_articles']= len(Article.objects.all().filter(reporter_account=account))
 
         return Response(queryset)

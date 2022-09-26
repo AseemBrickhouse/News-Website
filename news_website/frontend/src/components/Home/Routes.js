@@ -1,13 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import * as authActions from '../../store/actions/auth';
-import * as articleActions from '../../store/actions/article';
 import {
     BrowserRouter as Router,
     Switch, 
     Route,
-    withRouter
-  } from "react-router-dom";
+} from "react-router-dom";
 import HomePage from './HomePage';
 import Header from '../Dashboard/Header';
 import Account from '../Dashboard/AccountHome/Account';
@@ -21,46 +17,68 @@ import FindPeople from '../Dashboard/People/FindPeople';
 import AccountID from '../Dashboard/People/Account';
 import SavedArticles from '../Dashboard/AccountHome/SavedArticles';
 import Followers from '../Dashboard/People/Followers';
+import Following from '../Dashboard/People/Following';
 
-class Routes extends React.Component{
-    constructor(props){
-        super(props)
-    };
-    componentDidMount(){
-        // this.props.AutoTrySignUp();
-        //  console.log(this.props);
-    }
-    render(){
-        // console.log(this.props)
-        return(
-        <React.Fragment>
-            <Router>
-                <Header {...this.props}/>
-                <Switch>
-                    <Route exact path="/">
-                        <HomePage {...this.props}/>
-                    </Route>
-                    <Route exact path="/SignUp" component={SignUp}/>
-                    <Route exact path="/Login" component={Login}/>
-                    <Route exact path ='/Account/EditAccount'><EditAccount {...this.props}/></Route>
-                    <Route exact path ='/Account/SavedArticles'><SavedArticles {...this.props}/></Route>
-                    <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
-                    <Route exact path={'/Articles/:id'} component={ArticleID}/>
-                    <Route exact path='/Account/FindPeople' component={FindPeople}/>
-                    <Route exact path={'/Account/People/:key'} component={AccountID}/>
-                    <Route exact path={'/Account/Followers'} component={Followers}/>
-                    <Route exact path ='/Account/Articles'>
-                        <Articles {...this.props}/>
-                    </Route>
-                    <Route path ='/Account/Profile'>
-                        <Account {...this.props}/>
-                    </Route>
-                </Switch>
-            </Router>
-        </React.Fragment>
-        )
-    }
+const Routes = (props) =>{
+    return(
+    <React.Fragment>
+        <Router>
+            <Header {...props}/>
+            <Switch>
+                <Route exact path="/"><HomePage {...props}/></Route>
+                <Route exact path="/SignUp" component={SignUp}/>
+                <Route exact path="/Login" component={Login}/>
+                <Route exact path ='/Account/EditAccount'><EditAccount {...props}/></Route>
+                <Route exact path ='/Account/SavedArticles'><SavedArticles/></Route>
+                <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
+                <Route exact path={'/Articles/:id'} component={ArticleID}/>
+                <Route exact path='/Account/FindPeople' component={FindPeople}/>
+                <Route exact path={'/Account/People/:key'} component={AccountID}/>
+                <Route exact path={'/Account/Followers'} component={Followers}/>
+                <Route exact path="/Account/Following" component={Following}/>
+                <Route exact path ='/Account/Articles'><Articles {...props}/></Route>
+                {/* <Route path ='/Account/Profile'><Account {...props}/></Route> */}
+            </Switch>
+        </Router>
+    </React.Fragment>  
+    )
 }
+// class Routes extends React.Component{
+//     constructor(props){
+//         super(props)
+//     };
+//     render(){
+//         return(
+//         <React.Fragment>
+//             <Router>
+//                 <Header {...this.props}/>
+//                 <Switch>
+//                     <Route exact path="/">
+//                         <HomePage {...this.props}/>
+//                     </Route>
+//                     <Route exact path="/SignUp" component={SignUp}/>
+//                     <Route exact path="/Login" component={Login}/>
+//                     <Route exact path ='/Account/EditAccount'><EditAccount {...this.props}/></Route>
+//                     <Route exact path ='/Account/SavedArticles'><SavedArticles/></Route>
+//                     <Route exact path='/Account/CreateArticle' component={CreateArticle}/>
+//                     <Route exact path={'/Articles/:id'} component={ArticleID}/>
+//                     <Route exact path='/Account/FindPeople' component={FindPeople}/>
+//                     <Route exact path={'/Account/People/:key'} component={AccountID}/>
+//                     <Route exact path={'/Account/Followers'} component={Followers}/>
+//                     <Route exact path="/Account/Following" component={Following}/>
+//                     {/* <Route exact path="/Account/SavedArticles" component={SavedArticles}/> */}
+//                     <Route exact path ='/Account/Articles'>
+//                         <Articles {...this.props}/>
+//                     </Route>
+//                     <Route path ='/Account/Profile'>
+//                         <Account {...this.props}/>
+//                     </Route>
+//                 </Switch>
+//             </Router>
+//         </React.Fragment>
+//         )
+//     }
+// }
 
 // const mapStateToProps = state => {
 //     // console.log(state.auth)
@@ -76,5 +94,5 @@ class Routes extends React.Component{
 //     }
 // }
 
-export default (Routes);
+export default Routes;
 

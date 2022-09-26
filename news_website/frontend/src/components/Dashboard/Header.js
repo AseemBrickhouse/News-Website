@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import MyAccount from './MyAccount';
 import {
@@ -13,7 +13,6 @@ import {
 import { styled } from "@material-ui/core/styles";
 import StickyBox from "react-sticky-box";
 
-//Prob can remove
 
 const Header = (props) =>{
     const StyledButton = styled(Button)({

@@ -1,20 +1,16 @@
 import React, {useEffect} from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { 
-  Grid, Typography, TextField, 
-  FormControlLabel, Avatar, MenuItem,
-  Button, CssBaseline, Link, Box, FormControl,
-  Container, Checkbox, InputLabel, Select,
+    TextField, 
+    MenuItem,
+    Button,
+    FormControl,
+    InputLabel,
+    Select,
 } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CircularProgress from '@mui/material/CircularProgress';
 import CSRFToken from '../../../store/actions/csrfToken';
 import SaveIcon from '@mui/icons-material/Save';
-import Article from '../Articles';
 
 const CreateArticle = (props) => {
             var defaultValues= {
@@ -174,40 +170,4 @@ const CreateArticle = (props) => {
             </div>
         )
     }
-
-    // render(){
-    //     console.log("Here");
-    //     return(
-    //         <div>
-    //             <this.Form/>
-    //         </div>
-    //     )
-    // }
 export default CreateArticle;
-
-                // visibility: data.get('visibility'),
-                // article_description: data.get('article_description'),
-                // article_body: data.get('article_body')
-            // fetch("/api/CreateNewArticle/", {
-            //     method: "POST",
-            //     headers:{
-            //       'Accept':'application/json',
-            //       'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({
-            //         token: localStorage.getItem('token'),
-            //         headline: data.get('headline'),
-            //         // visibility: data.get('visibility'),
-            //         // article_description: data.get('article_description'),
-            //         // article_body: data.get('article_body'),
-            //     })
-            // })
-            // .then(response =>{
-            //     console.log(response)
-            // })
-            // .then(data =>{
-            //     console.log(data)
-            // })
-            // console.log("Createsddfds");
-            // this.props.history.push('/')
-            // <Redirect to="/Account/Articles/"/>

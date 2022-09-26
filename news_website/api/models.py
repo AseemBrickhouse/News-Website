@@ -40,6 +40,7 @@ class Account(models.Model):
     phone = models.CharField(max_length=12, default="444-444-4444")
     bio = models.TextField(null=True)
     email = models.EmailField(max_length=50, null=True)
+    profile_pic = models.ImageField(blank=True, null=True)
     occupation = models.CharField(max_length=30, null=True)
 
     def FullName(self):

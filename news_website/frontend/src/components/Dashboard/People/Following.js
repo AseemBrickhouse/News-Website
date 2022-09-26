@@ -8,12 +8,12 @@ import {
   } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 
-const FindPeople = () => {
+const Following = () => {
     const[people, setPeople] = useState(null);
     const[load, setLoad] = useState(false);
 
         useEffect(async () =>{
-        await fetch("/api/AllAccounts/",{
+        await fetch("/api/myFollowing/",{
             method: "POST",
             headers:{
                 'Accept':'application/json',
@@ -27,7 +27,7 @@ const FindPeople = () => {
             return response.json();
         })
         .then(data=>{
-            // console.log(data)
+            console.log(data)
             setLoad(true)
             setPeople(data)
         })
@@ -55,7 +55,7 @@ const FindPeople = () => {
             })
             .then(data=>{
                 setLoad(false)
-                // console.log(data)
+                console.log(data)
             })
 
     }
@@ -79,7 +79,7 @@ const FindPeople = () => {
             // console.log(data)
         })
     }
-
+    console.log(people)
     return(
         <Box sx={{
             flexDirection: "row", 
@@ -87,11 +87,9 @@ const FindPeople = () => {
             display: "flex",
             marginLeft: "20vw", 
             marginRight:"20vw", 
-            marginTop:"1vh",
-            flexWrap: "wrap",
-            }}>
+            marginTop:"1vh"}}>
             {
-                people != null ? Object.entries(people).map(([id, Person]) =>{
+                people != null ? Object.entries(people).map(([key, Person]) =>{
                     return(
                         <Box sx={{
                             borderRadius: "25px",
@@ -111,15 +109,15 @@ const FindPeople = () => {
                                 height: "auto"
                             }}>
                                 <Box sx={{width: "100%",height:"150px", display: "flex", flexDirection: "row"}}>
-                                    <Box sx={{width: "35%", height: "100%"}}>
-                                        <Box sx={{
-                                            marginLeft: "50%",
-                                            marginTop: "25%",
-                                            height: "50px",
-                                            width: "50px",
-                                            // backgroundColor: "black",
-                                            borderRadius: "50%",
-                                        }}>  
+                                <Box sx={{width: "35%", height: "100%"}}>
+                                    <Box sx={{
+                                        marginLeft: "50%",
+                                        marginTop: "25%",
+                                        height: "50px",
+                                        width: "50px",
+                                        // backgroundColor: "black",
+                                        borderRadius: "50%",
+                                    }}>  
                                         {
                                             Person.profile_pic != null ?
                                             <Avatar 
@@ -141,7 +139,7 @@ const FindPeople = () => {
                                                 }}
                                             />
                                         }
-                                        </Box>
+                                    </Box>
                                     </Box>
                                     <Box sx={{
                                         width: "75%",
@@ -307,10 +305,10 @@ const FindPeople = () => {
                         </Box>
                     )
                 })
-                : console.log(people)
+                : <></>
             }
         </Box>
     )
 }
 
-export default FindPeople;
+export default Following;

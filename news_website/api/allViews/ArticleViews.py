@@ -92,7 +92,7 @@ class GetUserArticles(APIView):
         userArticles = Article.objects.all().filter(
             reporter_account = Account.objects.all().get(key=key)
         )[:6]
-        print(userArticles)
+        # print(userArticles)
         queryset={}
         for article in userArticles:
             articlesJson = ArticleSerializer(article).data
