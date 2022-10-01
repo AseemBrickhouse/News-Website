@@ -105,11 +105,7 @@ const AccountID = (props) =>{
     // const savedArticles = props.saved.saved;
 
     const isBookmarked = (key) =>{
-        if (props.saved.saved[key] == undefined){
-            return false
-        }else{
-            return true
-        }
+       return props.saved.saved[key] == undefined ? false : true
     }
     return(
         <Box sx={{display: "flex", flexDirection: "row" ,height: "94vh"}}>
@@ -123,7 +119,7 @@ const AccountID = (props) =>{
                         {
                             person.profile_pic != null ?
                             <Avatar 
-                                alt={person.first_name = person.last_name} 
+                                alt={person.first_name + person.last_name} 
                                 src={person.profile_pic}
                                 sx={{
                                     margin: "auto",
@@ -133,7 +129,7 @@ const AccountID = (props) =>{
                             />
                             :
                             <Avatar 
-                                alt={person.first_name = person.last_name} 
+                                alt={person.first_name + person.last_name} 
                                 src="/images/defaultProfilePic.png"
                                 sx={{
                                     margin: "auto",
@@ -228,7 +224,7 @@ const AccountID = (props) =>{
                                                   alignItems: 'center',
                                                   flexWrap: 'wrap',
                                                 }}>
-                                              <StarIcon fontSize='15px' style={{color: "yellow", marginRight: "5px"}}/>
+                                              <StarIcon fontSize='15px' style={{color: "#F2AF29", marginRight: "5px"}}/>
                                               <span>Members only</span>
                                             </div>  
                                           </StyledTypographyFooter>

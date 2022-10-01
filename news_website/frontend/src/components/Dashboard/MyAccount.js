@@ -1,6 +1,7 @@
 import React from 'react';
 import {withRouter, Link } from 'react-router-dom';
 import * as actions from '../../store/actions/auth';
+import * as savedArticleActions from '../../store/actions/savedArticles';
 import { connect } from 'react-redux';
 import Logout from '@mui/icons-material/Logout';
 import { 
@@ -166,9 +167,19 @@ const MyAccount = (props) =>{
       </Box>
     )
 }
+// const handleLog = (props) =>{
+//   console.log(props);
+//   props.getSavedLogout;
+//   props.logout;
+// }
+
 const mapDispatchToProps = dispatch => {
     return {
-      logout : () => dispatch(actions.authLOGOUT())
+      getSavedLogout: () => dispatch(savedArticlesActions.getSavedLogout()),
+      logout : () => {
+        dispatch(savedArticleActions.getSAVEDLOGOUT()),
+        dispatch(actions.authLOGOUT())
+      }
     }
 }
 export default withRouter(connect(null,mapDispatchToProps)(MyAccount));

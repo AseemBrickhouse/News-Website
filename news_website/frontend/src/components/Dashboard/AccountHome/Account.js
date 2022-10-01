@@ -1,15 +1,4 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Profile from './Profile';
-import Articles from './Articles';
-import CreateArticle from './CreateArticle';
-import EditAccount from './EditAccount';
-import ArticleID from '../ArticleID';
 import { connect } from 'react-redux';
 import {Switch, BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import { 
@@ -21,8 +10,9 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
+//I DOnt hitnk this file is used
 const Account = (props) =>{
-    const account = props.account
+    const account = account
     return(
         <div>
         <Box className = "profileContainerTest" sx={{ display: 'inline-flex', flexDirection: 'row', marginTop: "1vh", width:"75%"}}>

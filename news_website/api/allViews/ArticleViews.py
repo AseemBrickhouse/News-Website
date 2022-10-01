@@ -33,36 +33,53 @@ class AllArticles(APIView):
         # else:
         queryset = Article.objects.all().filter(isPrivate = False)
         for article in queryset:
-            tmpArt = ArticleSerializer(article)
-            # attachNameToArticle(tmpArt)
-            # account = Account.objects.all().filter(id=tmpArt.data['reporter_account'])
-            querysetSend[tmpArt.data['key']] = tmpArt.data
-            querysetSend[tmpArt.data['key']]['reporter_account'] = attachNameToArticle(tmpArt)
+            articleJson = ArticleSerializer(article)
+            key = articleJson.data['key']
+            querysetSend[key] = articleJson.data
+            reporter_account = Account.objects.all().filter(id=articleJson.data['reporter_account'])[0]
+            querysetSend[key]['reporter_account'] = AccountSerializer(reporter_account).data
+            querysetSend[key]['reporter_account']['followers'] = getFollow(reporter_account, "FOLLOWERS")
             if request.data['token'] != None:
                 try:
                     isBookmarked = BookmarkedArticles.objects.get(
                         account = getCurrentUser(request.data['token'], "isBookmarked"),
                         saved=article,
                     )
-                    querysetSend[tmpArt.data['key']]['isBookmarked'] = True
+                    querysetSend[key]['isBookmarked'] = True
                 except BookmarkedArticles.DoesNotExist:
-                    querysetSend[tmpArt.data['key']]['isBookmarked'] = False
+                    querysetSend[key]['isBookmarked'] = False
+                
+                try:
+                    isFollowing= Followers.objects.get(
+                        account = getCurrentUser(request.data['token'], "isFollowing"),
+                        following_user=reporter_account
+                    )
+                    querysetSend[key]['reporter_account']['is_following'] = True
+                except Followers.DoesNotExist:
+                    querysetSend[key]['reporter_account']['is_following'] = False
 
         popqueryset = {}
-        popQuerySetRequest = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:3]
+        popQuerySetRequest = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:3] #Change num to display num of pop articles
 
         for article in popQuerySetRequest:
             articleJson = ArticleSerializer(article)
-            popqueryset[articleJson.data['key']] = articleJson.data
-            popqueryset[articleJson.data['key']]['reporter_account'] = {
-                'name': attachNameToArticle(articleJson),
-                'key': Account.objects.all().filter(id=articleJson.data['reporter_account'])[0].key,
-                'person' : AccountSerializer(Account.objects.all().filter(id=articleJson.data['reporter_account'])[0]).data,
-            }
-        return Response({
-                            'allArticles': querysetSend, 
-                            'popArticles': popqueryset
-                        })
+            key = articleJson.data['key']
+            popqueryset[key] = articleJson.data
+            reporter_account = Account.objects.all().filter(id=articleJson.data['reporter_account'])[0]
+            popqueryset[key]['reporter_account'] = AccountSerializer(reporter_account).data
+            popqueryset[key]['reporter_account']['followers'] = getFollow(reporter_account, "FOLLOWERS")
+
+            if request.data['token'] != None:
+                try:
+                    isFollowing= Followers.objects.get(
+                        account = getCurrentUser(request.data['token'], "isFollowing"),
+                        following_user=reporter_account
+                    )
+                    popqueryset[key]['reporter_account']['is_following'] = True
+                except Followers.DoesNotExist:
+                    popqueryset[key]['reporter_account']['is_following'] = False  
+
+        return Response({'allArticles': querysetSend,'popArticles': popqueryset})
 
     def get(self, request, *args, **kwargs):
         pass

@@ -17,7 +17,7 @@ import StickyBox from "react-sticky-box";
 const Header = (props) =>{
     const StyledButton = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-      backgroundColor: "black",
+      backgroundColor: "#AD343E",
       width: "110%",
       height: "100%",
       color: "white",
@@ -28,8 +28,8 @@ const Header = (props) =>{
       textTransform: "none",
       textDecoration: "none",
       "&:hover":{
-        fontSize: "15px",
-        fontWeight: "500",
+        fontSize: "17px",
+        fontWeight: "300",
         color: "white",
         backgroundColor: "black",
       }

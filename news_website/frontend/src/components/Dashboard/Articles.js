@@ -5,25 +5,28 @@ import {
 } from "react-router-dom";
 import AdSense from 'react-adsense';
 import ArticleID from './ArticleID';
-import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
+// import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Util from '../Utility';
 import { 
   Typography, 
-  Chip,
+  Chip, Avatar,
   Box, Button,
-  
 } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import { styled } from "@material-ui/core/styles";
 import SearchBar from "material-ui-search-bar";
 import * as articleActions from '../../store/actions/article';
 import * as savedArticleActions from '../../store/actions/savedArticles';
+import StarIcon from '@mui/icons-material/Star';
+
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 const Article = (props) => {
 
     const StyledButton = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-      backgroundColor: "black",
+      backgroundColor: "#AD343E",
       width: "75%",
       height: "70%",
       color: "white",
@@ -33,19 +36,31 @@ const Article = (props) => {
       borderRadius: "50px",
       textTransform: "none",
       textDecoration: "none",
+      "&:hover":{
+        fontSize: "15px",
+        fontWeight: "300",
+        color: "white",
+        backgroundColor: "black",
+      }
 
     });
-
+    const StyledTypographyFooter = styled(Typography)({
+      color: "black", 
+      textDecoration: "none",
+      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+      fontWeight: "500",
+      fontSize: "15px",
+      marginRight: "5px",
+  })
+  
     const [load, setLoad] = useState(true);
   
     const Utility= new Util();
 
     useEffect(async () => {
-        console.log(props)
         const token = localStorage.getItem('token');
         props.getArticles(token);
         props.getSavedArticles(token);
-        // setAllArticles(props.data);
         setLoad(true);
     },[load]);
 
@@ -70,7 +85,6 @@ const Article = (props) => {
         .then(response => {return response.json()})
         .then(data => {
           setLoad(false)
-          console.log(data)
         })
     }
     const handleRemoveBookMark = (key) =>{
@@ -88,146 +102,159 @@ const Article = (props) => {
       .then(response => {return response.json() })
       .then(data => {
         setLoad(false)
-        console.log(data)
+        // console.log(data)
       })
   }
+  const isBookmarked = (key) =>{
+    if (props.saved.saved == null) {
+      return false
+    }
+    if (props.saved.saved[key] === undefined){
+        return false
+    }else{
+        return true
+    }
+}
     return(
       <React.Fragment>
         <div className='container'>
         <Box sx={{display: "flex", marginLeft: "15vw", flexDirection: "column", marginTop:"1px",}}>
           { 
             props.allArticles != null ? Object.entries(props.allArticles).map(([id,Article]) => {
+              const reporter = Article.reporter_account
               return(
-                    <Box  
-                      sx={{
-                         width: "40vw", height: "25vh",
-                        //  backgroundColor: "lightblue",
-                         marginRight: "20px",
-                         display: "flex", 
-                         flexDirection:"row", 
-                         borderTop: "solid 1px black", 
-                         borderBottom: "solid 1px black",
-                         borderRight: "solid 2px black", 
-                         paddingRight: "2vw"
-                      }}>
-                      <Link 
-                      style={{
-                        textDecoration: "none",
-                        color: "black",
-                        underline: "none",
-                      }}
-                      to={{
-                        pathname: '/Articles/' + Article.key + '/',
-                        state: { 
-                          ArticleID: Article.key,
-                          Article: Article,
-                      },   
-                      }}>
-                        <Box sx={{width: "100%", height: "20%", flexDirection: "row", display:"flex", whiteSpace:"pre-wrap", marginTop: "4px"}}>
-                            <Box>
-                              {Article.reporter_account} {/* Put Work Affilation hwwwwwwere*/}
-                            </Box>
-                            <Box sx={{marginLeft: "5px"}}>•</Box>
-                            <Box sx={{marginLeft: "5px"}}>
-                              {Utility.getDate(Article.date)}
-                            </Box>
-                            <Box>
-                              {/* Center the items*/}
-                              {
-                                Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" ?
-                                  <Box sx={{marginLeft: "5px"}}>
-                                    ☆ Members only
-                                  </Box>
-                                  : <></>
-                              }
-                            </Box>
-                        </Box>
-                        <Box sx={{width: "40vw", height: "60%", display:"flex", flexDirection:"column",
-                          // backgroundColor: "orange",
-                        }}>
-                              <Box sx={{
-                                fontSize: "25px",
-                                fontWeight: "500",
-                                marginLeft: "3%"
-                              }}>
-                                {Article.headline}
-                              </Box>
-                              <Box sx={{
-                                fontSize: "16px",
-                                marginLeft: "5%",
-                                marginRight: "5%",
-                                mt: "1%"
-                              }}>
-                                {Article.article_description}
-                              </Box>
-                        </Box>
-                        <Box sx={{
-                          // backgroundColor: "blue", 
-                          width: "100%", 
-                          height: "20%", 
-                          display: "flex", 
-                          flexDirection: "row",
-                          alignContent: "center",
-                          justifyContent: "space-between"
-                          }}>
-                          <Box sx={{
-                            width: "100%", 
-                            height: "20%", 
-                            display: "flex", 
-                            flexDirection: "row",
-                            alignContent: "center",
-                          }}>
-                            {
-                              Array.isArray(Article.tags) ?
-                                  Article.tags.map(tag =>{
-                                    return(
-                                      <Box sx={{margin: "5px"}}>
-                                        <Chip style={{
-                                          backgroundColor: "#C1BDBD",
-                                          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                          fontSize: "15px",
-                                          textDecoration: "none",
-                                        }}
-                                        label={tag}
-                                        />
-                                      </Box>
-                                    )
-                                  })
-                              :
-                              <Box sx={{margin: "5px"}}>
-                                <Chip style={{
-                                  backgroundColor: "#C1BDBD",
-                                  fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                  fontSize: "15px",
-                                  textDecoration: "none",
-                                }}
-                                label={Article.tags}
-                                />
-                              </Box>
-                            }
-                          </Box>
-                        </Box>
-                        </Link>
-                        <Box sx={{alignContent: "right", marginTop: "auto", marginRight: "0%"}}>
-                            {
-                              Article.isBookmarked ? 
-                                <Box onClick={() => handleRemoveBookMark(Article.key)}>
-                                  <BookmarkAddOutlinedIcon sx={{color: "#F2AF29", fontSize: "35px"}}/>
-                                </Box>
-                              : 
-                                <Box onClick={() => handleBookMark(Article.key)}>
-                                  <BookmarkAddOutlinedIcon sx={{color: "#C1BDBD", fontSize: "35px"}}/>
-                                </Box>
-                            }
-                          </Box>
+                <Box  
+                  sx={{
+                    width: "40vw", height: "25vh",
+                     //  backgroundColor: "lightblue",
+                    marginRight: "20px",
+                    display: "flex", 
+                    flexDirection:"row", 
+                    borderTop: "solid 1px black", 
+                    borderBottom: "solid 1px black",
+                    borderRight: "solid 2px black", 
+                    paddingRight: "2vw"
+                }}>
+                <Link 
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    underline: "none",
+                  }}
+                  to={{
+                    pathname: '/Articles/' + Article.key + '/',
+                    state: { 
+                      ArticleID: Article.key,
+                      Article: Article,
+                  },   
+                }}>
+                  <Box sx={{width: "100%", height: "20%", flexDirection: "row", display:"flex", whiteSpace:"pre-wrap", marginTop: "4px"}}>
+                    {/* Put Work Affilation here*/}
+                    {/* <Box>
+                      {`${reporter.first_name} ${reporter.last_name}`}
                     </Box>
+                    <Box sx={{marginLeft: "5px"}}>•</Box>
+                    <Box sx={{marginLeft: "5px"}}>{Utility.getDate(Article.date)}</Box> */}
+                    {`${reporter.first_name} ${reporter.last_name}   •   ${Utility.getDate(Article.date)} `}
+                      {
+                        Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" ?
+                          <StyledTypographyFooter style={{marginLeft: "10px"}}>
+                            <div 
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                              }}>
+                              <StarIcon style={{color: "#F2AF29", marginRight: "5px", fontSize: '10px' }}/>
+                              <span>Members only</span>
+                            </div>  
+                          </StyledTypographyFooter>
+                        : <></>
+                      }
+                  </Box>
+                  <Box sx={{width: "40vw", height: "60%", display:"flex", flexDirection:"column"}}>
+                    <Box sx={{
+                      fontSize: "25px",
+                      fontWeight: "500",
+                      marginLeft: "3%"
+                    }}>
+                      {Article.headline}
+                    </Box>
+                    <Box sx={{
+                      fontSize: "16px",
+                      marginLeft: "5%",
+                      marginRight: "5%",
+                      mt: "1%"
+                    }}>
+                      {Article.article_description}
+                    </Box>
+                  </Box>
+                  <Box sx={{
+                    width: "100%", 
+                    height: "20%", 
+                    display: "flex", 
+                    flexDirection: "row",
+                    alignContent: "center",
+                    justifyContent: "space-between"
+                    }}>
+                    <Box sx={{
+                      width: "100%", 
+                      height: "20%", 
+                      display: "flex", 
+                      flexDirection: "row",
+                      alignContent: "center",
+                    }}>
+                      {
+                      Array.isArray(Article.tags) ?
+                        Article.tags.map(tag =>{
+                          return(
+                            <Box sx={{margin: "5px"}}>
+                              <Chip style={{
+                                backgroundColor: "#C1BDBD",
+                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                fontSize: "15px",
+                                textDecoration: "none",
+                              }}
+                              label={tag}
+                              />
+                            </Box>
+                          )
+                        })
+                      :
+                        <Box sx={{margin: "5px"}}>
+                          <Chip style={{
+                            backgroundColor: "#C1BDBD",
+                            fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                            fontSize: "15px",
+                            textDecoration: "none",
+                          }}
+                            label={Article.tags}
+                          />
+                        </Box>
+                      }
+                    </Box>
+                  </Box>
+                </Link>
+                <Box sx={{alignContent: "right", marginTop: "auto", marginRight: "0%"}}>
+                {
+                  isBookmarked(Article.key) ? 
+                    <Box onClick={() => handleRemoveBookMark(Article.key)}>
+                      <BookmarkIcon style={{color: "#F2AF29", fontSize: "35px"}}/>
+                    </Box>
+                  : 
+                    <Box onClick={() => handleBookMark(Article.key)}>
+                      <BookmarkAddIcon style={{color: "#C1BDBD", fontSize: "35px"}}/>
+                    </Box>
+                }
+                </Box>
+                </Box>
               )
             })
             : <></>
           }
         </Box>
           <StickyBox offsetTop={50}>
-            <Box sx= {{display: "flex", flexDirection:"column", width:"25vw", height:"90vh", marginTop: "1px", marginLeft: "1vw"}}>
+            <Box sx= {{display: "flex", flexDirection:"column", width:"25vw", height:"90vh", marginTop: "1px", marginLeft: "1vw",}}>
               <Box sx={{width: "100%", height:"20%", display: "flex", flexDirection:"column"}}>
                 <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
                   <StyledButton>
@@ -235,15 +262,15 @@ const Article = (props) => {
                   </StyledButton>
                 </Box>
                 <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
-                    <SearchBar
-                        style={{
-                          borderStyle: "inset",
-                          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                          width: "75%",
-                          height: "70%",
-                          borderRadius: "25px",
-                        }}
-                    />
+                  <SearchBar
+                    style={{
+                      borderStyle: "inset",
+                      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                      width: "75%",
+                      height: "70%",
+                      borderRadius: "25px",
+                    }}
+                  />
                 </Box>
               </Box>
               <Box sx={{width: "100%", height:"40%",}}>
@@ -256,11 +283,12 @@ const Article = (props) => {
                       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                       fontWeight: "600",
                     }}>
-                    Top rated Articles
+                      Top rated Articles
                   </Typography>
                 </Box>
                 {
                   props.popArticles != null ? Object.entries(props.popArticles).map(([id,Article]) => {
+                    const reporter = Article.reporter_account
                     return(
                       <Box>
                         <Link
@@ -269,25 +297,44 @@ const Article = (props) => {
                             color: "black",
                             underline: "none",
                           }}
-                          // Need to create account pages for viewing other accounts
                           to={{
-                            pathname: '/Account/People/' + Article.reporter_account.key + '/',
+                            pathname: '/Account/People/' + reporter.key + '/',
                             state: { 
-                              key: Article.reporter_account.key,
-                              person: Article.reporter_account.person,
+                              key: reporter.key,
+                              person: reporter,
                           },   
-                          }}
-                        >
-                          <Box sx={{marginLeft: "10%", marginBottom: "3px"}} onClick={console.log(id)}>
+                        }}>
+                          <Box sx={{marginLeft: "10%", marginBottom: "3px", flexDirection: "row", display: "flex", alignItems: "center", flexWrap: "wrap"}} onClick={console.log(id)}>
+                          {
+                            reporter.profile_pic != null ?
+                            <Avatar 
+                              alt={`${reporter.first_name} ${reporter.last_name}`} 
+                              src={reporter.profile_pic}
+                              style={{
+                                width: '20px',
+                                height: '20px',
+                              }}
+                            />
+                            :
+                            <Avatar 
+                              alt={`${reporter.first_name} ${reporter.last_name}`} 
+                              src="/images/defaultProfilePic.png"
+                              style={{
+                                  width: '20px',
+                                  height: '20px',
+                              }}
+                            />
+                            }
                             <Typography 
                               style={{
                                 color: "black", 
                                 textDecoration: "none",
                                 fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                                 fontWeight: "400",
-                              }}
-                              >
-                                {Article.reporter_account.name}
+                                fontSize: "18px",
+                                marginLeft: "5px",
+                              }}>
+                              {`${reporter.first_name} ${reporter.last_name}`} 
                             </Typography>
                           </Box>
                         </Link>
@@ -305,18 +352,17 @@ const Article = (props) => {
                           },   
                         }}>
                           <Box onClick={() => handleView(id)} sx={{width:"100%"}}>
-                              <Box sx={{marginLeft: "5%", marginBottom: "3%"}}>
-                                <Typography 
-                                  style={{
-                                    color: "black", 
-                                    textDecoration: "none",
-                                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                    fontWeight: "600",
-                                  }}
-                                >
-                                  {Article.headline}
-                                </Typography>
-                              </Box>  
+                            <Box sx={{marginLeft: "5%", marginBottom: "3%"}}>
+                              <Typography 
+                                style={{
+                                  color: "black", 
+                                  textDecoration: "none",
+                                  fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                  fontWeight: "600",
+                              }}>
+                                {Article.headline}
+                              </Typography>
+                            </Box>  
                           </Box>
                         </Link>
                       </Box>
@@ -325,19 +371,16 @@ const Article = (props) => {
                   : <></>
                 }
               </Box>
-              {/* <Box sx={{backgroundColor: "purple", width: "100%", height:"20%"}}>
-                connect account
-              </Box> */}
             </Box>
           </StickyBox>
           <StickyBox offsetTop={50}>
             <Box sx={{backgroundColor: "orange", marginLeft: "10px", marginTop: "1vh"}}>
-            <AdSense.Google
-              client='ca-pub-7292810486004926'
-              slot='7806394673'
-              style={{ width: 250, height: 600, float: 'left' }}
-              format='fluid'
-            />
+              <AdSense.Google
+                client='ca-pub-7292810486004926'
+                slot='7806394673'
+                style={{ width: 250, height: 600, float: 'left' }}
+                format='fluid'
+              />
             </Box>
           </StickyBox>
         </div>
@@ -346,11 +389,10 @@ const Article = (props) => {
   }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return{
         allArticles: state.articles.allArticles,
         popArticles: state.articles.popArticles,
-
+        saved: state.savedArticles
   }
 }
 

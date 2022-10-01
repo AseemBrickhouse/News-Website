@@ -9,6 +9,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
 //TODO: UPDATE FILE by using the current state
+// dont think this is used
 class Profile extends React.Component{
     constructor(props){
         super(props);
@@ -182,7 +183,7 @@ class Profile extends React.Component{
         )
     }
     render(){
-        return(<this.Profile/>)
+        // return(<this.Profile/>)
     }
 }
 export default Profile;

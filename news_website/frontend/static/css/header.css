@@ -145,6 +145,7 @@ body{
     margin-top: -20px;
     /* background-image: linear-gradient(to left, #ccb9b1 , #212123); */
     /* background-image: linear-gradient(to left, #d9cab3 , #212123); */
+    /* background-image: linear-gradient(to left, #d9cab3, url("/images/headerBackground.jpg")) ; */
     background-color: #d9cab3;
     height: 300px;
     width: 100%;
@@ -179,7 +180,10 @@ body{
     left: 26%;
 }
 .HFL:hover{
-  box-shadow: 0px 0px 5px 5px #d9cab3;
+  font-size: 17px;
+  font-weight: 300;
+  color: white;
+  background-color: black;
 }
 .HFL a{
     color: #f2f2f2;

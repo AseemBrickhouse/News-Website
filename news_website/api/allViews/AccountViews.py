@@ -46,6 +46,7 @@ class AllAccounts(ObtainAuthToken):
         queryset = {}
         for account in Account.objects.all().exclude(user=getCurrentUser(request.data['token'], "ALLACCOUNTS")):
             queryset[AccountSerializer(account).data['user']] = AccountSerializer(account).data
+            queryset[AccountSerializer(account).data['user']]['key'] = AccountSerializer(account).data['key']
             queryset[AccountSerializer(account).data['user']]['written_articles'] = len(Article.objects.all().filter(reporter_account=account))
             queryset[AccountSerializer(account).data['user']]['followers'] = getFollow(account, "FOLLOWERS")
             try:
@@ -56,10 +57,7 @@ class AllAccounts(ObtainAuthToken):
                 queryset[AccountSerializer(account).data['user']]['is_following'] = True
             except Followers.DoesNotExist:
                 queryset[AccountSerializer(account).data['user']]['is_following'] = False
-            # queryset[AccountSerializer(account).data['user']]['is_following'] = Followers.objects.get(
-            #                                                                                 account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
-            #                                                                                 following_user=account[0]
-            #                                                                             )
+
         return Response(queryset)
 
 class AccountCreation(ObtainAuthToken):
@@ -95,3 +93,26 @@ class EditAccount(ObtainAuthToken):
 
     def get(self, request, *args, **kwargs):
         pass
+
+class GetPerson(APIView):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        personObject = Account.objects.filter(
+            first_name = request.data['first_name'],
+            last_name = request.data['last_name'],
+            email = request.data['email'],
+        )[0]
+        person = AccountSerializer(personObject).data
+        person['followers'] = getFollow(personObject, "FOLLOWERS")
+        try:
+            is_following = Followers.objects.get(
+                account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
+                following_user=personObject,
+            )
+            person['is_following'] = True
+        except Followers.DoesNotExist:
+            person['is_following'] = False
+
+        person['written_articles'] = len(Article.objects.all().filter(reporter_account=personObject))
+
+        return Response(person)   

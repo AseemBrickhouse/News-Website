@@ -38,12 +38,18 @@ class unFollow(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         following = request.data['toUnFollow']
         account = getCurrentUser(request.data['token'], "UNFOLLOW")
-        Followers.objects.get(account=account, 
+        try:
+            Followers.objects.get(
+                                account=account, 
                                 following_user=Account.objects.get(
                                 first_name=following['first_name'],
                                 last_name=following['last_name'],
                                 email=following['email']
                             )).delete()
+        except Followers.DoesNotExist:
+            print("here")
+            return Response(request.data)
+
         return Response(request.data)
 
 class myFollowers(ObtainAuthToken):
