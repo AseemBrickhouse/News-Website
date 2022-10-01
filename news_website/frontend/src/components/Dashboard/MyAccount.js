@@ -1,6 +1,7 @@
-import React, {useEffect}  from 'react';
+import React from 'react';
 import {withRouter, Link } from 'react-router-dom';
 import * as actions from '../../store/actions/auth';
+import * as savedArticleActions from '../../store/actions/savedArticles';
 import { connect } from 'react-redux';
 import Logout from '@mui/icons-material/Logout';
 import { 
@@ -31,6 +32,7 @@ const MyAccount = (props) =>{
       fontWeight: "700",
       textAlign: "center",
     })
+    console.log(props)
     return(
       <Box sx={{display: "flex", flexDirection: "row", textDecoration: "none", padding: "5px"}}>
         <div>
@@ -49,7 +51,14 @@ const MyAccount = (props) =>{
             }}
           >
             <MenuItem>
-              <Link to="/Account/Profile" style={{ textDecoration: 'none' }} underline="none">
+              <Link to={{
+                pathname: '/Account/People/' + props.account.key + '/',
+                state: { 
+                  key: props.account.key,
+                  person: props.account,
+                },          
+              }} 
+              style={{ textDecoration: 'none' }} underline="none">
                 <Typography style={{color: "black", marginLeft: "1vw", textDecoration: "none"}}>
                   View Profile
                 </Typography>
@@ -158,9 +167,19 @@ const MyAccount = (props) =>{
       </Box>
     )
 }
+// const handleLog = (props) =>{
+//   console.log(props);
+//   props.getSavedLogout;
+//   props.logout;
+// }
+
 const mapDispatchToProps = dispatch => {
     return {
-      logout : () => dispatch(actions.authLOGOUT())
+      getSavedLogout: () => dispatch(savedArticlesActions.getSavedLogout()),
+      logout : () => {
+        dispatch(savedArticleActions.getSAVEDLOGOUT()),
+        dispatch(actions.authLOGOUT())
+      }
     }
 }
 export default withRouter(connect(null,mapDispatchToProps)(MyAccount));

@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {Box} from "@material-ui/core";
 import Card from './Card';
 
-const FindPeople = () => {
+const Following = () => {
     const[people, setPeople] = useState(null);
     const[load, setLoad] = useState(false);
 
     useEffect(async () =>{
-        await fetch("/api/AllAccounts/",{
+        await fetch("/api/myFollowing/",{
             method: "POST",
             headers:{
                 'Accept':'application/json',
@@ -37,7 +37,7 @@ const FindPeople = () => {
             flexWrap: "wrap",
             }}>
             {
-            people != null ? Object.entries(people).map(([id, Person]) =>{
+            people != null ? Object.entries(people).map(([key, Person]) =>{
                 return(
                     <Box sx={{
                         borderRadius: "25px",
@@ -48,15 +48,15 @@ const FindPeople = () => {
                         width: "300px",
                         height: "auto",
                         margin: "5px"
-                        }}> 
+                        }}>
                         <Card {...Person}/>
                     </Box>
                 )
             })
-            : console.log(people)
+            : <></>
             }
         </Box>
     )
 }
 
-export default FindPeople;
+export default Following;

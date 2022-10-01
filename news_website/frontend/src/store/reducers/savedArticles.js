@@ -28,13 +28,18 @@ const getSAVEDFAIL = (state, action)=>{
         loading: false,
     })
 }
-
+const getSAVEDLOGOUT=(state, action)=>{
+    return updateObject(state, {
+        saved: action.payload,
+        loading: false,
+    })
+}
 const reducer = (state=initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_SAVED_ARTICLES_SUCCESS: return getSAVEDSUCCESS(state, action);
         case actionTypes.GET_SAVED_ARTICLES_FAIL: return getSAVEDFAIL(state, action);
         case actionTypes.GET_SAVED_ARTICLES_START: return startGETSAVED(state, action);
-
+        case actionTypes.GET_SAVED_LOGOUT: return getSAVEDLOGOUT(state, action)
         default:
             return state;
     }

@@ -1,18 +1,15 @@
 import * as React from 'react';
 import * as actions from '../../store/actions/auth';
-import CSRFToken from '../../store/actions/csrfToken';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { styled } from "@material-ui/core/styles";
-
 import { 
-  Grid, Typography, TextField, 
-  FormControlLabel, Avatar, 
-  Button, CssBaseline, Box, 
-  Container, Checkbox,
+  TextField,
+  Button, 
+  Box, 
+  Container,
 } from "@material-ui/core";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme} from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 
 

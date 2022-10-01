@@ -1,5 +1,6 @@
 import * as actionTypes from './types';
 import axios from 'axios';
+import { BASE_URL } from '../baseURLS';
 
 export const startGETSAVED = () =>{
     return{
@@ -18,11 +19,10 @@ export const getSAVEDSUCCESS = (data) =>{
         payload: data
     }
 }
-
 export const getSAVEDARTICLES = (token) =>{
     return dispatch=>{
         dispatch(startGETSAVED())
-        axios.post('http://127.0.0.1:8000/api/SavedArticles/', {
+        axios.post(`${BASE_URL}/api/SavedArticles/`, {
             token: token,
         })
         .then(response=>{
@@ -30,5 +30,12 @@ export const getSAVEDARTICLES = (token) =>{
         }).catch(error =>{
             dispatch(getSAVEDFAIL(error))
         })
+    }
+}
+export const getSAVEDLOGOUT = () =>{
+    console.log("here")
+    return {
+        type: actionTypes.GET_SAVED_LOGOUT,
+        payload: null
     }
 }

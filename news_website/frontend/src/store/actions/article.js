@@ -1,5 +1,6 @@
 import * as actionTypes from './types';
 import axios from 'axios';
+import { BASE_URL } from '../baseURLS';
 
 export const startGETARTICLES = () =>{
     return{
@@ -21,10 +22,9 @@ export const articleFAIL = (error) =>{
     };
 }
 export const getARTICLES = (token) =>{
-    // console.log(action)
     return dispatch=>{
-        dispatch(startGETARTICLES())
-        axios.post('http://127.0.0.1:8000/api/AllArticles/', {
+        dispatch(startGETARTICLES()) 
+        axios.post(`${BASE_URL}/api/AllArticles/`, {
             token: token,
         })
         .then(response=>{

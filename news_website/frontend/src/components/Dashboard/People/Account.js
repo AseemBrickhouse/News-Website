@@ -8,6 +8,7 @@ import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Utility from '../../Utility';
 import StarIcon from '@mui/icons-material/Star';
 import * as savedAction from '../../../store/actions/savedArticles';
+import Avatar from '@mui/material/Avatar';
 
 const AccountID = (props) =>{
     const person = props.location.state.person
@@ -104,11 +105,7 @@ const AccountID = (props) =>{
     // const savedArticles = props.saved.saved;
 
     const isBookmarked = (key) =>{
-        if (props.saved.saved[key] == undefined){
-            return false
-        }else{
-            return true
-        }
+       return props.saved.saved[key] == undefined ? false : true
     }
     return(
         <Box sx={{display: "flex", flexDirection: "row" ,height: "94vh"}}>
@@ -118,10 +115,29 @@ const AccountID = (props) =>{
                 backgroundColor: "#D9CAB3", 
                 border: "1px solid black",
                 borderRadius:"25px", marginLeft: "10%", flexDirection:"column", display:"flex", textAlign: "center", dropShadow: "16px 16px 10px 10px black"}}>
-                    <Box sx={{width: "100%", height: "50%",  textAlign: "center"}}>
-                        {/* { center the cirlce for larger screens} */}
-                        {/* <Box sx={{borderRadius:"50%", backgroundColor: "black", width:"100px", height:"100px", marginLeft: "10vw", marginTop: "1vh"}}/> */}
-                        <p>Account img</p>
+                    <Box sx={{width: "100%", height: "50%", marginTop: "20px"}}>
+                        {
+                            person.profile_pic != null ?
+                            <Avatar 
+                                alt={person.first_name + person.last_name} 
+                                src={person.profile_pic}
+                                sx={{
+                                    margin: "auto",
+                                    width: 125,
+                                    height: 125,
+                                }}
+                            />
+                            :
+                            <Avatar 
+                                alt={person.first_name + person.last_name} 
+                                src="/images/defaultProfilePic.png"
+                                sx={{
+                                    margin: "auto",
+                                    width: 125,
+                                    height: 125,
+                                }}
+                            />
+                        }
                     </Box>
                     <Box sx={{width: "100%", height: "20%"}}>
                         <Typography
@@ -208,7 +224,7 @@ const AccountID = (props) =>{
                                                   alignItems: 'center',
                                                   flexWrap: 'wrap',
                                                 }}>
-                                              <StarIcon fontSize='15px' style={{color: "yellow", marginRight: "5px"}}/>
+                                              <StarIcon fontSize='15px' style={{color: "#F2AF29", marginRight: "5px"}}/>
                                               <span>Members only</span>
                                             </div>  
                                           </StyledTypographyFooter>

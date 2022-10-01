@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import MyAccount from './MyAccount';
 import {
@@ -13,12 +13,11 @@ import {
 import { styled } from "@material-ui/core/styles";
 import StickyBox from "react-sticky-box";
 
-//Prob can remove
 
 const Header = (props) =>{
     const StyledButton = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-      backgroundColor: "black",
+      backgroundColor: "#AD343E",
       width: "110%",
       height: "100%",
       color: "white",
@@ -29,8 +28,8 @@ const Header = (props) =>{
       textTransform: "none",
       textDecoration: "none",
       "&:hover":{
-        fontSize: "15px",
-        fontWeight: "500",
+        fontSize: "17px",
+        fontWeight: "300",
         color: "white",
         backgroundColor: "black",
       }

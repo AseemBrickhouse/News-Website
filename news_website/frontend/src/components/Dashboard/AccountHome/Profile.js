@@ -1,23 +1,15 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-
-import { Redirect, Switch, BrowserRouter as Router, Route } from "react-router-dom";
-
 import { 
-    Grid, Typography, TextField, 
-    FormControlLabel, Avatar, 
-    CssBaseline, Box, MenuList,
-    Container, Checkbox, MenuItem, NestedMenuItem,
-  } from "@material-ui/core";
-
+    Grid, 
+    Box,
+} from "@material-ui/core";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
+//TODO: UPDATE FILE by using the current state
+// dont think this is used
 class Profile extends React.Component{
     constructor(props){
         super(props);
@@ -191,53 +183,7 @@ class Profile extends React.Component{
         )
     }
     render(){
-        return(
-            <div>
-                <this.Profile/>
-            </div> 
-        )
+        // return(<this.Profile/>)
     }
 }
 export default Profile;
-
-            // <div>
-            //     <div className='profile'>    
-            //         <div className="left">
-            //             <div className="iconBack">    
-            //             </div>
-            //         </div>
-            //         <div className="middle">
-            //             <div className="middleContent">
-            //                 <p>Name<br/><br/><span> {this.state.first_name} {this.state.last_name}</span></p>
-            //                 <p>Email<br/><br/><span> {this.state.email}</span></p>
-            //                 <p>Occupation<br/><br/><span> {this.state.occupation}</span></p>
-            //                 <p>Phone<br/><br/><span> {this.state.phone}</span></p>
-            //             </div>
-            //         </div>
-            //         <div className="right">
-            //             <div className="rightTitle">
-            //                 Bio
-            //             </div>
-            //             <bio>  
-            //                {/* <span>"Lorem</span>  */}
-            //                 {this.state.bio}
-            //             </bio>
-            //         </div>
-            //     </div>
-            //     <div className='ProfileBottom'>
-            //         <div className="followersContent">
-            //             <div className='followers'>
-            //                 <p>Followers</p>
-            //                 <p>53,256</p>
-            //                 <p>Following</p>
-            //                 <p>843</p>
-            //                 <p>Written Articles</p>
-            //                 <p>67</p>
-            //             </div>
-            //             <div class='popArticles'>
-            //                 <p style={{marginLeft: "10px"}}>Popular Articles</p>
-            //                 <this.Articles/>
-            //             </div>
-            //         </div>
-            //     </div>
-            // </div>   

@@ -1,21 +1,11 @@
 import React, {useEffect} from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { Redirect, Switch, Link, Route } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
-import { styled } from "@material-ui/core/styles";
-import Article from '../Articles';
+import { Link, Route } from "react-router-dom";
 import ArticleID from '../ArticleID';
 import Util from '../../Utility';
-import { 
-    Grid, Typography, TextField, 
-    FormControlLabel, Avatar, Chip,
-    CssBaseline, Box, MenuList, Button,
-    Container, Checkbox, MenuItem, NestedMenuItem,
-  } from "@material-ui/core";
-import CreateArticle from './CreateArticle';
+import { Chip,Box} from "@material-ui/core";
+
+// Possible Addition for a Create Button ??
+// import CreateArticle from './CreateArticle';
 
 const Articles = () =>{
 
@@ -101,7 +91,7 @@ const Articles = () =>{
             {
             articles != null ? Object.entries(articles).map( ([id, Article]) =>{
                 return(
-                    <Link 
+                <Link 
                     style={{
                       textDecoration: "none",
                       color: "black",
@@ -207,8 +197,8 @@ const Articles = () =>{
                 )
             })
         :
-        <>
-        </>}
+        <></>
+        }
             </Box>
         </div>
     )

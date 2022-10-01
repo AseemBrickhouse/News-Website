@@ -1,6 +1,7 @@
 import * as actionTypes from './types';
 import axios from 'axios';
-import { getSAVEDARTICLES } from './savedArticles';
+import { getSAVEDARTICLES, getSAVEDLOGOUT } from './savedArticles';
+import { BASE_URL } from '../baseURLS';
 
 export const authStart = () =>{
     return{
@@ -36,7 +37,7 @@ export const getAuthInfoFAIL = error =>{
 }
 export const getAuthInfo = token =>{
     return dispatch=>{
-        axios.post('http://127.0.0.1:8000/api/current_user/',{
+        axios.post(`${BASE_URL}/api/current_user/`,{
             token: token,
         })
         .then(response =>{
@@ -66,7 +67,7 @@ export const getAuthInfo = token =>{
 export const authLogin = (username, password) => {
     return dispatch =>{
         dispatch(authStart());
-        axios.post('http://127.0.0.1:8000/rest-auth/login/', {
+        axios.post(`${BASE_URL}/rest-auth/login/`, {
             username: username,
             password: password
         })
@@ -91,7 +92,7 @@ export const authLogin = (username, password) => {
 export const authSignUp = (username, email, password1, password2) => {
     return dispatch =>{
         dispatch(authStart());
-        axios.post('http://127.0.0.1:8000/rest-auth/registration/', {
+        axios.post(`${BASE_URL}/rest-auth/registration/`, {
             username: username,
             email: email,
             password1: password1,
@@ -140,7 +141,7 @@ export const authCheckState = () => {
             if(expirationDate <= new Date()){
                 dispatch(authLOGOUT())
             }else{
-                axios.post('http://127.0.0.1:8000/api/current_user/',{
+                axios.post(`${BASE_URL}/api/current_user/`,{
                     token: token,
                 })
                 .then(response =>{
