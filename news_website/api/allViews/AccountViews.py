@@ -96,7 +96,6 @@ class EditAccount(ObtainAuthToken):
 
 class GetPerson(APIView):
     def post(self, request, *args, **kwargs):
-        print(request.data)
         personObject = Account.objects.filter(
             first_name = request.data['first_name'],
             last_name = request.data['last_name'],
@@ -104,14 +103,15 @@ class GetPerson(APIView):
         )[0]
         person = AccountSerializer(personObject).data
         person['followers'] = getFollow(personObject, "FOLLOWERS")
-        try:
-            is_following = Followers.objects.get(
-                account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
-                following_user=personObject,
-            )
-            person['is_following'] = True
-        except Followers.DoesNotExist:
-            person['is_following'] = False
+        if request.data['token'] != None:
+            try:
+                is_following = Followers.objects.get(
+                    account=getCurrentUser(request.data['token'], "IS_FOLLOWING"), 
+                    following_user=personObject,
+                )
+                person['is_following'] = True
+            except Followers.DoesNotExist:
+                person['is_following'] = False
 
         person['written_articles'] = len(Article.objects.all().filter(reporter_account=personObject))
 

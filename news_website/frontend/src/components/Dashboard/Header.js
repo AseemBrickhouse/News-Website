@@ -64,7 +64,7 @@ const Header = (props) =>{
                   }}
                   to="/"
                 >
-                  Lorem
+                  News Wire
                 </Link>
               </Box>
             </Box>

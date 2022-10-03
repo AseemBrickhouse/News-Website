@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import AdSense from 'react-adsense';
 import ArticleID from './ArticleID';
-// import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Util from '../Utility';
 import { 
   Typography, 
@@ -64,12 +63,6 @@ const Article = (props) => {
         setLoad(true);
     },[load]);
 
-    const handleView = (key)=>{
-      <Route exact path={'/Articles/' + key + '/'}>
-          <ArticleID/>
-      </Route>
-    }
-
     const handleBookMark = (key) =>{
         fetch('api/Bookmark/', {
           method: "POST",
@@ -106,14 +99,15 @@ const Article = (props) => {
       })
   }
   const isBookmarked = (key) =>{
-    if (props.saved.saved == null) {
-      return false
-    }
-    if (props.saved.saved[key] === undefined){
-        return false
-    }else{
-        return true
-    }
+    // if (props.saved.saved == null) {
+    //   return false
+    // }
+    // if (props.saved.saved[key] === undefined){
+    //     return false
+    // }else{
+    //     return true
+    // }
+    return props.saved.saved == null || props.saved.saved[key] === undefined ? false : true
 }
     return(
       <React.Fragment>
@@ -150,11 +144,6 @@ const Article = (props) => {
                 }}>
                   <Box sx={{width: "100%", height: "20%", flexDirection: "row", display:"flex", whiteSpace:"pre-wrap", marginTop: "4px"}}>
                     {/* Put Work Affilation here*/}
-                    {/* <Box>
-                      {`${reporter.first_name} ${reporter.last_name}`}
-                    </Box>
-                    <Box sx={{marginLeft: "5px"}}>•</Box>
-                    <Box sx={{marginLeft: "5px"}}>{Utility.getDate(Article.date)}</Box> */}
                     {`${reporter.first_name} ${reporter.last_name}   •   ${Utility.getDate(Article.date)} `}
                       {
                         Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" ?
@@ -290,81 +279,100 @@ const Article = (props) => {
                   props.popArticles != null ? Object.entries(props.popArticles).map(([id,Article]) => {
                     const reporter = Article.reporter_account
                     return(
-                      <Box>
-                        <Link
-                          style={{
-                            textDecoration: "none",
-                            color: "black",
-                            underline: "none",
-                          }}
-                          to={{
-                            pathname: '/Account/People/' + reporter.key + '/',
-                            state: { 
-                              key: reporter.key,
-                              person: reporter,
-                          },   
-                        }}>
-                          <Box sx={{marginLeft: "10%", marginBottom: "3px", flexDirection: "row", display: "flex", alignItems: "center", flexWrap: "wrap"}} onClick={console.log(id)}>
-                          {
-                            reporter.profile_pic != null ?
-                            <Avatar 
-                              alt={`${reporter.first_name} ${reporter.last_name}`} 
-                              src={reporter.profile_pic}
-                              style={{
-                                width: '20px',
-                                height: '20px',
-                              }}
-                            />
-                            :
-                            <Avatar 
-                              alt={`${reporter.first_name} ${reporter.last_name}`} 
-                              src="/images/defaultProfilePic.png"
-                              style={{
-                                  width: '20px',
-                                  height: '20px',
-                              }}
-                            />
-                            }
-                            <Typography 
-                              style={{
-                                color: "black", 
-                                textDecoration: "none",
-                                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                fontWeight: "400",
-                                fontSize: "18px",
-                                marginLeft: "5px",
-                              }}>
-                              {`${reporter.first_name} ${reporter.last_name}`} 
-                            </Typography>
-                          </Box>
-                        </Link>
-                        <Link 
-                          style={{
-                            textDecoration: "none",
-                            color: "black",
-                            underline: "none",
-                          }}
-                          to={{
-                            pathname: '/Articles/' + Article.key + '/',
-                            state: { 
-                              ArticleID: id,
-                              Article: Article,
-                          },   
-                        }}>
-                          <Box onClick={() => handleView(id)} sx={{width:"100%"}}>
-                            <Box sx={{marginLeft: "5%", marginBottom: "3%"}}>
+                      <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: "2vh"}}>
+                        <Box sx={{display: "flex", flexDirection: "column"}}>
+                          <Link
+                            style={{
+                              textDecoration: "none",
+                              color: "black",
+                              underline: "none",
+                            }}
+                            to={{
+                              pathname: '/Account/People/' + reporter.key + '/',
+                              state: { 
+                                key: reporter.key,
+                                person: reporter,
+                            },}}
+                          >
+                            <Box sx={{display: "flex", flexDirection: "row"}}>
+                              {
+                                reporter.profile_pic != null ?
+                                <Avatar 
+                                  alt={`${reporter.first_name} ${reporter.last_name}`} 
+                                  src={reporter.profile_pic}
+                                  style={{
+                                    width: '20px',
+                                    height: '20px',
+                                  }}
+                                />
+                                :
+                                <Avatar 
+                                  alt={`${reporter.first_name} ${reporter.last_name}`} 
+                                  src="/images/defaultProfilePic.png"
+                                  style={{
+                                      width: '20px',
+                                      height: '20px',
+                                  }}
+                                />
+                              }
                               <Typography 
                                 style={{
                                   color: "black", 
                                   textDecoration: "none",
                                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                                  fontWeight: "600",
-                              }}>
-                                {Article.headline}
+                                  fontWeight: "400",
+                                  fontSize: "18px",
+                                  marginLeft: "5px",
+                                }}>
+                                {`${reporter.first_name} ${reporter.last_name}`} 
                               </Typography>
-                            </Box>  
+                            </Box>
+                          </Link>
+                          <Link 
+                            style={{
+                              textDecoration: "none",
+                              color: "black",
+                              underline: "none",
+                            }}
+                            to={{
+                              pathname: '/Articles/' + Article.key + '/',
+                              state: { 
+                                ArticleID: id,
+                                Article: Article,
+                            },}}
+                          >
+                            <Box sx={{width:"100%"}}>
+                              <Box sx={{marginLeft: "5%", marginBottom: "3%"}}>
+                                <Typography 
+                                  style={{
+                                    color: "black", 
+                                    textDecoration: "none",
+                                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                                    fontWeight: "600",
+                                }}>
+                                  {Article.headline}
+                                </Typography>
+                              </Box>  
+                            </Box>
+                          </Link>
+                        </Box>
+                        <Box sx={{width: "100px", height: "100px", marginRight: "5vw"}}>
+                          <Box sx={{width: "100px" , height: "100px"}}>
+                            {
+                              Article.article_pic != null ?
+                              <img 
+                                alt={`article_pic`}
+                                src={`${Article.article_pic}`}
+                                style={{
+                                  width: "100px",
+                                  height: "100px"
+                                }}
+                              />
+                              :
+                              <></>
+                            }
                           </Box>
-                        </Link>
+                        </Box>
                       </Box>
                     )
                   })

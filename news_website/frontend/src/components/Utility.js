@@ -5,7 +5,7 @@ export default class Util {
         return Months[num];
     }
     getDate = (date) =>{
-        return this.NumberToMonth(new Date(date).getMonth()) + ' ' + new Date(date).getDate() + '-' + new Date(date).getFullYear();
+        return new Date(date).getMonth() % 12 + '-' + new Date(date).getDate() + '-' + new Date(date).getFullYear();
     }
     getDateDifference = (date)=>{
       var creationDate = new Date(new Date(date).getMonth() + "/" + new Date(date).getDate() + "/" + new Date(date).getFullYear()) 

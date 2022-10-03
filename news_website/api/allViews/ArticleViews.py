@@ -59,7 +59,7 @@ class AllArticles(APIView):
                     querysetSend[key]['reporter_account']['is_following'] = False
 
         popqueryset = {}
-        popQuerySetRequest = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:3] #Change num to display num of pop articles
+        popQuerySetRequest = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:5] #Change num to display num of pop articles
 
         for article in popQuerySetRequest:
             articleJson = ArticleSerializer(article)
