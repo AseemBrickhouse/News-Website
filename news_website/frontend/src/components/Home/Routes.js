@@ -18,6 +18,9 @@ import AccountID from '../Dashboard/People/Account';
 import SavedArticles from '../Dashboard/AccountHome/SavedArticles';
 import Followers from '../Dashboard/People/Followers';
 import Following from '../Dashboard/People/Following';
+import AuthError from '../../Errors/AuthError';
+import ArticleError from '../../Errors/ArticleError';
+import SavedArticleError from '../../Errors/SavedArticleError';
 
 const Routes = (props) =>{
     return(
@@ -37,6 +40,9 @@ const Routes = (props) =>{
                 <Route exact path={'/Account/Followers'} component={Followers}/>
                 <Route exact path="/Account/Following" component={Following}/>
                 <Route exact path ='/Account/Articles'><Articles {...props}/></Route>
+                <Route exact path = "/AuthError" component={AuthError}/>
+                <Route exact path = "/ArticleError" component={ArticleError}/>
+                <Route exact path = "/SavedArticleError" component={SavedArticleError}/>
                 {/* <Route path ='/Account/Profile'><Account {...props}/></Route> */}
             </Switch>
         </Router>

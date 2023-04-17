@@ -1,0 +1,6 @@
+.main-article-container{
+    display: flex;
+    margin-left: 15vw;
+    flex-direction: column;
+    margin-top: 1px;
+}

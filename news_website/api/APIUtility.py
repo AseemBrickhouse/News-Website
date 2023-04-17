@@ -44,10 +44,3 @@ def PopularUserArticles(account):
         convertedArticle = ArticleSerializer(article)
         popular_articles[convertedArticle.data['id']] = convertedArticle.data
     return(popular_articles)
-
-def setQuerySetData(key, op):
-    pass
-    # queryset= {}
-    # queryset[op.data[key]] = op.data
-    # return (queryset,op.data[key])
-    #return (op.data[key], op.data)

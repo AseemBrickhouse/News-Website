@@ -35,9 +35,9 @@ const GETARTICLESFAIL = (state, action)=>{
 const reducer = (state=initialState, action) => {
     // console.log(action)
     switch (action.type) {
-        case actionTypes.GET_ARTICLES: return startGETARTICLES(state, action);
-        case actionTypes.GET_ARTICLESSUCCESS: return GETARTICLESSUCCESS(state, action);
-        case actionTypes.GET_ARTICLESFAIL: return GETARTICLESFAIL(state, action);
+        case actionTypes.GET_ARTICLES_START: return startGETARTICLES(state, action);
+        case actionTypes.GET_ARTICLES_SUCCESS: return GETARTICLESSUCCESS(state, action);
+        case actionTypes.GET_ARTICLES_FAIL: return GETARTICLESFAIL(state, action);
 
         default:
             return state;

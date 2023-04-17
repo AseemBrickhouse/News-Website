@@ -35,7 +35,7 @@ const Header = (props) =>{
       }
     });
     return (
-      props.location.pathname != '/Login' && props.location.pathname != '/SignUp' ?
+      props.location.pathname != '/Login' && props.location.pathname != '/SignUp' && !props.location.pathname.includes("Error")?
       <React.Fragment>
         <StickyBox offsetTop={0}>
           <Box sx={{
@@ -69,7 +69,7 @@ const Header = (props) =>{
               </Box>
             </Box>
             {
-                props.isAuthenticated ? 
+                props.isAuthenticated? 
                   <Box sx={{display: "flex", flexDirection:"row", textAlign:"center", marginLeft: "46vw"}}>
                     <MyAccount {...props}/>
                   </Box>

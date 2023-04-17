@@ -19,6 +19,11 @@ module.exports = {
         //   react: path.resolve('./node_modules/react')
         // },
       },
+      // {
+      //   test: /\.css$/, 
+      //   use: ["css-loader"],
+      //   exclude: /node_modules/,
+      // },
     ],
   },
   optimization: {

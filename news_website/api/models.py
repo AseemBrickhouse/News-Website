@@ -36,12 +36,12 @@ class Account(models.Model):
     first_name = models.CharField(max_length=26)
     last_name = models.CharField(max_length=26)
     creation_date = models.DateTimeField(auto_now_add=True)
-    role = models.CharField(max_length=10, choices=ROLES)
+    role = models.CharField(max_length=10, choices=ROLES, blank=True)
     phone = models.CharField(max_length=12, default="444-444-4444")
-    bio = models.TextField(null=True)
+    bio = models.TextField(null=True, blank=True)
     email = models.EmailField(max_length=50, null=True)
-    profile_pic = models.ImageField(blank=True, null=True)
-    occupation = models.CharField(max_length=30, null=True)
+    profile_pic = models.ImageField(blank=True, null=True,)
+    occupation = models.CharField(max_length=30, null=True, blank=True)
 
     def FullName(self):
             return self.first_name + self.last_name

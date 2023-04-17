@@ -59,10 +59,10 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': 
-    ('knox.auth.TokenAuthentication',)
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': 
+#     ('knox.auth.TokenAuthentication',)
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

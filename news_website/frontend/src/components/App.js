@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React, { Component, useEffect }  from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from './Home/Routes';
 import { connect } from 'react-redux';
@@ -6,28 +6,26 @@ import * as authActions from '../store/actions/auth';
 import * as articleActions from '../store/actions/article';
 import * as savedAction from '../store/actions/savedArticles';
 
-class App extends Component{
-    componentDidMount(){
-        const token = localStorage.getItem('token');
-        this.props.AutoTrySignUp();
-        this.props.AllArticles(token);
-        this.props.SavedArticles(token);
-    }
-    render(){
-        return( 
-            <React.Fragment>
-                <Router>
-                    <Routes {...this.props}/>
-                </Router>
-            </React.Fragment>
-        );
-    }
+export const App = (props) => {
+    const token = localStorage.getItem('token');
+    useEffect(() =>{
+        props.AutoTrySignUp();
+        props.AllArticles(token);
+        props.SavedArticles(token);
+    },[])
+
+    return( 
+        <React.Fragment>
+            <Router>
+                <Routes {...props}/>
+            </Router>
+        </React.Fragment>
+    );
 }
 const mapStateToProps = (state) => {
-    // console.log(state)
     return{
-            account: state.auth.account,
-            isAuthenticated: state.auth.token !== null ,
+        account: state.auth.account,
+        isAuthenticated: state.auth.token !== null ,
     }
 }
 
@@ -40,4 +38,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-// export default App;

@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 
 const AccountID = (props) =>{
     const person = props.location.state.person
+    console.log(props.location.state)
     const [articles, setArticles] = useState(false)
     const [load, setLoad] = useState(false)
     const Util = new Utility();

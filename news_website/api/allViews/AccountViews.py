@@ -1,3 +1,4 @@
+from warnings import catch_warnings
 from rest_framework import viewsets
 from ..serializers import *
 from ..models import *
@@ -10,7 +11,6 @@ from ..APIUtility import *
 
 class current_user(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        print(request.data)
         try:
             account = getCurrentUser(request.data['token'], "CURRENTACCOUNT")
         except:
@@ -28,7 +28,7 @@ class current_user(ObtainAuthToken):
                 'bio': account.bio,
                 'email': account.email,
                 'occupation': account.occupation,
-                'profile_pic': account.profile_pic.url,
+                'profile_pic': account.profile_pic.url if account.profile_pic != None else "/images/defaultProfilePic.png",
                 'popular_articles': popularArticles,
                 'written_articles': len(Article.objects.all().filter(reporter_account=account)),
                 'followers': getFollow(account, "FOLLOWERS"),
@@ -36,7 +36,11 @@ class current_user(ObtainAuthToken):
             }
             return Response(data)
         except:
-            return Response(request.data)
+            return Response({
+                'Account Info': AccountSerializer(account).data,
+                'Error': "Error",
+                'request': request.data
+                })
 
     def get(self, request):
         pass
@@ -64,6 +68,14 @@ class AccountCreation(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         currentUser = getCurrentUser(request.data['token'], "CREATEACCOUNT")
         print(currentUser , "-------------------------------------------------------------------------")
+        try: 
+            account = Account.objects.get(
+                first_name=request.data['first_name'],
+                last_name=request.data['last_name'],
+                email=request.data['email'],
+            )
+        except Account.DoesNotExist:
+            pass
         account = Account.objects.create(
             user=currentUser,
             key=AccountKeyGen(3),

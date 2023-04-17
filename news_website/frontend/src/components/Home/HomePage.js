@@ -1,5 +1,5 @@
 import React from 'react';
-import Articles from "../Dashboard/Articles";
+import Articles from "../Dashboard/Articles/Articles"
 
 const HomePage = (props) => {
     return (

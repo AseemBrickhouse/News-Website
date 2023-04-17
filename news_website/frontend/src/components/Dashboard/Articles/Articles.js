@@ -4,8 +4,9 @@ import {
   Route, withRouter, Redirect, Link
 } from "react-router-dom";
 import AdSense from 'react-adsense';
-import ArticleID from './ArticleID';
-import Util from '../Utility';
+import ArticleID from '../ArticleID';
+import styles from "./css/Article.module.css"
+import Util from '../../Utility';
 import { 
   Typography, 
   Chip, Avatar,
@@ -14,8 +15,8 @@ import {
 import StickyBox from "react-sticky-box";
 import { styled } from "@material-ui/core/styles";
 import SearchBar from "material-ui-search-bar";
-import * as articleActions from '../../store/actions/article';
-import * as savedArticleActions from '../../store/actions/savedArticles';
+import * as articleActions from '../../../store/actions/article';
+import * as savedArticleActions from '../../../store/actions/savedArticles';
 import StarIcon from '@mui/icons-material/Star';
 
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -112,7 +113,7 @@ const Article = (props) => {
     return(
       <React.Fragment>
         <div className='container'>
-        <Box sx={{display: "flex", marginLeft: "15vw", flexDirection: "column", marginTop:"1px",}}>
+        <Box className='main-article-container'>
           { 
             props.allArticles != null ? Object.entries(props.allArticles).map(([id,Article]) => {
               const reporter = Article.reporter_account
