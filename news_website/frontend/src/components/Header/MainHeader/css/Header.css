@@ -1,0 +1,33 @@
+.main-container-header{
+    background-color: #d9cab3;
+    height: 50px;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    /* text-overflow: hidden; */
+    z-index: auto;
+    position: relative;
+}
+.main-container-header-iconset{
+    display: flex;
+    flex-direction: row;
+    margin-left: 15vw;
+}
+.main-container-header-link-base{
+    text-decoration: none;
+    color: black;
+}
+.main-container-header-account{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin-left: 46vw;
+}
+.main-container-header-buttonset{
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    text-align: center;
+    align-items: center;
+    margin-left: 46vw;
+}
