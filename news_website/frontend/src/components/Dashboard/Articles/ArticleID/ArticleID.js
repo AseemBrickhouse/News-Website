@@ -2,18 +2,17 @@ import React, { useEffect } from 'react';
 import {Link, withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Util from '../Utility';
+import Util from '../../../Utility';
 import { 
  Chip, Box, Typography, Button, Avatar
 } from "@material-ui/core";
 import SearchBar from "material-ui-search-bar";
 import { styled } from "@material-ui/core/styles";
 import StickyBox from "react-sticky-box";
-import RightPannel from './Articles/ArticleID/components/RightPannel/RightPannel';
-
+import RightPannel from './components/RightPannel/RightPannel';
 const ArticleID = (props) =>{
     const Utility = new Util();
-    console.log(props)
+    // console.log(props)
     const account = props.account
     const StyledButtonSubscribe = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
@@ -139,7 +138,7 @@ const ArticleID = (props) =>{
             return response.json();
         })
         .then(data=>{
-          console.log(data)
+        //   console.log(data)
           setLoad(true)
           setReporterArticles(data)
         })
@@ -183,74 +182,7 @@ const ArticleID = (props) =>{
       //Rewrite article header to match with website
       <React.Fragment>
       <div className='container'>
-        <Box sx={{display: "flex", flexDirection: "column", width: "60%"}}>
-          <article>
-            <header>
-              <box>
-            	  <Link to='/' style={{textDecoration: 'none', width:'10%'}}>
-                  <p>
-                    <ArrowBackIcon style={{textDecoration: 'none'}} />
-                    All posts
-                  </p>
-                </Link>
-              </box>
-            	<div className='headline'>{Article.headline}</div>
-            	<sub>{Article.sub_title}</sub>
-            	<div class="article-tags">
-                <Box sx={{     
-                 width: "100%", 
-                 minHeight: "30%",
-                 height: "30%", 
-                 display: "flex", 
-                 flexDirection: "row",
-                 alignContent: "center",
-                }}>
-                {
-                Array.isArray(Article.tags) ?
-                  Article.tags.map(tag =>{
-                    return(
-                      <Box sx={{margin: "5px"}}>
-                        <Chip style={{
-                          backgroundColor: "#E0E0CE",
-                          fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                          fontSize: "15px",
-                          textDecoration: "none",
-                        }}
-                        label={tag}
-                        />
-                      </Box>
-                    )
-                  })
-                :
-                  <Box sx={{margin: "5px"}}>
-                    <Chip style={{
-                      backgroundColor: "#E0E0CE",
-                      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                      fontSize: "15px",
-                      textDecoration: "none",
-                    }}
-                      label={Article.tags}
-                    />
-                  </Box>
-                }
-                </Box>
-            	</div>
-            </header>
-            <authHeader>
-               <author>{`${reporter.first_name} ${reporter.last_name}`}</author>
-     	         <dateline>{Utility.getDate(Article.date)}</dateline>
-            </authHeader>
-            <main>
-     	        <div className='description'>
-                {Article.article_description}
-              </div>
-              <body>
-                {Article.article_body}
-              </body>
-            </main>
-            </article>
-          </Box>
-          {/* <RightPannel {...props}/> */}
+            <RightPannel {...props}/>
       </div>
       </React.Fragment>
     )

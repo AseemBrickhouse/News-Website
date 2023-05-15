@@ -13,70 +13,45 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import TopRated from "./components/TopRated/TopRated";
 import { Advertisments } from "./Advertisments";
+import * as request from "./ApiCalls/Requests";
 
 const Article = (props) => {
 
-  const [load, setLoad] = useState(true);
-
+  const [load, setLoad] = useState(false);
+  const [articles, setArtcles] = useState([]);
   const Utility = new Util();
 
-  useEffect(async () => {
-    const token = localStorage.getItem("token");
-    props.getArticles(token);
-    props.getSavedArticles(token);
-    setLoad(true);
+  useEffect(() => {
+    if(!load){
+      const init = async() =>{
+        const token = localStorage.getItem("token");
+        props.getSavedArticles(token);
+        setArtcles(await request.AllArticles())
+      }
+      init();
+      setLoad(true);
+    }
   }, [load]);
 
-  const handleBookMark = (key) => {
-    fetch("api/Bookmark/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key: key,
-        token: localStorage.getItem("token"),
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setLoad(false);
-      });
+  const handleBookMark = (key, type) => {
+    request.handleBookMark(key, type)
+    setLoad(false)
   };
-  const handleRemoveBookMark = (key) => {
-    fetch("api/RemoveBookmark/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key: key,
-        token: localStorage.getItem("token"),
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setLoad(false);
-        // console.log(data)
-      });
-  };
-  const isBookmarked = (key) => {
-    return props.saved.saved == null || props.saved.saved[key] === undefined
-      ? false
-      : true;
-  };
+
+  // const isBookmarked = (key) => {
+  //   return props.saved.saved == null || props.saved.saved[key] === undefined
+  //     ? false
+  //     : true;
+  // };
+
+  console.log(articles)
+
   return (
     <React.Fragment>
       <div className="container">
         <Box className="main-article-container">
-          {props.allArticles != null ? (
-            Object.entries(props.allArticles).map(([id, Article]) => {
+          {articles.allArticles != null ? (
+            Object.entries(articles.allArticles).map(([id, Article]) => {
               const reporter = Article.reporter_account;
               return (
                 <Box className="main-article-container-reporter">
@@ -145,14 +120,14 @@ const Article = (props) => {
                     </Box>
                   </Link>
                   <Box sx={{ alignContent: "right", marginTop: "auto" }}>
-                    {isBookmarked(Article.key) ? (
-                      <Box onClick={() => handleRemoveBookMark(Article.key)}>
+                    {props.saved.saved == null || props.saved.saved[Article.key] ? (
+                      <Box onClick={() => handleBookMark(Article.key, "REMOVE_BOOKMARK")}>
                         <BookmarkIcon
                           style={{ color: "#F2AF29", fontSize: "35px" }}
                         />
                       </Box>
                     ) : (
-                      <Box onClick={() => handleBookMark(Article.key)}>
+                      <Box onClick={() => handleBookMark(Article.key, "BOOKMARK_ARTICLE")}>
                         <BookmarkAddIcon
                           style={{ color: "#C1BDBD", fontSize: "35px" }}
                         />
@@ -192,7 +167,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getSavedArticles: (token) =>
       dispatch(savedArticleActions.getSAVEDARTICLES(token)),
-    getArticles: (token) => dispatch(articleActions.getARTICLES(token)),
+      getArticles: (token) => dispatch(articleActions.getARTICLES(token)),
   };
 };
 export default withRouter(

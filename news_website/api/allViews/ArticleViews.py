@@ -41,7 +41,7 @@ class AllArticles(APIView):
             querysetSend[key]['reporter_account']['followers'] = getFollow(reporter_account, "FOLLOWERS")
             if request.data['token'] != None:
                 try:
-                    isBookmarked = BookmarkedArticles.objects.get(
+                    BookmarkedArticles.objects.get(
                         account = getCurrentUser(request.data['token'], "isBookmarked"),
                         saved=article,
                     )
@@ -50,7 +50,7 @@ class AllArticles(APIView):
                     querysetSend[key]['isBookmarked'] = False
                 
                 try:
-                    isFollowing= Followers.objects.get(
+                    Followers.objects.get(
                         account = getCurrentUser(request.data['token'], "isFollowing"),
                         following_user=reporter_account
                     )
@@ -82,22 +82,81 @@ class AllArticles(APIView):
         return Response({'allArticles': querysetSend,'popArticles': popqueryset})
 
     def get(self, request, *args, **kwargs):
-        pass
+        def get_popular_articles(token, display_count):
+            popQuerySetRequest = Article.objects.all().filter(isPrivate = False).order_by('rating').reverse()[:display_count]
+
+            for article in popQuerySetRequest:
+                articleJson = ArticleSerializer(article)
+                key = articleJson.data['key']
+                popqueryset[key] = articleJson.data
+                reporter_account = Account.objects.all().filter(id=articleJson.data['reporter_account'])[0]
+                popqueryset[key]['reporter_account'] = AccountSerializer(reporter_account).data
+                popqueryset[key]['reporter_account']['followers'] = getFollow(reporter_account, "FOLLOWERS")
+                if not "null".__eq__(token):
+                    try:
+                       Followers.objects.get(
+                            account = getCurrentUser( token, "isFollowing"),
+                            following_user=reporter_account
+                       )
+                       popqueryset[key]['reporter_account']['is_following'] = True
+                    except Followers.DoesNotExist:
+                       popqueryset[key]['reporter_account']['is_following'] = False  
+            return popqueryset
+        
+        querysetSend = {}
+        queryset = Article.objects.all().filter(isPrivate = False)
+
+        for article in queryset:
+            articleJson = ArticleSerializer(article)
+            key = articleJson.data['key']
+            querysetSend[key] = articleJson.data
+            reporter_account = Account.objects.all().filter(id=articleJson.data['reporter_account'])[0]
+            querysetSend[key]['reporter_account'] = AccountSerializer(reporter_account).data
+            querysetSend[key]['reporter_account']['followers'] = getFollow(reporter_account, "FOLLOWERS")
+            token = request.headers['token']
+        #Fix
+
+            if not "null".__eq__(token):
+                try:
+                    BookmarkedArticles.objects.get(
+                        account = getCurrentUser(token, "isBookmarked"),
+                        saved=article,
+                    )
+                    querysetSend[key]['isBookmarked'] = True
+                except BookmarkedArticles.DoesNotExist:
+                    querysetSend[key]['isBookmarked'] = False
+                
+                try:
+                    Followers.objects.get(
+                        account = getCurrentUser(token, "isFollowing"),
+                        following_user=reporter_account
+                    )
+                    querysetSend[key]['reporter_account']['is_following'] = True
+                except Followers.DoesNotExist:
+                    querysetSend[key]['reporter_account']['is_following'] = False
+
+        popqueryset = {}
+        popQuerySetRequest = get_popular_articles(token, 5)
+
+        return Response({'allArticles': querysetSend,'popArticles': popQuerySetRequest})
 
 class AllUserArticles(ObtainAuthToken):
-        def post(self, request, *args, **kwargs):
-            queryset = Article.objects.all().filter(reporter_account=getCurrentUser(request.data['token'], "USERARTICLES"))
+        def get(self, request, *args, **kwargs):
+            token = Token.objects.get(key=request.headers['token'])
+            if token == None:
+                return Response({
+                    "Error" : "No current token. (Try loggin in or Creating an account! )"
+                })
+            user_account = User.objects.all().filter(id=token.user_id)[0].account
+            queryset = Article.objects.all().filter(reporter_account=user_account)
             
             AllArticles = {}
             for article in queryset:
-                data = ArticleSerializer(article)
-                AllArticles[data.data['id']] = data.data
-                AllArticles[data.data['id']]['reporter_account'] = attachNameToArticle(data)
+                article_json = ArticleSerializer(article)
+                AllArticles[article_json.data['id']] = article_json.data
+                AllArticles[article_json.data['id']]['reporter_account'] = attachNameToArticle(article_json)
 
             return Response(AllArticles)
-        
-        def get(self, request, *args, **kwargs):
-            pass
 
 class GetUserArticles(APIView):
     def post(self, request, *args, **kwargs):
@@ -174,8 +233,9 @@ class CreateNewArticle(ObtainAuthToken):
         pass
 
 class DeleteArticle(APIView):
-    def post(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         article = Article.objects.all().filter(key=request.data['key']).delete()
+        #Handel if the article was deleted or not
         return Response(request.data)
 
 class PopularTags(APIView):
@@ -198,51 +258,38 @@ class PopularTags(APIView):
     def post(self, request, *args, **kwargs):
         pass
 
-class Bookmark(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        if request.data['token'] == None:
+class HandleBookmark(ObtainAuthToken):
+        def put(self, request, *args, **kwargs):
+            token = Token.objects.get(key=request.headers['token'])
+            if token == None:
+                return Response({
+                    "Error" : "No current token. (Try loggin in or Creating an account! )"
+                })
+            user_account = User.objects.all().filter(id=token.user_id)[0].account
+            if(request.data['type'] == "BOOKMARK_ARTICLE"):
+                try:
+                    BookmarkedArticles.objects.get(
+                        account = user_account,
+                        saved = Article.objects.get(key=request.data['key'])
+                    )
+                except BookmarkedArticles.DoesNotExist:
+                    bookmark = BookmarkedArticles.objects.create(
+                        account = getCurrentUser(token, "BOOKMARKARTICLE"),
+                        saved = Article.objects.get(key=request.data['key'])
+                    )
+                    bookmark.save()
+            if(request.data['type'] == "REMOVE_BOOKMARK"):
+                try:
+                    BookmarkedArticles.objects.get(
+                        account=user_account,
+                        saved=Article.objects.get(key=request.data['key'])
+                    ).delete()
+                except BookmarkedArticles.DoesNotExist:
+                    pass
             return Response({
-                "Error" : "No current toke. (Try loggin in or Creating an account! )"
-            })
-        try:
-            bookmark = BookmarkedArticles.objects.get(
-                account = getCurrentUser(request.data['token'], "BOOKMARKARTICLE"),
-                saved = Article.objects.get(key=request.data['key'])
-            )
-            return Response({
-                "Message" : "Bookmark already exist"
-            })
-        except BookmarkedArticles.DoesNotExist:
-            bookmark = BookmarkedArticles.objects.create(
-                account = getCurrentUser(request.data['token'], "BOOKMARKARTICLE"),
-                saved = Article.objects.get(key=request.data['key'])
-            )
-            bookmark.save()
-            return Response({
-                'Message': "Succesfully Bookmarked",
-                'account': AccountSerializer(getCurrentUser(request.data['token'], "BOOKMARKARTICLE")).data,
-                'article': ArticleSerializer(Article.objects.get(key=request.data['key'])).data
+                "Message": "Updated BookMark",
             })
 
-class RemoveBookmark(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        if request.data['token'] == None:
-            return Response({
-                "Error" : "No current toke. (Try loggin in or Creating an account! )"
-            })
-        try:
-            isBookmarked = BookmarkedArticles.objects.get(
-                account=getCurrentUser(request.data['token'], "REMOVEBOOKMARK"),
-                saved=Article.objects.get(key=request.data['key'])
-            ).delete()
-            return Response({
-                'Message': "Successfully removed",
-            })
-        except BookmarkedArticles.DoesNotExist:
-            return Response({
-                'Error': 'Article not Bookmarked!',
-            })
-    
 class MyBookmarkedArticles(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         bookmarked = BookmarkedArticles.objects.all().filter(
@@ -256,6 +303,7 @@ class MyBookmarkedArticles(ObtainAuthToken):
         print(queryset)
 
         return Response(queryset)
+
 
 class SavedArticles(ObtainAuthToken):
     def post(self, request, *args, **kwargs):

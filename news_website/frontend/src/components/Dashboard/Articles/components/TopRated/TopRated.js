@@ -15,16 +15,9 @@ import {
 const TopRated = (props) => {
     return(
         <Box sx={{marginBottom: "3px"}}>
-            <Typography 
-              style={{
-                color: "black", 
-                marginLeft: "25%", 
-                textDecoration: "none",
-                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                fontWeight: "600",
-              }}>
+            <p className='das'>
                 Top rated Articles
-            </Typography>
+            </p>
             {
             props.popArticles != null ? Object.entries(props.popArticles).map(([id,Article]) => {
                 const reporter = Article.reporter_account

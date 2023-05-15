@@ -68,6 +68,8 @@
     height: 90vh;
     margin-top: 1px;
     margin-left: 1vw;
+    align-items: center;
+    justify-content: baseline;
 }
 
 .main-article-toprated-container{

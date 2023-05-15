@@ -3,6 +3,8 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: 2vh;
+    width: 106.25%;
+    margin-left: 6.25%;
 }
 .main-container-link{
     text-decoration: none;
@@ -44,4 +46,9 @@
     overflow-wrap: break-word;
     hyphens: manual;
 
+}
+.das{
+    color: black;
+    margin-left: 36%;
+    font-weight: 600;
 }

@@ -1,0 +1,30 @@
+.main-container-ra-header{
+    text-transform: none;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+}
+.main-container-ra-headline{
+    text-transform: none;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+}
+.main-container-ra-link{
+    text-decoration: none;
+    color: black;
+    text-underline-position: none;
+    text-underline-offset: none;
+}
+.main-container-ra-articleset{
+    margin-top: 2vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.main-container-ra-article-image{
+    width: 100px;
+    height: 100px;
+}

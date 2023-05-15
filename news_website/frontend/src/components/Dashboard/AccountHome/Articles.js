@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import * as request from "./ApiCalls/Requests";
 import { connect } from 'react-redux';
 import {withRouter} from "react-router-dom";
 import Utility from '../../Utility';
@@ -19,98 +20,102 @@ const Articles = (props) =>{
 
     const [articles, setArticles] = React.useState(null);
     const [load, setLoad] = React.useState(false);
-    useEffect(async() =>{
-        await fetch("/api/AllUserArticles/", {
-            method: "POST",
-            headers:{
-                'Accept':'application/json',
-                'Content-Type': 'application/json',
-              },
-                body: JSON.stringify({
-                    token: localStorage.getItem('token')
-                })
-        })
-        .then(response =>{
-            if(response.status > 400){
-                return this.setState(()=>{
-                    return{ placeholder: "Something went wrong!" };
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            setLoad(true)
-            setArticles(data)
-        });
+    useEffect(() =>{
+        const Init = async () =>{
+          const response = await request.AllUserArticles();
+          setArticles(response);
+        }
+        Init();
+        props.getSavedArticles(token);
+        // await fetch("/api/AllUserArticles/", {
+        //     method: "POST",
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type': 'application/json',
+        //       },
+        //         body: JSON.stringify({
+        //             token: localStorage.getItem('token')
+        //         })
+        // })
+        // .then(response =>{
+        //     if(response.status > 400){
+        //         return this.setState(()=>{
+        //             return{ placeholder: "Something went wrong!" };
+        //         });
+        //     }
+        //     return response.json();
+        // })
+        // .then(data => {
+        //     setLoad(true)
+        //     setArticles(data)
+        // });
     },[load])
 
-    const deleteArticle = (Article_key) =>{
-        fetch("/api/DeleteArticle/", {
-            method: "POST",
-            headers:{
-                'Accept':'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                key: Article_key,
-            })
-        })
-        .then(response=>{
-            return response.json()
-        })
-        .then(data=>{
-            setLoad(false)
-        })
+    const deleteArticle = async (key) => {
+      const response = await request.DeleteArticle(key);
+        // fetch("/api/DeleteArticle/", {
+        //     method: "POST",
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         key: Article_key,
+        //     })
+        // })
+        // .then(response=>{
+        //     return response.json()
+        // })
+        // .then(data=>{
+        //     setLoad(false)
+        // })
     }
 
     const saved = props.savedArticles
     const Util = new Utility();
   
     useEffect(async () => {
-      const token = localStorage.getItem('token');
-      props.getSavedArticles(token);
-      setLoad(true);
+      // const token = localStorage.getItem('token');
+      // props.getSavedArticles(token);
+      // setLoad(true);
     },[load]);
   
-    const handleBookMark = (key) =>{
-        fetch('/api/Bookmark/', {
-          method: "POST",
-          headers:{
-            'Accept':'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              key: key,
-              token: localStorage.getItem('token')
-          })
-        })
-        .then(response => {return response.json()})
-        .then(data => {
-          setLoad(false)
-        })
+    const handleBookMark = (key, type) =>{
+      request.handleBookMark(key, type);
+        // fetch('/api/Bookmark/', {
+        //   method: "POST",
+        //   headers:{
+        //     'Accept':'application/json',
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //       key: key,
+        //       token: localStorage.getItem('token')
+        //   })
+        // })
+        // .then(response => {return response.json()})
+        // .then(data => {
+        //   setLoad(false)
+        // })
     }
-    const handleRemoveBookMark = (key) =>{
-      fetch('/api/RemoveBookmark/', {
-        method: "POST",
-        headers:{
-          'Accept':'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            key: key,
-            token: localStorage.getItem('token')
-        })
-      })
-      .then(response => {return response.json() })
-      .then(data => {
-        setLoad(false)
-      })
-    }
+    // const handleRemoveBookMark = (key) =>{
+    //   fetch('/api/RemoveBookmark/', {
+    //     method: "POST",
+    //     headers:{
+    //       'Accept':'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //         key: key,
+    //         token: localStorage.getItem('token')
+    //     })
+    //   })
+    //   .then(response => {return response.json() })
+    //   .then(data => {
+    //     setLoad(false)
+    //   })
+    // }
    
-    const isBookmarked = (key) =>{
-      return saved[key] == undefined ? false : true
-   }
-  
     const StyledTypographyHeader = styled(Typography)({
         color: "black", 
         textDecoration: "none",
@@ -176,12 +181,12 @@ const Articles = (props) =>{
                     </Box>
                     <Box sx={{marginRight: "1vw"}}>
                       {
-                      isBookmarked(article.key) ? 
-                          <Box onClick={() => handleRemoveBookMark(article.key)}>
+                      saved[article.key] == undefined? 
+                          <Box onClick={() => handleBookMark(article.key, "REMOVE_BOOKMARK")}>
                               <BookmarkIcon style={{color: "#F2AF29"}}/> 
                           </Box>
                           :
-                          <Box onClick={() => handleBookMark(article.key)}>
+                          <Box onClick={() => handleBookMark(article.key, "BOOKMARK_ARTICLE")}>
                               <BookmarkAddIcon sx={{color: "#C1BDBD"}}/>
                           </Box>
                       }

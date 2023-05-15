@@ -5,8 +5,9 @@
     display: flex;
     flex-direction: row;
     /* text-overflow: hidden; */
-    z-index: auto;
+    z-index: 1;
     position: relative;
+
 }
 .main-container-header-iconset{
     display: flex;
