@@ -104,7 +104,7 @@ class EditAccount(ObtainAuthToken):
 
         return Response(
             AccountSerializer(user_account.account).data,
-            status=status.HTTP_200_OK,
+            status=status.HTTP_201_CREATED,
         )
 
 class GetPerson(APIView):
