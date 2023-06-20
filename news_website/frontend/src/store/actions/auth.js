@@ -37,8 +37,10 @@ export const getAuthInfoFAIL = error =>{
 }
 export const getAuthInfo = token =>{
     return dispatch=>{
-        axios.post(`${BASE_URL}/api/current_user/`,{
-            token: token,
+        axios.get(`${BASE_URL}/api/current_user/`,{
+            headers: {
+                token: token,
+            }
         })
         .then(response =>{
             // console.log(response.data)
@@ -142,8 +144,10 @@ export const authCheckState = () => {
             if(expirationDate <= new Date()){
                 dispatch(authLOGOUT())
             }else{
-                axios.post(`${BASE_URL}/api/current_user/`,{
-                    token: token,
+                axios.get(`${BASE_URL}/api/current_user/`,{
+                    headers:{
+                        token: token,
+                    }
                 })
                 .then(response =>{
                     dispatch(getAuthInfoSUCCESS(response.data))

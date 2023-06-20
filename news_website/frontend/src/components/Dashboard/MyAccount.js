@@ -32,7 +32,7 @@ const MyAccount = (props) =>{
       fontWeight: "700",
       textAlign: "center",
     })
-    console.log(props.account)
+    // console.log(props.account)
     return(
       <Box sx={{display: "flex", flexDirection: "row", textDecoration: "none", padding: "5px"}}>
         <div>

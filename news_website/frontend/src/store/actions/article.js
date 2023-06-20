@@ -21,11 +21,14 @@ export const articleFAIL = (error) =>{
         error: error,
     };
 }
-export const getARTICLES = (token) =>{
+export const getARTICLES = (token, tags) =>{
     return dispatch=>{
-        dispatch(articleStart()) 
-        axios.post(`${BASE_URL}/api/AllArticles/`, {
-            token: token,
+        dispatch(articleStart())
+        axios.get(`${BASE_URL}/api/AllArticles/`, {
+            headers:{
+                token: token,
+                tags: tags,
+            },
         })
         .then(response=>{
             // console.log(response.data['popArticles'])

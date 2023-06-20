@@ -18,7 +18,7 @@ import * as request from "./ApiCalls/Requests";
 const Article = (props) => {
 
   const [load, setLoad] = useState(false);
-  const [articles, setArtcles] = useState([]);
+  const [articles, setArticles] = useState([]);
   const Utility = new Util();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const Article = (props) => {
       const init = async() =>{
         const token = localStorage.getItem("token");
         props.getSavedArticles(token);
-        setArtcles(await request.AllArticles())
+        setArticles(await request.AllArticles([]))
       }
       init();
       setLoad(true);
@@ -50,43 +50,47 @@ const Article = (props) => {
     <React.Fragment>
       <div className="container">
         <Box className="main-article-container">
-          {articles.allArticles != null ? (
-            Object.entries(articles.allArticles).map(([id, Article]) => {
+          {articles.articles != null ? (
+            Object.entries(articles.articles).map(([Article_Key, Article]) => {
               const reporter = Article.reporter_account;
               return (
-                <Box className="main-article-container-reporter">
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      color: "black",
-                      underline: "none",
-                    }}
-                    to={{
-                      pathname: "/Articles/" + Article.key + "/",
-                      state: {
-                        ArticleID: Article.key,
-                        Article: Article,
-                      },
-                    }}
-                  >
-                    <Box className="main-article-container-type">
-                      {/* Put Work Affilation here*/}
-                      {`${reporter.first_name} ${reporter.last_name}   •   ${Utility.getDate(Article.date)} `}
-                      {Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" ? (
-                          <div className="main-article-container-type-iconset">
-                            <StarIcon className="main-article-container-type-icon" style={{fontSize: "10px"}}/>
-                            <span>Members only</span>
-                          </div>
-                      ) : (null)}
-                    </Box>
-                    <Box className="main-article-container-description">
-                      <Box className="main-article-container-description-headline">
-                        {Article.headline}
+                <Box className="main-article-container-body">
+                  <div className="top">
+                    <Link
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        underline: "none",
+                      }}
+                      to={{
+                        pathname: "/Articles/" + Article_Key + "/",
+                        state: {
+                          ArticleID: Article_Key,
+                          Article: Article,
+                        },
+                      }}
+                    >
+                      <Box className="main-article-container-type">
+                        {/* Put Work Affilation here*/}
+                        <div className="main-article-reporter">                        
+                          {`${reporter.first_name} ${reporter.last_name}   •   ${Utility.getDate(Article.date)} `}  
+                        </div>
+                        {Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" &&  (
+                            <div className="main-article-container-type-iconset">
+                              <StarIcon className="main-article-container-type-icon" style={{fontSize: "10px"}}/>
+                              <span>Members only</span>
+                            </div>
+                        )}
                       </Box>
-                      <Box className="main-article-container-description-description">
-                        {Article.article_description}
+                      <Box className="main-article-container-description">
+                        <Box className="main-article-container-description-headline">
+                          {Article.headline}
+                        </Box>
+                        <Box className="main-article-container-description-description">
+                          {Article.article_description}
+                        </Box>
                       </Box>
-                    </Box>
+                    </Link>
                     <Box className="main-article-container-description-tag-container">
                       <Box className="main-article-container-description-tags-outline">
                         {Array.isArray(Article.tags) ? (
@@ -117,13 +121,11 @@ const Article = (props) => {
                           </Box>
                         )}
                       </Box>
-                    </Box>
-                  </Link>
-                  <Box sx={{ alignContent: "right", marginTop: "auto" }}>
+                      <Box sx={{ alignContent: "right", marginTop: "auto" }}>
                     {props.saved.saved == null || props.saved.saved[Article.key] ? (
                       <Box onClick={() => handleBookMark(Article.key, "REMOVE_BOOKMARK")}>
                         <BookmarkIcon
-                          style={{ color: "#F2AF29", fontSize: "35px" }}
+                          style={{ color: "#F2AF29", fontSize: "35px", zIndex: "1" }}
                         />
                       </Box>
                     ) : (
@@ -134,6 +136,8 @@ const Article = (props) => {
                       </Box>
                     )}
                   </Box>
+                  </Box>
+                  </div>
                 </Box>
               );
             })
@@ -157,7 +161,7 @@ const Article = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    allArticles: state.articles.allArticles,
+    allArticles: state.articles.articles,
     popArticles: state.articles.popArticles,
     saved: state.savedArticles,
   };

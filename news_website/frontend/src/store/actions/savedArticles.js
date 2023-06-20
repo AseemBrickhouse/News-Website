@@ -22,8 +22,10 @@ export const getSAVEDSUCCESS = (data) =>{
 export const getSAVEDARTICLES = (token) =>{
     return dispatch=>{
         dispatch(startGETSAVED())
-        axios.post(`${BASE_URL}/api/SavedArticles/`, {
-            token: token,
+        axios.get(`${BASE_URL}/api/SavedArticles/`, {
+            headers: {
+                token: token,
+            },
         })
         .then(response=>{
             dispatch(getSAVEDSUCCESS(response.data))

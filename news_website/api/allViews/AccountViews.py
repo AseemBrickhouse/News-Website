@@ -110,20 +110,15 @@ class EditAccount(ObtainAuthToken):
 class GetPerson(APIView):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
-        if (user_account == None):
-            return Response({
-                "Err": "User account not found"
-            },
-                status=status.HTTP_404_NOT_FOUND)
         
         personObject = Account.objects.filter(
-            first_name=request.headers['first_name'],
-            last_name=request.header['last_name'],
+            first_name=request.headers['firstName'],
+            last_name=request.headers['lastName'],
             email=request.headers['email'],
         )[0]
         person = AccountSerializer(personObject).data
         person['followers'] = getFollow(personObject, "FOLLOWERS")
-        if request.data['token'] != None:
+        if user_account != None:
             try:
                 Followers.objects.get(
                     account=user_account,

@@ -15,13 +15,14 @@ export const handleBookMark = async(key, type) =>{
     })
 }
 
-export const AllArticles = async() => {
+export const AllArticles = async(tags) => {
   const url = `${BASE_URL}/api/AllArticles/`
   const response = await fetch(url, {
     method: "GET",
     headers: {
-      token: localStorage.getItem('token')
-    }
+      token: localStorage.getItem('token'),
+      tags: tags
+    },
   })
   return response.json();
 } 

@@ -10,6 +10,7 @@ import StickyBox from "react-sticky-box";
 import "./css/ReporterTop.css";
 
 const ReporterTop = ({ account, reporter }) => {
+  console.log(reporter)
   const StyledButton = styled(Button)({
     fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
     border: "1px solid #AD343E",
@@ -32,7 +33,7 @@ const ReporterTop = ({ account, reporter }) => {
       boxShadow: "0 20px 80px -10px #AD343E",
     },
   });
-  const [following, setFollowing] = useState([]);
+  const [following, setFollowing] = useState(reporter.is_following);
   const [followerCount, setFollowerCount] = useState(0);
   useEffect(() => {
     setFollowing(reporter.is_following);
@@ -51,8 +52,8 @@ const ReporterTop = ({ account, reporter }) => {
     setFollowing(reporter.is_following);
     setFollowerCount(followerCount + 1);
   };
-
-  return (
+  console.log(reporter)
+  return reporter && (
     <>
       <Link
         className="main-container-rt-link"
@@ -118,7 +119,7 @@ const ReporterTop = ({ account, reporter }) => {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.auth.token != null ? state.auth.account : null,
+    account: state?.auth?.token,
   };
 };
 export default withRouter(connect(mapStateToProps)(ReporterTop));

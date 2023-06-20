@@ -10,7 +10,7 @@ export const App = (props) => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     props.AutoTrySignUp();
-    props.AllArticles(token);
+    props.AllArticles(token, []);
     props.SavedArticles(token);
   }, []);
 
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     AutoTrySignUp: () => dispatch(authActions.authCheckState()),
-    AllArticles: (token) => dispatch(articleActions.getARTICLES(token)),
+    AllArticles: (token, tags) => dispatch(articleActions.getARTICLES(token, tags)),
     SavedArticles: (token) => dispatch(savedAction.getSAVEDARTICLES(token)),
   };
 };

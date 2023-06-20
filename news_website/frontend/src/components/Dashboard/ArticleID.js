@@ -9,8 +9,10 @@ import {
 import SearchBar from "material-ui-search-bar";
 import { styled } from "@material-ui/core/styles";
 import StickyBox from "react-sticky-box";
-import RightPannel from './Articles/ArticleID/components/RightPannel/RightPannel';
+import RightPanel from './Articles/ArticleID/components/RightPanel/RightPanel';
 
+
+// TODO: Delete the file and update it to the new ArticleID location...
 const ArticleID = (props) =>{
     const Utility = new Util();
     console.log(props)
