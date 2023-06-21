@@ -1,38 +1,25 @@
-import React, { useEffect } from 'react';
-import {Link, withRouter} from "react-router-dom";
-import { connect } from 'react-redux';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Util from '../../../Utility';
-import { 
- Chip, Box, Typography, Button, Avatar
-} from "@material-ui/core";
-import SearchBar from "material-ui-search-bar";
-import { styled } from "@material-ui/core/styles";
-import StickyBox from "react-sticky-box";
+import React from 'react';
 import RightPanel from './components/RightPanel/RightPanel';
 import LeftPanel from './components/LeftPanel/LeftPanel';
-import * as request from "../ApiCalls/Requests"
-import { GetPerson } from './components/RightPanel/Requests';
-const ArticleID = (props) =>{
+import StickyBox from "react-sticky-box";
+
+import "./css/ArticleID.css";
+
+const ArticleID = (props) => {
     const Article = props.location.state.Article
+    window.scrollTo(0, 0);
     return(
-      //Rewrite article header to match with website
       Article != null && (
         <React.Fragment>
-          <div className='container'>
-                {/* <RightPanel person = {reporter} /> */}
-                <LeftPanel article = {Article}/>
-                <RightPanel reporter = {Article.reporter_account}/>
+          <div className="main-container-articleID">
+            <LeftPanel article = {Article}/>
+            <StickyBox offsetTop={75}>
+              <RightPanel reporter = {Article.reporter_account}/>
+            </StickyBox>
           </div>
         </React.Fragment>
       )
     )
 }
 
-const mapStateToProps = (state) => {
-  return{
-    account: state.auth.account,
-  }
-}
-
-export default withRouter(connect(mapStateToProps,null)(ArticleID));
+export default ArticleID;

@@ -10,7 +10,6 @@ import StickyBox from "react-sticky-box";
 import "./css/ReporterTop.css";
 
 const ReporterTop = ({ account, reporter }) => {
-  console.log(reporter)
   const StyledButton = styled(Button)({
     fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
     border: "1px solid #AD343E",
@@ -33,6 +32,7 @@ const ReporterTop = ({ account, reporter }) => {
       boxShadow: "0 20px 80px -10px #AD343E",
     },
   });
+
   const [following, setFollowing] = useState(reporter.is_following);
   const [followerCount, setFollowerCount] = useState(0);
   useEffect(() => {
@@ -52,68 +52,76 @@ const ReporterTop = ({ account, reporter }) => {
     setFollowing(reporter.is_following);
     setFollowerCount(followerCount + 1);
   };
-  console.log(reporter)
-  return reporter && (
-    <>
-      <Link
-        className="main-container-rt-link"
-        to={{
-          pathname: "/Account/People/" + reporter.key + "/",
-          state: {
-            key: reporter.key,
-            person: reporter,
-          },
-        }}
-      >
-        {reporter.profile_pic != null ? (
-          <Avatar
-            alt={`${reporter.first_name} ${reporter.last_name}`}
-            src={reporter.profile_pic}
-            className="main-container-rt-avatar"
-          />
-        ) : (
-          <Avatar
-            alt={`${reporter.first_name} ${reporter.last_name}`}
-            src="/images/defaultProfilePic.png"
-            className="main-container-rt-avatar"
-          />
-        )}
-      </Link>
-      <Box sx={{ marginTop: "1vh" }}>
-        <span className="main-container-rt-name">
-          {`${reporter.first_name} ${reporter.last_name}`}
-        </span>
-      </Box>
-      <Box sx={{ marginTop: "1vh" }}>
-        <span className="main-container-rt-followcount">
-          {`${followerCount} Followers`}
-        </span>
-      </Box>
-      <Box sx={{ marginTop: "1vh", marginRight: "50%" }}>
-        {account != null && reporter.key != account.key ? (
-          following ? (
-            <StyledButton
-              className="btn"
-              onClick={() => {
-                handleunFollow(reporter);
+
+  return (
+    reporter && (
+      <>
+        <Link
+          className="main-container-rt-link"
+          to={{
+            pathname: "/Account/People/" + reporter.key + "/",
+            state: {
+              key: reporter.key,
+              person: reporter,
+            },
+          }}
+        >
+          {reporter.profile_pic != null ? (
+            <Avatar
+              alt={`${reporter.first_name} ${reporter.last_name}`}
+              src={reporter.profile_pic}
+              style={{
+                height: "60px",
+                width: "60px",
               }}
-            >
-              <span>Following</span>
-            </StyledButton>
+              className="main-container-rt-avatar"
+            />
           ) : (
-            <StyledButton
-              onClick={() => {
-                handleFollow(reporter);
+            <Avatar
+              alt={`${reporter.first_name} ${reporter.last_name}`}
+              src="/images/defaultProfilePic.png"
+              style={{
+                height: "60px",
+                width: "60px",
               }}
-            >
-              Follow
-            </StyledButton>
-          )
-        ) : (
-          <></>
-        )}
-      </Box>
-    </>
+              className="main-container-rt-avatar"
+            />
+          )}
+        </Link>
+        <Box sx={{ marginTop: "1vh" }}>
+          <span className="main-container-rt-name">
+            {`${reporter.first_name} ${reporter.last_name}`}
+          </span>
+        </Box>
+        <Box sx={{ marginTop: "1vh" }}>
+          <span className="main-container-rt-followcount">
+            {`${followerCount} Followers`}
+          </span>
+        </Box>
+        <Box sx={{ marginTop: "1vh", marginRight: "50%" }}>
+          {account != null &&
+            reporter.key != account.key &&
+            (following ? (
+              <StyledButton
+                className="btn"
+                onClick={() => {
+                  handleunFollow(reporter);
+                }}
+              >
+                <span>Following</span>
+              </StyledButton>
+            ) : (
+              <StyledButton
+                onClick={() => {
+                  handleFollow(reporter);
+                }}
+              >
+                Follow
+              </StyledButton>
+            ))}
+        </Box>
+      </>
+    )
   );
 };
 

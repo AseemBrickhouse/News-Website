@@ -29,7 +29,7 @@
 .main-article-container-description{
     margin-top: 1%;
     width: 40vw;
-    height: 40%;
+    height: 42%;
     display: flex;
     flex-direction: column;
 }
@@ -41,7 +41,7 @@
 .main-article-container-description-description{
     font-size: 16px;
     font-weight: 500;
-    margin-top: 1%;
+    /* margin-top: 1%; */
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
@@ -63,6 +63,8 @@
     display: flex;
     flex-direction: row;
     align-content: center;
+    gap: 10px;
+    margin-top: 5px;
 }   
 .main-article-container-description-tags-content{
     background-color: #C1BDBD;

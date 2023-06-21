@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 export default class Util {
   NumberToMonth = (num) => {
     const Months = [
@@ -17,15 +16,16 @@ export default class Util {
     ];
     return Months[num];
   };
+
   getDate = (date) => {
+    const month = new Date(date).getMonth() % 12;
+    const day = new Date(date).getDate()
+    const year = new Date(date).getFullYear()
     return (
-      (new Date(date).getMonth() % 12) +
-      "-" +
-      new Date(date).getDate() +
-      "-" +
-      new Date(date).getFullYear()
+      this.NumberToMonth(month) + " " + day + ' , ' + year
     );
   };
+  
   getDateDifference = (date) => {
     var creationDate = new Date(
       new Date(date).getMonth() +

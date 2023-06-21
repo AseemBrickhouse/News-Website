@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import {withRouter, Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import "./css/Article.css";
 import Util from "../../Utility";
-import { Chip, Box, } from "@material-ui/core";
+import { Chip, Box } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import * as articleActions from "../../../store/actions/article";
 import * as savedArticleActions from "../../../store/actions/savedArticles";
@@ -16,26 +16,25 @@ import { Advertisments } from "./Advertisments";
 import * as request from "./ApiCalls/Requests";
 
 const Article = (props) => {
-
   const [load, setLoad] = useState(false);
   const [articles, setArticles] = useState([]);
   const Utility = new Util();
 
   useEffect(() => {
-    if(!load){
-      const init = async() =>{
+    if (!load) {
+      const init = async () => {
         const token = localStorage.getItem("token");
         props.getSavedArticles(token);
-        setArticles(await request.AllArticles([]))
-      }
+        setArticles(await request.AllArticles([]));
+      };
       init();
       setLoad(true);
     }
   }, [load]);
 
   const handleBookMark = (key, type) => {
-    request.handleBookMark(key, type)
-    setLoad(false)
+    request.handleBookMark(key, type);
+    setLoad(false);
   };
 
   // const isBookmarked = (key) => {
@@ -44,7 +43,7 @@ const Article = (props) => {
   //     : true;
   // };
 
-  console.log(articles)
+  console.log(articles);
 
   return (
     <React.Fragment>
@@ -72,14 +71,19 @@ const Article = (props) => {
                     >
                       <Box className="main-article-container-type">
                         {/* Put Work Affilation here*/}
-                        <div className="main-article-reporter">                        
-                          {`${reporter.first_name} ${reporter.last_name}   •   ${Utility.getDate(Article.date)} `}  
+                        <div className="main-article-reporter">
+                          {`${reporter.first_name} ${
+                            reporter.last_name
+                          }   •   ${Utility.getDate(Article.date)} `}
                         </div>
-                        {Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" &&  (
-                            <div className="main-article-container-type-iconset">
-                              <StarIcon className="main-article-container-type-icon" style={{fontSize: "10px"}}/>
-                              <span>Members only</span>
-                            </div>
+                        {Article.visibility == "FOLLOWER/SUBSCRIBER ONLY" && (
+                          <div className="main-article-container-type-iconset">
+                            <StarIcon
+                              className="main-article-container-type-icon"
+                              style={{ fontSize: "10px" }}
+                            />
+                            <span>Members only</span>
+                          </div>
                         )}
                       </Box>
                       <Box className="main-article-container-description">
@@ -96,47 +100,64 @@ const Article = (props) => {
                         {Array.isArray(Article.tags) ? (
                           Article.tags.map((tag) => {
                             return (
-                              <Box sx={{ margin: "5px" }}>
                                 <Chip
                                   className="main-article-container-description-tags-content"
                                   style={{
+                                    backgroundColor: "#d9cab3",
                                     fontFamily:
                                       "Neue Haas Grotesk Display Pro, sans-serif",
+                                    fontSize: "15px",
+                                    fontWeight: "475",
+                                    textDecoration: "none",
                                   }}
                                   label={tag}
                                 />
-                              </Box>
                             );
                           })
                         ) : (
-                          <Box sx={{ margin: "5px" }}>
                             <Chip
                               className="main-article-container-description-tags-content"
                               style={{
+                                backgroundColor: "#d9cab3",
                                 fontFamily:
                                   "Neue Haas Grotesk Display Pro, sans-serif",
+                                fontSize: "15px",
+                                fontWeight: "475",
+                                textDecoration: "none",
                               }}
                               label={Article.tags}
+                            />
+                        )}
+                      </Box>
+                      <Box sx={{ alignContent: "right", marginTop: "auto" }}>
+                        {props.saved.saved == null ||
+                        props.saved.saved[Article.key] ? (
+                          <Box
+                            onClick={() =>
+                              handleBookMark(Article.key, "REMOVE_BOOKMARK")
+                            }
+                          >
+                            <BookmarkIcon
+                              style={{
+                                color: "#F2AF29",
+                                fontSize: "35px",
+                                zIndex: "1",
+                              }}
+                            />
+                          </Box>
+                        ) : (
+                          <Box
+                            onClick={() =>
+                              handleBookMark(Article.key, "BOOKMARK_ARTICLE")
+                            }
+                          >
+                            <BookmarkAddIcon
+                              style={{ color: "#C1BDBD", fontSize: "35px" }}
                             />
                           </Box>
                         )}
                       </Box>
-                      <Box sx={{ alignContent: "right", marginTop: "auto" }}>
-                    {props.saved.saved == null || props.saved.saved[Article.key] ? (
-                      <Box onClick={() => handleBookMark(Article.key, "REMOVE_BOOKMARK")}>
-                        <BookmarkIcon
-                          style={{ color: "#F2AF29", fontSize: "35px", zIndex: "1" }}
-                        />
-                      </Box>
-                    ) : (
-                      <Box onClick={() => handleBookMark(Article.key, "BOOKMARK_ARTICLE")}>
-                        <BookmarkAddIcon
-                          style={{ color: "#C1BDBD", fontSize: "35px" }}
-                        />
-                      </Box>
-                    )}
-                  </Box>
-                  </Box>
+                    </Box>
                   </div>
                 </Box>
               );
@@ -171,7 +192,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getSavedArticles: (token) =>
       dispatch(savedArticleActions.getSAVEDARTICLES(token)),
-      getArticles: (token) => dispatch(articleActions.getARTICLES(token)),
+    getArticles: (token) => dispatch(articleActions.getARTICLES(token)),
   };
 };
 export default withRouter(

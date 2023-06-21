@@ -1,8 +1,0 @@
-.main-container-rightpannel{
-    display: flex;
-    flex-direction: column;
-    width: 25vw;
-    height: 90vh;
-    margin-top: 1px;
-    margin-left: 1vw;
-}
