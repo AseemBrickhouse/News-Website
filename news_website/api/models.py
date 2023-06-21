@@ -36,12 +36,12 @@ class Account(models.Model):
     first_name = models.CharField(max_length=26)
     last_name = models.CharField(max_length=26)
     creation_date = models.DateTimeField(auto_now_add=True)
-    role = models.CharField(max_length=10, choices=ROLES)
+    role = models.CharField(max_length=10, choices=ROLES, blank=True)
     phone = models.CharField(max_length=12, default="444-444-4444")
-    bio = models.TextField(null=True)
+    bio = models.TextField(null=True, blank=True)
     email = models.EmailField(max_length=50, null=True)
-    profile_pic = models.ImageField(blank=True, null=True)
-    occupation = models.CharField(max_length=30, null=True)
+    profile_pic = models.ImageField(blank=True, null=True,)
+    occupation = models.CharField(max_length=30, null=True, blank=True)
 
     def FullName(self):
             return self.first_name + self.last_name
@@ -54,14 +54,15 @@ class Article(models.Model):
     key = models.CharField(max_length=20, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True) ##change to date field 
     headline = models.CharField(max_length=100)
-    sub_title = models.CharField(max_length=200, null=True)
+    sub_title = models.CharField(max_length=200, null=True, blank=True)
     reporter_account = models.ForeignKey(Account, on_delete=models.CASCADE) #Reporter
     rating = models.IntegerField(null=True)
     isPrivate = models.BooleanField(null=True, default=False)
     visibility = models.CharField(choices=VISIBILITY, null=True, default=False, max_length=24)
     article_description = models.CharField(max_length=500, null=True)
     article_body = models.TextField(max_length=10000, null=True)
-    tags = MultiSelectField(choices=TAGS, max_choices=7, max_length=20000, null=True)
+    tags = MultiSelectField(choices=TAGS, max_choices=7, max_length=20000, null=True, blank=True)
+    article_pic = models.ImageField(blank=True, null=True)
 
     def str(self):
             return self.reporter_account.FullName

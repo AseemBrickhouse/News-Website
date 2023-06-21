@@ -7,24 +7,26 @@ const FindPeople = () => {
     const[load, setLoad] = useState(false);
 
     useEffect(async () =>{
-        await fetch("/api/AllAccounts/",{
-            method: "POST",
-            headers:{
-                'Accept':'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                token: localStorage.getItem('token'),
+        if(!load){
+            await fetch("/api/AllAccounts/",{
+                method: "POST",
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: localStorage.getItem('token'),
+                })
             })
-        })
-        .then(response=> {
-            return response.json();
-        })
-        .then(data=>{
-            console.log(data)
-            setLoad(true)
-            setPeople(data)
-        })
+            .then(response=> {
+                return response.json();
+            })
+            .then(data=>{
+                console.log(data)
+                setLoad(true)
+                setPeople(data)
+            })
+        }
     },[load]);
     return(
         <Box sx={{

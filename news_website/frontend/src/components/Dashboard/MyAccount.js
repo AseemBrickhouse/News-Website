@@ -32,7 +32,7 @@ const MyAccount = (props) =>{
       fontWeight: "700",
       textAlign: "center",
     })
-    console.log(props)
+    // console.log(props.account)
     return(
       <Box sx={{display: "flex", flexDirection: "row", textDecoration: "none", padding: "5px"}}>
         <div>
@@ -164,6 +164,13 @@ const MyAccount = (props) =>{
             </StyledTypography>
           </Button>
         </div>
+        <div>
+          <Button style={{marginRight: "1vw"}}>
+            <Link to ='/SavedArticleError'>
+              Test eror
+            </Link>
+          </Button>
+        </div>
       </Box>
     )
 }
@@ -172,7 +179,11 @@ const MyAccount = (props) =>{
 //   props.getSavedLogout;
 //   props.logout;
 // }
-
+const mapStateToProps = (state) => {
+  return{
+    account: state.auth.account
+  }
+}
 const mapDispatchToProps = dispatch => {
     return {
       getSavedLogout: () => dispatch(savedArticlesActions.getSavedLogout()),
@@ -182,4 +193,4 @@ const mapDispatchToProps = dispatch => {
       }
     }
 }
-export default withRouter(connect(null,mapDispatchToProps)(MyAccount));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MyAccount));

@@ -37,8 +37,10 @@ export const getAuthInfoFAIL = error =>{
 }
 export const getAuthInfo = token =>{
     return dispatch=>{
-        axios.post(`${BASE_URL}/api/current_user/`,{
-            token: token,
+        axios.get(`${BASE_URL}/api/current_user/`,{
+            headers: {
+                token: token,
+            }
         })
         .then(response =>{
             // console.log(response.data)
@@ -67,7 +69,7 @@ export const getAuthInfo = token =>{
 export const authLogin = (username, password) => {
     return dispatch =>{
         dispatch(authStart());
-        axios.post(`${BASE_URL}/rest-auth/login/`, {
+        axios.post(`${BASE_URL}/api/rest-auth/login/`, {
             username: username,
             password: password
         })
@@ -85,6 +87,7 @@ export const authLogin = (username, password) => {
             dispatch(checkTimeout(3600));  
         })
         .catch(error => {
+            // console.log(error)
             dispatch(authFAIL(error))
         })
     };
@@ -92,7 +95,7 @@ export const authLogin = (username, password) => {
 export const authSignUp = (username, email, password1, password2) => {
     return dispatch =>{
         dispatch(authStart());
-        axios.post(`${BASE_URL}/rest-auth/registration/`, {
+        axios.post(`${BASE_URL}/api/rest-auth/registration/`, {
             username: username,
             email: email,
             password1: password1,
@@ -141,8 +144,10 @@ export const authCheckState = () => {
             if(expirationDate <= new Date()){
                 dispatch(authLOGOUT())
             }else{
-                axios.post(`${BASE_URL}/api/current_user/`,{
-                    token: token,
+                axios.get(`${BASE_URL}/api/current_user/`,{
+                    headers:{
+                        token: token,
+                    }
                 })
                 .then(response =>{
                     dispatch(getAuthInfoSUCCESS(response.data))

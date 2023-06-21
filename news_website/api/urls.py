@@ -32,12 +32,13 @@ urlpatterns = [
         path('unFollow/', unFollow.as_view()),
         path('myFollowers/', myFollowers.as_view()),
         path('myFollowing/', myFollowing.as_view()),
-        path('Bookmark/', Bookmark.as_view()),
-        path('RemoveBookmark/', RemoveBookmark.as_view()),
+        # path('Bookmark/', Bookmark.as_view()),
+        # path('RemoveBookmark/', RemoveBookmark.as_view()),
         path('MyBookmarkedArticles/', MyBookmarkedArticles.as_view()),
         path('SavedArticles/', SavedArticles.as_view()),
         path('GetUserArticles/', GetUserArticles.as_view()),
         path('GetPerson/', GetPerson.as_view()),
+        path('HandleBookmark/', HandleBookmark.as_view()),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls

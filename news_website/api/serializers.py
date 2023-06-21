@@ -36,6 +36,7 @@ class ArticleSerializer(serializers.ModelSerializer):
                   'article_description',
                   'article_body',
                   'tags',
+                  'article_pic'
                   )
 
 

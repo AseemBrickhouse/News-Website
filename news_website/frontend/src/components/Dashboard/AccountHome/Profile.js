@@ -30,14 +30,12 @@ class Profile extends React.Component{
     }
     componentDidMount(){
         fetch("/api/current_user/", {
-            method:"POST",
+            method:"GET",
             headers:{
               'Accept':'application/json',
               'Content-Type': 'application/json',
+              token: localStorage.getItem('token')
             },
-                body: JSON.stringify({
-                    token: localStorage.getItem('token')
-                })
             })
             .then(response =>{
                 if(response.status > 400){

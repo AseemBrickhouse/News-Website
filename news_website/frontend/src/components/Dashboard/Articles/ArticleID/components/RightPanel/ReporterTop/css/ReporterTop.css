@@ -1,0 +1,51 @@
+.main-container-rt{
+
+}
+.main-container-rt-follow{
+    background-color:#AD343E;
+    width: 75%;
+    height: 70%;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 300;
+    border-radius: 50px;
+    text-transform: none;
+}
+.main-container-rt-follow:hover{
+    font-size: 15px;
+    font-weight: 300;
+    color: white;
+    background-color: black;
+}
+
+.main-container-rt-following{
+    border: 1px solid #AD343E;
+    width: 75%;
+    height: 70%;
+    background-color: #AD343E;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 50px;
+}
+.main-container-rt-name{
+    text-transform: none;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+}
+.main-container-rt-followcount{
+    font-size: 17px;
+    font-weight: 500;
+    color: #474747;
+}
+.main-container-rt-link{
+    text-decoration: none;
+    color: black;
+    text-underline-offset: none;
+    text-underline-position: none;
+}
+.main-container-rt-avatar{
+    width: 100px;
+    height: 100px;
+}

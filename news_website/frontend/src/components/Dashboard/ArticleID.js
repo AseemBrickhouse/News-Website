@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react';
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import { connect } from 'react-redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Util from '../Utility';
 import { 
  Chip, Box, Typography, Button, Avatar
 } from "@material-ui/core";
 import SearchBar from "material-ui-search-bar";
-
 import { styled } from "@material-ui/core/styles";
-
 import StickyBox from "react-sticky-box";
+import RightPanel from './Articles/ArticleID/components/RightPanel/RightPanel';
+
+
+// TODO: Delete the file and update it to the new ArticleID location...
 const ArticleID = (props) =>{
     const Utility = new Util();
-    // console.log(props.location.state)
+    console.log(props)
+    const account = props.account
     const StyledButtonSubscribe = styled(Button)({
       fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
       backgroundColor: "#AD343E",
@@ -44,7 +48,7 @@ const ArticleID = (props) =>{
       borderRadius: "50px",
       textTransform: "none",
       textDecoration: "none",
-      transform: "translate(-50%, -0%)",
+      // transform: "translate(-00%, -0%)",
       "&:hover":{
         fontSize: "15px",
         fontWeight: "300",
@@ -65,7 +69,7 @@ const ArticleID = (props) =>{
       borderRadius: "50px",
       textTransform: "none",
       textDecoration: "none",
-      transform: "translate(-50%, -0%)",
+      // transform: "translate(-50%, -0%)",
       // "&:hover":{
       //   fontSize: "15px",
       //   fontWeight: "300",
@@ -89,9 +93,18 @@ const ArticleID = (props) =>{
         fontWeight: "500",
         color: "grey",
     })
+    const StyledTypographySideHealine = styled(Typography)({
+      fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+      textTransform: "none",
+      textDecoration: "none",
+      fontSize: "18px",
+      fontWeight: "600",
+      color: "black",
+    })
     const Article = props.location.state.Article
     window.scrollTo(0, 0);
     const [reporter, setReporter] = React.useState(Article.reporter_account);
+    const [reporterArticles, setReporterArticles] = React.useState([]);
     const [load, setLoad] = React.useState(true);
     useEffect(() =>{
         fetch("/api/GetPerson/",{
@@ -111,9 +124,26 @@ const ArticleID = (props) =>{
             return response.json();
         })
         .then(data=>{
-          console.log(data)
-            setLoad(true)
+            console.log(data)
             setReporter(data)
+        })
+        fetch("/api/GetUserArticles/",{
+          method: "POST",
+          headers:{
+              'Accept':'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              key: reporter.key
+          })
+        })
+        .then(response=> {
+            return response.json();
+        })
+        .then(data=>{
+          console.log(data)
+          setLoad(true)
+          setReporterArticles(data)
         })
     },[load]);
     const handleFollow = (person) =>{
@@ -152,6 +182,7 @@ const ArticleID = (props) =>{
     }
 
     return(
+      //Rewrite article header to match with website
       <React.Fragment>
       <div className='container'>
         <Box sx={{display: "flex", flexDirection: "column", width: "60%"}}>
@@ -221,74 +252,17 @@ const ArticleID = (props) =>{
             </main>
             </article>
           </Box>
-        <StickyBox offsetTop={50}>
-            <Box sx= {{display: "flex", flexDirection:"column", width:"25vw", height:"90vh", marginTop: "1px", marginLeft: "1vw"}}>
-              <Box sx={{width: "100%", height:"20%", display: "flex", flexDirection:"column"}}>
-                <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
-                  <StyledButtonSubscribe>
-                    Subscribe Today
-                  </StyledButtonSubscribe>
-                </Box>
-                <Box sx={{marginLeft: "12.5%", marginTop: "1vh"}}>
-                <SearchBar
-                  style={{
-                    borderStyle: "inset",
-                    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                    width: "75%",
-                    height: "70%",
-                    borderRadius: "25px",
-                  }}
-                  />
-                </Box>
-                <Box sx={{marginTop: "2vh", alignContent: "center", justifyContent: "center", marginLeft: "50%", transform: "translate(-25%, -0%)" }}>
-                  {
-                    reporter.profile_pic != null ?
-                    <Avatar 
-                      alt={`${reporter.first_name} ${reporter.last_name}`} 
-                      src={reporter.profile_pic}
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                      }}
-                    />
-                    :
-                    <Avatar 
-                      alt={`${reporter.first_name} ${reporter.last_name}`} 
-                      src="/images/defaultProfilePic.png"
-                      style={{
-                          width: '100px',
-                          height: '100px',
-                      }}
-                    />
-                    }
-                    <Box sx={{marginTop: "1vh"}}>
-                      <StyledTypographyHeader1>
-                        {`${reporter.first_name} ${reporter.last_name}`} 
-                      </StyledTypographyHeader1>
-                    </Box>
-                    <Box sx={{marginTop: "1vh"}}>
-                      <StyledTypographyHeader2>
-                        {`${reporter.followers} Followers`} 
-                      </StyledTypographyHeader2>
-                    </Box>
-                    <Box sx={{marginTop: "1vh"}}>
-                      { 
-                        reporter.is_following ?
-                          <StyledButtonFollowing onClick={() => handleUnfollow(reporter)}>
-                            Following
-                          </StyledButtonFollowing>
-                          :
-                          <StyledButtonFollow onClick={() => handleFollow(reporter)}>
-                          Follow
-                        </StyledButtonFollow>
-                      }
-                    </Box>
-                </Box>
-              </Box>
-            </Box>
-          </StickyBox>
+          {/* <RightPannel {...props}/> */}
       </div>
       </React.Fragment>
     )
 }
-export default ArticleID;
+
+const mapStateToProps = (state) => {
+  console.log(state)
+  return{
+    account: state.auth.account,
+  }
+}
+
+export default withRouter(connect(mapStateToProps,null)(ArticleID));

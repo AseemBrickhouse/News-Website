@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import status
 from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
@@ -10,47 +10,67 @@ from ..APIUtility import *
 
 class Follow(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        follow = request.data['toFollow']
+        follow = request.data['person']
+        token = Token.objects.get(key=request.headers['token'])
+        if token == None:
+            return Response({
+                "Error" : "No current token. (Try loggin in or Creating an account! )"
+            })
+        user_account = User.objects.all().filter(id=token.user_id)[0].account
+        following_user = Account.objects.all().filter(
+                            first_name=follow['first_name'],
+                            last_name=follow['last_name'],
+                            email=follow['email'],
+                        )[0]
         try:
             query = Followers.objects.get(
-                account = getCurrentUser(request.data['token'], "FOLLOW"),
-                following_user = Account.objects.all().filter(
-                    first_name=follow['first_name'],
-                    last_name=follow['last_name'],
-                    email=follow['email'],
-                )[0]
+                account = user_account,
+                following_user = following_user,
             )
             print(query)
 
         except Followers.DoesNotExist:            
             createFollow = Followers.objects.create(
-                account= getCurrentUser(request.data['token'], "FOLLOW"),
-                following_user = Account.objects.all().filter(
-                    first_name=follow['first_name'],
-                    last_name=follow['last_name'],
-                    email=follow['email']
-                )[0]
+                account= user_account,
+                following_user = following_user,
             )
             createFollow.save()
-        return Response(request.data)
+
+        follow = following_user
+        follow_json = AccountSerializer(follow).data
+        follow_json['is_following'] = True
+        follow_json['followers'] = len(Followers.objects.all().filter(following_user=following_user))
+        return Response(follow_json)
+
 
 class unFollow(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        following = request.data['toUnFollow']
-        account = getCurrentUser(request.data['token'], "UNFOLLOW")
+    def delete(self, request, *args, **kwargs):
+        following = request.data['person']
+        token = Token.objects.get(key=request.headers['token'])
+        if token == None:
+            return Response({
+                "Error" : "No current token. (Try loggin in or Creating an account! )"
+            })
+        user_account = User.objects.all().filter(id=token.user_id)[0].account
+        following_user = Account.objects.filter(
+                            first_name=following['first_name'],
+                            last_name=following['last_name'],
+                            email=following['email']
+                        )[0] 
         try:
             Followers.objects.get(
-                                account=account, 
-                                following_user=Account.objects.get(
-                                first_name=following['first_name'],
-                                last_name=following['last_name'],
-                                email=following['email']
-                            )).delete()
+                account=user_account, 
+                following_user=following_user
+            ).delete()
         except Followers.DoesNotExist:
-            print("here")
+            print("Follow Object entry does not exists")
             return Response(request.data)
 
-        return Response(request.data)
+        following = following_user
+        following_json = AccountSerializer(following).data
+        following_json['is_following'] = False
+        following_json['followers'] = len(Followers.objects.all().filter(following_user=following_user))
+        return Response(following_json)
 
 class myFollowers(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
