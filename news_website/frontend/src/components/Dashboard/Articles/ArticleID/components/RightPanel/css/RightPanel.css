@@ -1,0 +1,8 @@
+.main-container-rightpanel{
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    height: 90vh;
+    /* margin-top: 5vh; */
+    margin-left: 1vw;
+}
