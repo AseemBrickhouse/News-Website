@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./Home/Routes";
 import { connect } from "react-redux";
@@ -25,7 +25,7 @@ export const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     account: state.auth.account,
-    isAuthenticated: state.auth.token !== null,
+    isAuthenticated: state?.auth?.token,
   };
 };
 
