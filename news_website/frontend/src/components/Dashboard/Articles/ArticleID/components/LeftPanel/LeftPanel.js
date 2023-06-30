@@ -4,6 +4,7 @@ import "./css/LeftPanel.css";
 import Util from "../../../../../Utility";
 import StarIcon from "@mui/icons-material/Star";
 import Options from "./components/Options";
+import CommentSection from "./components/options/Comments/CommentSection/CommentSection";
 //TODO: Add button functionality
 
 const LeftPanel = ({ article }) => {
@@ -107,6 +108,9 @@ const LeftPanel = ({ article }) => {
             {article?.article_body}
           </span>
         </Box>
+        <div>
+          <CommentSection article={article}/>
+        </div>
       </Box>
     )
   );

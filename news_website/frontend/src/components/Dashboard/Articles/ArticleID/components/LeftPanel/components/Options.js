@@ -1,23 +1,23 @@
 import React from "react";
-import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
+import Rating from "./options/Rating/Rating"
 import PlayButton from "./options/PlayButton"
 import BookMarkButton from "./options/BookMarkButton"
+import CommentButton from "./options/Comments/CommentButton";
+
 import "../css/LeftPanel.css"
 
 const Options = ({ article }) => {
   return (
     <div className="main-container-button-box-options">
       <div className="main-container-button-box-left">
-        <ThumbUpOffAltIcon style={{ color: "B2D9C1", fontSize: "24px" }} />
-        <ThumbDownOffAltIcon style={{ color: "#AD343E", fontSize: "24px" }} />
-        <CommentOutlinedIcon style={{ color: "#474747", fontSize: "24px" }} />
+        <Rating article={article}/>
+        <CommentButton article={article}/>
       </div>
       <div className="main-container-button-box-right">
-        <BookMarkButton article = {article}/>
+        <BookMarkButton article={article}/>
         <PlayButton article={article}/>
         <MoreHorizOutlinedIcon style={{ color: "#000000", fontSize: "24px" }} />
       </div>

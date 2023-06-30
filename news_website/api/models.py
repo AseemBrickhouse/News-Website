@@ -76,3 +76,28 @@ class BookmarkedArticles(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     saved = models.ForeignKey(Article, on_delete=models.CASCADE)
     create = models.DateTimeField(auto_now_add=True)
+
+class Comment(models.Model):
+    commenter_account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    commented_article =  models.ForeignKey(Article,on_delete=models.CASCADE)
+    content = models.TextField()
+    parent = models.ForeignKey('self' , null=True , blank=True , on_delete=models.CASCADE , related_name='replies')
+    created_at = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(default=0)
+    
+    class Meta:
+        ordering=['-created_at']
+
+    def __str__(self):
+        return str(self.commenter_account) + ' comment ' + str(self.content)
+
+    @property
+    def children(self):
+        return Comment.objects.filter(parent=self).reverse()
+
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        return False
+    
