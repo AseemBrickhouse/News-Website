@@ -7,7 +7,7 @@ import NotStartedOutlinedIcon from '@mui/icons-material/NotStartedOutlined';
 import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import "./css/TextToSpeech.css";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./ProgressBar/ProgressBar";
 
 const TextToSpeech = ({ text }) => {
   const [isPaused, setIsPaused] = useState(true);

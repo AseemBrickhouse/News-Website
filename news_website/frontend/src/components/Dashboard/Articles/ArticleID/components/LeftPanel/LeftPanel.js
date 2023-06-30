@@ -3,8 +3,7 @@ import { Chip, Box, Avatar } from "@material-ui/core";
 import "./css/LeftPanel.css";
 import Util from "../../../../../Utility";
 import StarIcon from "@mui/icons-material/Star";
-import Options from "./components/options/Options";
-
+import Options from "./components/Options";
 //TODO: Add button functionality
 
 const LeftPanel = ({ article }) => {

@@ -39,6 +39,7 @@ urlpatterns = [
         path('GetUserArticles/', GetUserArticles.as_view()),
         path('GetPerson/', GetPerson.as_view()),
         path('HandleBookmark/', HandleBookmark.as_view()),
+        path('GetArticle/', GetArticle.as_view()),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
     ]
 urlpatterns += router.urls

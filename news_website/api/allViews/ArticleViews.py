@@ -1,9 +1,9 @@
+from collections import defaultdict
 from rest_framework import viewsets
 from ..serializers import *
 from ..models import *
 from rest_framework.response import Response
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from ..APIUtility import *
@@ -93,6 +93,37 @@ class AllArticles(APIView):
         popQuerySetRequest = get_popular_articles(user_account, 5)
 
         return Response({'articles': querysetSend,'popArticles': popQuerySetRequest}, status=status.HTTP_200_OK)
+
+class GetArticle(ObtainAuthToken):
+    def get(self, request, *args, **kwargs):
+        user_account = get_user_account(request.headers['token'])
+        article = Article.objects.get(key=request.headers['key'])
+
+        articleJson = ArticleSerializer(article).data
+        reporter_account = Account.objects.get(id=articleJson['reporter_account'])
+        articleJson['reporter_account'] = reporter_account.data
+
+        if user_account != None:
+            try:
+                BookmarkedArticles.objects.get(
+                    account=user_account,
+                    saved=article,
+                )
+                articleJson['isBookmarked'] = True
+            except BookmarkedArticles.DoesNotExist:
+                articleJson['isBookmarked'] = False
+            try:
+                Followers.objects.get(
+                    account = user_account,
+                    following_user=reporter_account
+                )
+                articleJson['reporter_account']['is_following'] = True
+            except Followers.DoesNotExist:
+                articleJson['reporter_account']['is_following'] = False
+        else:
+            articleJson['isBookmarked'] = False
+
+        return Response(articleJson, status=status.HTTP_200_OK)      
 
 class AllUserArticles(ObtainAuthToken):
         def get(self, request, *args, **kwargs):
@@ -230,20 +261,32 @@ class DeleteArticle(APIView):
         article = Article.objects.all().filter(reporter_account=user_account, key=request.data['key']).delete()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
+# class PopularTags(APIView):
+#     def get(self, request, *args, **kwargs):
+#         data = {}
+#         queryset = Article.objects.all()
+
+#         for article in queryset:
+#             for tag in article.tags:
+#                 if tag in data:
+#                     data[tag] = data[tag]+1
+#                 else: 
+#                     data[tag] = 1
+
+#         data = sorted(data, key=data.get)[::-1]
+#         data = {tag: tag for tag in data}
+#         return Response(data, status=status.HTTP_200_OK)
 class PopularTags(APIView):
     def get(self, request, *args, **kwargs):
-        data = {}
+        data = defaultdict(int)
         queryset = Article.objects.all()
 
         for article in queryset:
             for tag in article.tags:
-                if tag in data:
-                    data[tag] = data[tag]+1
-                else: 
-                    data[tag] = 1
+                data[tag] += 1
 
-        data = sorted(data, key=data.get)[::-1]
-        data = {tag: tag for tag in data}
+        sorted_data = sorted(data, key=data.get, reverse=True)
+        data = {tag: tag for tag in sorted_data}
         return Response(data, status=status.HTTP_200_OK)
 
 
@@ -256,11 +299,12 @@ class HandleBookmark(ObtainAuthToken):
                     },
                     status=status.HTTP_404_NOT_FOUND
                 )
+            article = Article.objects.get(key=request.data['key'])
             if(request.data['type'] == "BOOKMARK_ARTICLE"):
                 try:
                     BookmarkedArticles.objects.get(
                         account = user_account,
-                        saved = Article.objects.get(key=request.data['key'])
+                        saved = article
                     )
                     return Response({
                         "Err": "Article already bookmarked"
@@ -270,14 +314,14 @@ class HandleBookmark(ObtainAuthToken):
                 except BookmarkedArticles.DoesNotExist:
                     bookmark = BookmarkedArticles.objects.create(
                         account = user_account,
-                        saved = Article.objects.get(key=request.data['key'])
+                        saved = article
                     )
                     bookmark.save()
             if(request.data['type'] == "REMOVE_BOOKMARK"):
                 try:
                     BookmarkedArticles.objects.get(
                         account=user_account,
-                        saved=Article.objects.get(key=request.data['key'])
+                        saved=article
                     ).delete()
                 except BookmarkedArticles.DoesNotExist:
                     return Response({

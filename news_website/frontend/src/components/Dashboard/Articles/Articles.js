@@ -43,7 +43,6 @@ const Article = (props) => {
   //     : true;
   // };
 
-  console.log(articles);
 
   return (
     <React.Fragment>

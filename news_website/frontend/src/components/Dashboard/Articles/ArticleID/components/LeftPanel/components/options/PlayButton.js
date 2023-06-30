@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PlayCircleOutlineOutlinedIcon from "@mui/icons-material/PlayCircleOutlineOutlined";
-import TextToSpeech from "../TextToSpeech";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import TextToSpeech from "./TextToSpeech/TextToSpeech";
 
 const PlayButton = ({ article }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
