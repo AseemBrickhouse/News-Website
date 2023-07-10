@@ -55,6 +55,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'content',
             'parent',
             'rating',
+            'is_edited',
             'created_at',
         )
 

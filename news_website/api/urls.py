@@ -5,10 +5,12 @@ from api.views import *
 from api.allViews.AccountViews import *
 from api.allViews.FollowViews import *
 from api.allViews.ArticleViews import *
+from api.allViews.CommentViews import *
 
 router = DefaultRouter()
 router.register(r'Articles', ArticleViewSet)
 router.register(r'Accounts', AccountViewSet)
+# router.register(r'^GetComments/(?P<article_key>\w{1,50})/$', GetComments)
 # router.register(r'CreateNewArticle/', CreateNewArticle.as_view(), basename='CreateNewArticle')
 # router.register(r'current_user', current_user)
 # router.register(r'rest-auth/registration/', include('rest_auth.registration.urls'))
@@ -40,6 +42,10 @@ urlpatterns = [
         path('GetPerson/', GetPerson.as_view()),
         path('HandleBookmark/', HandleBookmark.as_view()),
         path('GetArticle/', GetArticle.as_view()),
+        path('GetComments/', GetComments.as_view()),
+        path('UpdateRating/', UpdateRating.as_view()),
+        # path('GetComments/<str:article_key>/', GetComments.as_view(), name="GetComments"),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
+        # path(regex=r'^GetComments/(?P<username>\w{1,50})/$', view='GetComments'),
     ]
 urlpatterns += router.urls

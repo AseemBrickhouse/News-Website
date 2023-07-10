@@ -30,11 +30,11 @@ class current_user(ObtainAuthToken):
 class AllAccounts(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
-        if (user_account == None):
-            return Response({
-                "Err": "User account not found"
-            },
-                status=status.HTTP_404_NOT_FOUND)
+        # if (user_account == None):
+        #     return Response({
+        #         "Err": "User account not found"
+        #     },
+        #         status=status.HTTP_404_NOT_FOUND)
         queryset = {}
         for account in Account.objects.all().exclude(key=user_account.key):
             queryset[AccountSerializer(account).data['user']] = AccountSerializer(account).data

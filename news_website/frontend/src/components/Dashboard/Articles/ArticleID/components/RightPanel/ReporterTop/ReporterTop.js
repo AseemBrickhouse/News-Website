@@ -66,27 +66,15 @@ const ReporterTop = ({ account, reporter }) => {
             },
           }}
         >
-          {reporter.profile_pic != null ? (
-            <Avatar
-              alt={`${reporter.first_name} ${reporter.last_name}`}
-              src={reporter.profile_pic}
-              style={{
-                height: "60px",
-                width: "60px",
-              }}
-              className="main-container-rt-avatar"
-            />
-          ) : (
-            <Avatar
-              alt={`${reporter.first_name} ${reporter.last_name}`}
-              src="/images/defaultProfilePic.png"
-              style={{
-                height: "60px",
-                width: "60px",
-              }}
-              className="main-container-rt-avatar"
-            />
-          )}
+        <Avatar
+          alt={`${reporter.first_name} ${reporter.last_name}`}
+          src={reporter.profile_pic || "/images/defaultProfilePic.png"}
+          style={{
+            height: "60px",
+            width: "60px",
+          }}
+          className="main-container-rt-avatar"
+        />
         </Link>
         <Box sx={{ marginTop: "1vh" }}>
           <span className="main-container-rt-name">

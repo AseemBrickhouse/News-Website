@@ -83,6 +83,7 @@ class Comment(models.Model):
     content = models.TextField()
     parent = models.ForeignKey('self' , null=True , blank=True , on_delete=models.CASCADE , related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_edited = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
     
     class Meta:
