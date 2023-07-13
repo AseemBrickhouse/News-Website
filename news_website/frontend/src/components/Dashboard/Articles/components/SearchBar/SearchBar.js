@@ -19,7 +19,7 @@ const SearchBarComponent = (props) => {
       color: "white",
       fontSize: "15px",
       fontWeight: "500",
-      borderRadius: "50px",
+      borderRadius: "10px",
       textTransform: "none",
       zIndex: 2,
       transition: "transform ease 0.2s, box-shadow ease 0.2s",

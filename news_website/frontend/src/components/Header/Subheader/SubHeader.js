@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./css/SubHeader.css";
 
-//TODO: Fix Clipping issuse
 const SubHeader = ({isAuthenticated, location}) => {
   const pathnameCheck = location.pathname == "/" && !isAuthenticated;
 

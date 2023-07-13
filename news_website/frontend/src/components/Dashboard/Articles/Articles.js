@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-// import "./css/Article.css";
-
-import Util from "../../Utility";
+import "./css/Article.css";
 import { Box } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import * as articleActions from "../../../store/actions/article";
@@ -17,7 +15,6 @@ import ArticleEntry from "./ArticleEntry";
 const Article = (props) => {
   const [load, setLoad] = useState(false);
   const [articles, setArticles] = useState([]);
-  const Utility = new Util();
 
   useEffect(() => {
     if (!load) {
