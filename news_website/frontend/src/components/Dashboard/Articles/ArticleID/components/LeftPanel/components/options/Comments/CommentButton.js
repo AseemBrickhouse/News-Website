@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
-
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-
+import React, {useState} from "react";
 import { Popover, Box, Typography } from "@mui/material";
-
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
-const CommentButton = ({ article, account, isAuthenticated }) => {
-  console.log(article, account, isAuthenticated);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
+const CommentButton = () => {
+  const scrollTo = window.document.getElementById("Comment-Section");
+  const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -18,24 +12,26 @@ const CommentButton = ({ article, account, isAuthenticated }) => {
     setAnchorEl(null);
   };
   const open = Boolean(anchorEl);
-  const handleOpen = () => {};
+  const handleClick = () => {
+    scrollTo.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
+  };
   return (
-    <div>
+    <>
       <CommentOutlinedIcon
         aria-owns={open ? "mouse-over-popover" : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-        onClick={handleOpen}
+        onClick={handleClick}
         style={{ color: "#474747", fontSize: "24px" }}
       />
       <Popover
         id="mouse-over-popover"
+        open={open}
+        anchorEl={anchorEl}
         sx={{
           pointerEvents: "none",
         }}
-        open={open}
-        anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "top",
           horizontal: "center",
@@ -49,13 +45,8 @@ const CommentButton = ({ article, account, isAuthenticated }) => {
       >
         <Typography sx={{ p: 1 }}>Comment</Typography>
       </Popover>
-    </div>
+    </>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    account: state.auth.account,
-    isAuthenticated: state?.auth?.token,
-  };
-};
-export default withRouter(connect(mapStateToProps)(CommentButton));
+
+export default CommentButton;

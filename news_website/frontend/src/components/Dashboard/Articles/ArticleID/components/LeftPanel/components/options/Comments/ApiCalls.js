@@ -25,7 +25,7 @@ export const CreateComment = async(article_key, content, parent_id) => {
 }
 
 export const DeleteComment = async(comment_id, article_key) =>{
-    const url = `${BASE_URL}/api/DeleteComment/`
+    const url = `${BASE_URL}/api/DeleteComment/?comment_id=${comment_id}`
     const headers = {
         token,
         'Content-Type': 'application/json',

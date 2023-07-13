@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import { Chip, Box, Avatar } from "@material-ui/core";
 import "./css/LeftPanel.css";
 import Util from "../../../../../Utility";
@@ -9,7 +9,6 @@ import CommentSection from "./components/options/Comments/CommentSection/Comment
 
 const LeftPanel = ({ article }) => {
   const Utility = new Util();
-
   const ReadTime = () => {
     const text = article.article_body;
     const wpm = 225;
@@ -104,7 +103,7 @@ const LeftPanel = ({ article }) => {
           </span>
         </Box>
         <Box className="main-container-article-body">
-          <span className="main-container-article-body-text">
+          <span className="main-container-article-body-text" id="article_body">
             {article?.article_body}
           </span>
         </Box>

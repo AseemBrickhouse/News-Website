@@ -1,7 +1,17 @@
-import * as request from "../ApiCalls";
 import React, { useState } from "react";
-import moment from "moment";
-import { Card, Box, Stack, Typography, Button, TextField, ThemeProvider, Avatar } from "@mui/material";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import * as request from "../ApiCalls";
+import {
+  Card,
+  Box,
+  Stack,
+  Typography,
+  Button,
+  TextField,
+  ThemeProvider,
+  Avatar,
+} from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import theme from "./CustomStyles";
 import YouTag from "./YouTag";
@@ -9,8 +19,10 @@ import ReplyAllOutlinedIcon from "@mui/icons-material/ReplyAllOutlined";
 import DeleteComment from "./DeleteComment";
 import ScoreCard from "./ScoreCard";
 import ChildComments from "../CommentSection/ChildComments";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-const Comment = ({ comment_id, comment, person, account }) => {
+const Comment = ({ comment_id, comment, person, account, article, parentName }) => {
   const [openModal, setOpenModal] = useState(false);
   const [editingComm, setEditingComm] = useState(false);
   const [commentText, setCommentText] = useState(comment.content);
@@ -52,12 +64,13 @@ const Comment = ({ comment_id, comment, person, account }) => {
   return (
     <ThemeProvider theme={theme}>
       <DeleteComment
-        onOpen = {openModal}
-        onClose = {handleClose}
-        account = {account}
+        onOpen={openModal}
+        onClose={handleClose}
+        account={account}
         id={comment_id}
+        article={article}
       />
-      <Card style={{backgroundColor: "custom.dun"}}>
+      <Card style={{ backgroundColor: "custom.dun" }}>
         <Box sx={{ p: "15px" }}>
           <Stack spacing={2} direction="row">
             <Box>
@@ -79,17 +92,19 @@ const Comment = ({ comment_id, comment, person, account }) => {
                       width: "40px",
                     }}
                   />
-                  <Typography
-                    sx={{ color: "custom.black", fontWeight: 500, }}
-                  >
+                  <Typography sx={{ color: "custom.black", fontWeight: 500 }}>
                     {`${person.first_name} ${person.last_name}`}
                   </Typography>
                   {person.email === account.email && <YouTag />}
-                  <Typography sx={{ color: "custom.outerSpace", fontWeight: 400, }}>
+                  <Typography
+                    sx={{ color: "custom.outerSpace", fontWeight: 400 }}
+                  >
                     {getPostedTime(comment)}
-                  </Typography>                  
-                  <Typography sx={{ color: "custom.outerSpace", fontWeight: 400,  }}>
-                    {comment.is_edited && ("(Edited)")}
+                  </Typography>
+                  <Typography
+                    sx={{ color: "custom.outerSpace", fontWeight: 400 }}
+                  >
+                    {comment.is_edited && "(Edited)"}
                   </Typography>
                 </Stack>
                 {person.email === account.email ? (
@@ -174,8 +189,9 @@ const Comment = ({ comment_id, comment, person, account }) => {
                   </Button>
                 </>
               ) : (
-                <Typography sx={{ color: "blue", p: "20px 0" }}>
-                  {commentText}
+                <Typography sx={{p: "20px 0px"}} >
+                  {parentName && (<span style={{color: "hsl(355, 54%, 44%)", fontWeight: "600"}}>{`@${parentName}`}</span>) }
+                  <span style={{color: "custom.black", fontWeight: "400"}}>{commentText}</span>
                 </Typography>
               )}
             </Box>
@@ -187,7 +203,13 @@ const Comment = ({ comment_id, comment, person, account }) => {
               setClicked(!clicked);
             }}
           >
-            {clicked ? "Hide Replies" : "Show Replies"}
+            <div style={{ marginLeft: "100%" }}>
+              {clicked ? (
+                <VisibilityOffOutlinedIcon />
+              ) : (
+                <VisibilityOutlinedIcon />
+              )}
+            </div>
           </Button>
         )}
       </Card>
@@ -198,6 +220,8 @@ const Comment = ({ comment_id, comment, person, account }) => {
             comment_id={comment_id}
             children={comment.children}
             clicked={clicked}
+            article={article}
+            parentName={`${comment.commenter_account.first_name} ${comment.commenter_account.last_name}`}
           />
         )}
     </ThemeProvider>
@@ -211,4 +235,3 @@ const mapStateToProps = (state) => {
 };
 
 export default withRouter(connect(mapStateToProps)(Comment));
-

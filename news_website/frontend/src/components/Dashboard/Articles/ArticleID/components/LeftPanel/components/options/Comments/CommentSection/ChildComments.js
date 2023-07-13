@@ -8,7 +8,7 @@ import { Divider } from "@mui/material";
 import Comment from "../Comment/Comment";
 import ListItem from "@mui/material/ListItem";
 
-const ChildComments = ({ comment_id, children, clicked }) => {
+const ChildComments = ({ comment_id, children, clicked,article, parentName }) => {
   return (
     <div style={{width:"100%"}}>
       {clicked && (
@@ -21,6 +21,8 @@ const ChildComments = ({ comment_id, children, clicked }) => {
                   comment_id={childComment_id}
                   comment={childComment}
                   person={person}
+                  article={article}
+                  parentName={parentName}
                 />
               </div>
             );

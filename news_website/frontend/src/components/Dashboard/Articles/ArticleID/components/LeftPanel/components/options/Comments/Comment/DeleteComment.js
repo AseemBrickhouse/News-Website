@@ -7,8 +7,14 @@ import {
   DialogTitle,
   DialogContent,
 } from "@mui/material";
+import { styled } from "@material-ui/core/styles";
+import * as request from "../ApiCalls"
 
-const DeleteComment = ({ onOpen, onClose, id, account }) => {
+const DeleteComment = ({ onOpen, onClose, id, article }) => {
+  const handleDelete = () => {
+      console.log(id, article)
+      // request.DeleteComment(id, article?.key)
+  }
   return (
     <Dialog open={onOpen} onClose={onClose}>
       <DialogContent sx={{ maxWidth: "430px" }}>
@@ -27,8 +33,13 @@ const DeleteComment = ({ onOpen, onClose, id, account }) => {
             variant="contained"
             disableElevation
             sx={{
-              bgcolor: "blue",
-              "&:hover": { bgcolor: "blue" },
+              bgcolor: "custom.dun",
+              transition: "transform ease 0.2s, box-shadow ease 0.2s",
+              "&:hover": { 
+                bgcolor: "custom.dun",
+                transform: "translate(0, -3px)",
+                boxShadow: "0 20px 80px -10px #D9CAB3",
+              },
             }}
             onClick={onClose}
           >
@@ -38,12 +49,17 @@ const DeleteComment = ({ onOpen, onClose, id, account }) => {
             variant="contained"
             disableElevation
             sx={{
-              bgcolor: "custom.softRed",
-              "&:hover": { bgcolor: "custom.softRed" },
+              bgcolor: "custom.cardinal",
+              transition: "transform ease 0.2s, box-shadow ease 0.2s",
+              "&:hover": { 
+                bgcolor: "custom.cardinal",
+                transform: "translate(0, -3px)",
+                boxShadow: "0 20px 80px -10px #AD343E",
+              },
             }}
             onClick={() => {
               //TODO: Add delete functionality
-              //   onDel ? onDel(comId) : deleteComment(id);
+                handleDelete()
             }}
           >
             Yes, delete
