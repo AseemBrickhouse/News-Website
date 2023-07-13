@@ -82,7 +82,7 @@ const SignUp = (props) =>{
   return(
     <div>
       {
-       !load ? 
+       load ? 
         <Loading/>
       :
         <Box>
