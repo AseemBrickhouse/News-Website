@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import "./css/SubHeader.css";
 
 //TODO: Fix Clipping issuse
-const SubHeader = (props) => {
-  const location = props.location.pathname == "/" && !props.isAuthenticated;
+const SubHeader = ({isAuthenticated, location}) => {
+  const pathnameCheck = location.pathname == "/" && !isAuthenticated;
 
-  return location ? (
+  return pathnameCheck && (
     <div className="main-container-subheader">
       <h2 className="main-container-subheader-title">
         Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.
@@ -22,6 +22,6 @@ const SubHeader = (props) => {
         </Link>
       </div>
     </div>
-  ) : null;
+  )
 };
 export default SubHeader;

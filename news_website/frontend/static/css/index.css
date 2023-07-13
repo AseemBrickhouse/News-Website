@@ -1,94 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 
-html{
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: white;
+html {
+  height: 100%;
+  background-color: white;
+}
+body{
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif; 
+  margin: 0;
+}
+/* .root {
+  flex-grow: 1;
+} */
+
+/* .ArticleBox {
+  display: flex;
+  background-color: black;
+  height: 10vh;
 }
 
-.root{
-    flex-grow: 1;
+.header {
+  display: flex;
+  text-align: center;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+    AppleGothic, sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 26.4;
 }
 
-.ArticleBox{
-    display: flex;
-    background-Color: black;
-    height: 10vh;
-
+.header1 {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+    AppleGothic, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 26.4px;
+  color: white;
+  flex-grow: 1;
 }
 
-.header{
-    display: flex;
-    text-align: center;
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    font-size: 26px; 
-    font-style: normal; 
-    font-variant: normal; 
-    font-weight: 700; 
-    line-height: 26.4;
+h3 {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+    AppleGothic, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+  line-height: 15.4px;
 }
 
-.header1 { 
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif; 
-    font-size: 18px; 
-    font-style: normal; 
-    font-variant: normal; 
-    font-weight: 700; 
-    line-height: 26.4px; 
-    color: white;
-    flex-grow: 1;
-} 
-
-h3 { 
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-     font-size: 14px; 
-     font-style: normal; 
-     font-variant: normal; 
-     font-weight: 700; 
-     line-height: 15.4px; 
-} 
-
-.p2 { 
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif; 
-    font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px; 
-} 
-
-blockquote { 
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, 
-    sans-serif; 
-    font-size: 21px; 
-    font-style: normal; 
-    font-variant: normal; 
-    font-weight: 400; 
-    line-height: 30px; 
+.p2 {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+    AppleGothic, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 20px;
 }
-     
-pre { 
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, 
-    sans-serif; 
-    font-size: 13px; 
-    font-style: normal;
-    font-variant: normal;
-     font-weight: 400; 
-     line-height: 18.5714px;
+
+blockquote {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+    AppleGothic, sans-serif;
+  font-size: 21px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+pre {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+    AppleGothic, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 18.5714px;
 }
 ul#menu li {
-    display:inline;
-    padding-inline: 1vw 1vh;
-    text-align: left;
-}
+  display: inline;
+  padding-inline: 1vw 1vh;
+  text-align: left;
+} */
 /* body{
     background-color: rgb(180, 180, 180); 
     width:100%;
     height:100%;
 } */
-.back {
-    background-color: black;
-    direction: row;
-    height: 100px;
-    border-radius: 25px;
-}
+/* .back {
+  background-color: black;
+  direction: row;
+  height: 100px;
+  border-radius: 25px;
+} */
 /* .left{
     background-color: white;
     border-radius: 25px 0 0 25px;
@@ -100,4 +108,3 @@ ul#menu li {
     background-color: white;
     border-radius: 0 25px 25px 0;
 } */
-
