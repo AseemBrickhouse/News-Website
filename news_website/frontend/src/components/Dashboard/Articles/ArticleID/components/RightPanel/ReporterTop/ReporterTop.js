@@ -1,12 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import * as request from "../Requests";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Chip, Box, Typography, Button, Avatar } from "@material-ui/core";
-import SearchBar from "material-ui-search-bar";
+import { Box, Button, Avatar } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
-import StickyBox from "react-sticky-box";
 import "./css/ReporterTop.css";
 
 const ReporterTop = ({ account, reporter }) => {
@@ -115,7 +112,7 @@ const ReporterTop = ({ account, reporter }) => {
 
 const mapStateToProps = (state) => {
   return {
-    account: state?.auth?.token,
+    account: state?.auth?.account,
   };
 };
 export default withRouter(connect(mapStateToProps)(ReporterTop));

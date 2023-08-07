@@ -18,7 +18,7 @@ const AddComment = ({ article, account, isAuthenticated }) => {
   console.log(article, account, isAuthenticated);
   const [commentText, setCommentText] = useState("");
 
-  return (
+  return isAuthenticated && (
     <ThemeProvider theme={theme} id="add-comment">
       <Card>
         <Box sx={{ p: "15px" }}>

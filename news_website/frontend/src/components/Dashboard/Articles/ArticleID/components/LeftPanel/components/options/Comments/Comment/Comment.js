@@ -190,7 +190,7 @@ const Comment = ({ comment_id, comment, person, account, article, parentName }) 
                 </>
               ) : (
                 <Typography sx={{p: "20px 0px"}} >
-                  {parentName && (<span style={{color: "hsl(355, 54%, 44%)", fontWeight: "600"}}>{`@${parentName}`}</span>) }
+                  {parentName && (<span style={{color: "hsl(355, 54%, 44%)", fontWeight: "600"}}>{`@${parentName} `}</span>) }
                   <span style={{color: "custom.black", fontWeight: "400"}}>{commentText}</span>
                 </Typography>
               )}
