@@ -18,7 +18,8 @@ class current_user(ObtainAuthToken):
                 status=status.HTTP_404_NOT_FOUND)
 
         user_data = AccountSerializer(user_account).data
-        user_data['profile_pic'] = user_account.profile_pic.url if user_account.profile_pic != None else "/images/defaultProfilePic.png",
+        print(user_data['profile_pic'])
+        user_data['profile_pic'] = user_data['profile_pic'] if user_data['profile_pic'] != None else "/images/defaultProfilePic.png",
         user_data['popular_articles'] = PopularUserArticles(user_account)
         user_data['written_articles'] = len(Article.objects.all().filter(reporter_account=user_account))
         user_data['followers'] = getFollow(user_account, "FOLLOWERS")
@@ -30,11 +31,6 @@ class current_user(ObtainAuthToken):
 class AllAccounts(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
-        # if (user_account == None):
-        #     return Response({
-        #         "Err": "User account not found"
-        #     },
-        #         status=status.HTTP_404_NOT_FOUND)
         queryset = {}
         for account in Account.objects.all().exclude(key=user_account.key):
             queryset[AccountSerializer(account).data['user']] = AccountSerializer(account).data
@@ -79,6 +75,7 @@ class AccountCreation(ObtainAuthToken):
                 first_name=request.data['first_name'],
                 last_name=request.data['last_name'],
                 email=request.data['email'],
+                profile_pic = "/images/defaultProfilePic.png"
             )
             account.save()
             return Response(AccountSerializer(account).data, status=status.HTTP_201_CREATED)

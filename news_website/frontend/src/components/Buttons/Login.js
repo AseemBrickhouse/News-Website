@@ -72,7 +72,7 @@ const Login = ({ error, onAuth, history, auth }) => {
                 className="main-container-box-right"
               >
                 <Box className="main-container-box-right-header">
-                  <Box sx={{ marginLeft: "" }}>
+                  <Box>
                     <div className="main-container-box-right-header-text">
                       Login to Your Account
                     </div>

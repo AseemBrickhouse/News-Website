@@ -1,9 +1,6 @@
 import * as React from 'react';
-import * as actions from '../../store/actions/auth';
-import { withRouter} from 'react-router-dom';
-import { connect } from 'react-redux';
 import { styled } from "@material-ui/core/styles";
-
+import "./css/Loading.css"
 import { 
     Box, 
     Typography,
@@ -47,16 +44,10 @@ export const Loading = () => {
                 Don't wait for opportunity.
               </StyledTypographyBody1>
             </Box>
-            <Box sx={{textAlign: "right", marginRight: "5vw"}}>
+            <Box sx={{textAlign: "left", marginLeft: "3vw"}}>
               <StyledTypographyBody2>
                 Create it!
               </StyledTypographyBody2>
-            </Box>
-            <Box sx={{marginLeft: "3vw"}}>
-              <StyledTypographyBody1>
-                <span class="rotatingText-adjective">Verfiying</span>
-                <span class="rotatingText-adjective">Success!</span>
-              </StyledTypographyBody1>
             </Box>
             <div className="loading">
                 <span><i></i><i></i><i></i><i></i><i></i></span>
