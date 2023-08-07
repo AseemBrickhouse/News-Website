@@ -19,12 +19,10 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import "./css/Login.css";
 import "./css/SignUp.css";
 import { Alert } from "@mui/material";
-import { create } from "@mui/material/styles/createTransitions";
 
 const SignUp = (props) => {
   const [error, setError] = useState(null)
-  const [load, setLoad] = useState(true);
-  const [token, setToken] = useState(null);
+  const [load, setLoad] = useState(false);
   const [formFields, setFormField] = useState({
     first_name: null,
     last_name: null,
@@ -86,10 +84,8 @@ const SignUp = (props) => {
   useEffect(() => {
     console.log(formFields)
     if (!props.loading && props.error != null) {
-      console.log(props.error);
       setError(props.error);
     } else if (!props.loading && props.error == null && props.auth.token != null) {
-      console.log(formFields.first_name, formFields);
       const createAccount = async () => {
         const response = await request.accountCreation(
           formFields.first_name,
@@ -97,14 +93,12 @@ const SignUp = (props) => {
           formFields.email,
           props.auth.token
         );
-        console.log(response)
         if (!response.ok) {
           setError("Server error try again");
         } else {
           props.history.push("/");
         }
       };
-
       createAccount();
     }
   }, [props.loading]);
@@ -151,7 +145,6 @@ const SignUp = (props) => {
 
     if (passwordError && emailError) {
       setError({password: passwordError,email: emailError})
-      // setError("Password and email are invalid.");
       return false;
     } else if (passwordError) {
       setError(`Invalid Password - ${passwordError}`);
@@ -193,8 +186,7 @@ const SignUp = (props) => {
           : null;
       };
 
-      const response = await getToken(username, email, password1, password2);
-      setToken(response);
+      const token = await getToken(username, email, password1, password2);
 
       setTimeout(() => {
         setLoad(false);
