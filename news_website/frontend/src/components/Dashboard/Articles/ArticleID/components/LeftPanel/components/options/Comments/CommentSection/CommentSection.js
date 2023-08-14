@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import * as request from "../ApiCalls";
 import "./css/CommentSection.css";
 import Comment from "../Comment/Comment";
@@ -9,26 +9,33 @@ const CommentSection = ({ article }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    const Init = async () => {
+    const fetchData = async () => {
       const response = await request.GetComments(article.key);
       setComments(response);
     };
-    Init();
+    fetchData();
   }, []);
+
+  const fetchUpdatedComments = async () => {
+    const response = await request.GetComments(article.key);
+    setComments(response);
+  };
 
   return (
     <div id="Comment-Section">
-    <AddComment article={article}/>
+    <AddComment article={article} onUpdateComments={fetchUpdatedComments}/>
     <List style={{ padding: "40px 0px"}}>
       {Object.entries(comments).map(([comment_id, comment]) => {
         const person = comment.commenter_account;
         return (
           <div style={{marginTop: "3px", marginBottom: "3px"}}>
             <Comment
+              key={comment_id}
               comment_id={comment_id}
               comment={comment}
               person={person}
               article={article}
+              onUpdateComments={fetchUpdatedComments}
             />
           </div>
         );

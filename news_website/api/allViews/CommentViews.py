@@ -39,6 +39,7 @@ class GetComments(APIView):
     
 class CreateComment(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        print(request.data, 'here')
         token = request.headers.get('token')
         user_account = get_user_account(token)
 
@@ -50,12 +51,13 @@ class CreateComment(ObtainAuthToken):
         parent_id = request.data.get('parent')
         parent_query = Comment.objects.get(id=parent_id) if parent_id else None
 
-        Comment.objects.create(
+        comment = Comment.objects.create(
             commenter_account = user_account,
             commented_article = queryset,
             content = request.data['content'],
             parent = parent_query,
         )
+        print(comment)
         return Response(status=status.HTTP_201_CREATED)
 
 class DeleteComment(ObtainAuthToken):
@@ -93,15 +95,15 @@ class UpdateComment(ObtainAuthToken):
         comment_id = request.data.get('comment_id')
         
         try:
-            query = Comment.objects.get(
+            query = Comment.objects.filter(
                 id=comment_id,
                 commenter_account=user_account,
                 commented_article=query_article,
-            ).update(
+            )
+            query.update(
                 content = request.data.get('content'),
                 is_edited = True,
             )
-            query.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)

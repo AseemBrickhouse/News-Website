@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {} from "react";
 import {
   Button,
   Stack,
@@ -7,14 +7,17 @@ import {
   DialogTitle,
   DialogContent,
 } from "@mui/material";
-import { styled } from "@material-ui/core/styles";
-import * as request from "../ApiCalls"
+import * as request from "../ApiCalls";
 
-const DeleteComment = ({ onOpen, onClose, id, article }) => {
-  const handleDelete = () => {
-      console.log(id, article)
-      // request.DeleteComment(id, article?.key)
-  }
+const DeleteComment = ({ onOpen, onClose, id, article, deleteRef }) => {
+
+  const handleDelete = async () => {
+    await request.DeleteComment(id, article?.key);
+    if (deleteRef) {
+      deleteRef();
+    }
+    
+  };
   return (
     <Dialog open={onOpen} onClose={onClose}>
       <DialogContent sx={{ maxWidth: "430px" }}>
@@ -35,7 +38,7 @@ const DeleteComment = ({ onOpen, onClose, id, article }) => {
             sx={{
               bgcolor: "custom.dun",
               transition: "transform ease 0.2s, box-shadow ease 0.2s",
-              "&:hover": { 
+              "&:hover": {
                 bgcolor: "custom.dun",
                 transform: "translate(0, -3px)",
                 boxShadow: "0 20px 80px -10px #D9CAB3",
@@ -51,15 +54,15 @@ const DeleteComment = ({ onOpen, onClose, id, article }) => {
             sx={{
               bgcolor: "custom.cardinal",
               transition: "transform ease 0.2s, box-shadow ease 0.2s",
-              "&:hover": { 
+              "&:hover": {
                 bgcolor: "custom.cardinal",
                 transform: "translate(0, -3px)",
                 boxShadow: "0 20px 80px -10px #AD343E",
               },
             }}
             onClick={() => {
-              //TODO: Add delete functionality
-                handleDelete()
+              handleDelete();
+              onClose();
             }}
           >
             Yes, delete

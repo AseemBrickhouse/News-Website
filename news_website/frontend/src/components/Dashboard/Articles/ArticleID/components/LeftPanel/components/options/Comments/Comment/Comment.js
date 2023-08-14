@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as request from "../ApiCalls";
@@ -22,11 +22,13 @@ import ChildComments from "../CommentSection/ChildComments";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-const Comment = ({ comment_id, comment, person, account, article, parentName }) => {
+const Comment = ({ comment_id, comment, person, account, article, parentName, onUpdateComments}) => {
   const [openModal, setOpenModal] = useState(false);
   const [editingComm, setEditingComm] = useState(false);
   const [commentText, setCommentText] = useState(comment.content);
   const [clicked, setClicked] = useState(false);
+
+
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -60,10 +62,14 @@ const Comment = ({ comment_id, comment, person, account, article, parentName }) 
     }
     return <span>{formattedTimeAgo} ago</span>;
   };
-
+  const UpdateComment = async() => {
+    setEditingComm(!editingComm)
+    await request.UpdateComment(comment_id, article.key, commentText);
+  }
   return (
     <ThemeProvider theme={theme}>
       <DeleteComment
+        deleteRef={onUpdateComments}
         onOpen={openModal}
         onClose={handleClose}
         account={account}
@@ -182,7 +188,7 @@ const Comment = ({ comment_id, comment, person, account, article, parentName }) 
                         ? alert(
                             "If  you want to remove the comment text, just delete the comment."
                           )
-                        : setEditingComm(!editingComm);
+                        : UpdateComment();
                     }}
                   >
                     Update

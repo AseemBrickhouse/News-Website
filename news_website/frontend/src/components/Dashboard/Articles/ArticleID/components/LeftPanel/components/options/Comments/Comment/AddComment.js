@@ -14,10 +14,19 @@ import {
   Box,
 } from "@mui/material";
 
-const AddComment = ({ article, account, isAuthenticated }) => {
-  console.log(article, account, isAuthenticated);
+const AddComment = ({ article, account, isAuthenticated, onUpdateComments }) => {
   const [commentText, setCommentText] = useState("");
-
+  
+  const handleCreateComment = async () => {
+    const trimmedCommentText = commentText.trim();
+    if (trimmedCommentText !== "") {
+      await request.CreateComment(article.key, trimmedCommentText, null);
+      setCommentText("");
+      if (onUpdateComments) {
+        onUpdateComments();
+      }
+    }
+  };
   return isAuthenticated && (
     <ThemeProvider theme={theme} id="add-comment">
       <Card>
@@ -52,11 +61,10 @@ const AddComment = ({ article, account, isAuthenticated }) => {
                   bgcolor: "custom.cardinal",
                 },
               }}
-              //TODO: ADD fucntionality
               onClick={(e) => {
                 !commentText.trim()
                   ? e.preventDefault()
-                  : addComment(commentText.trim());
+                  : handleCreateComment();
                 setCommentText("");
               }}
             >

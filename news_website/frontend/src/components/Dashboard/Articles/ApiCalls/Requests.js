@@ -34,3 +34,40 @@ export const GetArticle = async(key) => {
   const response = await fetch(url, {method: "GET", headers,})
     return response.json()
 }
+
+export const CreateNewArticle = async ({headline, article_description, article_body, visibility, isPrivate}) => {
+  const url = `${BASE_URL}/api/CreateNewArticle/`
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    token: localStorage?.getItem('token')
+  }
+  const body = {
+    headline,
+    article_description,
+    article_body,
+    visibility,
+    isPrivate,
+  }
+  const response = await fetch(url, {method: "POST", headers, body})
+  return response.json();
+}
+
+export const UpdateArticle = async(key, headline, article_description, article_body, visibility, isPrivate ) => {
+  const url = `${BASE_URL}/api/UpdateArticle/`
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    token: localStorage?.getItem('token')
+  }
+  const body = {
+    key,
+    headline,
+    article_description,
+    article_body,
+    visibility,
+    isPrivate,
+  }
+  const response = await fetch(url, {method: "POST", headers, body})
+  return response.json();
+}
