@@ -22,9 +22,9 @@ const CommentSection = ({ article }) => {
   };
 
   return (
-    <div id="Comment-Section">
-    <AddComment article={article} onUpdateComments={fetchUpdatedComments}/>
-    <List style={{ padding: "40px 0px"}}>
+    <div id="Comment-Section" className="comment-section-container">
+    <AddComment style={{position:"unset"}} article={article} onUpdateComments={fetchUpdatedComments}/>
+    <List style={{ padding: "40px 0px", position: "unset"}}>
       {Object.entries(comments).map(([comment_id, comment]) => {
         const person = comment.commenter_account;
         return (

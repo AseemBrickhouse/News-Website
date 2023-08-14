@@ -60,13 +60,6 @@ const TopRatedEntry = ({ article, articleKey, reporter }) => {
         </Link>
       </Box>
       <Box sx={{ width: "100px", height: "100px", marginRight: "5vw" }}>
-        {/* <Box sx={{ width: "100px", height: "100px" }}>
-          <img
-            alt={`article_pic`}
-            src={`${article?.article_pic}`}
-            className="main-toprated-container-article-picture"
-          />
-        </Box> */}
         {article.article_pic != null ? (
           <Box sx={{ width: "100px", height: "100px" }}>
             <img
