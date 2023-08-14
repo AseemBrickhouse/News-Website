@@ -64,7 +64,6 @@ export const UpdateRating = async (comment_id, article_key, rating, type) => {
     type,
   });
   const response = await fetch(url, { method: "PUT", headers, body });
-  return response.json();
 };
 
 export const GetUserComments = async (first_name, last_name, article_key) => {

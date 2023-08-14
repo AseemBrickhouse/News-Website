@@ -22,13 +22,19 @@ import ChildComments from "../CommentSection/ChildComments";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-const Comment = ({ comment_id, comment, person, account, article, parentName, onUpdateComments}) => {
+const Comment = ({
+  comment_id,
+  comment,
+  person,
+  account,
+  article,
+  parentName,
+  onUpdateComments,
+}) => {
   const [openModal, setOpenModal] = useState(false);
   const [editingComm, setEditingComm] = useState(false);
   const [commentText, setCommentText] = useState(comment.content);
   const [clicked, setClicked] = useState(false);
-
-
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -62,10 +68,10 @@ const Comment = ({ comment_id, comment, person, account, article, parentName, on
     }
     return <span>{formattedTimeAgo} ago</span>;
   };
-  const UpdateComment = async() => {
-    setEditingComm(!editingComm)
-    await request.UpdateComment(comment_id, article.key, commentText);
-  }
+  const UpdateComment = async () => {
+    setEditingComm(!editingComm);
+    await request.UpdateComment(comment_id, article?.key, commentText);
+  };
   return (
     <ThemeProvider theme={theme}>
       <DeleteComment
@@ -80,7 +86,11 @@ const Comment = ({ comment_id, comment, person, account, article, parentName, on
         <Box sx={{ p: "15px" }}>
           <Stack spacing={2} direction="row">
             <Box>
-              <ScoreCard comment_rating={comment.rating} />
+              <ScoreCard
+                comment_id={comment_id}
+                article_key={article.key}
+                comment_rating={comment.rating}
+              />
             </Box>
             <Box sx={{ width: "100%" }}>
               <Stack
@@ -195,9 +205,15 @@ const Comment = ({ comment_id, comment, person, account, article, parentName, on
                   </Button>
                 </>
               ) : (
-                <Typography sx={{p: "20px 0px"}} >
-                  {parentName && (<span style={{color: "hsl(355, 54%, 44%)", fontWeight: "600"}}>{`@${parentName} `}</span>) }
-                  <span style={{color: "custom.black", fontWeight: "400"}}>{commentText}</span>
+                <Typography sx={{ p: "20px 0px" }}>
+                  {parentName && (
+                    <span
+                      style={{ color: "hsl(355, 54%, 44%)", fontWeight: "600" }}
+                    >{`@${parentName} `}</span>
+                  )}
+                  <span style={{ color: "custom.black", fontWeight: "400" }}>
+                    {commentText}
+                  </span>
                 </Typography>
               )}
             </Box>

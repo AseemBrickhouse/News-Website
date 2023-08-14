@@ -118,13 +118,13 @@ class UpdateRating(ObtainAuthToken):
             return Response({"Err": "User account not found"},status=status.HTTP_404_NOT_FOUND)
         
         query_article = Article.objects.get(key=request.data.get('article_key'))
-        comment_id = request.headers.get('id')
-
+        comment_id = request.data.get('comment_id')
         try:
-            Comment.objects.filter(
+            query_comment = Comment.objects.filter(
                 id=comment_id,
                 commented_article=query_article,
-            ).update(
+            )
+            query_comment.update(
                 rating = request.data.get('rating'),
             )
             return Response(status=status.HTTP_204_NO_CONTENT)
