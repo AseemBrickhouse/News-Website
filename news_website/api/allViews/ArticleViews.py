@@ -201,7 +201,7 @@ class PopularArticles(APIView):
 
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        user_account = get_user_account(request.headers['token'])
+        user_account = get_user_account(request.data.get('token'))
         if (user_account == None):
             return Response({
                     "Err": "User account not found"

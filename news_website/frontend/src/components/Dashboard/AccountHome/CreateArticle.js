@@ -42,6 +42,7 @@ const CreateArticle = (props) => {
             };
             const handleSubmit = (event) => {
                 event.preventDefault();
+                console.log(formValues)
                 fetch("/api/CreateNewArticle/",{
                     method: "POST",
                     headers:{
@@ -60,7 +61,7 @@ const CreateArticle = (props) => {
                 }).then(response => {
                     console.log(response)
                 });
-                props.history.push("/Account/Articles")
+                props.history.push("/")
             }
             //Add Functionalty to save and finish later
             const handleSave = (event) =>{
