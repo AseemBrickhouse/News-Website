@@ -25,11 +25,16 @@ TAGS = (
 )
 
 VISIBILITY = (
-    ("PUBLIC","PUBLIC"),
-    ("FOLLOWER/SUBSCRIBER ONLY","FOLLOWER/SUBSCRIBER ONLY"),
-    ("PRIVATE","PRIVATE"),
+    ("PUBLIC", "PUBLIC"),
+    ("FOLLOWER/SUBSCRIBER ONLY", "FOLLOWER/SUBSCRIBER ONLY"),
+    ("PRIVATE", "PRIVATE"),
 )
 
+VOTE_TYPES = (
+    ('upvote', 'upvote'),
+    ('neutral','neutral'),
+    ('downvote', 'downvote'),
+)
 class Account(models.Model):
     key = models.CharField(max_length=32, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
@@ -44,52 +49,63 @@ class Account(models.Model):
     occupation = models.CharField(max_length=30, null=True, blank=True)
 
     def FullName(self):
-            return self.first_name + self.last_name
-    
+        return self.first_name + self.last_name
+
+
 class Settings(models.Model):
     assigned_user = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 
 class Article(models.Model):
     key = models.CharField(max_length=20, null=True)
-    date = models.DateTimeField(auto_now_add=True, null=True) ##change to date field 
+    date = models.DateTimeField(
+        auto_now_add=True, null=True)  # change to date field
     headline = models.CharField(max_length=100)
     sub_title = models.CharField(max_length=200, null=True, blank=True)
-    reporter_account = models.ForeignKey(Account, on_delete=models.CASCADE) #Reporter
+    reporter_account = models.ForeignKey(
+        Account, on_delete=models.CASCADE)  # Reporter
     rating = models.IntegerField(null=True)
     isPrivate = models.BooleanField(null=True, default=False)
-    visibility = models.CharField(choices=VISIBILITY, null=True, default=False, max_length=24)
+    visibility = models.CharField(
+        choices=VISIBILITY, null=True, default=False, max_length=24)
     article_description = models.CharField(max_length=500, null=True)
     article_body = models.TextField(max_length=10000, null=True)
-    tags = MultiSelectField(choices=TAGS, max_choices=7, max_length=20000, null=True, blank=True)
+    tags = MultiSelectField(choices=TAGS, max_choices=7,
+                            max_length=20000, null=True, blank=True)
     article_pic = models.ImageField(blank=True, null=True)
 
     def str(self):
-            return self.reporter_account.FullName
-    
+        return self.reporter_account.FullName
+
+
 class Followers(models.Model):
-    account = models.ForeignKey(Account, related_name="following", on_delete=models.CASCADE)
-    following_user = models.ForeignKey(Account, related_name="followers", on_delete=models.CASCADE)
+    account = models.ForeignKey(
+        Account, related_name="following", on_delete=models.CASCADE)
+    following_user = models.ForeignKey(
+        Account, related_name="followers", on_delete=models.CASCADE)
     create = models.DateTimeField(auto_now_add=True)
+
 
 class BookmarkedArticles(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     saved = models.ForeignKey(Article, on_delete=models.CASCADE)
     create = models.DateTimeField(auto_now_add=True)
 
+
 class Comment(models.Model):
     commenter_account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    commented_article =  models.ForeignKey(Article,on_delete=models.CASCADE)
+    commented_article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField()
-    parent = models.ForeignKey('self' , null=True , blank=True , on_delete=models.CASCADE , related_name='replies')
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
-    
-    class Meta:
-        ordering=['-created_at']
 
-    def __str__(self):
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self) -> str:
         return str(self.commenter_account) + ' comment ' + str(self.content)
 
     @property
@@ -101,4 +117,19 @@ class Comment(models.Model):
         if self.parent is None:
             return True
         return False
+
+
+# have to do it like this because ArrayFields literally do not work...
+class CommentVote(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    has_vote = models.BooleanField(default=False)
+    vote_type = models.CharField(max_length=12, default='neutral')
+
+    def __str__(self) -> str:
+        return str(self.account) + ' ' + str(self.comment) + 'voted: ' + str(self.has_vote)
+    
+    @property
+    def get_has_vote(self) -> bool:
+        return self.has_vote
     

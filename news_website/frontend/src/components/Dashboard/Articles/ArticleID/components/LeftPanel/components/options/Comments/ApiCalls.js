@@ -3,8 +3,14 @@ import { BASE_URL } from "../../../../../../../../../store/baseURLS";
 const token = localStorage?.getItem("token");
 
 export const GetComments = async (article_key) => {
-  const url = `${BASE_URL}/api/GetComments/?article_key=${article_key}`;
-  const response = await fetch(url, { method: "GET" });
+  const url = `${BASE_URL}/api/GetComments/`;
+  const headers = {
+    token: null,
+    articleKey: article_key,
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  }
+  const response = await fetch(url, { method: "GET", headers });
   return response.json();
 };
 
@@ -60,7 +66,7 @@ export const UpdateRating = async (comment_id, article_key, rating, type) => {
   const body = JSON.stringify({
     comment_id,
     article_key,
-    rating: type == "upvote" ? (rating += 1) : (rating -= 1),
+    rating,
     type,
   });
   const response = await fetch(url, { method: "PUT", headers, body });

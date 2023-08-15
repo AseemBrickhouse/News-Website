@@ -80,6 +80,17 @@ class FollowersSerializer(serializers.ModelSerializer):
             'following_user',
             'create',
         )
+
+class CommentVoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentVote
+        fields= (
+            'id',
+            # 'account',
+            # 'comment',
+            'has_vote',
+            'vote_type',
+        )
 # class RegisterSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Account
