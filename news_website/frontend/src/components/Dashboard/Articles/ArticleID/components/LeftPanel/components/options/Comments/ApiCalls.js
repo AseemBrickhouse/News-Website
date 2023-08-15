@@ -5,7 +5,7 @@ const token = localStorage?.getItem("token");
 export const GetComments = async (article_key) => {
   const url = `${BASE_URL}/api/GetComments/`;
   const headers = {
-    token: null,
+    token,
     articleKey: article_key,
     Accept: "application/json",
     "Content-Type": "application/json",

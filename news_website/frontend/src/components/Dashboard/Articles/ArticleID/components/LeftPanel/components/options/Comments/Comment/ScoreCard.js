@@ -6,11 +6,48 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 import "./css/ScoreCard.css";
 
-const ScoreCard = ({ comment_id, article_key, comment_rating }) => {
+const ScoreCard = ({
+  comment_id,
+  article_key,
+  comment_rating,
+  comment_vote,
+}) => {
+  const[voteType, setVoteType] = useState(comment_vote.vote_type)
+  console.log(voteType)
   const [rating, setRating] = useState(comment_rating);
   const updateRating = async (type) => {
-    await request.UpdateRating(comment_id, article_key, rating, type);
-    type == "upvote" ? setRating(rating + 1) : setRating(rating - 1);
+      await request.UpdateRating(comment_id, article_key, rating, type);
+    // type == "upvote" ? setRating(rating + 1) : setRating(rating - 1);
+
+      if(voteType == undefined){
+        if(type == 'upvote'){
+          setRating(rating + 1)
+        }else if(type == 'downvote'){
+          setRating(rating - 1)
+        }
+        setVoteType(type)
+      }else{
+        //remove the vote 
+        console.log(voteType == type && type == "upvote")
+        if (voteType == type && type == "upvote"){
+          setRating(rating - 1)
+          setVoteType(undefined)
+        }
+        //upvote
+        else if(voteType != type && type == "upvote"){
+          setRating(rating + 1)
+          setVoteType("upvote")
+        }
+        //remove the vote
+        else if(voteType == type && type == "downvote"){
+          setRating(rating + 1)
+          setVoteType(undefined)
+        //downvote
+        }else if(voteType != type && type == "downvote"){
+          setRating(rating - 1)
+          setVoteType("downvote")
+        }
+      }
   };
   return (
     <Box className="score">
@@ -21,7 +58,11 @@ const ScoreCard = ({ comment_id, article_key, comment_rating }) => {
           updateRating("upvote");
         }}
       >
-        <AddIcon className="score-add" />
+        {voteType == "upvote" ? (
+          <AddIcon className="score-add" style={{ color: "green" }} />
+        ) : (
+          <AddIcon className="score-add" />
+        )}
       </IconButton>
       <Typography sx={{ color: "hsl(0, 0%, 0%)", fontWeight: 500 }}>
         {rating}
@@ -33,7 +74,11 @@ const ScoreCard = ({ comment_id, article_key, comment_rating }) => {
           updateRating("downvote");
         }}
       >
-        <RemoveIcon className="score-remove" />
+        {voteType == "downvote" ? (
+          <RemoveIcon className="score-remove" style={{ color: "red" }} />
+        ) : (
+          <RemoveIcon className="score-remove" />
+        )}
       </IconButton>
     </Box>
   );

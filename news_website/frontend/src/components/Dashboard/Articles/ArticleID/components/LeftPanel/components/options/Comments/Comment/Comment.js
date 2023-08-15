@@ -90,6 +90,7 @@ const Comment = ({
                 comment_id={comment_id}
                 article_key={article.key}
                 comment_rating={comment.rating}
+                comment_vote={comment.comment_vote}
               />
             </Box>
             <Box sx={{ width: "100%" }}>

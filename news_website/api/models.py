@@ -100,6 +100,7 @@ class Comment(models.Model):
         'self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
     is_edited = models.BooleanField(default=False)
+    #TODO: Make it show the field can be negative
     rating = models.IntegerField(default=0)
 
     class Meta:
