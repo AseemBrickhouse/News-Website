@@ -14,16 +14,21 @@ import {
   Box,
 } from "@mui/material";
 
-const AddComment = ({ article, account, isAuthenticated, onUpdateComments }) => {
+const AddComment = ({ article, account, isAuthenticated, onUpdateComments, parentID, onClose }) => {
   const [commentText, setCommentText] = useState("");
-  
   const handleCreateComment = async () => {
     const trimmedCommentText = commentText.trim();
     if (trimmedCommentText !== "") {
-      await request.CreateComment(article.key, trimmedCommentText, null);
+      const requestParams = [
+        article.key, 
+        trimmedCommentText,
+        parentID,
+      ]
+      await request.CreateComment(...requestParams);
       setCommentText("");
       if (onUpdateComments) {
         onUpdateComments();
+        onClose();
       }
     }
   };

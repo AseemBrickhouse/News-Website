@@ -13,7 +13,6 @@ const ScoreCard = ({
   comment_vote,
 }) => {
   const[voteType, setVoteType] = useState(comment_vote.vote_type)
-  console.log(voteType)
   const [rating, setRating] = useState(comment_rating);
   const updateRating = async (type) => {
       await request.UpdateRating(comment_id, article_key, rating, type);
@@ -35,7 +34,7 @@ const ScoreCard = ({
         }
         //upvote
         else if(voteType != type && type == "upvote"){
-          setRating(rating + 1)
+          setRating(rating + 2)
           setVoteType("upvote")
         }
         //remove the vote
@@ -44,7 +43,7 @@ const ScoreCard = ({
           setVoteType(undefined)
         //downvote
         }else if(voteType != type && type == "downvote"){
-          setRating(rating - 1)
+          setRating(rating -2)
           setVoteType("downvote")
         }
       }
@@ -53,34 +52,34 @@ const ScoreCard = ({
     <Box className="score">
       <IconButton
         disableRipple
-        aria-label="increase score"
-        onClick={() => {
-          updateRating("upvote");
-        }}
+        aria-label="change score"
+        onClick={() => updateRating("upvote")}
       >
-        {voteType == "upvote" ? (
-          <AddIcon className="score-add" style={{ color: "green" }} />
-        ) : (
-          <AddIcon className="score-add" />
-        )}
+        <AddIcon
+          className="score-add"
+          style={{ color: voteType === "upvote" ? "green" : undefined }}
+        />
       </IconButton>
       <Typography sx={{ color: "hsl(0, 0%, 0%)", fontWeight: 500 }}>
         {rating}
       </Typography>
       <IconButton
         disableRipple
-        aria-label="decrease score"
-        onClick={() => {
-          updateRating("downvote");
-        }}
+        aria-label="change score"
+        onClick={() => updateRating("downvote")}
       >
-        {voteType == "downvote" ? (
-          <RemoveIcon className="score-remove" style={{ color: "red" }} />
-        ) : (
-          <RemoveIcon className="score-remove" />
-        )}
+        <RemoveIcon
+          className="score-remove"
+          style={{ color: voteType === "downvote" ? "red" : undefined }}
+        />
       </IconButton>
     </Box>
   );
 };
+
 export default ScoreCard;
+
+
+
+
+

@@ -28,7 +28,7 @@ const CommentSection = ({ article }) => {
       {Object.entries(comments).map(([comment_id, comment]) => {
         const person = comment.commenter_account;
         return (
-          <div style={{marginTop: "3px", marginBottom: "3px"}}>
+          <div style={{marginTop: "3px", marginBottom: "3px"}} key={comment_id}>
             <Comment
               key={comment_id}
               comment_id={comment_id}

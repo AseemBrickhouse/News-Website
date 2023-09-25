@@ -21,6 +21,7 @@ import ScoreCard from "./ScoreCard";
 import ChildComments from "../CommentSection/ChildComments";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import AddComment from "./AddComment";
 
 const Comment = ({
   comment_id,
@@ -35,6 +36,7 @@ const Comment = ({
   const [editingComm, setEditingComm] = useState(false);
   const [commentText, setCommentText] = useState(comment.content);
   const [clicked, setClicked] = useState(false);
+  const [openReply, setOpenReply] = useState(false);
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -44,6 +46,10 @@ const Comment = ({
     setOpenModal(false);
   };
 
+  const handleReplySubmit = () => {
+    setOpenReply(!openReply)
+    setClicked(true)
+  }
   const getPostedTime = ({ created_at }) => {
     const createdAtDate = new Date(created_at);
     const currentDate = new Date();
@@ -82,8 +88,14 @@ const Comment = ({
         id={comment_id}
         article={article}
       />
-      <Card style={{ backgroundColor: "custom.dun" }}>
-        <Box sx={{ p: "15px" }}>
+      <Card style={{ backgroundColor: "custom.dun", borderRadius: "15px" }}>
+        <Box
+          sx={{
+            p: "15px",
+            boxShadow: "inset 0px 0px .5px .2px black",
+            borderRadius: "15px",
+          }}
+        >
           <Stack spacing={2} direction="row">
             <Box>
               <ScoreCard
@@ -156,7 +168,7 @@ const Comment = ({
                 ) : (
                   <Button
                     onClick={() => {
-                      setClicked(!clicked);
+                      setOpenReply(!openReply);
                     }}
                     variant="text"
                     sx={{
@@ -187,11 +199,10 @@ const Comment = ({
                   <Button
                     sx={{
                       float: "right",
-                      bgcolor: "custom.moderateBlue",
-                      color: "neutral.white",
+                      color: "custom.dun",
                       p: "8px 25px",
                       "&:hover": {
-                        bgcolor: "custom.lightGrayishBlue",
+                        bgcolor: "white",
                       },
                     }}
                     onClick={() => {
@@ -217,25 +228,55 @@ const Comment = ({
                   </span>
                 </Typography>
               )}
+              <Stack style={{ justifyContent: "left" }}>
+                {Object.entries(comment.children).length > 0 && (
+                  <Button
+                    style={{ justifyContent: "left" }}
+                    onClick={() => {
+                      setClicked(!clicked);
+                    }}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "white",
+                      },
+                    }}
+                  >
+                    <Stack
+                      sx={{
+                        fontWeight: 500,
+                        textTransform: "capitalize",
+                        color: "custom.dun",
+                      }}
+                    >
+                      {clicked ? (
+                        <Stack direction="row" spacing={1}>
+                          <VisibilityOffOutlinedIcon />
+                          <span>{`Hide replies`}</span>
+                        </Stack>
+                      ) : (
+                        <Stack direction="row" spacing={1}>
+                          <VisibilityOutlinedIcon />
+                          <span>{`Show replies ( ${
+                            Object.entries(comment.children).length
+                          } )`}</span>
+                        </Stack>
+                      )}
+                    </Stack>
+                  </Button>
+                )}
+              </Stack>
             </Box>
           </Stack>
         </Box>
-        {Object.entries(comment.children).length > 0 && (
-          <Button
-            onClick={() => {
-              setClicked(!clicked);
-            }}
-          >
-            <div style={{ marginLeft: "100%" }}>
-              {clicked ? (
-                <VisibilityOffOutlinedIcon />
-              ) : (
-                <VisibilityOutlinedIcon />
-              )}
-            </div>
-          </Button>
-        )}
       </Card>
+      {openReply && (
+        <AddComment
+          article={article}
+          onUpdateComments={onUpdateComments}   
+          parentID={comment_id}
+          onClose={handleReplySubmit}
+        />
+      )}
       {clicked &&
         comment.children &&
         Object.entries(comment.children).length > 0 && (

@@ -68,26 +68,29 @@ class GetComments(ObtainAuthToken):
 
 class CreateComment(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        print(request.data, 'here')
-        token = request.headers.get('token')
+        token = request.headers.get('token')       
+        article_key = request.data.get('article_key')
+        parent_id = request.data.get('parent_id')
+        content = request.data.get('content')
+
         user_account = get_user_account(token)
 
         if not user_account:
             return Response({"Err": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
-
-        article_key = request.data.get('article_key')
-        queryset = Article.objects.get(key=article_key)
-        parent_id = request.data.get('parent')
-        parent_query = Comment.objects.get(id=parent_id) if parent_id else None
-
-        comment = Comment.objects.create(
-            commenter_account=user_account,
-            commented_article=queryset,
-            content=request.data['content'],
-            parent=parent_query,
-        )
-        print(comment)
-        return Response(status=status.HTTP_201_CREATED)
+        try:
+            queryset = Article.objects.get(key=article_key)
+            parent_query = Comment.objects.get(id=parent_id) if parent_id else None
+            comment = Comment.objects.create(
+                commenter_account=user_account,
+                commented_article=queryset,
+                content=content,
+                parent=parent_query,
+            )
+            return Response(status=status.HTTP_201_CREATED)
+        except Article.DoesNotExist:
+            return Response({"Err": "Article not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Comment.DoesNotExist:
+            return Response({"Err": "Parent comment not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class DeleteComment(ObtainAuthToken):
@@ -118,7 +121,7 @@ class UpdateComment(ObtainAuthToken):
     def put(self, request, *args, **kwargs):
         token = request.headers.get('token')
         user_account = get_user_account(token)
-
+        print(token, user_account)
         if not user_account:
             return Response({"Err": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
 

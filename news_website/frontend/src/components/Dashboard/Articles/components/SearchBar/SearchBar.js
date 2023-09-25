@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useSelector } from 'react';
-import SearchBar from "material-ui-search-bar";
+// import SearchBar from "material-ui-search-bar";
 import { styled } from "@material-ui/core/styles";
 import { 
     Typography, 
@@ -41,12 +41,12 @@ const SearchBarComponent = (props) => {
               </StyledButton>
             </Box>
             <Box className='main-container-searchbar-sub'>
-              <SearchBar className='main-container-searchbar-content'
+              {/* <SearchBar className='main-container-searchbar-content'
                 style={{
                   fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
                   borderRadius: "25px",
                 }}
-              />
+              /> */}
             </Box>
         </Box>
     )

@@ -6,7 +6,7 @@ import Util from '../Utility';
 import { 
  Chip, Box, Typography, Button, Avatar
 } from "@material-ui/core";
-import SearchBar from "material-ui-search-bar";
+// import SearchBar from "material-ui-search-bar";
 import { styled } from "@material-ui/core/styles";
 import StickyBox from "react-sticky-box";
 import RightPanel from './Articles/ArticleID/components/RightPanel/RightPanel';

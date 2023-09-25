@@ -49,8 +49,11 @@ def PopularUserArticles(account):
 def get_user_account(token):
     try:
         token = Token.objects.get(key=token)
-        user_account = User.objects.all().filter(id=token.user_id)[0].account
-        return user_account
+        try:
+            user_account = User.objects.all().filter(id=token.user_id)[0].account
+            return user_account
+        except Account.DoesNotExist:
+            return None
     except Token.DoesNotExist:
-         return None
+        return None
 

@@ -74,20 +74,28 @@ export const authLogin = (username, password) => {
         username: username,
         password: password,
       })
-      .then((response) => {
-        const token = response.data.key;
+      .then((tokenResponse) => {
+        const token = tokenResponse.data.key;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        // window.localStorage.setItem("token",token);
-        localStorage.setItem("token", response.data.key);
-        // axios.defaults.headers.common['Authorization'] = token ;
-        localStorage.setItem("expirationDate", expirationDate);
-        dispatch(getAuthInfo(token));
-        dispatch(authSUCCESS(token));
-        dispatch(getSAVEDARTICLES(token));
-        dispatch(checkTimeout(3600));
+        const config = {
+          headers : {
+            token,
+          }
+        }
+        axios.get(`${BASE_URL}/api/HasAccount`, config)
+        .then((accountResponse) => {
+          localStorage.setItem("token", tokenResponse.data.key);
+          localStorage.setItem("expirationDate", expirationDate);
+          dispatch(getAuthInfo(token));
+          dispatch(authSUCCESS(token));
+          dispatch(getSAVEDARTICLES(token));
+          dispatch(checkTimeout(3600));
+        })
+        .catch((error) => {
+          dispatch(authFAIL(error));
+        })
       })
       .catch((error) => {
-        // console.log(error)
         dispatch(authFAIL(error));
       });
   };

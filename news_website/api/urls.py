@@ -22,6 +22,7 @@ urlpatterns = [
         path('rest-auth/registration/', include('rest_auth.registration.urls')),
         path('AccountCreation/', AccountCreation.as_view()),
         path('EditAccount/', EditAccount.as_view()),
+        path('HasAccount/', HasAccount.as_view()),
         path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
         path('CreateNewArticle/', CreateNewArticle.as_view()),

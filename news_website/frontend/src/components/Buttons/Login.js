@@ -24,26 +24,20 @@ const StyledButton = styled(Button)({
 });
 
 const Login = ({ error, onAuth, history, auth }) => {
-  const [load, setLoad] = useState(false);
-
   useEffect(() => {
-    if (auth.token != null && error == null) {
+    if (auth.token != null && error == null && auth.account.length != 0 && !auth.loading) {
       history.push("/");
     }
-  }, [load]);
+  }, [auth] );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    setLoad(true);
     await onAuth(data.get("email"), data.get("password"));
-    setTimeout(() => {
-      setLoad(false);
-    }, 3000);
   };
   return (
     <>
-      {load ? (
+      {auth.loading ? (
         <Loading />
       ) : (
         <Box>
@@ -76,7 +70,7 @@ const Login = ({ error, onAuth, history, auth }) => {
                     <div className="main-container-box-right-header-text">
                       Login to Your Account
                     </div>
-                    {error != null && (
+                    {auth.error != null && (
                       <Alert severity="error" variant="outlined">
                         <strong>Error</strong> Wrong Username and/or password!
                       </Alert>

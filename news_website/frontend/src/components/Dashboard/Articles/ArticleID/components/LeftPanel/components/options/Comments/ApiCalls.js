@@ -26,6 +26,7 @@ export const CreateComment = async (article_key, content, parent_id) => {
     content,
     parent_id,
   });
+  console.log(body)
   const response = await fetch(url, {method: "POST", headers, body});
 };
 
