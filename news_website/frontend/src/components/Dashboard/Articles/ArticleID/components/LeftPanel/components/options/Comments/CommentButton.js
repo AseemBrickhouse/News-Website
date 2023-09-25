@@ -3,7 +3,7 @@ import { Popover, Box, Typography } from "@mui/material";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 
 const CommentButton = () => {
-  const scrollTo = window.document.getElementById("Comment-Section");
+  const element = window.document.getElementById("Add-Comment");
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -13,7 +13,7 @@ const CommentButton = () => {
   };
   const open = Boolean(anchorEl);
   const handleClick = () => {
-    scrollTo.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
+    element.scrollIntoView(true, { behavior: "smooth", block: "end", inline: "nearest" })
   };
   return (
     <>

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
-import * as request from "../ApiCalls";
+import React from "react";
 import "./css/CommentSection.css";
-import { Grid } from "@material-ui/core";
-import { Paper } from "@material-ui/core";
-import { Avatar } from "@material-ui/core";
-import { Divider } from "@mui/material";
 import Comment from "../Comment/Comment";
-import ListItem from "@mui/material/ListItem";
 
-const ChildComments = ({ comment_id, children, clicked,article, parentName }) => {
+const ChildComments = ({
+  comment_id,
+  children,
+  clicked,
+  article,
+  parentName,
+  onUpdateComments,
+}) => {
   return (
-    <div style={{width:"100%"}}>
+    <div style={{ width: "100%" }}>
       {clicked && (
         <div key={comment_id} style={{ marginLeft: "20px" }}>
           {Object.entries(children).map(([childComment_id, childComment]) => {
@@ -23,6 +24,7 @@ const ChildComments = ({ comment_id, children, clicked,article, parentName }) =>
                   person={person}
                   article={article}
                   parentName={parentName}
+                  onUpdateComments={onUpdateComments}
                 />
               </div>
             );

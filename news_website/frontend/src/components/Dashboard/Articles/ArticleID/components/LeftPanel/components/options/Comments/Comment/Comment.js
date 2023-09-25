@@ -37,7 +37,6 @@ const Comment = ({
   const [commentText, setCommentText] = useState(comment.content);
   const [clicked, setClicked] = useState(false);
   const [openReply, setOpenReply] = useState(false);
-
   const handleOpen = () => {
     setOpenModal(true);
   };
@@ -272,9 +271,9 @@ const Comment = ({
       {openReply && (
         <AddComment
           article={article}
-          onUpdateComments={onUpdateComments}   
           parentID={comment_id}
           onClose={handleReplySubmit}
+          onUpdateComments={onUpdateComments}
         />
       )}
       {clicked &&
@@ -286,6 +285,7 @@ const Comment = ({
             clicked={clicked}
             article={article}
             parentName={`${comment.commenter_account.first_name} ${comment.commenter_account.last_name}`}
+            onUpdateComments={onUpdateComments}
           />
         )}
     </ThemeProvider>

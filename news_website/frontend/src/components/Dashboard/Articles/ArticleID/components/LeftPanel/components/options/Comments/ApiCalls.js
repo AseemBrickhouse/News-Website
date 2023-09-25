@@ -26,7 +26,6 @@ export const CreateComment = async (article_key, content, parent_id) => {
     content,
     parent_id,
   });
-  console.log(body)
   const response = await fetch(url, {method: "POST", headers, body});
 };
 
@@ -41,7 +40,6 @@ export const DeleteComment = async (comment_id, article_key) => {
     comment_id,
   });
   const response = await fetch(url, { method: "DELETE", headers, body });
-  console.log("Blah blah delete")
 };
 
 export const UpdateComment = async (comment_id, article_key, content) => {

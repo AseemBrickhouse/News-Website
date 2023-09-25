@@ -27,6 +27,7 @@ const AddComment = ({ article, account, isAuthenticated, onUpdateComments, paren
       await request.CreateComment(...requestParams);
       setCommentText("");
       if (onUpdateComments) {
+        console.log(onUpdateComments)
         onUpdateComments();
         onClose();
       }
