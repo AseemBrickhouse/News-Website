@@ -28,8 +28,8 @@ const ArticleEntry = ({ article, reporter, articleKey }) => {
           to={{
             pathname: "/Articles/" + articleKey + "/",
             state: {
-              ArticleID: articleKey,
-              Article: article,
+              articleID: articleKey,
+              article: article,
             },
           }}
         >

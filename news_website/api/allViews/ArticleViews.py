@@ -101,7 +101,7 @@ class GetArticle(ObtainAuthToken):
 
         articleJson = ArticleSerializer(article).data
         reporter_account = Account.objects.get(id=articleJson['reporter_account'])
-        articleJson['reporter_account'] = reporter_account.data
+        articleJson['reporter_account'] = AccountSerializer(reporter_account).data
 
         if user_account != None:
             try:
@@ -122,6 +122,8 @@ class GetArticle(ObtainAuthToken):
                 articleJson['reporter_account']['is_following'] = False
         else:
             articleJson['isBookmarked'] = False
+
+        articleJson['reporter_account']['followers'] = getFollow(reporter_account, "FOLLOWERS")
 
         return Response(articleJson, status=status.HTTP_200_OK)      
 

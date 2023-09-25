@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Box} from "@material-ui/core";
 import "./css/ReporterArticles.css";
 
-const ReporterArticles = ({ reporterArticles, reporter }) => {
+const ReporterArticles = ({ reporterArticles, reporter}) => {
   return (
     <>
       <div style={{ marginTop: "10px" }}>
@@ -19,8 +19,8 @@ const ReporterArticles = ({ reporterArticles, reporter }) => {
                 to={{
                   pathname: "/Articles/" + id + "/",
                   state: {
-                    ArticleID: id,
-                    Article: Article,
+                    articleID: id,
+                    article: Article,
                   },
                 }}
               >

@@ -14,7 +14,7 @@ const CommentSection = ({ article }) => {
       setComments(response);
     };
     fetchData();
-  }, []);
+  }, [article]);
 
   const fetchUpdatedComments = async () => {
     const response = await request.GetComments(article.key);
