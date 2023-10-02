@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogContent,
 } from "@mui/material";
-import * as request from "../ApiCalls";
+import * as request from "../../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 
 const DeleteComment = ({ onOpen, onClose, id, article, deleteRef }) => {
 

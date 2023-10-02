@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import ReporterArticles from "./ReporterArticles/ReporterArticles";
-import * as request from "./Requests";
+import * as request from "../../Dashboard/Articles/ArticleID/components/RightPanel/Requests";
 import ReporterTop from "./ReporterTop/ReporterTop";
 import "./css/RightPanel.css";
 

@@ -2,10 +2,10 @@ import React from "react";
 
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-import Rating from "./options/Rating/Rating"
-import PlayButton from "./options/PlayButton"
-import BookMarkButton from "./options/BookMarkButton"
-import CommentButton from "./options/Comments/CommentButton";
+import Rating from "./Options/Rating/Rating"
+import PlayButton from "../../../Buttons/ArticleButtons/TextToSpeech/PlayButton"
+import BookMarkButton from "../../../Buttons/ArticleButtons/BookMark/BookMarkButton"
+import CommentButton from "../../../Buttons/ArticleButtons/Comment/CommentButton";
 
 import "../css/LeftPanel.css"
 

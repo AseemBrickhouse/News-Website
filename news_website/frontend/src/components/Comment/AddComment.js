@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import theme from "./CustomStyles";
-import * as request from "../ApiCalls";
+import theme from "./components/CustomStyles";
+import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 
 import {
   Avatar,

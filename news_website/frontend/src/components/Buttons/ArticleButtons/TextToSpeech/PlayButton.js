@@ -3,7 +3,7 @@ import PlayCircleOutlineOutlinedIcon from "@mui/icons-material/PlayCircleOutline
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import TextToSpeech from "./TextToSpeech/TextToSpeech";
+import TextToSpeech from "../../../ArticleView/LeftPanel/OptionBar/Options/TextToSpeech/TextToSpeech";
 
 const PlayButton = ({ article }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);

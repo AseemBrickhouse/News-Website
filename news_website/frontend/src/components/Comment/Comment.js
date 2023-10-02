@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import * as request from "../ApiCalls";
+import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 import {
   Card,
   Box,
@@ -13,12 +13,12 @@ import {
   Avatar,
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
-import theme from "./CustomStyles";
-import YouTag from "./YouTag";
+import theme from "./components/CustomStyles";
+import YouTag from "./components/YouTag";
 import ReplyAllOutlinedIcon from "@mui/icons-material/ReplyAllOutlined";
-import DeleteComment from "./DeleteComment";
-import ScoreCard from "./ScoreCard";
-import ChildComments from "../CommentSection/ChildComments";
+import DeleteComment from "./components/DeleteComment"
+import ScoreCard from "./components/ScoreCard";
+import ChildComments from "./ChildComments";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import AddComment from "./AddComment";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import * as request from "../Requests";
+import * as request from "../../../Dashboard/Articles/ArticleID/components/RightPanel/Requests";
 import { Box, Button, Avatar } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 import "./css/ReporterTop.css";

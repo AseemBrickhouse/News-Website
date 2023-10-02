@@ -9,7 +9,7 @@ import {
 // import SearchBar from "material-ui-search-bar";
 import { styled } from "@material-ui/core/styles";
 import StickyBox from "react-sticky-box";
-import RightPanel from './Articles/ArticleID/components/RightPanel/RightPanel';
+import RightPanel from '../ArticleView/RightPanel/RightPanel';
 
 
 // TODO: Delete the file and update it to the new ArticleID location...

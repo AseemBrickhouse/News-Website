@@ -1,6 +1,6 @@
 import React from "react";
 import "./css/CommentSection.css";
-import Comment from "../Comment/Comment";
+import Comment from "./Comment";
 
 const ChildComments = ({
   comment_id,

@@ -5,7 +5,7 @@ import HomePage from "./HomePage";
 import Header from "../Header/MainHeader/Header";
 import Account from "../Dashboard/AccountHome/Account";
 // import ArticleID from "../Dashboard/ArticleID";
-import ArticleID from "../Dashboard/Articles/ArticleID/ArticleID";
+import ArticleID from "../ArticleView/ArticleID";
 import Articles from "../Dashboard/AccountHome/Articles";
 import EditAccount from "../Dashboard/AccountHome/EditAccount";
 import CreateArticle from "../Dashboard/AccountHome/CreateArticle";

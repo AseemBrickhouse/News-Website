@@ -1,10 +1,10 @@
 import React, {useRef} from "react";
 import { Chip, Box, Avatar } from "@material-ui/core";
 import "./css/LeftPanel.css";
-import Util from "../../../../../Utility";
+import Util from "../../Utility";
 import StarIcon from "@mui/icons-material/Star";
-import Options from "./components/Options";
-import CommentSection from "./components/options/Comments/CommentSection/CommentSection";
+import Options from "./OptionBar/Options";
+import CommentSection from "../../Comment/CommentSection";
 //TODO: Add button functionality
 
 const LeftPanel = ({ article }) => {

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import RightPanel from "./components/RightPanel/RightPanel";
-import LeftPanel from "./components/LeftPanel/LeftPanel";
+import RightPanel from "./RightPanel/RightPanel";
+import LeftPanel from "./LeftPanel/LeftPanel";
 import StickyBox from "react-sticky-box";
-import * as request from "../ApiCalls/Requests";
+// import * as request from "../Dashboard/Articles/ApiCalls/Requests";
 import "./css/ArticleID.css";
 
 const ArticleID = (props) => {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import * as request from "../ApiCalls";
+import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 import "./css/CommentSection.css";
-import Comment from "../Comment/Comment";
+import Comment from "./Comment";
 import List from "@mui/material/List";
-import AddComment from "../Comment/AddComment";
+import AddComment from "./AddComment";
 
 const CommentSection = ({ article }) => {
   const [comments, setComments] = useState([]);

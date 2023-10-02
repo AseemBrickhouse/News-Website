@@ -25,6 +25,21 @@ maybe something like
             - followApi
             - accountApi
 
+        buttons
+            -articlebuttons
+                -comment
+                -play
+                -bookmark
+            
+        articleView
+            -leftPannel
+                -OptionBar
+                -Options
+                    -TTS
+                    -rating
+            -rightPannel
+        comment
+
 Try to write script to 
     activate venv
     run django backend
