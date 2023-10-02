@@ -1,0 +1,32 @@
+redo file structure
+maybe something like
+    src -
+        components
+            - header
+                - nav
+            - body
+                - articleHome
+                    - articleHome.js
+                    - css
+                - account
+                - etc.
+            - footer
+            or just do
+
+            - nav
+            - articleHome
+            - etc.
+        hooks
+            - debounce
+            
+        request -
+            - articleApi
+            - commentApi
+            - followApi
+            - accountApi
+
+Try to write script to 
+    activate venv
+    run django backend
+    run react frontend
+    Edit: I tried and it doesnt seems like it works

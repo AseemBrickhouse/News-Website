@@ -10,7 +10,7 @@ import {
   styled 
 } from "@material-ui/core";
 import "./css/Login.css";
-import Loading from "./Loading";
+import Loading from "../Loading/Loading";
 import { Alert } from "@mui/material";
 
 const StyledButton = styled(Button)({

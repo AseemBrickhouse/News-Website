@@ -3,7 +3,7 @@ import * as actions from "../../store/actions/auth";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { styled } from "@material-ui/core/styles";
-import * as request from "./ApiCalls";
+import * as request from "../ApiCalls/SignUp";
 import {
   Button,
   Box,
@@ -12,11 +12,11 @@ import {
   withStyles,
   createTheme,
 } from "@material-ui/core";
-import Loading from "./Loading";
+import Loading from "../Loading/Loading";
 import AlertTitle from "@mui/material/AlertTitle";
 
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import "./css/Login.css";
+// import "./css/Login.css";
 import "./css/SignUp.css";
 import { Alert } from "@mui/material";
 
