@@ -4,13 +4,13 @@ import { withRouter } from "react-router-dom";
 import "./css/Article.css";
 import { Box } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
-import * as articleActions from "../../../store/actions/article";
-import * as savedArticleActions from "../../../store/actions/savedArticles";
+import * as articleActions from "../../store/actions/article";
+import * as savedArticleActions from "../../store/actions/savedArticles";
 // import SearchBarComponent from "./components/SearchBar/SearchBar";
-import TopRated from "./components/TopRated/TopRated";
-import { Advertisments } from "./Advertisments";
-import * as request from "./ApiCalls/Requests";
-import ArticleEntry from "./ArticleEntry";
+import TopRated from "../Dashboard/Articles/components/TopRated/TopRated";
+import { Advertisments } from "../Dashboard/Articles/Advertisments";
+import * as request from "../ApiCalls/Article";
+import ArticleEntry from "../ArticleEntry/ArticleEntry";
 
 const Article = (props) => {
   const [load, setLoad] = useState(false);

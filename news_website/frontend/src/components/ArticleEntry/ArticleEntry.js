@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./css/Article.css";
-import Util from "../../Utility";
+import Util from "../Utility";
 import { Chip, Box } from "@material-ui/core";
 import StarIcon from "@mui/icons-material/Star";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import * as request from "./ApiCalls/Requests";
+// import * as request from "../ApiCalls/Article";
+import * as request from "../ApiCalls/Bookmark"
 
 const ArticleEntry = ({ article, reporter, articleKey }) => {
   const Utility = new Util();
