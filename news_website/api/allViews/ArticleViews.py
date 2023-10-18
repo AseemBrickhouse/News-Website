@@ -201,7 +201,7 @@ class GetUserArticles(APIView):
 
         return Response(queryset, status=status.HTTP_200_OK)
 
-
+#Unused
 class PopularArticles(APIView):
     def get(self, request, *args, **kwargs):
         querysetRequest = {}
@@ -280,8 +280,7 @@ class DeleteArticle(APIView):
             },
                 status=status.HTTP_404_NOT_FOUND
             )
-        article = Article.objects.all().filter(reporter_account=user_account,
-                                            key=request.data['key']).delete()
+        article = Article.objects.all().filter(reporter_account=user_account,key=request.data['key']).delete()
         return Response(request.data, status=status.HTTP_204_NO_CONTENT)
 
 # class PopularTags(APIView):
@@ -300,7 +299,7 @@ class DeleteArticle(APIView):
 #         data = {tag: tag for tag in data}
 #         return Response(data, status=status.HTTP_200_OK)
 
-
+#Unused
 class PopularTags(APIView):
     def get(self, request, *args, **kwargs):
         data = defaultdict(int)
@@ -360,7 +359,7 @@ class HandleBookmark(ObtainAuthToken):
             status=status.HTTP_200_OK
         )
 
-
+#Unused
 class MyBookmarkedArticles(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
@@ -381,7 +380,7 @@ class MyBookmarkedArticles(ObtainAuthToken):
         return Response(queryset, status=status.HTTP_200_OK)
 
 
-# Really not needed I think...
+#Unused
 class SavedArticles(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
