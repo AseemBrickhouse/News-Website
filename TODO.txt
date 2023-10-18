@@ -45,3 +45,9 @@ Try to write script to
     run django backend
     run react frontend
     Edit: I tried and it doesnt seems like it works
+
+Fix api urls (Fixing right now
+    articles -> update front end
+    account -> update frontend
+    
+) 

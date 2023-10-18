@@ -6,6 +6,7 @@ from api.allViews.AccountViews import *
 from api.allViews.FollowViews import *
 from api.allViews.ArticleViews import *
 from api.allViews.CommentViews import *
+from api.allViews.Test import *
 
 router = DefaultRouter()
 router.register(r'Articles', ArticleViewSet)
@@ -48,6 +49,10 @@ urlpatterns = [
         path('CreateComment/', CreateComment.as_view()),
         path('UpdateComment/', UpdateComment.as_view()),
         path('DeleteComment/', DeleteComment.as_view()),
+
+        #test
+        path('articles/', ArticleView.as_view()),
+        path('articles/<str:article_id>/', ArticleView.as_view(), name='article-detail'),
         # path('GetComments/<str:article_key>/', GetComments.as_view(), name="GetComments"),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
         # path(regex=r'^GetComments/(?P<username>\w{1,50})/$', view='GetComments'),

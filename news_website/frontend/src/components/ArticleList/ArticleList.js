@@ -6,11 +6,10 @@ import { Box } from "@material-ui/core";
 import StickyBox from "react-sticky-box";
 import * as articleActions from "../../store/actions/article";
 import * as savedArticleActions from "../../store/actions/savedArticles";
-// import SearchBarComponent from "./components/SearchBar/SearchBar";
-import TopRated from "../Dashboard/Articles/components/TopRated/TopRated";
-import { Advertisments } from "../Dashboard/Articles/Advertisments";
-import * as request from "../ApiCalls/Article";
+import TopRated from "./TopRated/TopRated";
+import * as articleAPI from "../ApiCalls/ArticleAPI";
 import ArticleEntry from "../ArticleEntry/ArticleEntry";
+import Advertisments from "../Advertisments/Advertisments";
 
 const Article = (props) => {
   const [load, setLoad] = useState(false);
@@ -21,7 +20,7 @@ const Article = (props) => {
       const init = async () => {
         const token = localStorage.getItem("token");
         props.getSavedArticles(token);
-        setArticles(await request.AllArticles([]));
+        setArticles(await articleAPI.AllArticles([]));
       };
       init();
       setLoad(true);
