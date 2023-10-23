@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import * as request from "../../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 import { Box, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-
+import * as request from '../../ApiCalls/Comment'
 import "./css/ScoreCard.css";
 
 const ScoreCard = ({

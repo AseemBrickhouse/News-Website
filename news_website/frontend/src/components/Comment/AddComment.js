@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import theme from "./components/CustomStyles";
-import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
+import * as request from "../ApiCalls/Comment";
 
 import {
   Avatar,

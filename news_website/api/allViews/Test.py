@@ -8,10 +8,10 @@ from rest_framework import status
 
 class ArticleView(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
-        article_id = kwargs['article_id']
         token = request.META.get('HTTP_TOKEN')
         user_account = get_user_account(token)
-        if article_id:
+        if 'article_id' in kwargs:
+            article_id = kwargs['article_id']
             try:
                 article = Article.objects.get(key=article_id)
             except Article.DoesNotExist:
@@ -198,3 +198,114 @@ class BookmarkArticleView(ObtainAuthToken):
                 return Response({"error": "Article bookmark not found"},status=status.HTTP_404_NOT_FOUND)
             
         return Response({"error": "User account not found"},status=status.HTTP_404_NOT_FOUND)
+
+
+class CommentView(ObtainAuthToken):
+    def get(self, request, *args, **kwargs):
+        token = request.META.get('HTTP_TOKEN')
+        user_account = None
+        if not token:
+            pass
+        else:
+            user_account = get_user_account(token)
+        
+        article_id = kwargs['article_id']
+        article = Article.objects.get(key=article_id)
+        queryset_parent = Comment.objects.filter(commented_article=article, parent=None)
+        data = {}
+
+        def get_nested_comments(children):
+            if not children:
+                return {}
+            children_json = {}
+            for child in children:
+                child_json = CommentSerializer(child).data
+                person = Account.objects.get(id=child_json['commenter_account'])
+                child_json['commenter_account'] = AccountSerializer(person).data
+                
+                child_json['comment_vote'] = {}
+                if user_account:
+                    queryset_comment_vote = CommentVote.objects.filter(account=user_account, comment=child)
+                    if queryset_comment_vote:
+                        comment_vote_json = CommentVoteSerializer(queryset_comment_vote[0]).data
+                        child_json['comment_vote'] = comment_vote_json
+                    else:
+                        child_json['comment_vote'] = {}
+
+                child_json['children'] = get_nested_comments(child.children)
+
+                children_json[child_json['id']] = child_json
+
+            return children_json
+
+        for comment in queryset_parent:
+            comment_json = CommentSerializer(comment).data
+            comment_json['children'] = get_nested_comments(comment.children)
+            person = Account.objects.get(id=comment_json['commenter_account'])
+            comment_json['commenter_account'] = AccountSerializer(person).data
+            comment_json['comment_vote'] = {}
+            if user_account:
+                queryset_comment_vote = CommentVote.objects.filter(account=user_account, comment=comment)
+                if queryset_comment_vote:
+                    comment_vote_json = CommentVoteSerializer(queryset_comment_vote[0]).data
+                    comment_json["comment_vote"] = comment_vote_json
+            data[comment_json['id']] = comment_json
+
+        return Response(data, status=status.HTTP_200_OK)
+    
+    def post(self, request, *args, **kwargs):
+        token = request.META.get('HTTP_TOKEN')    
+        article_id = kwargs['article_id']
+
+        parent_id = request.data.get('parent_id')
+        content = request.data.get('content')
+
+        user_account = get_user_account(token)
+
+        if not user_account:
+            return Response({"error": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            queryset = Article.objects.get(key=article_id)
+            parent_query = Comment.objects.get(id=parent_id) if parent_id else None
+
+            comment = Comment.objects.create(
+                commenter_account=user_account,
+                commented_article=queryset,
+                content=content,
+                parent=parent_query,
+            )
+            comment.save()
+            return Response(status=status.HTTP_201_CREATED)
+        except Article.DoesNotExist:
+            return Response({"error": "Article not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Comment.DoesNotExist:
+            return Response({"error": "Parent comment not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, *args, **kwargs):
+        token = request.META.get('HTTP_TOKEN')    
+        user_account = get_user_account(token)
+
+        print(token, user_account)
+        if not user_account:
+            return Response({"error": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        article_id = kwargs['article_id']
+        query_article = Article.objects.get(key=article_id)
+        comment_id = kwargs['comment_id']
+
+        try:
+            query = Comment.objects.filter(
+                id=comment_id,
+                commenter_account=user_account,
+                commented_article=query_article,
+            )
+            query.update(
+                content=request.data.get('content'),
+                is_edited=True,
+            )
+            return Response({"message:", " Comment successfully updated."},status=status.HTTP_204_NO_CONTENT)
+        except Comment.DoesNotExist:
+            return Response({"error:" ,"Comment not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, *args, **kwargs):
+        pass

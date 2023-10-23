@@ -9,7 +9,7 @@ import CommentButton from "../../../Buttons/ArticleButtons/Comment/CommentButton
 
 import "../css/LeftPanel.css"
 
-const Options = ({ article, ref }) => {
+const Options = ({ article }) => {
   return (
     <div className="main-container-button-box-options">
       <div className="main-container-button-box-left">

@@ -53,8 +53,10 @@ urlpatterns = [
         #test article related items
         path("articles/", ArticleView.as_view()),
         path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail'),
-        path('articles/<str:article_id>/bookmark/', BookmarkArticleView.as_view(), name='bookmark-article'),
-        path("articles/<str:article_id>/bookmark/<str:bookmark_id>/", BookmarkArticleView.as_view(), name='bookmark-article-delete'),
+        path("articles/<str:article_id>/bookmark/", BookmarkArticleView.as_view(), name='article-bookmark'),
+        path("articles/<str:article_id>/bookmark/<str:bookmark_id>/", BookmarkArticleView.as_view(), name='article-bookmark-id'),
+        path("articles/<str:article_id>/comments/", CommentView.as_view(), name='article-comment'),
+        path("articles/<str:article_id>/comments/<str:comment_id>/", CommentView.as_view(), name='article-comment-id'),
 
         # path('GetComments/<str:article_key>/', GetComments.as_view(), name="GetComments"),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),

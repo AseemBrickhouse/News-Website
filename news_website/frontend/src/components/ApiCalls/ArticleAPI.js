@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../store/baseURLS";
 
 export const AllArticles = async (tags) => {
-  const url = `${BASE_URL}/api/AllArticles/`;
+  const url = `${BASE_URL}/api/articles/`;
   const headers = {
     token: localStorage?.getItem("token"),
     tags,
@@ -11,10 +11,9 @@ export const AllArticles = async (tags) => {
 };
 
 export const GetArticle = async (key) => {
-  const url = `${BASE_URL}/api/GetArticle/`;
+  const url = `${BASE_URL}/api/${key}/`;
   const headers = {
     token: localStorage?.getItem("token"),
-    key,
   };
   const response = await fetch(url, { method: "GET", headers });
   return response.json();
@@ -27,7 +26,7 @@ export const CreateNewArticle = async ({
   visibility,
   isPrivate,
 }) => {
-  const url = `${BASE_URL}/api/CreateNewArticle/`;
+  const url = `${BASE_URL}/api/articles/`;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",

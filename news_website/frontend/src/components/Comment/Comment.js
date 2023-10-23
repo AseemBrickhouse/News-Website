@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 import {
   Card,
   Box,
@@ -22,7 +21,7 @@ import ChildComments from "./ChildComments";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import AddComment from "./AddComment";
-
+import * as request from "../ApiCalls/Comment";
 const Comment = ({
   comment_id,
   comment,

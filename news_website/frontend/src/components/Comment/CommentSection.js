@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
+// import * as request from "../Dashboard/Articles/ArticleID/components/LeftPanel/components/options/Comments/ApiCalls";
 import "./css/CommentSection.css";
 import Comment from "./Comment";
 import List from "@mui/material/List";
 import AddComment from "./AddComment";
+import * as request from "../ApiCalls/Comment"
 
 const CommentSection = ({ article }) => {
   const [comments, setComments] = useState([]);

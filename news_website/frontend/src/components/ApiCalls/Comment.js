@@ -3,7 +3,7 @@ import { BASE_URL } from "../../store/baseURLS";
 const token = localStorage?.getItem("token");
 
 export const GetComments = async (article_key) => {
-  const url = `${BASE_URL}/api/GetComments/`;
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/`;
   const headers = {
     token,
     articleKey: article_key,
@@ -15,14 +15,13 @@ export const GetComments = async (article_key) => {
 };
 
 export const CreateComment = async (article_key, content, parent_id) => {
-  const url = `${BASE_URL}/api/CreateComment/`;
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/`;
   const headers = {
     token,
     Accept: "application/json",
     "Content-Type": "application/json",
   };
   const body = JSON.stringify({
-    article_key,
     content,
     parent_id,
   });
@@ -30,7 +29,7 @@ export const CreateComment = async (article_key, content, parent_id) => {
 };
 
 export const DeleteComment = async (comment_id, article_key) => {
-  const url = `${BASE_URL}/api/DeleteComment/`;
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/`;
   const headers = {
     token,
     "Content-Type": "application/json",
@@ -43,14 +42,12 @@ export const DeleteComment = async (comment_id, article_key) => {
 };
 
 export const UpdateComment = async (comment_id, article_key, content) => {
-  const url = `${BASE_URL}/api/UpdateComment/`;
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/`;
   const headers = {
     token,
     "Content-Type": "application/json",
   };
   const body = JSON.stringify({
-    comment_id,
-    article_key,
     content,
   });
   const response = await fetch(url, { method: "PUT", headers, body });
