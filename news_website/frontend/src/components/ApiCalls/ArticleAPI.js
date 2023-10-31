@@ -40,25 +40,25 @@ export const CreateNewArticle = async ({
     isPrivate,
   };
   const response = await fetch(url, { method: "POST", headers, body });
-  return response.json();
+  return await response.json();
 };
 
 export const UpdateArticle = async (
-  key,
+  article_key,
   headline,
   article_description,
   article_body,
   visibility,
   isPrivate
 ) => {
-  const url = `${BASE_URL}/api/UpdateArticle/`;
+  const url = `${BASE_URL}/api/${article_key}/`;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
     token: localStorage?.getItem("token"),
   };
   const body = {
-    key,
+    article_key,
     headline,
     article_description,
     article_body,

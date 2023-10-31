@@ -53,21 +53,6 @@ export const UpdateComment = async (comment_id, article_key, content) => {
   const response = await fetch(url, { method: "PUT", headers, body });
 };
 
-export const UpdateRating = async (comment_id, article_key, rating, type) => {
-  const url = `${BASE_URL}/api/UpdateRating/`;
-  const headers = {
-    token,
-    "Content-Type": "application/json",
-  };
-  const body = JSON.stringify({
-    comment_id,
-    article_key,
-    rating,
-    type,
-  });
-  const response = await fetch(url, { method: "PUT", headers, body });
-};
-
 export const GetUserComments = async (first_name, last_name, article_key) => {
   const url = `${BASE_URL}/api/GetUserComments/`;
   const headers = {
@@ -99,4 +84,46 @@ export const GetParentComments = async (article_key) => {
   };
   const response = await fetch(url, { method: "GET", headers });
   return response.json();
+};
+
+export const AddCommentRating = async (comment_id, article_key, rating, type) => {
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/rating/`;
+  const headers = {
+    token,
+    "Content-Type": "application/json",
+  };
+  const body = JSON.stringify({
+    rating,
+    type,
+  });
+  const response = await fetch(url, { method: "POST", headers, body });
+  return response.json();
+};
+
+
+export const UpdateCommentRating = async (comment_id, article_key, rating, type, rating_id) => {
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/rating/${rating_id}/`;
+  const headers = {
+    token,
+    "Content-Type": "application/json",
+  };
+  const body = JSON.stringify({
+    rating,
+    type,
+  });
+  const response = await fetch(url, { method: "PUT", headers, body });
+};
+
+export const DeleteCommentRating = async (comment_id, article_key, rating, type, rating_id) => {
+  const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/rating/${rating_id}/`;
+  const headers = {
+    token,
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+  const body = JSON.stringify({
+    rating,
+    type,
+  });
+  const response = await fetch(url, { method: "DELETE", headers, body });
 };

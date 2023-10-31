@@ -5,22 +5,11 @@ import Comment from "./Comment";
 import List from "@mui/material/List";
 import AddComment from "./AddComment";
 import * as request from "../ApiCalls/Comment"
+import UseCommentFetcher from "../hooks/UseCommentFetcher";
 
 const CommentSection = ({ article }) => {
-  const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await request.GetComments(article.key);
-      setComments(response);
-    };
-    fetchData();
-  }, [article]);
-
-  const fetchUpdatedComments = async () => {
-    const response = await request.GetComments(article.key);
-    setComments(response);
-  };
+  const { comments, fetchUpdatedComments } = UseCommentFetcher(article);
 
   return (
     <div id="Comment-Section" className="comment-section-container">
