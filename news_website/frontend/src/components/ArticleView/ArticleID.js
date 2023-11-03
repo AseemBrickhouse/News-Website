@@ -14,9 +14,7 @@ const ArticleID = (props) => {
         <div className="main-container-articleID">
           <LeftPanel article={article} />
           <StickyBox offsetTop={75}>
-            <RightPanel
-              reporter={article.reporter_account}
-            />
+            <RightPanel reporter={article.reporter_account}/>
           </StickyBox>
         </div>
       </div>

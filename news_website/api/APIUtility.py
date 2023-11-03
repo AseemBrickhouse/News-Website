@@ -57,3 +57,8 @@ def get_user_account(token):
     except Token.DoesNotExist:
         return None
 
+def count_followers_or_following(account, op):
+    queryset = Followers.objects.filter(
+        following_user=account if op == "FOLLOWERS" else account
+    )
+    return queryset.count()

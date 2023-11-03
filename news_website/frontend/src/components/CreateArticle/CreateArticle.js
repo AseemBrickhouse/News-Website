@@ -23,6 +23,7 @@ import "./css/CreateArticle.css";
 import * as articleAPI from "../ApiCalls/ArticleAPI";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import PublishOutlinedIcon from "@mui/icons-material/PublishOutlined";
+import TagList from "../TagList/TagList";
 const theme = {
   overrides: {
     MuiRadio: {
@@ -44,14 +45,24 @@ const CreateArticle = () => {
     visibility: "",
     isPrivate: false,
   });
+  const [tags, setTags] = useState({})
+  const updateTags = (key, op) => {
+    const updatedTags = {...tags}
+    if(op === 'unselected'){
+      delete updatedTags[key];
+      setTags(updatedTags)
+    }else{
+      setTags({...tags, [key]: op})
+    }
+  }
   const handleInputChange = (event) => {
     setArticleInfo({ ...articleInfo, [event.target.name]: event.target.value });
     console.log(articleInfo);
   };
   const handleSubmit = async (isPrivate) => {
     setArticleInfo({...articleInfo,['isPrivate']: isPrivate})
-    console.log(articleInfo);
-    const response = await articleAPI.CreateNewArticle(...articleInfo);
+    console.log(articleInfo, tags);
+    const response = await articleAPI.CreateNewArticle(...articleInfo, ...tags);
   };
 
   return (
@@ -151,10 +162,14 @@ const CreateArticle = () => {
               />
             </RadioGroup>
           </div>
+          <span className="article-container-visibility">Tags</span>
+          <div className="article-container-right-tag-list">
+            <TagList updateTags={updateTags}/>
+          </div>
           <div id="article-options" className="article-container-right-options">
             <button
               className="article-container-right-options-button"
-              onClick={handleSubmit(true)}
+              onClick={() => handleSubmit(true)}
             >
               <div
                 style={{
@@ -170,7 +185,7 @@ const CreateArticle = () => {
             </button>
             <button
               className="article-container-right-options-button"
-              onClick={handleSubmit(false)}
+              onClick={ () => handleSubmit(false)}
             >
               <div
                 style={{
