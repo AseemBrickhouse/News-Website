@@ -29,11 +29,10 @@
 }
 .article-container-right{
     display: flex;
-    /* justify-content: space-evenly; */
     flex-direction: column;
-    /* align-items: center; */
     width: 15%;
-    margin-left: 10px;
+    margin-left: 20px;
+    height: fit-content;
 }
 .article-container-right-options{
     display: flex;
@@ -62,14 +61,14 @@
     transform: translate(0, -3px);
     box-shadow: 0 20px 80px -10px #AD343E;
 }
-.article-container-visibility{
+.article-container-header{
     font-size: 20px;
     font-weight: 500;
     width: 100%;
     border-bottom: 1px solid #AD343E;
+    display: block;
+    margin-top: 1%;
 }
 .article-container-right-tag-list{
     margin-top: 2vh;
-    /* width: 100%;
-    overflow-wrap: initial; */
 }

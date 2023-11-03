@@ -125,18 +125,17 @@ class ArticleView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         token = request.META.get('HTTP_TOKEN')
         user_account = get_user_account(token)
-
         if user_account:
             article = Article.objects.create(
                 key=ArticleKeyGen(),
                 headline=request.data['headline'],
                 reporter_account=user_account,
                 rating=0,
-                isPrivate=False,
+                isPrivate=request.data.get('isPrivate')['isPrivate'],
                 visibility=request.data['visibility'],
                 article_description=request.data['article_description'],
                 article_body=request.data['article_body'],
-                tags=None,
+                tags=request.data.get('tags'),
             )
             article.save()
             return Response({"message": "Article successfully created! ", "id": article.key}, status=status.HTTP_201_CREATED)

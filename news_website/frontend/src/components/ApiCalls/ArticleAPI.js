@@ -19,26 +19,27 @@ export const GetArticle = async (key) => {
   return response.json();
 };
 
-export const CreateNewArticle = async ({
-  headline,
-  article_description,
-  article_body,
-  visibility,
-  isPrivate,
-}) => {
+export const CreateNewArticle = async (
+  { headline, article_description, article_body, visibility, tags },
+  isPrivate
+) => {
+  console.log(isPrivate);
   const url = `${BASE_URL}/api/articles/`;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
     token: localStorage?.getItem("token"),
   };
-  const body = {
+  //Extract keys from tag
+  const extractedTagKeys = Object.keys(tags);
+  const body = JSON.stringify({
     headline,
     article_description,
     article_body,
     visibility,
     isPrivate,
-  };
+    tags: extractedTagKeys,
+  });
   const response = await fetch(url, { method: "POST", headers, body });
   return await response.json();
 };
@@ -69,8 +70,8 @@ export const UpdateArticle = async (
   return response.json();
 };
 
-export const GetArticleTags = async() => {
+export const GetArticleTags = async () => {
   const url = `${BASE_URL}/api/tags/`;
-  const response = await fetch(url,{method: "GET"});
+  const response = await fetch(url, { method: "GET" });
   return response.json();
-}
+};

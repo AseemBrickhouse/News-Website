@@ -36,7 +36,6 @@ TAGS = (
     ("Business", "Business"),
     ("Gaming", "Gaming"),
     ("Fitness", "Fitness"),
-    ("Technology", "Technology"),
     ("Movies", "Movies"),
     ("Books", "Books"),
     ("Photography", "Photography"),

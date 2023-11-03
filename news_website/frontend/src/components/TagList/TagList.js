@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useTagFetcher from "../hooks/useTagFetcher";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Popover from '@mui/material/Popover';
 import "./css/TagList.css";
 
 const DELETE_COLOR = "#AD343E";
@@ -12,6 +13,7 @@ const Clicked = Object.freeze({
 });
 
 const TagList = ({ updateTags }) => {
+  const[numberSelected, setNumberSelected] = useState(0)
   const createMapping = (tags) => {
     let mapping = {};
     tags &&
