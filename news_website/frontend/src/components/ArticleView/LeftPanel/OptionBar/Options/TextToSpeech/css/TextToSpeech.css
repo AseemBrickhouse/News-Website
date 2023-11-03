@@ -1,0 +1,58 @@
+.main-container-tts{
+    position: fixed;
+    background-color: #D9CAB3;
+    width: 65%;
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: auto;
+    bottom: 5px;
+    border-radius: 25px;
+    margin-left: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.main-container-top-box{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50%;
+    margin-top: 10px;
+    /* justify-content: space-between; */
+}
+.main-container-bottom-box{
+    width: 100%;
+    height: 50%;
+    justify-content: center;
+}
+.input-box1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+}
+.input-box2{
+    display: flex;
+    width: 33%;
+    margin: auto;
+    justify-content: center;
+}
+.input-box2-button{  
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.input-box3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%
+}
+.input-text{
+    font-size: 18px;
+    font-weight: 500;
+}
+button{
+    all: unset;
+    cursor: pointer;
+}

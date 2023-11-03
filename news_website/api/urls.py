@@ -5,10 +5,13 @@ from api.views import *
 from api.allViews.AccountViews import *
 from api.allViews.FollowViews import *
 from api.allViews.ArticleViews import *
+from api.allViews.CommentViews import *
+from api.allViews.Test import *
 
 router = DefaultRouter()
 router.register(r'Articles', ArticleViewSet)
 router.register(r'Accounts', AccountViewSet)
+# router.register(r'^GetComments/(?P<article_key>\w{1,50})/$', GetComments)
 # router.register(r'CreateNewArticle/', CreateNewArticle.as_view(), basename='CreateNewArticle')
 # router.register(r'current_user', current_user)
 # router.register(r'rest-auth/registration/', include('rest_auth.registration.urls'))
@@ -20,6 +23,7 @@ urlpatterns = [
         path('rest-auth/registration/', include('rest_auth.registration.urls')),
         path('AccountCreation/', AccountCreation.as_view()),
         path('EditAccount/', EditAccount.as_view()),
+        path('HasAccount/', HasAccount.as_view()),
         path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
         path('CreateNewArticle/', CreateNewArticle.as_view()),
@@ -39,6 +43,26 @@ urlpatterns = [
         path('GetUserArticles/', GetUserArticles.as_view()),
         path('GetPerson/', GetPerson.as_view()),
         path('HandleBookmark/', HandleBookmark.as_view()),
+        path('GetArticle/', GetArticle.as_view()),
+        path('GetComments/', GetComments.as_view()),
+        path('UpdateRating/', UpdateRating.as_view()),
+        path('CreateComment/', CreateComment.as_view()),
+        path('UpdateComment/', UpdateComment.as_view()),
+        path('DeleteComment/', DeleteComment.as_view()),
+
+        #test article related items
+        path("articles/", ArticleView.as_view()),
+        path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail'),
+        path("articles/<str:article_id>/bookmark/", BookmarkArticleView.as_view(), name='article-bookmark'),
+        path("articles/<str:article_id>/bookmark/<str:bookmark_id>/", BookmarkArticleView.as_view(), name='article-bookmark-id'),
+        path("tags/", TagView.as_view(), name='article-tags'),
+        path("articles/<str:article_id>/comments/", CommentView.as_view(), name='article-comment'),
+        path("articles/<str:article_id>/comments/<str:comment_id>/", CommentView.as_view(), name='article-comment-id'),
+        path("articles/<str:article_id>/comments/<str:comment_id>/rating/", CommentRatingView.as_view(), name='article-comment-id-rating'),
+        path("articles/<str:article_id>/comments/<str:comment_id>/rating/<str:rating_id>/", CommentRatingView.as_view(), name='article-comment-id-rating'),
+        
+        # path('GetComments/<str:article_key>/', GetComments.as_view(), name="GetComments"),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
+        # path(regex=r'^GetComments/(?P<username>\w{1,50})/$', view='GetComments'),
     ]
 urlpatterns += router.urls

@@ -1,0 +1,12 @@
+.chip{
+    transition: transform ease 0.2s, box-shadow ease 0.2s;
+}
+.chip:hover{
+    background-color: #AD343E;
+    padding: 10px 0 10px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    transform: translate(0, -3px);
+    box-shadow: 0 20px 80px -10px #AD343E;
+}

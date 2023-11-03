@@ -2,5 +2,11 @@
   "dependencies": {
     "axios": "^0.27.2",
     "react-adsense": "^0.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  },
+  "scripts": {
   }
 }
+

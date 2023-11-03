@@ -5,48 +5,39 @@
     width: 100%;
     border-bottom: 2px solid #616063;
     z-index: -1;
-    /* position: relative; */
 }
+
 .main-container-subheader-title{
     color: #000000;
-    top: 20px;
-    position: relative;
-    left: 25%;
     max-width: 500px;
     text-align: left;
     font-size: 40px;
-    margin: 5px;
+    margin-left: 18vw;
+    margin-top: 0px;
+    padding: 10px 0 0 0;
 }
 .main-container-subheader-description{
     color: #000000;
-    position: relative;
     max-width: 500px;
-    top: 30px;
-    left: 26%;
-    margin: 5px;
+    margin-left: 20vw;
+    margin-top: -15px;
 }
 .main-container-subheader-button{
     background-color: #AD343E;
     padding: 5px 0 5px;
     text-align: center;
     border-radius: 10px;
-    position: relative;
     width: 100px;
-    top: 40px;
-    left: 26%;
-    z-index: 2;
+    margin-left: 20vw;
     transition: transform ease 0.2s, box-shadow ease 0.2s;
 }
 .main-container-subheader-button:hover{
     background-color: #AD343E;
-    /* border: solid #616063 2px; */
     padding: 5px 0 5px;
     text-align: center;
     border-radius: 10px;
-    position: relative;
     width: 100px;
-    top: 40px;
-    left: 26%;
+    margin-left: 20vw;
     transform: translate(0, -3px);
     box-shadow: 0 20px 80px -10px #AD343E;
 }
@@ -55,28 +46,4 @@
     color: white;
     font-size: 15px;
     font-weight: 300;
-}
-
-/* Had to use to change text content */
-.btn{
-}
-.btn:hover{
-    width: 75%;
-    height: 70%;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 50px;
-}
-.btn:hover span{
-    display: none;
-    width: 75%;
-    height: 70%;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    background-color: white;
-}
-.btn:hover::before{
-    content: "Unfollow";
 }

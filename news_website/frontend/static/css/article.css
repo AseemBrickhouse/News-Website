@@ -1,16 +1,10 @@
 body{
     margin: 0;
-    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    /* font-family: 'Neue Haas Grotesk Display Pro', sans-serif; */
     background-color: white;
 
 }
 .container {
-    display: flex;
-    flex-direction: row;
-    flex-flow: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    background-color: white;
 }
 .article{
     background-color: #fff;

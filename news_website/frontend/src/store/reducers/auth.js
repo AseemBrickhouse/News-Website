@@ -33,7 +33,7 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
     return updateObject(state, {
         token: null,
-        account: "No account currently logged in",
+        account: [],
     });
 }
 

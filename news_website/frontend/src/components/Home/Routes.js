@@ -5,12 +5,12 @@ import HomePage from "./HomePage";
 import Header from "../Header/MainHeader/Header";
 import Account from "../Dashboard/AccountHome/Account";
 // import ArticleID from "../Dashboard/ArticleID";
-import ArticleID from "../Dashboard/Articles/ArticleID/ArticleID";
+import ArticleID from "../ArticleView/ArticleID";
 import Articles from "../Dashboard/AccountHome/Articles";
 import EditAccount from "../Dashboard/AccountHome/EditAccount";
-import CreateArticle from "../Dashboard/AccountHome/CreateArticle";
-import Login from "../Buttons/Login";
-import SignUp from "../Buttons/SignUp";
+// import CreateArticle from "../Dashboard/AccountHome/CreateArticle";
+import Login from "../Login/Login";
+import SignUp from "../SignUp/SignUp";
 import FindPeople from "../Dashboard/People/FindPeople";
 import AccountID from "../Dashboard/People/Account";
 import SavedArticles from "../Dashboard/AccountHome/SavedArticles";
@@ -19,6 +19,7 @@ import Following from "../Dashboard/People/Following";
 import AuthError from "../../Errors/AuthError";
 import ArticleError from "../../Errors/ArticleError";
 import SavedArticleError from "../../Errors/SavedArticleError";
+import CreateArticle from "../CreateArticle/CreateArticle";
 
 const Routes = (props) => {
   return (

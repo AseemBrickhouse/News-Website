@@ -1,0 +1,53 @@
+redo file structure
+maybe something like
+    src -
+        components
+            - header
+                - nav
+            - body
+                - articleHome
+                    - articleHome.js
+                    - css
+                - account
+                - etc.
+            - footer
+            or just do
+
+            - nav
+            - articleHome
+            - etc.
+        hooks
+            - debounce
+            
+        request -
+            - articleApi
+            - commentApi
+            - followApi
+            - accountApi
+
+        buttons
+            -articlebuttons
+                -comment
+                -play
+                -bookmark
+            
+        articleView
+            -leftPannel
+                -OptionBar
+                -Options
+                    -TTS
+                    -rating
+            -rightPannel
+        comment
+
+Try to write script to 
+    activate venv
+    run django backend
+    run react frontend
+    Edit: I tried and it doesnt seems like it works
+
+Fix api urls (Fixing right now
+    articles -> update front end
+    account -> update frontend
+    
+) 

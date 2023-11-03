@@ -1,0 +1,54 @@
+input[type=range]{
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 50px;
+    height: 18px;
+    /* --range-progress: 50 */
+}
+input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #AD343E;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+}
+
+.input[type="range"]::before {
+    background: #f50;
+    width: var(--range-progress);
+} 
+.main-container-input{
+    color: #f50;
+}
+.main-container-time-current{
+    color: #000000;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.main-container-time-duration{
+    color: #000000;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.main-container-progressbar{
+    width: 100%;
+    height: 100%;
+    background-color: #D9CAB3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 0px 25px 25px;
+}
+
+.progress{
+    width: 100%;
+    background-color: grey;
+}
+
+.bar{
+    width: 1%;
+    height: 30px;
+    background-color: #AD343E;
+}

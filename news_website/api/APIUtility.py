@@ -49,8 +49,16 @@ def PopularUserArticles(account):
 def get_user_account(token):
     try:
         token = Token.objects.get(key=token)
-        user_account = User.objects.all().filter(id=token.user_id)[0].account
-        return user_account
+        try:
+            user_account = User.objects.all().filter(id=token.user_id)[0].account
+            return user_account
+        except Account.DoesNotExist:
+            return None
     except Token.DoesNotExist:
-         return None
+        return None
 
+def count_followers_or_following(account, op):
+    queryset = Followers.objects.filter(
+        following_user=account if op == "FOLLOWERS" else account
+    )
+    return queryset.count()

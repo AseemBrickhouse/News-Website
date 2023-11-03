@@ -1,5 +1,5 @@
 import React from 'react';
-import Articles from "../Dashboard/Articles/Articles"
+import Articles from "../ArticleList/ArticleList"
 
 const HomePage = (props) => {
     return (

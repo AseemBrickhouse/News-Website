@@ -1,0 +1,18 @@
+.main-container-box-right-form-signup{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.main-container-box-right-form-signup-row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.main-container-right-form-signup-input{
+    width: 40%;
+    font-size: 50px;
+}
