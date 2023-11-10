@@ -1,6 +1,6 @@
 import * as actionTypes from "./types";
 import axios from "axios";
-import { getSAVEDARTICLES, getSAVEDLOGOUT } from "./savedArticles";
+import { getSavedArticles, getSavedLogout } from "./savedArticles";
 import { BASE_URL } from "../baseURLS";
 
 export const authStart = () => {
@@ -88,7 +88,7 @@ export const authLogin = (username, password) => {
           localStorage.setItem("expirationDate", expirationDate);
           dispatch(getAuthInfo(token));
           dispatch(authSUCCESS(token));
-          dispatch(getSAVEDARTICLES(token));
+          dispatch(getSavedArticles(token));
           dispatch(checkTimeout(3600));
         })
         .catch((error) => {

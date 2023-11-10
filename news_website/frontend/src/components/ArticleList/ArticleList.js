@@ -50,7 +50,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getSavedArticles: (token) =>
-    dispatch(savedArticleActions.getSAVEDARTICLES(token)),
+    dispatch(savedArticleActions.getSavedArticles(token)),
 });
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(Article)

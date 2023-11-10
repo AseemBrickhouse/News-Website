@@ -379,7 +379,6 @@ class MyBookmarkedArticles(ObtainAuthToken):
         return Response(queryset, status=status.HTTP_200_OK)
 
 
-#Unused
 class SavedArticles(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])

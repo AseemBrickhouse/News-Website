@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useTagFetcher from "../hooks/useTagFetcher";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import Popover from '@mui/material/Popover';
 import "./css/TagList.css";
 
 const DELETE_COLOR = "#AD343E";

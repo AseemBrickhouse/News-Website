@@ -37,10 +37,10 @@ const TopRatedEntry = ({ article, articleKey, reporter }) => {
         <Link
           className="main-container-link"
           to={{
-            pathname: "/Articles/" + article.key + "/",
+            pathname: "/Articles/" + articleKey + "/",
             state: {
-              ArticleID: articleKey,
-              Article: article,
+              articleID: articleKey,
+              article: article,
             },
           }}
         >

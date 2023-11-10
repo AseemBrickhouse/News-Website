@@ -25,7 +25,7 @@ export const articleFAIL = (error) => {
 export const getARTICLES = (token, tags) => {
   return (dispatch) => {
     dispatch(articleStart());    
-    axios.get(`${BASE_URL}/api/AllArticles/`, {
+    axios.get(`${BASE_URL}/api/articles/`, {
         headers:{
             token: token,
             tags: tags,
