@@ -186,9 +186,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-      getSavedLogout: () => dispatch(savedArticlesActions.getSavedLogout()),
+      getSavedLogout: () => dispatch(savedArticleActions.getSavedLogout()),
       logout : () => {
-        dispatch(savedArticleActions.getSAVEDLOGOUT()),
+        dispatch(savedArticleActions.getSavedLogout()),
         dispatch(actions.authLOGOUT())
       }
     }

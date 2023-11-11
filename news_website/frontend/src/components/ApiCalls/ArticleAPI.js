@@ -23,7 +23,6 @@ export const CreateNewArticle = async (
   { headline, article_description, article_body, visibility, tags },
   isPrivate
 ) => {
-  console.log(isPrivate);
   const url = `${BASE_URL}/api/articles/`;
   const headers = {
     Accept: "application/json",

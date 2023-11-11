@@ -60,7 +60,7 @@ urlpatterns = [
         path("articles/<str:article_id>/comments/<str:comment_id>/", CommentView.as_view(), name='article-comment-id'),
         path("articles/<str:article_id>/comments/<str:comment_id>/rating/", CommentRatingView.as_view(), name='article-comment-id-rating'),
         path("articles/<str:article_id>/comments/<str:comment_id>/rating/<str:rating_id>/", CommentRatingView.as_view(), name='article-comment-id-rating'),
-        
+        path("accounts/<str:account_id>/articles/", AccountArticleView.as_view(), name='account-articles'),
         # path('GetComments/<str:article_key>/', GetComments.as_view(), name="GetComments"),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),
         # path(regex=r'^GetComments/(?P<username>\w{1,50})/$', view='GetComments'),

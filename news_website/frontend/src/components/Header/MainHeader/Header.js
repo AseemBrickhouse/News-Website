@@ -9,6 +9,7 @@ import StickyBox from "react-sticky-box";
 import * as actions from "../../../store/actions/auth";
 import "./css/Header.css";
 import SubHeader from "../Subheader/SubHeader";
+import HeaderOptions from "./HeaderOptions";
 
 const Header = (props) => {
   const pathLocation =
@@ -38,7 +39,7 @@ const Header = (props) => {
           </Box>
           {props.isAuthenticated ? (
             <Box className="main-container-header-account">
-              <MyAccount {...props} />
+              <HeaderOptions {...props} />
             </Box>
           ) : (
             <Box className="main-container-header-buttonset">

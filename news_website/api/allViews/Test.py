@@ -459,7 +459,6 @@ class CommentRatingView(ObtainAuthToken):
 # api/accounts/213/   get account 213
 # api/account/213/current
 
-
 class AccountView(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         token = request.headers.get('token')
@@ -578,3 +577,42 @@ class TagView(APIView):
     def get(self, request, *args, **kwargs):
         tags = [tag[0] for tag in TAGS]
         return Response({'tags' : tags}, status=status.HTTP_200_OK)
+    
+
+# api/accounts/<id>/articles/
+class AccountArticleView(ObtainAuthToken):
+    def get(self, request, *args, **kwargs):
+        token = request.headers.get('token')
+        user_account = get_user_account(token)
+        account_key = kwargs['account_id']
+
+        #User Articles to retrieve
+        account_to_view = Account.objects.get(key=account_key)
+        article_query = Article.objects.filter(reporter_account=account_to_view)
+
+        account_articles = {}
+        for article in article_query:
+            article_data = ArticleSerializer(article).data
+            key = article_data['key']
+            account_articles[key] = article_data
+            account_articles[key]['reporter_account'] = AccountSerializer(account_to_view).data
+            account_articles[key]['reporter_account']['followers'] = getFollow(account_to_view, "FOLLOWERS")
+            if user_account:
+                try:
+                    BookmarkedArticles.objects.get(
+                        account=user_account, saved=article)
+                    account_articles[key]['isBookmarked'] = True
+                except BookmarkedArticles.DoesNotExist:
+                    account_articles[key]['isBookmarked'] = False
+
+                try:
+                    Followers.objects.get(
+                        account=user_account, following_user=account_to_view)
+                    account_articles[key]['reporter_account']['is_following'] = True
+                except Followers.DoesNotExist:
+                    account_articles[key]['reporter_account']['is_following'] = False
+            else:
+                account_articles[key]['isBookmarked'] = False
+                account_articles[key]['reporter_account']['is_following'] = False
+
+        return Response({'account_articles': account_articles}, status=status.HTTP_200_OK)

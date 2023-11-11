@@ -5,23 +5,15 @@ import ReporterArticles from "./ReporterArticles/ReporterArticles";
 import * as request from "../../Dashboard/Articles/ArticleID/components/RightPanel/Requests";
 import ReporterTop from "./ReporterTop/ReporterTop";
 import "./css/RightPanel.css";
+import useAccountArticleFetcher from "../../hooks/useAccountArticleFetcher";
 
 const RightPanel = ({ reporter }) => {
-  const [reporterArticles, setReporterArticles] = React.useState([]);
-
-  useEffect(() => {
-    const Init = async () => {
-      setReporterArticles(await request.GetReporterArticles(reporter));
-    };
-    Init();
-  }, []);
-
+  const {account_articles} = useAccountArticleFetcher(reporter.key)
   return (
     <StickyBox offsetTop={75}>
       <Box className="main-container-rightpanel">
         <Box
           sx={{
-            // marginTop: "2vh",
             alignContent: "flex-start",
             justifyContent: "center",
             marginLeft: "12.5%",
@@ -29,7 +21,7 @@ const RightPanel = ({ reporter }) => {
         >
           <ReporterTop reporter={reporter} />
           <ReporterArticles
-            reporterArticles={reporterArticles}
+            reporterArticles={account_articles}
             reporter={reporter}
           />
         </Box>

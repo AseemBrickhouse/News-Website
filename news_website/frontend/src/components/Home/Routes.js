@@ -20,6 +20,7 @@ import AuthError from "../../Errors/AuthError";
 import ArticleError from "../../Errors/ArticleError";
 import SavedArticleError from "../../Errors/SavedArticleError";
 import CreateArticle from "../CreateArticle/CreateArticle";
+import AccountPage from "../Account/AccountPage";
 
 const Routes = (props) => {
   return (
@@ -45,7 +46,7 @@ const Routes = (props) => {
           />
           <Route exact path={"/Articles/:id"} component={ArticleID} />
           <Route exact path="/Account/FindPeople" component={FindPeople} />
-          <Route exact path={"/Account/People/:key"} component={AccountID} />
+          <Route exact path={"/Account/People/:key"} component={AccountPage} />
           <Route exact path={"/Account/Followers"} component={Followers} />
           <Route exact path="/Account/Following" component={Following} />
           <Route exact path="/Account/Articles">
