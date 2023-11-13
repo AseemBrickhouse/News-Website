@@ -9,7 +9,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ArticleSection from "./ArticleSection";
 import AboutSection from "./AboutSection";
+import TabPanel from "./TabPanel";
 
+//TODO: Move tabs into tab panel. Weird formatting stuff when I tried. Didnt feel like fixing it
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -29,8 +31,9 @@ function CustomTabPanel(props) {
   );
 }
 const AccountLeft = ({ account, key, person, articles }) => {
+  const [tab, setTab] = useState(0);
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTab(newValue);
   };
 
   function a11yProps(index) {
@@ -39,8 +42,15 @@ const AccountLeft = ({ account, key, person, articles }) => {
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }
-
-  const [value, setValue] = React.useState(0);
+  function filterObject(obj, field, condition){
+    const newObj = {}
+    obj !== undefined && Object.entries(obj).filter(([key, value]) => {
+        if(value[field] == condition){
+          newObj[key] = value
+        }
+      })
+    return newObj;
+  }
   return (
     <div className="main-container">
       <div className="main-container-account-header">
@@ -48,47 +58,93 @@ const AccountLeft = ({ account, key, person, articles }) => {
           {person.first_name} {person.last_name}
         </h1>
       </div>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        TabIndicatorProps={{
-          style: {
-            backgroundColor: "#AD343E",
-            top: '40px',
-          },
-        }}
-        textColor="black"
-        indicatorColor="#AD343E"
-      >
-        <Tab
-          sx={{
-            fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-            fontSize: "12px",
-            fontWeight: "600",
-            padding: "0px",
-          }}
-          label="Articles"
-          disableRipple
-          {...a11yProps(0)}
-        />
-        <Tab
-          sx={{
-            fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-            fontSize: "12px",
-            fontWeight: "600",
-            padding: "0px",
-          }}
-          disableRipple
-          label="About"
-          {...a11yProps(1)}
-        />
-      </Tabs>
-      <CustomTabPanel value={value} index={0}>
-        <ArticleSection articles={articles}/>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <AboutSection />
-      </CustomTabPanel>
+      {account?.key === person?.key ? (
+        <>
+          <Tabs
+            value={tab}
+            onChange={handleChange}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "#AD343E",
+                top: "40px",
+              },
+            }}
+            textColor="black"
+            indicatorColor="#AD343E"
+          >
+            <Tab
+              sx={{
+                fontSize: "12px",
+                fontWeight: "600",
+                padding: "0px",
+              }}
+              label="Articles"
+              disableRipple
+              {...a11yProps(0)}
+            />
+            <Tab
+              sx={{
+                fontSize: "12px",
+                fontWeight: "600",
+                padding: "0px",
+              }}
+              label="Drafts"
+              disableRipple
+              {...a11yProps(0)}
+            />
+          </Tabs>
+          <CustomTabPanel value={tab} index={0}>
+            <ArticleSection articles={filterObject(articles, "isPrivate", false)} />
+          </CustomTabPanel>
+          <CustomTabPanel value={tab} index={1}>
+            <ArticleSection articles={filterObject(articles, "isPrivate", true)} />
+          </CustomTabPanel>
+        </>
+      ) : (
+        <>
+          <Tabs
+            value={tab}
+            onChange={handleChange}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "#AD343E",
+                top: "40px",
+              },
+            }}
+            textColor="black"
+            indicatorColor="#AD343E"
+          >
+            <Tab
+              sx={{
+                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                fontSize: "12px",
+                fontWeight: "600",
+                padding: "0px",
+              }}
+              label="Articles"
+              disableRipple
+              {...a11yProps(0)}
+            />
+            <Tab
+              sx={{
+                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                fontSize: "12px",
+                fontWeight: "600",
+                padding: "0px",
+              }}
+              disableRipple
+              label="About"
+              {...a11yProps(1)}
+            />
+          </Tabs>
+          <CustomTabPanel value={tab} index={0}>
+            <ArticleSection articles={articles} />
+          </CustomTabPanel>
+          <CustomTabPanel value={tab} index={1}>
+            <AboutSection person={person}/>
+          </CustomTabPanel>
+        </>
+      )}
     </div>
   );
 };

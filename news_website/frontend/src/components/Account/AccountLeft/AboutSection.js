@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import "./css/AccountLeft.css";
 
-const AboutSection = () =>{
-    console.log("there")
+const AboutSection = ({person}) =>{
+    console.log(person)
     return (
         <div>
-            <h2 className="text-center">About Section</h2>  
+            <span className="bio-text">{person.bio}</span> 
         </div>
     )
 }

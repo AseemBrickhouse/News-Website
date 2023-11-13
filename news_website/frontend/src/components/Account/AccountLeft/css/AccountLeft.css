@@ -5,3 +5,6 @@
 .main-container-account-header{
     align-items: left;
 }
+.bio-text{
+    white-space: pre-wrap;
+}
