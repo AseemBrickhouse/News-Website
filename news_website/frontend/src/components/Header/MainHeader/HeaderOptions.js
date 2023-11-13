@@ -240,11 +240,11 @@ const HeaderOptions = (props) => {
           </StyledTypography>
         </Button>
       </div>
-      <div>
+      {/* <div>
         <Button style={{ marginRight: "1vw" }}>
           <Link to="/SavedArticleError">Test eror</Link>
         </Button>
-      </div>
+      </div> */}
     </Box>
   );
 };
@@ -258,7 +258,7 @@ const mapDispatchToProps = (dispatch) => {
     getSavedLogout: () => dispatch(savedArticleActions.getSavedLogout()),
     logout: () => {
       dispatch(savedArticleActions.getSavedLogout()),
-        dispatch(actions.authLOGOUT());
+        dispatch(authAction.authLOGOUT());
     },
   };
 };

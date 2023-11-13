@@ -1,0 +1,39 @@
+.edit-account-container{
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin-left: 25vw;
+}
+.edit-account-tabs{
+    display: flex;
+    flex-direction: column;
+    /* margin-left: 10vw; */
+    margin-top: 20vh;
+}
+.account-middle-tab-panel{
+    width: 30vw;
+    margin-top: 15vh;
+}
+.account-right-tab-entry{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+.entry-header{
+    /* margin-right: 10%; */
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+.edit-btn-right{
+    margin-top: 20vh;
+    width: 5vw;
+    margin-left: 50px;
+}
+.edit-btn-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

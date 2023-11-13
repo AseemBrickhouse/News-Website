@@ -27,101 +27,111 @@ const AccountLeft = ({ account, key, person }) => {
     };
   }
 
-  return person != null && (
-    <div className="main-container">
-      <div className="main-container-account-header">
-        <h1>
-          {person.first_name} {person.last_name}
-        </h1>
+  return (
+    person != null && (
+      <div className="main-container">
+        <div className="main-container-account-header">
+          <h1>
+            {person.first_name} {person.last_name}
+          </h1>
+        </div>
+        {account?.key === person?.key ? (
+          <>
+            <Tabs
+              value={tab}
+              onChange={handleChange}
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: "#AD343E",
+                  top: "40px",
+                },
+              }}
+              textColor="black"
+              indicatorColor="#AD343E"
+            >
+              <Tab
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  padding: "0px",
+                }}
+                label="Articles"
+                disableRipple
+                {...a11yProps(0)}
+              />
+              <Tab
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  padding: "0px",
+                }}
+                label="Drafts"
+                disableRipple
+                {...a11yProps(0)}
+              />
+            </Tabs>
+            <CustomTabPanel value={tab} index={0}>
+              <ArticleSection
+                person={person}
+                field={"isPrivate"}
+                condition={false}
+              />
+            </CustomTabPanel>
+            <CustomTabPanel value={tab} index={1}>
+              <ArticleSection
+                person={person}
+                field={"isPrivate"}
+                condition={true}
+              />
+            </CustomTabPanel>
+          </>
+        ) : (
+          <>
+            <Tabs
+              value={tab}
+              onChange={handleChange}
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: "#AD343E",
+                  top: "40px",
+                },
+              }}
+              textColor="black"
+              indicatorColor="#AD343E"
+            >
+              <Tab
+                sx={{
+                  fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  padding: "0px",
+                }}
+                label="Articles"
+                disableRipple
+                {...a11yProps(0)}
+              />
+              <Tab
+                sx={{
+                  fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
+                  fontSize: "12px",
+                  fontWeight: "600",
+                  padding: "0px",
+                }}
+                disableRipple
+                label="About"
+                {...a11yProps(1)}
+              />
+            </Tabs>
+            <CustomTabPanel value={tab} index={0}>
+              <ArticleSection person={person} />
+            </CustomTabPanel>
+            <CustomTabPanel value={tab} index={1}>
+              <AboutSection person={person} />
+            </CustomTabPanel>
+          </>
+        )}
       </div>
-      {account?.key === person?.key ? (
-        <>
-          <Tabs
-            value={tab}
-            onChange={handleChange}
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: "#AD343E",
-                top: "40px",
-              },
-            }}
-            textColor="black"
-            indicatorColor="#AD343E"
-          >
-            <Tab
-              sx={{
-                fontSize: "12px",
-                fontWeight: "600",
-                padding: "0px",
-              }}
-              label="Articles"
-              disableRipple
-              {...a11yProps(0)}
-            />
-            <Tab
-              sx={{
-                fontSize: "12px",
-                fontWeight: "600",
-                padding: "0px",
-              }}
-              label="Drafts"
-              disableRipple
-              {...a11yProps(0)}
-            />
-          </Tabs>
-          <CustomTabPanel value={tab} index={0}>
-            <ArticleSection person={person} field={"isPrivate"} condition={false} />
-          </CustomTabPanel>
-          <CustomTabPanel value={tab} index={1}>
-            <ArticleSection person={person} field={"isPrivate"} condition={true} />
-          </CustomTabPanel>
-        </>
-      ) : (
-        <>
-          <Tabs
-            value={tab}
-            onChange={handleChange}
-            TabIndicatorProps={{
-              style: {
-                backgroundColor: "#AD343E",
-                top: "40px",
-              },
-            }}
-            textColor="black"
-            indicatorColor="#AD343E"
-          >
-            <Tab
-              sx={{
-                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                fontSize: "12px",
-                fontWeight: "600",
-                padding: "0px",
-              }}
-              label="Articles"
-              disableRipple
-              {...a11yProps(0)}
-            />
-            <Tab
-              sx={{
-                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-                fontSize: "12px",
-                fontWeight: "600",
-                padding: "0px",
-              }}
-              disableRipple
-              label="About"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-          <CustomTabPanel value={tab} index={0}>
-            <ArticleSection person={person} />
-          </CustomTabPanel>
-          <CustomTabPanel value={tab} index={1}>
-            <AboutSection person={person} />
-          </CustomTabPanel>
-        </>
-      )}
-    </div>
+    )
   );
 };
 const mapStateToProps = (state) => {
