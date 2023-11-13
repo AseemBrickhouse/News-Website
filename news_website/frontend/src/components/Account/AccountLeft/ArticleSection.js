@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ArticleEntry from "../../ArticleEntry/ArticleEntry";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import * as savedArticleActions from "../../../store/actions/savedArticles";
+import useAccountArticleFetcher from "../../hooks/useAccountArticleFetcher";
 
-const ArticleSection = ({ articles }) => {
-  console.log(articles);
+const ArticleSection = ({field, condition, person}) => {
+  const filterObject = () => {
+    const newObj = {}
+    account_articles  && Object.entries(account_articles).filter(([key, value]) => {
+        if(value[field] == condition){
+          newObj[key] = value
+        }
+      })
+    return newObj;
+  }
+  //TODO: Move one layer up and fix the bug where the first click of a person gets the articles but they still remain after you click "View Profile". 
+  const {account_articles} = useAccountArticleFetcher(person.key);
+  const filteredArticleObjects = filterObject();
   return (
     <div>
-      {articles != null &&
-        Object.entries(articles).map(([key, article]) => {
+      {account_articles &&
+        Object.entries(filteredArticleObjects).map(([key, article]) => {
           return (
             <ArticleEntry
               article={article}

@@ -10,11 +10,10 @@ import useAccountArticleFetcher from "../hooks/useAccountArticleFetcher";
 
 const AccountPage = (props) => {
   const { key, person } = props.location.state;
-  const { account_articles } = useAccountArticleFetcher(key);
   return (
     <div className="account-page-container">
       <Box className="main-container-leftpanel">
-        <AccountLeft key={key} person={person} articles={account_articles} />
+        <AccountLeft key={key} person={person} />
       </Box>
       {/* No Clue why I have to put 2 sticky boxes to make it work */}
       <StickyBox offsetTop={75}>

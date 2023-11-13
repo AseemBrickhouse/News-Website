@@ -10,27 +10,11 @@ import Tab from "@mui/material/Tab";
 import ArticleSection from "./ArticleSection";
 import AboutSection from "./AboutSection";
 import TabPanel from "./TabPanel";
+import CustomTabPanel from "../../CustomTab/CustomTab";
+import useAccountArticleFetcher from "../../hooks/useAccountArticleFetcher";
 
 //TODO: Move tabs into tab panel. Weird formatting stuff when I tried. Didnt feel like fixing it
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-const AccountLeft = ({ account, key, person, articles }) => {
+const AccountLeft = ({ account, key, person }) => {
   const [tab, setTab] = useState(0);
   const handleChange = (event, newValue) => {
     setTab(newValue);
@@ -42,16 +26,8 @@ const AccountLeft = ({ account, key, person, articles }) => {
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }
-  function filterObject(obj, field, condition){
-    const newObj = {}
-    obj !== undefined && Object.entries(obj).filter(([key, value]) => {
-        if(value[field] == condition){
-          newObj[key] = value
-        }
-      })
-    return newObj;
-  }
-  return (
+
+  return person != null && (
     <div className="main-container">
       <div className="main-container-account-header">
         <h1>
@@ -94,10 +70,10 @@ const AccountLeft = ({ account, key, person, articles }) => {
             />
           </Tabs>
           <CustomTabPanel value={tab} index={0}>
-            <ArticleSection articles={filterObject(articles, "isPrivate", false)} />
+            <ArticleSection person={person} field={"isPrivate"} condition={false} />
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={1}>
-            <ArticleSection articles={filterObject(articles, "isPrivate", true)} />
+            <ArticleSection person={person} field={"isPrivate"} condition={true} />
           </CustomTabPanel>
         </>
       ) : (
@@ -138,10 +114,10 @@ const AccountLeft = ({ account, key, person, articles }) => {
             />
           </Tabs>
           <CustomTabPanel value={tab} index={0}>
-            <ArticleSection articles={articles} />
+            <ArticleSection person={person} />
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={1}>
-            <AboutSection person={person}/>
+            <AboutSection person={person} />
           </CustomTabPanel>
         </>
       )}

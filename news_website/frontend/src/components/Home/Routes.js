@@ -7,7 +7,7 @@ import Account from "../Dashboard/AccountHome/Account";
 // import ArticleID from "../Dashboard/ArticleID";
 import ArticleID from "../ArticleView/ArticleID";
 import Articles from "../Dashboard/AccountHome/Articles";
-import EditAccount from "../Dashboard/AccountHome/EditAccount";
+// import EditAccount from "../Dashboard/AccountHome/EditAccount";
 // import CreateArticle from "../Dashboard/AccountHome/CreateArticle";
 import Login from "../Login/Login";
 import SignUp from "../SignUp/SignUp";
@@ -21,6 +21,7 @@ import ArticleError from "../../Errors/ArticleError";
 import SavedArticleError from "../../Errors/SavedArticleError";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import AccountPage from "../Account/AccountPage";
+import EditAccount from "../EditAccount/EditAccount";
 
 const Routes = (props) => {
   return (
