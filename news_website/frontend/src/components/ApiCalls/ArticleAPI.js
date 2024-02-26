@@ -11,7 +11,7 @@ export const AllArticles = async (tags) => {
 };
 
 export const GetArticle = async (key) => {
-  const url = `${BASE_URL}/api/${key}/`;
+  const url = `${BASE_URL}/api/articles/${key}`;
   const headers = {
     token: localStorage?.getItem("token"),
   };
@@ -43,29 +43,32 @@ export const CreateNewArticle = async (
   return await response.json();
 };
 
-export const UpdateArticle = async (
-  article_key,
+export const UpdateArticle = async ({  
+  key,
   headline,
   article_description,
   article_body,
   visibility,
-  isPrivate
-) => {
-  const url = `${BASE_URL}/api/${article_key}/`;
+  isPrivate,
+  tags,
+}) => {
+  const url = `${BASE_URL}/api/articles/${key}/`;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
     token: localStorage?.getItem("token"),
   };
-  const body = {
-    article_key,
+  const body = JSON.stringify({
     headline,
     article_description,
     article_body,
     visibility,
     isPrivate,
-  };
-  const response = await fetch(url, { method: "POST", headers, body });
+    key,
+    tags,
+  });
+  console.log(body);
+  const response = await fetch(url, { method: "PUT", headers, body });
   return response.json();
 };
 

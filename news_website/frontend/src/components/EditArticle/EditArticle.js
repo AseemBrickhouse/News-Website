@@ -9,7 +9,7 @@ import {
   ThemeProvider,
   createTheme,
 } from "@material-ui/core";
-import "./css/CreateArticle.css";
+// import "./css/CreateArticle.css";
 import * as articleAPI from "../ApiCalls/ArticleAPI";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import PublishOutlinedIcon from "@mui/icons-material/PublishOutlined";
@@ -17,6 +17,7 @@ import TagList from "../TagList/TagList";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import StickyBox from "react-sticky-box";
+import "../CreateArticle/css/CreateArticle.css";
 
 const theme = {
   overrides: {
@@ -31,7 +32,11 @@ const theme = {
 };
 const muiTheme = createTheme(theme);
 const MAX_SELECTED = 7;
-const CreateArticle = () => {
+const Clicked = Object.freeze({
+  SELECTED: "selected",
+  UNSELECTED: "unselected",
+});
+const EditArticle = (props) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [articleInfo, setArticleInfo] = useState({
@@ -39,7 +44,9 @@ const CreateArticle = () => {
     article_description: "",
     article_body: "",
     visibility: "",
-    // isPrivate: false,
+    isPrivate: false,
+    article_pic: "",
+    key: "",
     tags: [],
   });
   //For child updating tags
@@ -56,6 +63,27 @@ const CreateArticle = () => {
     setArticleInfo({ ...articleInfo, tags: updatedTags });
   };
 
+  useEffect(() => {
+    if (props.location.state && props.location.state.article) {
+      const article = props.location.state.article;
+      const map = {};
+
+      if (article.tags && Array.isArray(article.tags)) {
+        article.tags.forEach((tag) => {
+          map[tag] = Clicked.SELECTED;
+        });
+      }
+
+      console.log("Created Map:", map);
+
+      setArticleInfo({
+        ...article,
+        tags: map,
+      });
+    }
+  }, [props.location.state]);
+
+  console.log(articleInfo);
   const handleInputChange = (event) => {
     setArticleInfo({ ...articleInfo, [event.target.name]: event.target.value });
     console.log(articleInfo);
@@ -75,10 +103,10 @@ const CreateArticle = () => {
         setError(true);
       } else {
         console.log(articleInfo);
-        //put a use callback here
-        const response = await articleAPI.CreateNewArticle(articleInfo, {
-          isPrivate: option,
-        });
+
+        const response = await articleAPI.UpdateArticle(
+          { ...articleInfo, isPrivate: option },
+        );
       }
     }
   };
@@ -181,25 +209,33 @@ const CreateArticle = () => {
                 <FormControlLabel
                   value="PUBLIC"
                   disableRipple
-                  control={<Radio disableRipple />}
+                  control={
+                    <Radio checked={articleInfo["visibility"] === "PUBLIC"} />
+                  }
                   label="Public"
                   name="visibility"
                   onChange={handleInputChange}
                 />
                 <FormControlLabel
                   value="FOLLOWER/SUBSCRIBER ONLY"
-                  control={<Radio />}
+                  disableRipple
+                  control={
+                      <Radio checked={articleInfo["visibility"] === "FOLLOWER/SUBSCRIBER ONLY"} />
+                  }
                   label="Follower/Subscriber only"
                   name="visibility"
                   onChange={handleInputChange}
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   value="PRIVATE"
-                  control={<Radio />}
+                  disableRipple
+                  control={
+                    <Radio checked={articleInfo["visibility"] === "PRIVATE"} />
+                  }
                   label="Private"
                   name="visibility"
                   onChange={handleInputChange}
-                />
+                /> */}
               </RadioGroup>
             </div>
             <span className="article-container-header">Tags</span>
@@ -217,7 +253,10 @@ const CreateArticle = () => {
               </Alert>
             ) : null}
             <div className="article-container-right-tag-list">
-              <TagList updateTags={updateTags} />
+              <TagList
+                updateTags={updateTags}
+                currentTags={articleInfo.tags != null ? articleInfo.tags : null}
+              />
             </div>
             <div
               id="article-options"
@@ -266,4 +305,4 @@ const CreateArticle = () => {
     </ThemeProvider>
   );
 };
-export default CreateArticle;
+export default EditArticle;

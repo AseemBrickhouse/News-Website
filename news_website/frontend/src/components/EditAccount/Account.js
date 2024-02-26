@@ -9,7 +9,6 @@ import {
   withStyles,
   createTheme,
 } from "@material-ui/core";
-import { object } from "prop-types";
 
 const Account = ({ account, edit, updateValue }) => {
     

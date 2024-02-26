@@ -52,7 +52,7 @@ urlpatterns = [
 
         #test article related items
         path("articles/", ArticleView.as_view()),
-        path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail'),
+        path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail/article-update'),
         path("articles/<str:article_id>/bookmark/", BookmarkArticleView.as_view(), name='article-bookmark'),
         path("articles/<str:article_id>/bookmark/<str:bookmark_id>/", BookmarkArticleView.as_view(), name='article-bookmark-id'),
         path("tags/", TagView.as_view(), name='article-tags'),

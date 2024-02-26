@@ -249,6 +249,7 @@ class CreateNewArticle(ObtainAuthToken):
 class UpdateArticle(ObtainAuthToken):
     def put(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
+        print(request.data)
         if (user_account == None):
             return Response({
                 "Err": "User account not found"

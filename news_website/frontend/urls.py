@@ -20,5 +20,6 @@ urlpatterns = [
     path('ArticleError', index),
     path('SavedArticleError', index),
     url(r'Articles/(?P<key>[a-zA-Z0-9]+.*)', index),
+    url(r'Articles/Edit/(?P<key>[a-zA-Z0-9]+.*)', index),
     url(r'Account/People/(?P<key>[a-zA-Z0-9]+.*)', index),
 ]

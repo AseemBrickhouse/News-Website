@@ -124,6 +124,7 @@ class ArticleView(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         token = request.META.get('HTTP_TOKEN')
+        print(request.data)
         user_account = get_user_account(token)
         if user_account:
             article = Article.objects.create(

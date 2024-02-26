@@ -22,7 +22,7 @@ import SavedArticleError from "../../Errors/SavedArticleError";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import AccountPage from "../Account/AccountPage";
 import EditAccount from "../EditAccount/EditAccount";
-
+import EditArticle from "../EditArticle/EditArticle";
 const Routes = (props) => {
   return (
     <React.Fragment>
@@ -60,6 +60,7 @@ const Routes = (props) => {
             path="/SavedArticleError"
             component={SavedArticleError}
           />
+          <Route exact path={"/Articles/Edit/:key"}component={EditArticle}/>
           {/* <Route path ='/Account/Profile'><Account {...props}/></Route> */}
         </Switch>
       </Router>
