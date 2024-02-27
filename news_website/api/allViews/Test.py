@@ -8,6 +8,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.http import JsonResponse
 
+#New Form of writing the api endpoints
+
 
 class ArticleView(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
@@ -124,7 +126,6 @@ class ArticleView(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         token = request.META.get('HTTP_TOKEN')
-        print(request.data)
         user_account = get_user_account(token)
         if user_account:
             article = Article.objects.create(
@@ -132,7 +133,7 @@ class ArticleView(ObtainAuthToken):
                 headline=request.data['headline'],
                 reporter_account=user_account,
                 rating=0,
-                isPrivate=request.data.get('isPrivate')['isPrivate'],
+                isPrivate=request.data['isPrivate'],
                 visibility=request.data['visibility'],
                 article_description=request.data['article_description'],
                 article_body=request.data['article_body'],
@@ -146,16 +147,15 @@ class ArticleView(ObtainAuthToken):
         token = request.META.get('HTTP_TOKEN')
         user_account = get_user_account(token)
         article_id = kwargs['article_id']
-
         if user_account:
             try:
-                article = Article.objects.get(
-                    reporter_account=user_account, key=article_id)
+                article = Article.objects.get(reporter_account=user_account, key=article_id)
                 article.headline = request.data['headline']
                 article.article_description = request.data['article_description']
                 article.article_body = request.data['article_body']
                 article.visibility = request.data['visibility']
                 article.isPrivate = request.data['isPrivate']
+                article.tags = request.data['tags']
                 article.save()
                 return Response({'message': 'Article successfully updated'}, status=status.HTTP_200_OK)
             except Article.DoesNotExist:

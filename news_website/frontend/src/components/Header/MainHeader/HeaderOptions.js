@@ -65,7 +65,7 @@ const HeaderOptions = (props) => {
               <Typography
                 style={{
                   color: "black",
-                  marginLeft: "1vw",
+                  // marginLeft: "1vw",
                   textDecoration: "none",
                 }}
               >
@@ -82,7 +82,7 @@ const HeaderOptions = (props) => {
               <Typography
                 style={{
                   color: "black",
-                  marginLeft: "1vw",
+                  // marginLeft: "1vw",
                   textDecoration: "none",
                 }}
               >
@@ -114,7 +114,7 @@ const HeaderOptions = (props) => {
               <Typography
                 style={{
                   color: "black",
-                  marginLeft: "1vw",
+                  // marginLeft: "1vw",
                   textDecoration: "none",
                 }}
               >
@@ -131,7 +131,7 @@ const HeaderOptions = (props) => {
               <Typography
                 style={{
                   color: "black",
-                  marginLeft: "1vw",
+                  // marginLeft: "1vw",
                   textDecoration: "none",
                 }}
               >
@@ -148,7 +148,7 @@ const HeaderOptions = (props) => {
               <Typography
                 style={{
                   color: "black",
-                  marginLeft: "1vw",
+                  // marginLeft: "1vw",
                   textDecoration: "none",
                 }}
               >

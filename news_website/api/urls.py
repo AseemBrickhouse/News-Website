@@ -26,7 +26,7 @@ urlpatterns = [
         path('HasAccount/', HasAccount.as_view()),
         path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
-        path('CreateNewArticle/', CreateNewArticle.as_view()),
+        # path('CreateNewArticle/', CreateNewArticle.as_view()),
         path('PopularArticles/', PopularArticles.as_view()),
         path('AllArticles/', AllArticles.as_view()),
         path('PopularTags/', PopularTags.as_view()),
@@ -52,14 +52,17 @@ urlpatterns = [
 
         #test article related items
         path("articles/", ArticleView.as_view()),
-        path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail/article-update'),
+        path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail/article-update/article-delete'),
+
         path("articles/<str:article_id>/bookmark/", BookmarkArticleView.as_view(), name='article-bookmark'),
         path("articles/<str:article_id>/bookmark/<str:bookmark_id>/", BookmarkArticleView.as_view(), name='article-bookmark-id'),
+        
         path("tags/", TagView.as_view(), name='article-tags'),
         path("articles/<str:article_id>/comments/", CommentView.as_view(), name='article-comment'),
         path("articles/<str:article_id>/comments/<str:comment_id>/", CommentView.as_view(), name='article-comment-id'),
         path("articles/<str:article_id>/comments/<str:comment_id>/rating/", CommentRatingView.as_view(), name='article-comment-id-rating'),
         path("articles/<str:article_id>/comments/<str:comment_id>/rating/<str:rating_id>/", CommentRatingView.as_view(), name='article-comment-id-rating'),
+        
         path("accounts/<str:account_id>/articles/", AccountArticleView.as_view(), name='account-articles'),
         # path('GetComments/<str:article_key>/', GetComments.as_view(), name="GetComments"),
         # path('PopularUserArticles/', PopularUserArticles, name="PopularUserArticles"),

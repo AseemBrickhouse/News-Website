@@ -51,3 +51,9 @@ Fix api urls (Fixing right now
     account -> update frontend
     
 ) 
+
+Colors : 
+Green: #B2D9C1
+Red (Cardinal): #AD343E
+Yellow (Xanthous): #F2AF29
+tan-ish: #d9cab3

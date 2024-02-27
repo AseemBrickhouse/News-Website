@@ -86,7 +86,6 @@ const EditArticle = (props) => {
   console.log(articleInfo);
   const handleInputChange = (event) => {
     setArticleInfo({ ...articleInfo, [event.target.name]: event.target.value });
-    console.log(articleInfo);
   };
 
   const validateAndSubmit = async (option) => {

@@ -31,6 +31,7 @@ export const CreateNewArticle = async (
   };
   //Extract keys from tag
   const extractedTagKeys = Object.keys(tags);
+  console.log(extractedTagKeys)
   const body = JSON.stringify({
     headline,
     article_description,
@@ -39,6 +40,8 @@ export const CreateNewArticle = async (
     isPrivate,
     tags: extractedTagKeys,
   });
+  console.log(body)
+
   const response = await fetch(url, { method: "POST", headers, body });
   return await response.json();
 };
@@ -53,6 +56,8 @@ export const UpdateArticle = async ({
   tags,
 }) => {
   const url = `${BASE_URL}/api/articles/${key}/`;
+  const extractedTagKeys = Object.keys(tags);
+  console.log(extractedTagKeys)
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -65,11 +70,11 @@ export const UpdateArticle = async ({
     visibility,
     isPrivate,
     key,
-    tags,
+    tags: extractedTagKeys,
   });
-  console.log(body);
+  console.log(extractedTagKeys)
   const response = await fetch(url, { method: "PUT", headers, body });
-  return response.json();
+  // return response.json();
 };
 
 export const GetArticleTags = async () => {
@@ -77,3 +82,16 @@ export const GetArticleTags = async () => {
   const response = await fetch(url, { method: "GET" });
   return response.json();
 };
+
+
+export const DeleteArticle = async({key}) => {
+  const url = `${BASE_URL}/api/articles/${key}/`;
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    token: localStorage?.getItem("token"),
+  }
+  const body = JSON.stringify({key})
+  console.log(body)
+  const response = await fetch(url, { method: "DELETE", headers, body  });
+}

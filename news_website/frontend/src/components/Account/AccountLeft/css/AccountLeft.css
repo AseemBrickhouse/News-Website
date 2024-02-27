@@ -8,3 +8,22 @@
 .bio-text{
     white-space: pre-wrap;
 }
+.articles-delete{
+    color: white;
+    padding: 10px 0 10px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 10px;
+    width: 200%;
+    transition: transform ease 0.2s, box-shadow ease 0.2s; 
+    margin-top: 1vh;
+}
+.articles-delete:hover{
+    padding: 10px 0 10px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    width: 200%;
+    transform: translate(0, -3px);
+    box-shadow: 0 20px 80px -10px #474747;
+}

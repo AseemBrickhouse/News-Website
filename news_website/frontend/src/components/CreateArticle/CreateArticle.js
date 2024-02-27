@@ -75,10 +75,7 @@ const CreateArticle = () => {
         setError(true);
       } else {
         console.log(articleInfo);
-        //put a use callback here
-        const response = await articleAPI.CreateNewArticle(articleInfo, {
-          isPrivate: option,
-        });
+        const response = await articleAPI.CreateNewArticle({...articleInfo}, option);
       }
     }
   };
@@ -193,13 +190,13 @@ const CreateArticle = () => {
                   name="visibility"
                   onChange={handleInputChange}
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   value="PRIVATE"
                   control={<Radio />}
                   label="Private"
                   name="visibility"
                   onChange={handleInputChange}
-                />
+                /> */}
               </RadioGroup>
             </div>
             <span className="article-container-header">Tags</span>
