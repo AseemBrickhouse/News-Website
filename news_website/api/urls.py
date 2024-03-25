@@ -6,6 +6,7 @@ from api.allViews.AccountViews import *
 from api.allViews.FollowViews import *
 from api.allViews.ArticleViews import *
 from api.allViews.CommentViews import *
+from api.allViews.ArticleRatingViews import *
 from api.allViews.Test import *
 
 router = DefaultRouter()
@@ -50,6 +51,11 @@ urlpatterns = [
         path('UpdateComment/', UpdateComment.as_view()),
         path('DeleteComment/', DeleteComment.as_view()),
 
+
+
+        #account
+        path("account/", AccountView.as_view(), name='get-account'),
+        path("account/<str:account_id>/", AccountView.as_view(), name='get-account'),
         #test article related items
         path("articles/", ArticleView.as_view()),
         path("articles/<str:article_id>/", ArticleView.as_view(), name='article-detail/article-update/article-delete'),
@@ -57,9 +63,13 @@ urlpatterns = [
         path("articles/<str:article_id>/bookmark/", BookmarkArticleView.as_view(), name='article-bookmark'),
         path("articles/<str:article_id>/bookmark/<str:bookmark_id>/", BookmarkArticleView.as_view(), name='article-bookmark-id'),
         
+        path("articles/<str:article_id>/rating/", ArticleRatingView.as_view(), name='article-rating'),
+        # path("articles/<str:article_id>/rating/<>", ArticleRatingView.as_view(), name='article-rating'),
         path("tags/", TagView.as_view(), name='article-tags'),
+
         path("articles/<str:article_id>/comments/", CommentView.as_view(), name='article-comment'),
         path("articles/<str:article_id>/comments/<str:comment_id>/", CommentView.as_view(), name='article-comment-id'),
+
         path("articles/<str:article_id>/comments/<str:comment_id>/rating/", CommentRatingView.as_view(), name='article-comment-id-rating'),
         path("articles/<str:article_id>/comments/<str:comment_id>/rating/<str:rating_id>/", CommentRatingView.as_view(), name='article-comment-id-rating'),
         

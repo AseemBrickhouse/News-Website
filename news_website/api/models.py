@@ -101,6 +101,19 @@ class Article(models.Model):
     def str(self):
         return self.reporter_account.FullName
 
+#Same format as comment
+class ArticleRating(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    has_vote = models.BooleanField(default=False)
+    vote_type = models.CharField(max_length=12, default='neutral')
+
+    def __str__(self) -> str:
+        return str(self.account) + 'voted: ' + str(self.has_vote)
+    
+    @property
+    def get_has_vote(self) -> bool:
+        return self.has_vote
 
 class Followers(models.Model):
     account = models.ForeignKey(

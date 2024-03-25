@@ -171,8 +171,8 @@ SECURE_FRAME_DENY               = False
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = "/"
-ACCOUUNT_EMAIL_VERIFICATION = 'none'
-ACCOUUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = 'false'
 
 MEDIA_URL = "/images/"

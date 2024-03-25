@@ -95,3 +95,17 @@ export const DeleteArticle = async({key}) => {
   console.log(body)
   const response = await fetch(url, { method: "DELETE", headers, body  });
 }
+
+export const CreateArticleRating = async (article_key, rating, type) => {
+  const url = `${BASE_URL}/api/articles/${article_key}/rating/`;
+  const headers = {
+    token,
+    "Content-Type": "application/json",
+  };
+  const body = JSON.stringify({
+    rating,
+    type,
+  });
+  const response = await fetch(url, {method: "POST", headers, body})
+  return response;
+}

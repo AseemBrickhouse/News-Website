@@ -80,14 +80,19 @@ class FollowersSerializer(serializers.ModelSerializer):
             'following_user',
             'create',
         )
-
+class ArticleRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArticleRating
+        fields = (
+            'id',
+            'has_vote',
+            'vote_type',
+        )
 class CommentVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentVote
         fields= (
             'id',
-            # 'account',
-            # 'comment',
             'has_vote',
             'vote_type',
         )
