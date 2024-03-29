@@ -2,6 +2,7 @@ import * as actionTypes from "./types";
 import axios from "axios";
 import { getSavedArticles, getSavedLogout } from "./savedArticles";
 import { BASE_URL } from "../baseURLS";
+import * as accountAPI from "../../Services/ApiCalls/AccountApi";
 
 export const authStart = () => {
   return {

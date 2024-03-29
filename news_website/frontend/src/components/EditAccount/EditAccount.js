@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as accountApi from "../ApiCalls/AccountApi";
+import * as accountApi from "../../Services/ApiCalls/AccountApi";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./css/EditAccount.css";

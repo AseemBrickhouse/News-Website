@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as articleAPI from "../ApiCalls/ArticleAPI";
+import * as articleAPI from "../../Services/ApiCalls/TagApi";
 import TagList from "../TagList/TagList";
 
 const useTagFetcher = () => {

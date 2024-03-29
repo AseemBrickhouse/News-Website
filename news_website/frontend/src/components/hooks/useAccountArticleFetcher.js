@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as accountApi from "../ApiCalls/AccountApi";
+import * as accountApi from "../../Services/ApiCalls/AccountApi";
 
 const useAccountArticleFetcher = (account_id) => {
     const [articles, setArticles] = useState([]);

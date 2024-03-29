@@ -7,11 +7,16 @@ import StarIcon from "@mui/icons-material/Star";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 // import * as request from "../ApiCalls/Article";
-import * as request from "../ApiCalls/Bookmark"
+import * as request from "../../Services/ApiCalls/BookmarkApi";
 
 const DEFAULT_PATH = "Article";
 
-const ArticleEntry = ({ article, reporter, articleKey, link = DEFAULT_PATH }) => {
+const ArticleEntry = ({
+  article,
+  reporter,
+  articleKey,
+  link = DEFAULT_PATH,
+}) => {
   const Utility = new Util();
   const [isBookmarked, setBookmarked] = useState(article.isBookmarked);
   const handleBookMark = (key, type) => {
@@ -30,7 +35,10 @@ const ArticleEntry = ({ article, reporter, articleKey, link = DEFAULT_PATH }) =>
           }}
           to={{
             // pathname: "/Articles/" + articleKey + "/",
-            pathname: (link === DEFAULT_PATH) ? "/Articles/" + articleKey + "/" : "/Articles/Edit/" + articleKey + "/",
+            pathname:
+              link === DEFAULT_PATH
+                ? "/Articles/" + articleKey + "/"
+                : "/Articles/Edit/" + articleKey + "/",
             state: {
               articleID: articleKey,
               article: article,

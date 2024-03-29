@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as articleAPI from "../ApiCalls/ArticleAPI";
+import * as articleAPI from "../../Services/ApiCalls/ArticleApi";
 
 const UseArticleFetcher = () => {
     const [articles, setArticles] = useState("");

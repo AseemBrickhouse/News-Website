@@ -153,6 +153,11 @@ class GetPerson(APIView):
 
 
 
+# api/accounts/213/friends/request get account 213 friend requests
+# api/accounts/        get all accounts
+# api/accounts/213/   get account 213
+# api/account/213/current
+
 class AccountView(ObtainAuthToken):
     def get_single_user(self, user_account: Account, account_id: str) -> dict:
         try:

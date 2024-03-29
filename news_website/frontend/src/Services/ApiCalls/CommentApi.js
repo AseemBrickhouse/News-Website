@@ -53,20 +53,17 @@ export const UpdateComment = async (comment_id, article_key, content) => {
   const response = await fetch(url, { method: "PUT", headers, body });
 };
 
-export const GetUserComments = async (first_name, last_name, article_key) => {
-  const url = `${BASE_URL}/api/GetUserComments/`;
+export const GetUserComments = async (account_id, article_key) => {
+  const url = `${BASE_URL}/api/account/${account_id}/comments/${article_key}/`;
   const headers = {
     "Content-Type": "application/json",
-    first_name,
-    last_name,
-    article_key,
   };
   const response = await fetch(url, { method: "GET", headers });
   return response.json();
 };
 
-export const GetChildComments = async (comment_id, article_key) => {
-  const url = `${BASE_URL}/api/GetChildComments/`;
+export const GetChildComments = async (article_key, comment_id) => {
+  const url = `${BASE_URL}/api/${article_key}/comments/${comment_id}/child`;
   const headers = {
     comment_id,
     article_key,
@@ -76,8 +73,8 @@ export const GetChildComments = async (comment_id, article_key) => {
   return response.json();
 };
 
-export const GetParentComments = async (article_key) => {
-  const url = `${BASE_URL}/api/GetParentComments/`;
+export const GetParentComments = async (article_key, comment_id) => {
+  const url = `${BASE_URL}/api/${article_key}/comments/${comment_id}/parent`;
   const headers = {
     article_key,
     "Content-Type": "application/json",
@@ -86,7 +83,12 @@ export const GetParentComments = async (article_key) => {
   return response.json();
 };
 
-export const AddCommentRating = async (comment_id, article_key, rating, type) => {
+export const AddCommentRating = async (
+  comment_id,
+  article_key,
+  rating,
+  type
+) => {
   const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/rating/`;
   const headers = {
     token,
@@ -100,8 +102,13 @@ export const AddCommentRating = async (comment_id, article_key, rating, type) =>
   return response.json();
 };
 
-
-export const UpdateCommentRating = async (comment_id, article_key, rating, type, rating_id) => {
+export const UpdateCommentRating = async (
+  comment_id,
+  article_key,
+  rating,
+  type,
+  rating_id
+) => {
   const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/rating/${rating_id}/`;
   const headers = {
     token,
@@ -114,7 +121,13 @@ export const UpdateCommentRating = async (comment_id, article_key, rating, type,
   const response = await fetch(url, { method: "PUT", headers, body });
 };
 
-export const DeleteCommentRating = async (comment_id, article_key, rating, type, rating_id) => {
+export const DeleteCommentRating = async (
+  comment_id,
+  article_key,
+  rating,
+  type,
+  rating_id
+) => {
   const url = `${BASE_URL}/api/articles/${article_key}/comments/${comment_id}/rating/${rating_id}/`;
   const headers = {
     token,

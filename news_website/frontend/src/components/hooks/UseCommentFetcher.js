@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as commentAPI from "../ApiCalls/Comment";
+import * as commentAPI from "../../Services/ApiCalls/CommentApi";
 
 const UseCommentFetcher = (article) => {
     const [comments, setComments] = useState([])

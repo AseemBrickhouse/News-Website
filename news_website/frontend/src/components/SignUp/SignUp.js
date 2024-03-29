@@ -3,7 +3,7 @@ import * as actions from "../../store/actions/auth";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { styled } from "@material-ui/core/styles";
-import * as request from "../ApiCalls/SignUp";
+import * as accountApi from "../../Services/ApiCalls/AccountApi";
 import {
   Button,
   Box,
@@ -87,7 +87,7 @@ const SignUp = (props) => {
       setError(props.error);
     } else if (!props.loading && props.error == null && props.auth.token != null) {
       const createAccount = async () => {
-        const response = await request.accountCreation(
+        const response = await accountApi.createAccount(
           formFields.first_name,
           formFields.last_name,
           formFields.email,
