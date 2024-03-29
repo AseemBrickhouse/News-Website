@@ -14,11 +14,7 @@ from api.allViews.TagViews import *
 router = DefaultRouter()
 router.register(r'Articles', ArticleViewSet)
 router.register(r'Accounts', AccountViewSet)
-# router.register(r'^GetComments/(?P<article_key>\w{1,50})/$', GetComments)
-# router.register(r'CreateNewArticle/', CreateNewArticle.as_view(), basename='CreateNewArticle')
-# router.register(r'current_user', current_user)
-# router.register(r'rest-auth/registration/', include('rest_auth.registration.urls'))
-#router.register('rest-auth/', include('rest_auth.urls'))
+
 
 urlpatterns = [
         path('APITEST/', APITEST.as_view()),
@@ -29,7 +25,7 @@ urlpatterns = [
         path('AccountCreation/', AccountCreation.as_view()),
         path('EditAccount/', EditAccount.as_view()),
         path('HasAccount/', HasAccount.as_view()),
-        path('current_user/', current_user.as_view()),
+        # path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
         path('PopularArticles/', PopularArticles.as_view()),
         path('AllArticles/', AllArticles.as_view()),

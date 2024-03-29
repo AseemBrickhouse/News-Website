@@ -38,7 +38,6 @@ export const getSavedArticles = (token) =>{
     }
 }
 export const getSavedLogout = () =>{
-    console.log("here")
     return {
         type: actionTypes.GET_SAVED_LOGOUT,
         payload: null

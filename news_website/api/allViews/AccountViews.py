@@ -21,25 +21,24 @@ class HasAccount(ObtainAuthToken):
         }, status=status.HTTP_200_OK)
 
 
-class current_user(ObtainAuthToken):
-    def get(self, request, *args, **kwargs):
-        user_account = get_user_account(request.headers['token'])
-        if (user_account == None):
-            return Response({
-                "Err": "User account not found"
-            },
-                status=status.HTTP_404_NOT_FOUND)
+# class current_user(ObtainAuthToken):
+#     def get(self, request, *args, **kwargs):
+#         user_account = get_user_account(request.headers['token'])
+#         if (user_account == None):
+#             return Response({
+#                 "Err": "User account not found"
+#             },
+#                 status=status.HTTP_404_NOT_FOUND)
 
-        user_data = AccountSerializer(user_account).data
-        print(user_data['profile_pic'])
-        user_data['profile_pic'] = user_data['profile_pic'] if user_data['profile_pic'] != None else "/images/defaultProfilePic.png",
-        user_data['popular_articles'] = PopularUserArticles(user_account)
-        user_data['written_articles'] = len(
-            Article.objects.all().filter(reporter_account=user_account))
-        user_data['followers'] = getFollow(user_account, "FOLLOWERS")
-        user_data['following'] = getFollow(user_account, "FOLLOWING")
+#         user_data = AccountSerializer(user_account).data
+#         user_data['profile_pic'] = user_data['profile_pic'] if user_data['profile_pic'] != None else "/images/defaultProfilePic.png",
+#         user_data['popular_articles'] = PopularUserArticles(user_account)
+#         user_data['written_articles'] = len(
+#             Article.objects.all().filter(reporter_account=user_account))
+#         user_data['followers'] = getFollow(user_account, "FOLLOWERS")
+#         user_data['following'] = getFollow(user_account, "FOLLOWING")
 
-        return Response(user_data)
+#         return Response(user_data)
 
 
 class AllAccounts(ObtainAuthToken):
@@ -201,7 +200,7 @@ class AccountView(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         token = request.headers.get('token')
         user_account = get_user_account(token)
-    
+
         #if we get an account_id then return that person otherwise return everyone(need to CHUNK it)
         try:
             account_id = kwargs['account_id']
@@ -210,6 +209,18 @@ class AccountView(ObtainAuthToken):
                 return Response(account['error'], account['status'])
             return Response(account, status=status.HTTP_200_OK)
         except KeyError:
+            #handles first login for a user to set state on frontend
+            scope = request.headers.get('scope')
+            if scope == 'current-user':
+                account_data = AccountSerializer(user_account).data
+                account_data['profile_pic'] = account_data['profile_pic'] if account_data['profile_pic'] != None else "/images/defaultProfilePic.png",
+                account_data['popular_articles'] = PopularUserArticles(user_account)
+                account_data['written_articles'] = len(Article.objects.all().filter(reporter_account=user_account))
+                account_data['followers'] = getFollow(user_account, "FOLLOWERS")
+                account_data['following'] = getFollow(user_account, "FOLLOWING")
+                return Response(account_data, status=status.HTTP_200_OK)
+            
+
             return Response(self.get_all_users(user_account), status=status.HTTP_200_OK)
 
 
