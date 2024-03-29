@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PublishIcon from "@mui/icons-material/Publish";
 import EditIcon from "@mui/icons-material/Edit";
 import { connect } from "react-redux";
-import * as articleAPI from "../../ApiCalls/ArticleAPI";
+import * as articleAPI from "../../../Services/ApiCalls/ArticleApi";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 

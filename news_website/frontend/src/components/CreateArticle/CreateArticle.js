@@ -10,7 +10,7 @@ import {
   createTheme,
 } from "@material-ui/core";
 import "./css/CreateArticle.css";
-import * as articleAPI from "../ApiCalls/ArticleAPI";
+import * as articleAPI from "../../Services/ApiCalls/ArticleApi";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import PublishOutlinedIcon from "@mui/icons-material/PublishOutlined";
 import TagList from "../TagList/TagList";

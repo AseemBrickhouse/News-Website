@@ -7,7 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 // import * as request from "../ApiCalls/Article";
-import * as request from "../../Services/ApiCalls/BookmarkApi";
+import * as bookmarkAPI from "../../Services/ApiCalls/BookmarkApi";
 
 const DEFAULT_PATH = "Article";
 
@@ -20,7 +20,7 @@ const ArticleEntry = ({
   const Utility = new Util();
   const [isBookmarked, setBookmarked] = useState(article.isBookmarked);
   const handleBookMark = (key, type) => {
-    request.handleBookMark(key, type);
+    bookmarkAPI.handleBookMark(key, type);
     setBookmarked(!isBookmarked);
   };
 
