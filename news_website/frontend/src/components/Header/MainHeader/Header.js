@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import MyAccount from "../../Dashboard/MyAccount";
 import { Link, withRouter } from "react-router-dom";
 
 import { Box } from "@material-ui/core";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ArticleEntry from "../../ArticleEntry/ArticleEntry";
-import useAccountArticleFetcher from "../../hooks/useAccountArticleFetcher";
+import useAccountArticleFetcher from "../../../Hooks/AccountHooks/useAccountArticleFetcher";
 import useArticleFilter from "../../hooks/useArticleFilter";
 import { Box } from "@material-ui/core";
 import "../../CreateArticle/css/CreateArticle.css";

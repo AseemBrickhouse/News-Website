@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import AccountLeft from "./AccountLeft/AccountLeft";
 import AccountRight from "./AccountRight/AccountRight";
 import StickyBox from "react-sticky-box";
-import useAccountArticleFetcher from "../hooks/useAccountArticleFetcher";
+import useAccountArticleFetcher from "../../Hooks/AccountHooks/useAccountArticleFetcher";
 
 const AccountPage = (props) => {
   const { key, person } = props.location.state;
