@@ -50,8 +50,7 @@ Fix api urls (Fixing right now
     articles -> update front end
     account -> update frontend
     
-) 
-
+)
 Colors : 
 Green: #B2D9C1
 Red (Cardinal): #AD343E
