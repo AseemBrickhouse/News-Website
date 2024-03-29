@@ -8,7 +8,7 @@ import * as savedArticleActions from "../../store/actions/savedArticles";
 import TopRated from "./TopRated/TopRated";
 import ArticleEntry from "../ArticleEntry/ArticleEntry";
 import Advertisements from "../Advertisments/Advertisments";
-import UseArticleFetcher from "../hooks/UseArticleFetcher";
+import UseArticleFetcher from "../../Hooks/ArticleHooks/UseArticleFetcher";
 
 const Article = (props) => {
   const { articles, popArticles } = UseArticleFetcher();
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getSavedArticles: (token) =>
-    dispatch(savedArticleActions.getSAVEDARTICLES(token)),
+    dispatch(savedArticleActions.getSavedArticles(token)),
 });
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(Article)

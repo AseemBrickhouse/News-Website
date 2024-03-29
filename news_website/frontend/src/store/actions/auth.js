@@ -1,7 +1,8 @@
 import * as actionTypes from "./types";
 import axios from "axios";
-import { getSAVEDARTICLES, getSAVEDLOGOUT } from "./savedArticles";
+import { getSavedArticles, getSavedLogout } from "./savedArticles";
 import { BASE_URL } from "../baseURLS";
+import * as accountAPI from "../../Services/ApiCalls/AccountApi";
 
 export const authStart = () => {
   return {
@@ -9,94 +10,61 @@ export const authStart = () => {
   };
 };
 
-export const authSUCCESS = (token) => {
+export const authSuccess = (token) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
   };
 };
 
-export const authFAIL = (error) => {
+export const authFail = (error) => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error,
   };
 };
 
-export const getAuthInfoSUCCESS = (account) => {
+export const getAuthInfoSuccess = (account) => {
   return {
-    type: actionTypes.GET_AUTH_ACCOUNT,
+    type: actionTypes.GET_AUTH_INFO_SUCCESS,
     account,
   };
 };
-export const getAuthInfoFAIL = (error) => {
+export const getAuthInfoFail = (error) => {
   return {
-    type: actionTypes.GET_AUTH_ACCOUNT,
+    type: actionTypes.GET_AUTH_INFO_FAIL,
     error: error,
   };
 };
-export const getAuthInfo = (token) => {
-  return (dispatch) => {
-    axios
-      .get(`${BASE_URL}/api/current_user/`, {
-        headers: {
-          token: token,
-        },
-      })
-      .then((response) => {
-        dispatch(getAuthInfoSUCCESS(response.data));
-      });
-  };
-};
-//Couldnt get working
-// export const getAuthEditSuccess = account =>{
-//     return{
-//         type: actionTypes.GET_AUTH_EDIT,
-//         account,
-//     }
-// }
-// export const getAuthEdit = (token) =>{
-//     console.log(token)
-//     return dispatch=>{
-//         axios.post('http://127.0.0.1:8000/EditAccount/',{
-//             token: token,
-//         })
-//         .then(response =>{
-//             console.log(response.data)
-//         })
-//     }
-// }
+
+export const getAuthInfo = ({data}) => ({
+  type: actionTypes.GET_AUTH_ACCOUNT,
+  data,
+});
+
 export const authLogin = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
-    axios
-      .post(`${BASE_URL}/api/rest-auth/login/`, {
-        username: username,
-        password: password,
-      })
+    axios.post(`${BASE_URL}/api/rest-auth/login/`, { username: username, password: password,})
       .then((tokenResponse) => {
         const token = tokenResponse.data.key;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        const config = {
-          headers : {
-            token,
-          }
-        }
-        axios.get(`${BASE_URL}/api/HasAccount`, config)
-        .then((accountResponse) => {
-          localStorage.setItem("token", tokenResponse.data.key);
-          localStorage.setItem("expirationDate", expirationDate);
-          dispatch(getAuthInfo(token));
-          dispatch(authSUCCESS(token));
-          dispatch(getSAVEDARTICLES(token));
-          dispatch(checkTimeout(3600));
-        })
-        .catch((error) => {
-          dispatch(authFAIL(error));
-        })
+        const config = {headers : {token,"scope": 'current-user'}}
+        axios.get(`${BASE_URL}/api/account/`, config)
+          .then((accountResponse) => {
+            localStorage.setItem("token", tokenResponse.data.key);
+            localStorage.setItem("expirationDate", expirationDate);
+            dispatch(getAuthInfoSuccess(accountResponse.data));
+            dispatch(authSuccess(token));
+            dispatch(getSavedArticles(token));
+            dispatch(checkTimeout(3600));
+          })
+          .catch((error) => {
+            dispatch(authFail(error));
+          })
       })
       .catch((error) => {
-        dispatch(authFAIL(error));
+        dispatch(authFail(error));
       });
   };
 };
@@ -117,45 +85,21 @@ export const authSignUp = (username, email, password1, password2) => {
       const response = await fetch(url, { method: "POST", headers, body });
       const data = await response.json();
       if (!response.ok) {
-        dispatch(authFAIL(data))
+        dispatch(authFail(data))
       }else{
         const token = data.key;
         console.log(token);
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("token", token);
         localStorage.setItem("expirationDate", expirationDate);
-        dispatch(authSUCCESS(token));
+        dispatch(authSuccess(token));
         dispatch(checkTimeout(3600));
       }
     } catch (error) {
-      dispatch(authFAIL(error));
+      dispatch(authFail(error));
     }
   };
 };
-
-// const headers = {
-//   method: "POST",
-// };
-// const body = {
-//   username,
-//   email,
-//   password1,
-//   password2,
-// };
-// const getAuth = async (headers, body) => {
-//   const response = await fetch(url, headers, body);
-//   return response.json();
-// };
-// const middle = async (headers, body) => {
-//     return await getAuth(headers, body)
-// }
-// const token = middle(headers, body);
-// console.log(token);
-// if (token) {
-//   const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-//   localStorage.setItem("token", response.data.key);
-//   localStorage.setItem("expirationDate", expirationDate);
-// }
 
 export const checkTimeout = (expirationTime) => {
   return (dispatch) => {
@@ -177,26 +121,22 @@ export const authCheckState = () => {
   return (dispatch) => {
     const token = localStorage.getItem("token");
     if (token == undefined) {
-      dispatch(getAuthInfoSUCCESS("No user currently logged"));
+      dispatch(getAuthInfoSuccess("No user currently logged in."));
       dispatch(authLOGOUT());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
       if (expirationDate <= new Date()) {
         dispatch(authLOGOUT());
       } else {
-        axios
-          .get(`${BASE_URL}/api/current_user/`, {
-            headers: {
-              token: token,
-            },
-          })
+        const config = {headers : {token,"scope": 'current-user'}}
+        axios.get(`${BASE_URL}/api/account/`, config)
           .then((response) => {
-            dispatch(getAuthInfoSUCCESS(response.data));
+            dispatch(getAuthInfoSuccess(response.data));
           })
           .catch((error) => {
-            dispatch(getAuthInfoFAIL(error));
+            dispatch(getAuthInfoFail(error));
           });
-        dispatch(authSUCCESS(token));
+        dispatch(authSuccess(token));
         dispatch(
           checkTimeout((expirationDate.getTime() - new Date().getTime()) / 1000)
         );
@@ -204,14 +144,3 @@ export const authCheckState = () => {
     }
   };
 };
-
-// export const accountCreation = (username, password) =>{
-//     return dispatch => {
-//         axios.get('http://127.0.0.1:8000/api/Accounts/', {
-//             user: username,
-//             password: password
-//         }).then(response =>{
-//             console.log(response);
-//         })
-//     }
-// }

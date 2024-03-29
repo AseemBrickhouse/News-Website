@@ -4,8 +4,8 @@ import "./css/CommentSection.css";
 import Comment from "./Comment";
 import List from "@mui/material/List";
 import AddComment from "./AddComment";
-import * as request from "../ApiCalls/Comment"
-import UseCommentFetcher from "../hooks/UseCommentFetcher";
+import * as request from "../../Services/ApiCalls/CommentApi";
+import UseCommentFetcher from "../../Hooks/CommentHooks/UseCommentFetcher";
 
 const CommentSection = ({ article }) => {
 

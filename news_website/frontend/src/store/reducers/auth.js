@@ -37,26 +37,26 @@ const authLogout = (state, action) => {
     });
 }
 
-const getAuthInfoSUCCESS = (state, action)=>{
+const getAuthInfoSuccess = (state, action)=>{
     return updateObject(state,{
         account: action.account,
     });
 }
 
-//Couldnt get working
-// const getAuthEditSuccess = (state, action) =>{
-//     console.log(action)
-//     return updateObject(state,{
-//         account: action.account,
-//     })
-// }
+const getAuthInfoFail = (state, action) => {
+    return updateObject(state, {
+        error: action.error,
+        loading: false,
+    })
+}
 const reducer = (state=initialState, action) => {
     switch (action.type) {
         case actionTypes.AUTH_START: return authStart(state, action);
         case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);   
         case actionTypes.AUTH_FAIL: return authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
-        case actionTypes.GET_AUTH_ACCOUNT: return getAuthInfoSUCCESS(state, action);
+        case actionTypes.GET_AUTH_INFO_SUCCESS: return getAuthInfoSuccess(state, action);
+        case actionTypes.GET_AUTH_INFO_FAIL: return getAuthInfoFail(state, action)
         //Couldnt get working on main page side
         // case actionTypes.GET_AUTH_EDIT: return getAuthEditSuccess(state, action);
 

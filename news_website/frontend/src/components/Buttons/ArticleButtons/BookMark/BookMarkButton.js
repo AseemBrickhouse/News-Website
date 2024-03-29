@@ -5,7 +5,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import * as request from "../../../Dashboard/Articles/ApiCalls/Requests";
+import * as request from "../../../../Services/ApiCalls/BookmarkApi";
 import { Box } from "@mui/material";
 
 const BookMarkButton = ({article, saved }) => {

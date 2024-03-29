@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import * as request from "../../../Dashboard/Articles/ArticleID/components/RightPanel/Requests";
+// import * as request from "../../../Dashboard/Articles/ArticleID/components/RightPanel/Requests";
 import { Box, Button, Avatar } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 import "./css/ReporterTop.css";
@@ -37,18 +37,19 @@ const ReporterTop = ({ account, reporter }) => {
     setFollowerCount(reporter.followers);
   }, [reporter]);
 
-  const handleunFollow = async (person) => {
-    const response = await request.handleUnFollow(person);
-    reporter = response;
-    setFollowing(reporter.is_following);
-    setFollowerCount(followerCount - 1);
-  };
-  const handleFollow = async (person) => {
-    const response = await request.handleFollow(person);
-    reporter = response;
-    setFollowing(reporter.is_following);
-    setFollowerCount(followerCount + 1);
-  };
+  //TODO: Fix the follow/unfollow
+  // const handleunFollow = async (person) => {
+  //   const response = await request.handleUnFollow(person);
+  //   reporter = response;
+  //   setFollowing(reporter.is_following);
+  //   setFollowerCount(followerCount - 1);
+  // };
+  // const handleFollow = async (person) => {
+  //   const response = await request.handleFollow(person);
+  //   reporter = response;
+  //   setFollowing(reporter.is_following);
+  //   setFollowerCount(followerCount + 1);
+  // };
 
   return (
     reporter && (

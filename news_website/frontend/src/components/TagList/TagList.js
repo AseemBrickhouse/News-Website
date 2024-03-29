@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import useTagFetcher from "../hooks/useTagFetcher";
+import useTagFetcher from "../../Hooks/ArticleHooks/useTagFetcher";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import Popover from '@mui/material/Popover';
 import "./css/TagList.css";
 
 const DELETE_COLOR = "#AD343E";
@@ -12,21 +11,27 @@ const Clicked = Object.freeze({
   UNSELECTED: "unselected",
 });
 
-const TagList = ({ updateTags }) => {
-  const[numberSelected, setNumberSelected] = useState(0)
-  const createMapping = (tags) => {
-    let mapping = {};
-    tags &&
-      tags.forEach((tag) => {
-        mapping[tag] = Clicked.UNSELECTED;
-      });
-    return mapping;
-  };
+const TagList = ({ updateTags, currentTags }) => {
+
   const tags = useTagFetcher().tags;
   const [clickedTag, setClickedTag] = useState({});
 
   useEffect(() => {
-    setClickedTag(createMapping(tags))
+    const createMapping = (tags) => {
+      let mapping = {};
+      tags &&
+        tags.forEach((tag) => {
+          mapping[tag] = Clicked.UNSELECTED;
+        });
+      currentTags &&
+        Object.keys(currentTags).forEach((tag) => {
+          delete mapping[tag];
+          updateTags(tag, Clicked.SELECTED);
+        });
+      return { ...currentTags, ...mapping };
+    };
+
+    setClickedTag(createMapping(tags));
   }, [tags]);
 
   const toggleTagSelection = (key) => {
@@ -37,16 +42,13 @@ const TagList = ({ updateTags }) => {
 
   const handleChipClick = (key) => {
     const op = toggleTagSelection(key);
-    if(op === Clicked.SELECTED){
-      delete clickedTag[key]
-      setClickedTag({[key]: op, ...clickedTag})
-    }else{
-      delete clickedTag[key]
-      setClickedTag({...clickedTag, [key]: op})
-    }
+    setClickedTag((prevClickedTag) => {
+      const newClickedTag = { ...prevClickedTag };
+      delete newClickedTag[key];
+      return { [key]: op, ...newClickedTag };
+    });
     updateTags(key, op);
   };
-  
 
   return (
     <Stack
@@ -81,4 +83,10 @@ const TagList = ({ updateTags }) => {
     </Stack>
   );
 };
+
+// TagList.propTypes = {
+//   updateTags: PropTypes.func.isRequired,
+//   currentTags: PropTypes.object.isRequired,
+// };
+
 export default TagList;

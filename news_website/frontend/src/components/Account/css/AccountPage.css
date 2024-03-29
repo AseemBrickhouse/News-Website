@@ -1,0 +1,36 @@
+.account-page-container{
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    margin: auto;
+    margin-top: 5vh;
+    /* justify-content: center; */
+}
+.account-page-header{
+
+}
+.account-page-middle{
+
+}
+.account-page-middle-avatar{
+    position: absolute;
+    margin-left: 5%;
+    margin-top: -5%;
+}
+.account-page-content{
+
+}
+.main-container-rightpanel{
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    /* height: 90vh; */
+    margin-top: 1px;
+    margin-left: 1vw;
+}
+.main-container-leftpanel{
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    height: auto;
+}

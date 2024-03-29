@@ -3,23 +3,25 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Routes from "./Home/Routes";
 import { connect } from "react-redux";
 import * as authActions from "../store/actions/auth";
-import * as articleActions from "../store/actions/article";
 import * as savedAction from "../store/actions/savedArticles";
+import theme from "./ThemeWrapper";
+import { ThemeProvider } from "@mui/material/styles";
 
 export const App = (props) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage?.getItem("token");
   useEffect(() => {
     props.AutoTrySignUp();
-    props.AllArticles(token, []);
     props.SavedArticles(token);
   }, []);
 
   return (
-    <React.Fragment>
-      <Router>
-        <Routes {...props} />
-      </Router>
-    </React.Fragment>
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        <Router>
+          <Routes {...props} />
+        </Router>
+      </React.Fragment>
+    </ThemeProvider>
   );
 };
 const mapStateToProps = (state) => {
@@ -32,8 +34,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     AutoTrySignUp: () => dispatch(authActions.authCheckState()),
-    AllArticles: (token, tags) => dispatch(articleActions.getARTICLES(token, tags)),
-    SavedArticles: (token) => dispatch(savedAction.getSAVEDARTICLES(token)),
+    SavedArticles: (token) => dispatch(savedAction.getSavedArticles(token)),
   };
 };
 

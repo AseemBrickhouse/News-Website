@@ -21,25 +21,24 @@ class HasAccount(ObtainAuthToken):
         }, status=status.HTTP_200_OK)
 
 
-class current_user(ObtainAuthToken):
-    def get(self, request, *args, **kwargs):
-        user_account = get_user_account(request.headers['token'])
-        if (user_account == None):
-            return Response({
-                "Err": "User account not found"
-            },
-                status=status.HTTP_404_NOT_FOUND)
+# class current_user(ObtainAuthToken):
+#     def get(self, request, *args, **kwargs):
+#         user_account = get_user_account(request.headers['token'])
+#         if (user_account == None):
+#             return Response({
+#                 "Err": "User account not found"
+#             },
+#                 status=status.HTTP_404_NOT_FOUND)
 
-        user_data = AccountSerializer(user_account).data
-        print(user_data['profile_pic'])
-        user_data['profile_pic'] = user_data['profile_pic'] if user_data['profile_pic'] != None else "/images/defaultProfilePic.png",
-        user_data['popular_articles'] = PopularUserArticles(user_account)
-        user_data['written_articles'] = len(
-            Article.objects.all().filter(reporter_account=user_account))
-        user_data['followers'] = getFollow(user_account, "FOLLOWERS")
-        user_data['following'] = getFollow(user_account, "FOLLOWING")
+#         user_data = AccountSerializer(user_account).data
+#         user_data['profile_pic'] = user_data['profile_pic'] if user_data['profile_pic'] != None else "/images/defaultProfilePic.png",
+#         user_data['popular_articles'] = PopularUserArticles(user_account)
+#         user_data['written_articles'] = len(
+#             Article.objects.all().filter(reporter_account=user_account))
+#         user_data['followers'] = getFollow(user_account, "FOLLOWERS")
+#         user_data['following'] = getFollow(user_account, "FOLLOWING")
 
-        return Response(user_data)
+#         return Response(user_data)
 
 
 class AllAccounts(ObtainAuthToken):
@@ -150,3 +149,142 @@ class GetPerson(APIView):
             Article.objects.all().filter(reporter_account=personObject))
 
         return Response(person)
+
+
+
+# api/accounts/213/friends/request get account 213 friend requests
+# api/accounts/        get all accounts
+# api/accounts/213/   get account 213
+# api/account/213/current
+
+class AccountView(ObtainAuthToken):
+    def get_single_user(self, user_account: Account, account_id: str) -> dict:
+        try:
+            account_query = Account.objects.get(key=account_id)
+            account_data = AccountSerializer(account_query).data
+            account_data['followers'] = count_followers_or_following(account_query, "FOLLOWERS")
+            if user_account:
+                try:
+                    Followers.objects.get(account=user_account, following_user=account_query)
+                    account_data['is_following'] = True
+                except Followers.DoesNotExist:
+                    account_data['is_following'] = False
+            account_data['written_articles'] = len(Article.objects.all().filter(reporter_account=account_query))
+            # print(account_data)
+            return {account_data['key']: account_data}
+        except Account.DoesNotExist:
+            error = {
+                "error": "Account does not exists",
+                "status": status.HTTP_404_NOT_FOUND,
+            }
+            return error
+
+    def get_all_users(self, user_account: Account) -> dict:
+        account_query = Account.objects.all().exclude(key=user_account.key)
+        queryset = {}
+        for account in account_query:
+            account_data = AccountSerializer(account).data
+            account_data['written_articles'] = len(Article.objects.all().filter(reporter_account=account))
+            account_data['followers'] = getFollow(account, "FOLLOWERS")
+            try:
+                Followers.objects.get(account=user_account,following_user=account,)
+                account_data['is_following'] = True
+            except Followers.DoesNotExist:
+                account_data['is_following'] = False
+
+            queryset[account_data['key']] = account_data
+        return queryset
+
+    #Need to refactor
+
+    def get(self, request, *args, **kwargs):
+        token = request.headers.get('token')
+        user_account = get_user_account(token)
+
+        #if we get an account_id then return that person otherwise return everyone(need to CHUNK it)
+        try:
+            account_id = kwargs['account_id']
+            account = self.get_single_user(user_account, account_id)
+            if 'error' in account:
+                return Response(account['error'], account['status'])
+            return Response(account, status=status.HTTP_200_OK)
+        except KeyError:
+            #handles first login for a user to set state on frontend
+            scope = request.headers.get('scope')
+            if scope == 'current-user':
+                account_data = AccountSerializer(user_account).data
+                account_data['profile_pic'] = account_data['profile_pic'] if account_data['profile_pic'] != None else "/images/defaultProfilePic.png",
+                account_data['popular_articles'] = PopularUserArticles(user_account)
+                account_data['written_articles'] = len(Article.objects.all().filter(reporter_account=user_account))
+                account_data['followers'] = getFollow(user_account, "FOLLOWERS")
+                account_data['following'] = getFollow(user_account, "FOLLOWING")
+                return Response(account_data, status=status.HTTP_200_OK)
+            
+
+            return Response(self.get_all_users(user_account), status=status.HTTP_200_OK)
+
+
+    def post(self, request, *args, **kwargs):
+        token = token = request.headers.get('token')
+        token_obj = Token.objects.get(key=token)
+
+        if token_obj == None:
+            return Response({
+                "error": "Token not found"
+            },
+                status=status.HTTP_404_NOT_FOUND)
+
+        current_user_object = User.objects.get(id=token.user_id)
+        try:
+            account = Account.objects.get(
+                email=request.data['email'],
+            )
+            return Response({
+                "error": "Email already in user",
+            },
+                status=status.HTTP_400_BAD_REQUEST)
+
+        except Account.DoesNotExist:
+            account = Account.objects.create(
+                user=current_user_object,
+                key=AccountKeyGen(3),
+                first_name=request.data['first_name'],
+                last_name=request.data['last_name'],
+                email=request.data['email'],
+                profile_pic="/images/defaultProfilePic.png"
+            )
+            account.save()
+            return Response(AccountSerializer(account).data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *args, **kwargs):
+        token = request.headers.get('token')
+        user_account = get_user_account(token)
+        try:
+            account_query = Account.objects.get(account=user_account)
+            account_query.delete()
+            return Response({"error": "Account successfully deleted"}, status=status.HTTP_204_NO_CONTENT)
+        except Account.DoesNotExist:
+            return Response({"error": "Account does not exists"}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, *args, **kwargs):
+        token = request.headers.get('token')
+        user_account = get_user_account(token)
+        if user_account == None:
+            return Response({
+                "error": "User account not found"
+            },
+                status=status.HTTP_404_NOT_FOUND)
+
+        Account.objects.filter(key=user_account.key).update(
+            first_name=request.data['first_name'] if request.data['first_name'] != "" else user_account.account.first_name,
+            last_name=request.data['last_name'] if request.data['last_name'] != "" else user_account.account.last_name,
+            phone=request.data['phone'] if request.data['phone'] != "" else user_account.account.phone,
+            bio=request.data['bio'] if request.data['bio'] != "" else user_account.account.bio,
+            email=request.data['email'] if request.data['email'] != "" else user_account.account.email,
+            occupation=request.data['occupation'] if request.data["occupation"] != "" else user_account.account.email,
+        )
+
+        return Response(
+            AccountSerializer(user_account.account).data,
+            status=status.HTTP_202_ACCEPTED,
+        )

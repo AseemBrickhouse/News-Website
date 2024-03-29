@@ -220,6 +220,7 @@ class PopularArticles(APIView):
 
 class CreateNewArticle(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        print(request.data['tags'])
         user_account = get_user_account(request.data.get('token'))
         if (user_account == None):
             return Response({
@@ -236,7 +237,7 @@ class CreateNewArticle(ObtainAuthToken):
             visibility=request.data['visibility'],
             article_description=request.data['article_description'],
             article_body=request.data['article_body'],
-            tags=None,
+            tags=request.data['tags'],
         )
         article.save()
         return Response({
@@ -248,6 +249,8 @@ class CreateNewArticle(ObtainAuthToken):
 
 class UpdateArticle(ObtainAuthToken):
     def put(self, request, *args, **kwargs):
+        print("asdiashbd")
+        print(request.data['tags'])
         user_account = get_user_account(request.headers['token'])
         if (user_account == None):
             return Response({
@@ -256,13 +259,15 @@ class UpdateArticle(ObtainAuthToken):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        Article.objects.filter(reporter_account=user_account, key=request.data['key']).update(
+        article = Article.objects.filter(reporter_account=user_account, key=request.data['key']).update(
             headline=request.data['headline'],
             article_description=request.data['article_description'],
             article_body=request.data['article_body'],
             visibility=request.data['visibility'],
             isPrivate=request.data['isPrivate'],
+            tags=request.data['tags'],
         )
+        print(article)
         return Response({
             "Message": "Article successfully update!"
         },
@@ -279,8 +284,14 @@ class DeleteArticle(APIView):
             },
                 status=status.HTTP_404_NOT_FOUND
             )
-        article = Article.objects.all().filter(reporter_account=user_account,key=request.data['key']).delete()
-        return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+        article_key = request.data['key']
+        try: 
+            article = Article.objects.all().filter(reporter_account=user_account,key=article_key)
+            article.delete()
+            return Response(request.data, status=status.HTTP_204_NO_CONTENT)
+        except Article.DoesNotExist:
+            return Response({"Error": "No matching article to delete with AccountKey:{user_account.key} + ArticleKey: {article_key}"}, 
+                            status=status.HTTP_404_NOT_FOUND)
 
 # class PopularTags(APIView):
 #     def get(self, request, *args, **kwargs):
@@ -379,7 +390,6 @@ class MyBookmarkedArticles(ObtainAuthToken):
         return Response(queryset, status=status.HTTP_200_OK)
 
 
-#Unused
 class SavedArticles(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])

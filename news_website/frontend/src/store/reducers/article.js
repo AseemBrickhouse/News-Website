@@ -2,13 +2,12 @@ import * as actionTypes from '../actions/types';
 import { updateObject } from '../utility';
 
 const initialState = {
-    allArticles: [],
     popArticles: [],
     error: null, 
     loading: false
 }
 
-const startGETARTICLES = (state, action)=>{
+const getArticleStart = (state, action)=>{
     return updateObject(state,{
         error: null,
         loading: true,
@@ -18,7 +17,6 @@ const startGETARTICLES = (state, action)=>{
 const GETARTICLESSUCCESS = (state, action)=>{
     // console.log(state, action)
     return updateObject(state,{
-        allArticles: action.allArticles,
         popArticles: action.popArticles,
         error: null,
         loading: false,
@@ -35,10 +33,8 @@ const GETARTICLESFAIL = (state, action)=>{
 const reducer = (state=initialState, action) => {
     // console.log(action)
     switch (action.type) {
-        case actionTypes.GET_ARTICLES_START: return startGETARTICLES(state, action);
         case actionTypes.GET_ARTICLES_SUCCESS: return GETARTICLESSUCCESS(state, action);
         case actionTypes.GET_ARTICLES_FAIL: return GETARTICLESFAIL(state, action);
-
         default:
             return state;
     }

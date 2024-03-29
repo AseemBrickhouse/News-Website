@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import * as commentAPI from '../../ApiCalls/Comment'
+import * as commentAPI from "../../../Services/ApiCalls/CommentApi";
 import "./css/ScoreCard.css";
 
 const ScoreCard = ({comment_id, article_key, comment_rating, comment_vote}) => {

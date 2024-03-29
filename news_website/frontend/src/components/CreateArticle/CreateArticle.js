@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import {
   Input,
@@ -10,7 +10,7 @@ import {
   createTheme,
 } from "@material-ui/core";
 import "./css/CreateArticle.css";
-import * as articleAPI from "../ApiCalls/ArticleAPI";
+import * as articleAPI from "../../Services/ApiCalls/ArticleApi";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import PublishOutlinedIcon from "@mui/icons-material/PublishOutlined";
 import TagList from "../TagList/TagList";
@@ -75,9 +75,7 @@ const CreateArticle = () => {
         setError(true);
       } else {
         console.log(articleInfo);
-        const response = await articleAPI.CreateNewArticle(articleInfo, {
-          isPrivate: option,
-        });
+        const response = await articleAPI.CreateNewArticle({...articleInfo}, option);
       }
     }
   };
@@ -192,13 +190,13 @@ const CreateArticle = () => {
                   name="visibility"
                   onChange={handleInputChange}
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   value="PRIVATE"
                   control={<Radio />}
                   label="Private"
                   name="visibility"
                   onChange={handleInputChange}
-                />
+                /> */}
               </RadioGroup>
             </div>
             <span className="article-container-header">Tags</span>
