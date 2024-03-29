@@ -5,7 +5,7 @@ import Comment from "./Comment";
 import List from "@mui/material/List";
 import AddComment from "./AddComment";
 import * as request from "../../Services/ApiCalls/CommentApi";
-import UseCommentFetcher from "../hooks/UseCommentFetcher";
+import UseCommentFetcher from "../../Hooks/CommentHooks/UseCommentFetcher";
 
 const CommentSection = ({ article }) => {
 

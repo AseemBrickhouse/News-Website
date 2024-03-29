@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ArticleEntry from "../../ArticleEntry/ArticleEntry";
 import useAccountArticleFetcher from "../../../Hooks/AccountHooks/useAccountArticleFetcher";
-import useArticleFilter from "../../hooks/useArticleFilter";
+import useArticleFilter from "../../../Hooks/ArticleHooks/useArticleFilter";
 import { Box } from "@material-ui/core";
 import "../../CreateArticle/css/CreateArticle.css";
 import DeleteIcon from "@mui/icons-material/Delete";
