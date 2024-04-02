@@ -13,7 +13,7 @@ const CustomTabPanel = (props) => {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography style={{alignItems: "flex-end"}}>{children}</Typography>
         </Box>
       )}
     </div>

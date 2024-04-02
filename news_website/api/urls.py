@@ -23,7 +23,7 @@ urlpatterns = [
 
         #ALL OF THESE NEED TO GO
         path('AccountCreation/', AccountCreation.as_view()),
-        path('EditAccount/', EditAccount.as_view()),
+        # path('EditAccount/', EditAccount.as_view()),
         path('HasAccount/', HasAccount.as_view()),
         # path('current_user/', current_user.as_view()),
         path('AllUserArticles/', AllUserArticles.as_view()),
@@ -39,14 +39,14 @@ urlpatterns = [
         path('MyBookmarkedArticles/', MyBookmarkedArticles.as_view()),
         path('SavedArticles/', SavedArticles.as_view()),
         path('GetUserArticles/', GetUserArticles.as_view()),
-        path('GetPerson/', GetPerson.as_view()),
+        # path('GetPerson/', GetPerson.as_view()),
         # path('HandleBookmark/', HandleBookmark.as_view()),
         path('GetArticle/', GetArticle.as_view()),
         path('UpdateRating/', UpdateRating.as_view()),
 
 
         #Account
-        path("account/", AccountView.as_view(), name='get-account'),
+        path("account/", AccountView.as_view(), name='get-post-account'),
         path("account/<str:account_id>/", AccountView.as_view(), name='get-account'),
         path("account/<str:account_id>/articles/", AccountArticleView.as_view(), name='account-articles'),
         path("account/<str:account_id>/comments/", GetUserComments.as_view(), name='user-comments'),

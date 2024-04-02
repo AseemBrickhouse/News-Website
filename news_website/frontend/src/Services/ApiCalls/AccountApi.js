@@ -12,7 +12,7 @@ export const getUserArticles = async (account_id) => {
 };
 
 export const createAccount = async(first_name, last_name, email, token) => {
-  const url = `${BASE_URL}/api/AccountCreation/`;
+  const url = `${BASE_URL}/api/account/`;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -27,28 +27,24 @@ export const createAccount = async(first_name, last_name, email, token) => {
   return response;
 }
 
-export const GetPerson = async (person) => {
-  const url = `${BASE_URL}/api/GetPerson`
+export const getAllUsers = async() => {
+  const url = `${BASE_URL}/api/account/`
+  const headers = {
+    'Accept':'application/json',
+    'Content-Type': 'application/json',
+    'token': localStorage.getItem('token'),
+}
+  const response = await fetch(url, {method: "GET", headers})
+  return response.json();
+}
+export const GetPerson = async (account_id) => {
+  const url = `${BASE_URL}/api/account/${account_id}/`
   const headers = {
       'Accept':'application/json',
       'Content-Type': 'application/json',
       'token': localStorage.getItem('token'),
-      'firstName': person.first_name,
-      'lastName': person.last_name,
-      'email': person.email,
   }
-  const response = await fetch(url, {method: "GET", header})
-  // const response = await fetch("/api/GetPerson/", {
-  //   method: "GET",
-  //   headers: {
-  //     'Accept':'application/json',
-  //     'Content-Type': 'application/json',
-  //     'token': localStorage.getItem('token'),
-  //     'firstName': person.first_name,
-  //     'lastName': person.last_name,
-  //     'email': person.email,
-  //   },
-  // });
+  const response = await fetch(url, {method: "GET", headers})
   return response.json();
 };
 
@@ -61,14 +57,27 @@ export const GetReporterArticles = async (person) => {
       token: localStorage?.getItem('token')
   }
   const response = await fetch(url, {method: "GET", headers})
-  // const response = await fetch("/api/GetUserArticles/", {
-  //   method: "GET",
-  //   headers: {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //     key: person.key,
-  //     token: localStorage?.getItem('token')
-  //   },
-  // });
   return response.json();
 };
+
+export const EditAccount = async(account) =>{
+  console.log(account)
+  const url = `${BASE_URL}/api/account/`
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    token: localStorage?.getItem('token')
+  }
+  console.log(localStorage?.getItem('token'))
+  const body = JSON.stringify({
+    "first_name":account.first_name,
+    "last_name": account.last_name,
+    "phone": account.phone,
+    "bio": account.bio,
+    "email": account.email,
+    "occupation": account.occupation,
+  })
+  console.log(body)
+  const response = await fetch(url, {method: "PUT", headers, body});
+  return response.json();
+}

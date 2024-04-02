@@ -33,6 +33,7 @@ const Routes = (props) => {
           <Route exact path={"/Account/People/:key"} component={AccountPage} />
           <Route exact path="/AuthError" component={AuthError} />
           <Route exact path="/ArticleError" component={ArticleError} />
+          <Route exact path="/Account/EditAccount" component={EditAccount}/>
           <Route
             exact
             path="/SavedArticleError"

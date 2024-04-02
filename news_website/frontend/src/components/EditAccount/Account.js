@@ -1,22 +1,57 @@
 import React, { useState, useEffect } from "react";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { styled } from "@material-ui/core/styles";
-import {
-  Button,
-  Box,
-  Container,
-  TextField,
-  withStyles,
-  createTheme,
-} from "@material-ui/core";
+import { TextField, withStyles, createTheme } from "@material-ui/core";
+import useKeyDebounce from "../../Hooks/GeneralHooks/useKeyDebounce";
 
-const Account = ({ account, edit, updateValue }) => {
-    
-    console.log(edit)
-  const [update, setUpdate] = useState(account);
-  useEffect(() => {
-    setUpdate(account);
-  }, [account]);
+const CssTextField = withStyles({
+  root: {
+    //   "& .MuiInputBast-input": {
+    //     asterisk: "red",
+    //   },
+    "& label.Mui-focused": {
+      color: "#F2AF29",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#F2AF29",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#F2AF29",
+      },
+      "&:hover fieldset": {
+        borderColor: "#F2AF29",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#F2AF29",
+      },
+      "& .MuiFormControl-root": {
+        width: "100%",
+      },
+    },
+  },
+})(TextField);
+
+const Account = ({ account, isEditing, updateValue }) => {
+  const [accountData, setAccountData] = useState(account);
+  const [updateKey, setUpdateKey] = useState(null);
+
+  const [originalAccountData, setOriginalAccountData] = useState(account);
+
+  const { debouncedKey, debouncedValue } = useKeyDebounce(
+    accountData[updateKey],
+    updateKey,
+    500
+  );
+
+  const entries = [
+    { label: "First name", key: "first_name", autoComplete: "firstName" },
+    { label: "Last name", key: "last_name", autoComplete: "lastName" },
+    { label: "Email", key: "email", autoComplete: "email" },
+    { label: "Occupation", key: "occupation", autoComplete: "occupation" },
+    { label: "Phone Number", key: "phone", autoComplete: "phoneNumber" },
+  ];
+
   const theme = createTheme({
     overrides: {
       MuiFormLabel: {
@@ -29,136 +64,45 @@ const Account = ({ account, edit, updateValue }) => {
       },
     },
   });
-  const CssTextField = withStyles({
-    root: {
-      //   "& .MuiInputBast-input": {
-      //     asterisk: "red",
-      //   },
-      "& label.Mui-focused": {
-        color: "#F2AF29",
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "#F2AF29",
-      },
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-          borderColor: "#F2AF29",
-        },
-        "&:hover fieldset": {
-          borderColor: "#F2AF29",
-        },
-        "&.Mui-focused fieldset": {
-          borderColor: "#F2AF29",
-        },
-        "& .MuiFormControl-root": {
-          width: "100%",
-        },
-      },
-    },
-  })(TextField);
 
-  //TODO: convert this to loop through each value and print it out
-  const generateEntries = () => {
-    Object.entries(account).map(([k, v]) => {
-      return (
-        <div key={k} className="account-right-tab-entry">
-          <span className="entry-header">First name: </span>
-          <CssTextField
-            name="First Name"
-            required
-            id="firstName"
-            variant="outlined"
-            label={update.first_name}
-            color="#F2AF29"
-            autoComplete="firstName"
-          />
-        </div>
-      );
-    });
+  useEffect(() => {
+    if (isEditing && debouncedKey !== null) {
+      setAccountData((prevState) => ({
+        ...prevState,
+        [debouncedKey]: debouncedValue,
+      }));
+      updateValue(debouncedKey, debouncedValue)
+    }
+
+  }, [debouncedKey, debouncedValue]);
+
+  const handleInputChange = (e, key) => {
+    const { value } = e.target;
+    setAccountData({ ...accountData, [key]: value });
+    setUpdateKey(key);
   };
 
   return (
     <MuiThemeProvider theme={theme}>
-      <div className="account-right-tab-entry">
-        <span className="entry-header">First name: </span>
-        {edit ? (
-          <CssTextField
-            name="First Name"
-            required
-            id="firstName"
-            variant="outlined"
-            label={update.first_name}
-            color="#F2AF29"
-            autoComplete="firstName"
-          />
-        ) : (
-          <span>{update.first_name}</span>
-        )}
-      </div>
-      <div className="account-right-tab-entry">
-        <span className="entry-header">Last name: </span>
-        {edit ? (
-          <CssTextField
-            name="Last Name"
-            required
-            id="lastName"
-            variant="outlined"
-            label={update.last_name}
-            color="#F2AF29"
-            autoComplete="lastName"
-          />
-        ) : (
-          <span>{update.last_name}</span>
-        )}
-      </div>
-      <div className="account-right-tab-entry">
-        <span className="entry-header">Email: </span>
-        {edit ? (
-          <CssTextField
-            name="Email"
-            required
-            id="Email"
-            variant="outlined"
-            label={update.email}
-            color="#F2AF29"
-            autoComplete="email"
-          />
-        ) : (
-          <span>{update.first_name}</span>
-        )}
-      </div>
-      <div className="account-right-tab-entry">
-        <span className="entry-header">Occupation: </span>
-        {edit ? (
-          <CssTextField
-            name="Occupation"
-            required
-            id="Occupation"
-            variant="outlined"
-            label={update.occupation}
-            color="#F2AF29"
-            autoComplete="occupation"
-          />
-        ) : (
-          <span>{update.occupation}</span>
-        )}
-      </div>
-      <div className="account-right-tab-entry">
-        <span className="entry-header">Phone Number: </span>
-        {edit ? (
-          <CssTextField
-            name="Phone Number"
-            required
-            id="phoneNumber"
-            variant="outlined"
-            label={update.phone}
-            color="#F2AF29"
-            autoComplete="phoneNumber"
-          />
-        ) : (
-          <span>{update.phone}</span>
-        )}
-      </div>
+      {entries.map((entry) => (
+        <div className="account-right-tab-entry" key={entry.key}>
+          <span className="entry-header">{entry.label}: </span>
+          {isEditing ? (
+            <CssTextField
+              name={entry.label}
+              required
+              id={entry.key}
+              variant="outlined"
+              label={originalAccountData[entry.key]}
+              color="#F2AF29"
+              autoComplete={entry.autoComplete}
+              onChange={(e) => handleInputChange(e, entry.key)}
+            />
+          ) : (
+            <span>{originalAccountData[entry.key]}</span>
+          )}
+        </div>
+      ))}
     </MuiThemeProvider>
   );
 };
