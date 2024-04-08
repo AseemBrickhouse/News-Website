@@ -6,10 +6,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "../CustomTab/CustomTab";
 import Account from "./Account";
-import { Box, Button, Avatar } from "@material-ui/core";
-import { styled } from "@material-ui/core/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import EditOffIcon from "@mui/icons-material/EditOff";
 import { EditAccountButton } from "../Buttons/EditAccount/EditAccountButton";
 import * as accountApi from "../../Services/ApiCalls/AccountApi";
 import * as authActions from "../../store/actions/auth";
@@ -21,7 +17,12 @@ const EditAccount = ({ account, ...props}) => {
   const [updateAccountData, setUpdateAccountData] = useState(account)
 
   useEffect(()=>{
-    setAccountData(account)
+    if(isEditing){
+      setAccountData(updateAccountData)
+      setIsEditing(!isEditing)
+    }else{
+      setAccountData(account)
+    }
   },[account])
 
   const [tab, setTab] = useState(0);
@@ -31,14 +32,11 @@ const EditAccount = ({ account, ...props}) => {
   const updateValue = (key, value) => {
     setUpdateAccountData({...updateAccountData, [key]: value})
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if(isEditing){
-      const response = accountApi.EditAccount(updateAccountData)
+      await accountApi.EditAccount(updateAccountData)
       setAccountData(updateAccountData)
-      props.updateStateAccountInformation()
-      setIsEditing(!isEditing)
-    }else{
-      console.log(accountData);
+      props.updateStateAccountInformation(updateAccountData)
     }
   };
   function a11yProps(index) {
@@ -92,7 +90,7 @@ const EditAccount = ({ account, ...props}) => {
       </div>
       <div className="account-middle-tab-panel">
         <CustomTabPanel value={tab} index={0}>
-          <Account account={accountData} isEditing={isEditing} updateValue={updateValue} />
+          <Account account={account} isEditing={isEditing} updateValue={updateValue} />
         </CustomTabPanel>
         <CustomTabPanel value={tab} index={1}></CustomTabPanel>
       </div>
@@ -140,7 +138,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateStateAccountInformation: () => dispatch(authActions.authCheckState()),
+    updateStateAccountInformation: (updateAccountData) => dispatch(authActions.updateAuthInformation(updateAccountData)),
   };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditAccount));

@@ -144,3 +144,14 @@ export const authCheckState = () => {
     }
   };
 };
+
+export const updateAuthInformation = (updatedAccountInformation) => {
+  return (dispatch) => {
+    const expirationDate = new Date(localStorage.getItem("expirationDate"));
+    if (expirationDate <= new Date()) {
+      dispatch(authLOGOUT());
+    }
+    dispatch(getAuthInfoSuccess(updatedAccountInformation))
+    dispatch(checkTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+  }
+}

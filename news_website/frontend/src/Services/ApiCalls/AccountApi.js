@@ -68,7 +68,6 @@ export const EditAccount = async(account) =>{
     "Content-Type": "application/json",
     token: localStorage?.getItem('token')
   }
-  console.log(localStorage?.getItem('token'))
   const body = JSON.stringify({
     "first_name":account.first_name,
     "last_name": account.last_name,
@@ -77,7 +76,6 @@ export const EditAccount = async(account) =>{
     "email": account.email,
     "occupation": account.occupation,
   })
-  console.log(body)
   const response = await fetch(url, {method: "PUT", headers, body});
   return response.json();
 }

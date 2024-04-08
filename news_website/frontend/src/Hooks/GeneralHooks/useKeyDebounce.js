@@ -7,9 +7,10 @@ function useKeyDebounce(value, key, delay) {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
-      setDebouncedKey(key);
     }, delay);
 
+    setDebouncedKey(key);
+    
     return () => {
       clearTimeout(handler);
     };

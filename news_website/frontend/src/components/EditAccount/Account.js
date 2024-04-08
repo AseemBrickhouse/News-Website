@@ -41,7 +41,7 @@ const Account = ({ account, isEditing, updateValue }) => {
   const { debouncedKey, debouncedValue } = useKeyDebounce(
     accountData[updateKey],
     updateKey,
-    500
+    50
   );
 
   const entries = [
@@ -55,15 +55,19 @@ const Account = ({ account, isEditing, updateValue }) => {
   const theme = createTheme({
     overrides: {
       MuiFormLabel: {
-        // asterisk: {
-        //   color: "#AD343E",
-        //   "&$error": {
-        //     color: "#AD343E",
-        //   },
-        // },
+        asterisk: {
+          color: "#AD343E",
+          "&$error": {
+            color: "#AD343E",
+          },
+        },
       },
     },
   });
+
+  useEffect(() => {
+    setOriginalAccountData(account)
+  },[account])
 
   useEffect(() => {
     if (isEditing && debouncedKey !== null) {
@@ -74,7 +78,7 @@ const Account = ({ account, isEditing, updateValue }) => {
       updateValue(debouncedKey, debouncedValue)
     }
 
-  }, [debouncedKey, debouncedValue]);
+  }, [debouncedKey, debouncedValue, updateKey]);
 
   const handleInputChange = (e, key) => {
     const { value } = e.target;
