@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import AccountLeft from "./AccountLeft/AccountLeft";
 import AccountRight from "./AccountRight/AccountRight";
 import StickyBox from "react-sticky-box";
-import useAccountArticleFetcher from "../../Hooks/AccountHooks/useAccountArticleFetcher";
+// import useAccountArticleFetcher from "../../Hooks/AccountHooks/useAccountArticleFetcher";
 
 const AccountPage = (props) => {
   const { key, person } = props.location.state;
@@ -16,12 +16,16 @@ const AccountPage = (props) => {
         <AccountLeft key={key} person={person} />
       </Box>
       {/* No Clue why I have to put 2 sticky boxes to make it work */}
-      <StickyBox offsetTop={75}>
+      <StickyBox offsetTop={75} 
+      style={{
+        height: 'fit-content',
+      }}
+      >
         <StickyBox offsetTop={75}>
           <Box className="main-container-rightpanel">
             <Box
               sx={{
-                alignContent: "flex-start",
+                // alignContent: "flex-start",
                 justifyContent: "center",
               }}
             >

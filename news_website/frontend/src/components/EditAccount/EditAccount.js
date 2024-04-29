@@ -92,7 +92,9 @@ const EditAccount = ({ account, ...props}) => {
         <CustomTabPanel value={tab} index={0}>
           <Account account={account} isEditing={isEditing} updateValue={updateValue} />
         </CustomTabPanel>
-        <CustomTabPanel value={tab} index={1}></CustomTabPanel>
+        <CustomTabPanel value={tab} index={1}>
+          
+        </CustomTabPanel>
       </div>
       <div className="edit-btn-right">
         {!isEditing ? (

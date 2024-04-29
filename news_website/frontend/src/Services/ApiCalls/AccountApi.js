@@ -1,6 +1,8 @@
 import { BASE_URL } from "../../store/baseURLS";
+import validatePassword  from "../../components/Utility";
 
 export const getUserArticles = async (account_id) => {
+  console.log(account_id)
   const url = `${BASE_URL}/api/account/${account_id}/articles/`;
   const headers = {
     Accept: "application/json",
@@ -61,7 +63,6 @@ export const GetReporterArticles = async (person) => {
 };
 
 export const EditAccount = async(account) =>{
-  console.log(account)
   const url = `${BASE_URL}/api/account/`
   const headers = {
     Accept: "application/json",
@@ -78,4 +79,14 @@ export const EditAccount = async(account) =>{
   })
   const response = await fetch(url, {method: "PUT", headers, body});
   return response.json();
+}
+
+export const ChangePassword = async(oldPassword, newPassword1, newPassword2) => {
+  if(oldPassword === newPassword1) return {"error" : "Old password cannot be used as the new password!"}
+  const isValid = validatePassword(newPassword1, newPassword2);
+
+}
+
+export const ChangeUsername = async(currentUsername, newUsername) => {
+
 }

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import * as accountApi from "../../Services/ApiCalls/AccountApi";
 
-const useAccountArticleFetcher = (account_id) => {
+const useAccountArticleFetcher = ({key}) => {
     const [articles, setArticles] = useState([]);
-
     useEffect(() => {
-        const fetchArticles = async () => {
-            const response = await accountApi.getUserArticles(account_id);
-            setArticles(response);
+        if (key !== undefined) {
+            const fetchArticles = async () => {
+                const response = await accountApi.getUserArticles(key)
+                setArticles(response);
+            }
+            fetchArticles();
         }
-        fetchArticles();
-    },[])
-
+    },[key])
     return articles;
 }
 export default useAccountArticleFetcher;

@@ -8,10 +8,10 @@ import * as savedArticleActions from "../../store/actions/savedArticles";
 import TopRated from "./TopRated/TopRated";
 import ArticleEntry from "../ArticleEntry/ArticleEntry";
 import Advertisements from "../Advertisments/Advertisments";
-import UseArticleFetcher from "../../Hooks/ArticleHooks/UseArticleFetcher";
+import useArticleFetcher from "../../Hooks/ArticleHooks/useArticleFetcher";
 
 const Article = (props) => {
-  const { articles, popArticles } = UseArticleFetcher();
+  const { articles, popArticles } = useArticleFetcher();
 
   return (
     <React.Fragment>

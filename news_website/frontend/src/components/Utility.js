@@ -37,4 +37,34 @@ export default class Util {
     console.log(creationDate);
     console.log(creationDate.getTime() - new Date().getTime() / 31536000000);
   };
+
 }
+
+
+const validatePassword = (password1, password2) => {
+  const MIN_PASSWORD_LENGTH = 8
+  if(password1 !== password2){
+    return {"error": "Passwords do not match."}
+  }
+  if (password1.length < MIN_PASSWORD_LENGTH) {
+    return {"error" : "Password must be at least 8 characters long."};
+  }
+
+  if (!/[a-z]/.test(password1)) {
+    return {"error": "Password must contain at least one lowercase letter."};
+  }
+
+  if (!/[A-Z]/.test(password1)) {
+    return {"error" : "Password must contain at least one uppercase letter."};
+  }
+
+  if (!/\d/.test(password1)) {
+    return {"error": "Password must contain at least one digit."};
+  }
+
+  // Check if password contains at least one special character
+  // if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
+  //   return {"error" : "Password must contain at least one special character."};
+  // }
+  return null;
+};
