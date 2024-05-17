@@ -5,18 +5,10 @@ import { connect } from "react-redux";
 import * as authActions from "../store/actions/auth";
 import * as savedAction from "../store/actions/savedArticles";
 // import theme from "./ThemeWrapper";
-// import { ThemeProvider } from "@mui/material/styles";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from "@material-ui/core/styles";
 
 //Yeah Still not sure why this doesnt work ...
-const theme = createTheme({
-  Typography: {
-    fontFamily: [
-      'Neue Haas Grotesk Display Pro',
-      'sans-serif'
-    ].join(','),
-  }
-});
+import theme from "../Themes/Themes";
 
 export const App = (props) => {
   const token = localStorage?.getItem("token");

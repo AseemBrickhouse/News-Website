@@ -104,6 +104,9 @@
   color: #f2af29;
   margin-right: 5px;
 }
+.font{
+  font-family: 'Neue Haas Grotesk Display Pro, sans-serif';
+}
 .test{
   display: -webkit-box;
   box-orient: vertical;

@@ -65,12 +65,14 @@ const ArticleEntry = ({
             )}
           </Box>
           <Box className="main-article-container-description">
-            <Box className="main-article-container-description-headline">
+            <Typography
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "600",
+              }}
+            >
               {article.headline}
-            </Box>
-            {/* <Box className="main-article-container-description-description">
-              {article.article_description}
-            </Box> */}
+            </Typography>
             <Typography
               style={{
                 overflow: "hidden",
@@ -79,10 +81,10 @@ const ArticleEntry = ({
                 WebkitLineClamp: "2",
                 WebkitBoxOrient: "vertical",
                 wordBreak: "break-all",
-                fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
               }}
             >
               {article.article_description}
+              {/* <span className="font">{article.article_description}</span> */}
             </Typography>
           </Box>
         </Link>

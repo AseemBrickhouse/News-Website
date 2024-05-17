@@ -415,8 +415,8 @@ class AccountArticleView(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         token = request.headers.get('token')
         user_account = get_user_account(token)
-        if user_account == None:
-            return Response({"error": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
+        # if user_account == None:
+        #     return Response({"error": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
         
         account_key = kwargs['account_id']
         # User Articles to retrieve
