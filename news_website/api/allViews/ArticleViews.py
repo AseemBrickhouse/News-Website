@@ -200,7 +200,9 @@ class GetUserArticles(APIView):
 
         return Response(queryset, status=status.HTTP_200_OK)
 
-#Unused
+# Unused
+
+
 class PopularArticles(APIView):
     def get(self, request, *args, **kwargs):
         querysetRequest = {}
@@ -285,12 +287,13 @@ class DeleteArticle(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         article_key = request.data['key']
-        try: 
-            article = Article.objects.all().filter(reporter_account=user_account,key=article_key)
+        try:
+            article = Article.objects.all().filter(
+                reporter_account=user_account, key=article_key)
             article.delete()
             return Response(request.data, status=status.HTTP_204_NO_CONTENT)
         except Article.DoesNotExist:
-            return Response({"Error": "No matching article to delete with AccountKey:{user_account.key} + ArticleKey: {article_key}"}, 
+            return Response({"Error": "No matching article to delete with AccountKey:{user_account.key} + ArticleKey: {article_key}"},
                             status=status.HTTP_404_NOT_FOUND)
 
 # class PopularTags(APIView):
@@ -309,7 +312,9 @@ class DeleteArticle(APIView):
 #         data = {tag: tag for tag in data}
 #         return Response(data, status=status.HTTP_200_OK)
 
-#Unused
+# Unused
+
+
 class PopularTags(APIView):
     def get(self, request, *args, **kwargs):
         data = defaultdict(int)
@@ -369,7 +374,9 @@ class HandleBookmark(ObtainAuthToken):
             status=status.HTTP_200_OK
         )
 
-#Unused
+# Unused
+
+
 class MyBookmarkedArticles(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         user_account = get_user_account(request.headers['token'])
@@ -392,6 +399,8 @@ class MyBookmarkedArticles(ObtainAuthToken):
 
 class SavedArticles(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
+        if (kwargs['account_id'] == None):
+            return Response({"error": "No account id provided!"})
         user_account = get_user_account(request.headers['token'])
         if (user_account == None):
             return Response({
