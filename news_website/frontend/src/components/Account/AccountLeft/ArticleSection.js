@@ -85,7 +85,7 @@ const ArticleSection = ({ field, condition, person, account }) => {
           const showLink = condition;
           return (
             <Box key={key} display={"flex"} flexDirection={"row"}>
-              {showLink ? (   
+              {showLink ? (
                 <ArticleEntry
                   article={article}
                   reporter={article.reporter_account}
@@ -151,6 +151,23 @@ const ArticleSection = ({ field, condition, person, account }) => {
                           </div>
                         </button>
                       </Link>
+                      <button
+                        className="articles-delete"
+                        style={{ backgroundColor: "#AD343E" }}
+                        onClick={() => handleDelete(key, article)}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <PublishIcon sx={{ marginRight: "10px" }} />
+                          <span>Delete</span>
+                        </div>
+                      </button>
                     </div>
                   )}
                   {/* <button

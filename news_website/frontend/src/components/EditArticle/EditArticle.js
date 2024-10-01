@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { Redirect } from "react-router-dom";
 import {
   Input,
   Box,
@@ -103,10 +104,12 @@ const EditArticle = (props) => {
       } else {
         console.log(articleInfo);
 
-        const response = await articleAPI.UpdateArticle(
-          { ...articleInfo, isPrivate: option },
-        );
+        const response = await articleAPI.UpdateArticle({
+          ...articleInfo,
+          isPrivate: option,
+        });
       }
+      return Redirect("/");
     }
   };
 
@@ -219,7 +222,11 @@ const EditArticle = (props) => {
                   value="FOLLOWER/SUBSCRIBER ONLY"
                   disableRipple
                   control={
-                      <Radio checked={articleInfo["visibility"] === "FOLLOWER/SUBSCRIBER ONLY"} />
+                    <Radio
+                      checked={
+                        articleInfo["visibility"] === "FOLLOWER/SUBSCRIBER ONLY"
+                      }
+                    />
                   }
                   label="Follower/Subscriber only"
                   name="visibility"

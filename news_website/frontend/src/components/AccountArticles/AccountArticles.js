@@ -102,7 +102,7 @@ const AccountArticles = ({ account }) => {
           width: "40%",
         }}
       >
-        <h1>Staff Picks</h1>
+        {/* <h1>Staff Picks</h1> */}
       </Box>
     </Box>
   );

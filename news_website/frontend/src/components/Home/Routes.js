@@ -31,17 +31,17 @@ const Routes = (props) => {
             component={CreateArticle}
           />
           <Route exact path={"/Articles/:id"} component={ArticleID} />
-          <Route exact path={"/Account/People/:key"} component={AccountPage} />
+          {/* <Route exact path={"/Account/People/:key"} component={AccountPage} /> */}
           <Route exact path="/AuthError" component={AuthError} />
           <Route exact path="/ArticleError" component={ArticleError} />
-          <Route exact path="/Account/EditAccount" component={EditAccount}/>
+          <Route exact path="/Account/EditAccount" component={EditAccount} />
           <Route
             exact
             path="/SavedArticleError"
             component={SavedArticleError}
           />
-          <Route exact path={"/Articles/Edit/:key"}component={EditArticle}/>
-          <Route exact path={"/Account/Articles"} component = {AccountArticles}/>
+          <Route exact path={"/Articles/Edit/:key"} component={EditArticle} />
+          <Route exact path={"/Account/Articles"} component={AccountArticles} />
         </Switch>
       </Router>
     </React.Fragment>
