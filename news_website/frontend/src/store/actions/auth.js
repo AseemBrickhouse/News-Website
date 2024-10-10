@@ -99,7 +99,7 @@ export const authSignUp = (username, email, password1, password2) => {
         localStorage.setItem("token", token);
         localStorage.setItem("expirationDate", expirationDate);
         dispatch(authSuccess(token));
-        dispatch(checkTimeout(3600));
+        dispatch(checkTimeout(36000));
       }
     } catch (error) {
       dispatch(authFail(error));
