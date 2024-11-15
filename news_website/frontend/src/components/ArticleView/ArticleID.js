@@ -6,7 +6,7 @@ import StickyBox from "react-sticky-box";
 import "./css/ArticleID.css";
 
 const ArticleID = (props) => {
-  const article = props.location.state.article
+  const article = props.location.state.article;
   window.scrollTo(0, 0);
   return (
     article != null && (
@@ -14,7 +14,7 @@ const ArticleID = (props) => {
         <div className="main-container-articleID">
           <LeftPanel article={article} />
           <StickyBox offsetTop={75}>
-            <RightPanel reporter={article.reporter_account}/>
+            <RightPanel reporter={article.reporter_account} />
           </StickyBox>
         </div>
       </div>

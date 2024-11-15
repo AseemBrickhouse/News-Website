@@ -56,7 +56,8 @@ const reducer = (state=initialState, action) => {
         case actionTypes.AUTH_FAIL: return authFail(state, action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state, action);
         case actionTypes.GET_AUTH_INFO_SUCCESS: return getAuthInfoSuccess(state, action);
-        case actionTypes.GET_AUTH_INFO_FAIL: return getAuthInfoFail(state, action)
+        case actionTypes.GET_AUTH_INFO_FAIL: return getAuthInfoFail(state, action);
+        case actionTypes.GET_AUTH_EDIT: return getAuthInfoSuccess(state, action);
         //Couldnt get working on main page side
         // case actionTypes.GET_AUTH_EDIT: return getAuthEditSuccess(state, action);
 

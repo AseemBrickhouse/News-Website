@@ -17,6 +17,7 @@ import TagList from "../TagList/TagList";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import StickyBox from "react-sticky-box";
+import { Redirect } from "react-router-dom";
 
 const theme = {
   overrides: {
@@ -75,7 +76,11 @@ const CreateArticle = () => {
         setError(true);
       } else {
         console.log(articleInfo);
-        const response = await articleAPI.CreateNewArticle({...articleInfo}, option);
+        const response = await articleAPI.CreateNewArticle(
+          { ...articleInfo },
+          option
+        );
+        return Redirect("/");
       }
     }
   };

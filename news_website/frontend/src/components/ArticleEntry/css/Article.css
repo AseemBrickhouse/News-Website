@@ -36,7 +36,7 @@
 .main-article-container-description {
   margin-top: 1%;
   width: 40vw;
-  height: 42%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
 }
@@ -103,4 +103,14 @@
 .main-article-container-type-icon {
   color: #f2af29;
   margin-right: 5px;
+}
+.font{
+  font-family: 'Neue Haas Grotesk Display Pro, sans-serif';
+}
+.test{
+  display: -webkit-box;
+  box-orient: vertical;
+  line-clamp: 2;
+  word-break: break-all;
+  overflow: hidden;
 }

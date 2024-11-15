@@ -11,7 +11,6 @@ import ArticleSection from "./ArticleSection";
 import AboutSection from "./AboutSection";
 import TabPanel from "./TabPanel";
 import CustomTabPanel from "../../CustomTab/CustomTab";
-import useAccountArticleFetcher from "../../../Hooks/AccountHooks/useAccountArticleFetcher";
 
 //TODO: Move tabs into tab panel. Weird formatting stuff when I tried. Didnt feel like fixing it
 const AccountLeft = ({ account, key, person }) => {

@@ -415,8 +415,10 @@ class AccountArticleView(ObtainAuthToken):
     def get(self, request, *args, **kwargs):
         token = request.headers.get('token')
         user_account = get_user_account(token)
+        # if user_account == None:
+        #     return Response({"error": "User account not found"}, status=status.HTTP_404_NOT_FOUND)
+        
         account_key = kwargs['account_id']
-
         # User Articles to retrieve
         account_to_view = Account.objects.get(key=account_key)
         article_query = Article.objects.filter(
@@ -448,5 +450,5 @@ class AccountArticleView(ObtainAuthToken):
             else:
                 account_articles[key]['isBookmarked'] = False
                 account_articles[key]['reporter_account']['is_following'] = False
-
-        return Response({'account_articles': account_articles}, status=status.HTTP_200_OK)
+    
+        return Response({'articles': account_articles}, status=status.HTTP_200_OK)

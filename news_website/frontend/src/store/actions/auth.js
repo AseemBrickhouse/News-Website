@@ -37,7 +37,7 @@ export const getAuthInfoFail = (error) => {
   };
 };
 
-export const getAuthInfo = ({data}) => ({
+export const getAuthInfo = ({ data }) => ({
   type: actionTypes.GET_AUTH_ACCOUNT,
   data,
 });
@@ -45,29 +45,35 @@ export const getAuthInfo = ({data}) => ({
 export const authLogin = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
-    axios.post(`${BASE_URL}/api/rest-auth/login/`, { username: username, password: password,})
+    axios
+      .post(`${BASE_URL}/api/rest-auth/login/`, {
+        username: username,
+        password: password,
+      })
       .then((tokenResponse) => {
         const token = tokenResponse.data.key;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        const config = {headers : {token,"scope": 'current-user'}}
-        axios.get(`${BASE_URL}/api/account/`, config)
+        const config = { headers: { token, scope: "current-user" } };
+        axios
+          .get(`${BASE_URL}/api/account/`, config)
           .then((accountResponse) => {
             localStorage.setItem("token", tokenResponse.data.key);
             localStorage.setItem("expirationDate", expirationDate);
             dispatch(getAuthInfoSuccess(accountResponse.data));
             dispatch(authSuccess(token));
-            dispatch(getSavedArticles(token));
+            dispatch(getSavedArticles(accountResponse.key, token));
             dispatch(checkTimeout(3600));
           })
           .catch((error) => {
             dispatch(authFail(error));
-          })
+          });
       })
       .catch((error) => {
         dispatch(authFail(error));
       });
   };
 };
+
 export const authSignUp = (username, email, password1, password2) => {
   const url = `${BASE_URL}/api/rest-auth/registration/`;
   const headers = {
@@ -85,15 +91,15 @@ export const authSignUp = (username, email, password1, password2) => {
       const response = await fetch(url, { method: "POST", headers, body });
       const data = await response.json();
       if (!response.ok) {
-        dispatch(authFail(data))
-      }else{
+        dispatch(authFail(data));
+      } else {
         const token = data.key;
         console.log(token);
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("token", token);
         localStorage.setItem("expirationDate", expirationDate);
         dispatch(authSuccess(token));
-        dispatch(checkTimeout(3600));
+        dispatch(checkTimeout(36000));
       }
     } catch (error) {
       dispatch(authFail(error));
@@ -128,8 +134,9 @@ export const authCheckState = () => {
       if (expirationDate <= new Date()) {
         dispatch(authLOGOUT());
       } else {
-        const config = {headers : {token,"scope": 'current-user'}}
-        axios.get(`${BASE_URL}/api/account/`, config)
+        const config = { headers: { token, scope: "current-user" } };
+        axios
+          .get(`${BASE_URL}/api/account/`, config)
           .then((response) => {
             dispatch(getAuthInfoSuccess(response.data));
           })
@@ -142,5 +149,18 @@ export const authCheckState = () => {
         );
       }
     }
+  };
+};
+
+export const updateAuthInformation = (updatedAccountInformation) => {
+  return (dispatch) => {
+    const expirationDate = new Date(localStorage.getItem("expirationDate"));
+    if (expirationDate <= new Date()) {
+      dispatch(authLOGOUT());
+    }
+    dispatch(getAuthInfoSuccess(updatedAccountInformation));
+    dispatch(
+      checkTimeout((expirationDate.getTime() - new Date().getTime()) / 1000)
+    );
   };
 };

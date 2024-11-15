@@ -7,7 +7,7 @@ import "./css/RightPanel.css";
 import useAccountArticleFetcher from "../../../Hooks/AccountHooks/useAccountArticleFetcher";
 
 const RightPanel = ({ reporter }) => {
-  const {account_articles} = useAccountArticleFetcher(reporter.key)
+  const {articles} = useAccountArticleFetcher(reporter)
   return (
     <StickyBox offsetTop={75}>
       <Box className="main-container-rightpanel">
@@ -20,7 +20,7 @@ const RightPanel = ({ reporter }) => {
         >
           <ReporterTop reporter={reporter} />
           <ReporterArticles
-            reporterArticles={account_articles}
+            reporterArticles={articles}
             reporter={reporter}
           />
         </Box>

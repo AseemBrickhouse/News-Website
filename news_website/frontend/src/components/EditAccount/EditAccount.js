@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import * as accountApi from "../../Services/ApiCalls/AccountApi";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./css/EditAccount.css";
@@ -7,51 +6,38 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomTabPanel from "../CustomTab/CustomTab";
 import Account from "./Account";
-import { Box, Button, Avatar } from "@material-ui/core";
-import { styled } from "@material-ui/core/styles";
-import EditIcon from "@mui/icons-material/Edit";
-import EditOffIcon from "@mui/icons-material/EditOff";
+import { EditAccountButton } from "../Buttons/EditAccount/EditAccountButton";
+import * as accountApi from "../../Services/ApiCalls/AccountApi";
+import * as authActions from "../../store/actions/auth";
 
-const EditAccount = ({ account }) => {
-  const StyledButton = styled(Button)({
-    fontFamily: "Neue Haas Grotesk Display Pro, sans-serif",
-    border: "1px solid #AD343E",
-    backgroundColor: "#AD343E",
-    width: "100%",
-    color: "white",
-    fontSize: "15px",
-    fontWeight: "600",
-    borderRadius: "5px",
-    textTransform: "none",
-    zIndex: 2,
-    transition: "transform ease 0.2s, box-shadow ease 0.2s",
-    display: "flex",
-    alignItems: "center",
-    flexWrap: "wrap",
-    "&:hover": {
-      fontSize: "15px",
-      fontWeight: "600",
-      color: "white",
-      backgroundColor: "#AD343E",
-      transform: "translate(0, -3px)",
-      boxShadow: "0 20px 80px -10px #AD343E",
-    },
-  });
-  const [edit, setEdit] = useState(false);
-  const [update, setUpdate] = useState(account)
+const EditAccount = ({ account, ...props}) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [accountData, setAccountData] = useState(account)
+  const [updateAccountData, setUpdateAccountData] = useState(account)
+
   useEffect(()=>{
-    setUpdate(account)
+    if(isEditing){
+      setAccountData(updateAccountData)
+      setIsEditing(!isEditing)
+    }else{
+      setAccountData(account)
+    }
   },[account])
-  console.log(update);
+
   const [tab, setTab] = useState(0);
   const handleChange = (event, newValue) => {
     setTab(newValue);
   };
   const updateValue = (key, value) => {
-    setUpdate({...update, [key]: value})
+    setUpdateAccountData({...updateAccountData, [key]: value})
   };
-  const handleSubmit = (content) => {
-    console.log(content);
+  const handleSubmit = async () => {
+    if(isEditing){
+      await accountApi.EditAccount(updateAccountData)
+      setAccountData(updateAccountData)
+      props.updateStateAccountInformation(updateAccountData)
+    }
   };
   function a11yProps(index) {
     return {
@@ -59,6 +45,7 @@ const EditAccount = ({ account }) => {
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }
+  
   return (
     <div className="edit-account-container">
       <div className="edit-account-tabs">
@@ -69,6 +56,7 @@ const EditAccount = ({ account }) => {
           TabIndicatorProps={{
             style: {
               backgroundColor: "#AD343E",
+              textAlign: "left",
             },
           }}
           variant="soft"
@@ -79,7 +67,8 @@ const EditAccount = ({ account }) => {
             sx={{
               fontSize: "18px",
               fontWeight: "600",
-              padding: "0px",
+              padding: "15px",
+              alignItems: 'flex-end',
             }}
             variant="soft"
             label="Account"
@@ -90,7 +79,8 @@ const EditAccount = ({ account }) => {
             sx={{
               fontSize: "18px",
               fontWeight: "600",
-              padding: "0px",
+              padding: "15px",
+              alignItems: 'flex-end',
             }}
             label="Login Details"
             disableRipple
@@ -100,35 +90,43 @@ const EditAccount = ({ account }) => {
       </div>
       <div className="account-middle-tab-panel">
         <CustomTabPanel value={tab} index={0}>
-          <Account account={update} edit={edit} updateValue={updateValue} />
+          <Account account={account} isEditing={isEditing} updateValue={updateValue} />
         </CustomTabPanel>
-        <CustomTabPanel value={tab} index={1}></CustomTabPanel>
+        <CustomTabPanel value={tab} index={1}>
+          
+        </CustomTabPanel>
       </div>
       <div className="edit-btn-right">
-        {!edit ? (
-          <StyledButton
-            onClick={() => {
-              setEdit(!edit);
-            }}
-          >
-            <span style={{ marginRight: "5px" }}>Edit</span>
-            <EditIcon />
-          </StyledButton>
+        {!isEditing ? (
+          <EditAccountButton
+            content={"Edit"}
+            color="#AD343E"
+            fn={() => setIsEditing(!isEditing)}
+            spanStyle={
+              {marginRight: "5px",}
+            }
+            isEditing={isEditing}
+          />
+
         ) : (
           <div>
-            <StyledButton
-              onClick={() => {
-                setEdit(!edit);
+            <EditAccountButton
+              content={"Edit"}
+              color="#B2D9C1"
+              fn={() => setIsEditing(!isEditing)}
+              isEditing={isEditing}
+            />
+            <EditAccountButton
+              style={{
+                marginTop: '10px'
               }}
-            >
-              <span style={{ marginRight: "5px" }}>Editing</span>
-              <EditOffIcon />
-            </StyledButton>
-            <div style={{ marginTop: "5px" }}>
-              <StyledButton>
-                <span>Save</span>
-              </StyledButton>
-            </div>
+              content={"Save"}
+              color="#AD343E"
+              fn={() => {handleSubmit()}}
+              spanStyle={
+                {marginRight: "5px",}
+              }
+            />
           </div>
         )}
       </div>
@@ -140,4 +138,9 @@ const mapStateToProps = (state) => {
     account: state?.auth?.account,
   };
 };
-export default withRouter(connect(mapStateToProps)(EditAccount));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateStateAccountInformation: (updateAccountData) => dispatch(authActions.updateAuthInformation(updateAccountData)),
+  };
+};
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditAccount));

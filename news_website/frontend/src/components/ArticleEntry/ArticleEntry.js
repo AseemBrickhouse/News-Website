@@ -8,7 +8,9 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 // import * as request from "../ApiCalls/Article";
 import * as bookmarkAPI from "../../Services/ApiCalls/BookmarkApi";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Options } from "./Options";
+import { Typography } from "@material-ui/core";
 const DEFAULT_PATH = "Article";
 
 const ArticleEntry = ({
@@ -63,12 +65,27 @@ const ArticleEntry = ({
             )}
           </Box>
           <Box className="main-article-container-description">
-            <Box className="main-article-container-description-headline">
+            <Typography
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "600",
+              }}
+            >
               {article.headline}
-            </Box>
-            <Box className="main-article-container-description-description">
+            </Typography>
+            <Typography
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: "2",
+                WebkitBoxOrient: "vertical",
+                wordBreak: "break-all",
+              }}
+            >
               {article.article_description}
-            </Box>
+              {/* <span className="font">{article.article_description}</span> */}
+            </Typography>
           </Box>
         </Link>
         <Box className="main-article-container-description-tag-container">
@@ -103,7 +120,15 @@ const ArticleEntry = ({
               />
             )}
           </Box>
-          <Box sx={{ alignContent: "right", marginTop: "auto" }}>
+          <Box
+            sx={{
+              alignContent: "right",
+              marginTop: "auto",
+              flexDirection: "row",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             {isBookmarked ? (
               <Box
                 onClick={() => handleBookMark(article.key, "REMOVE_BOOKMARK")}
@@ -125,6 +150,7 @@ const ArticleEntry = ({
                 />
               </Box>
             )}
+            <Options />
           </Box>
         </Box>
       </div>

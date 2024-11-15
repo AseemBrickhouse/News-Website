@@ -1,0 +1,816 @@
+[33mcommit b1ea67d3f43d4578f9fd9318b8d5cc8e1690d4a0[m[33m ([m[1;36mHEAD -> [m[1;32mArticleRating[m[33m, [m[1;31morigin/ArticleRating[m[33m)[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Oct 10 14:27:12 2024 -0500
+
+    Added the ability to up/down vote articles.
+
+[33mcommit a8aa03febf99a4c8929484042a5a9410244c7827[m[33m ([m[1;31morigin/test[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mtest[m[33m)[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Oct 1 16:20:24 2024 -0500
+
+    Added delete button to article view
+
+[33mcommit 4cdece4746f3801ddc1d9caab568185f3ca7f835[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Aug 28 12:50:11 2024 -0500
+
+    Fixed saved articles pulling without a key
+
+[33mcommit cc8bf305d1bc531568ffd1f010a59c216122370a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri May 17 17:24:50 2024 -0500
+
+    before material ui version update 4.12.3
+
+[33mcommit 10c54be2c33cdd79c6cc33df358a4d1532443640[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Apr 29 18:05:34 2024 -0500
+
+    Not sure what changed shouldve did another before this.
+
+[33mcommit 600183168edd3f86b6267d2ed27fa7234466f92b[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Apr 8 16:42:19 2024 -0500
+
+    Fixed bug with edit account not updating correctly.
+
+[33mcommit 863ce4d9c23d75661dbb9036df0d3d25470c9e68[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Apr 1 19:28:18 2024 -0500
+
+    Started to fix the edit page. Also made debouncing for it(idk why). Bug: key not updaing right value
+
+[33mcommit 3559ee1f36da791546213cb457f0bbea73b7aacb[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 17:37:00 2024 -0500
+
+    Small changes to store/auth to remove some endpoints.
+
+[33mcommit d7e968aa9d0a659f3fa52b24bdd72c080f18084c[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 15:57:12 2024 -0500
+
+    Fixed article bookmarking
+
+[33mcommit a1c82406a98bdb93582b7d1b4ef8b3426d1889ed[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 15:52:26 2024 -0500
+
+    Route fixing after changes
+
+[33mcommit d1f5ba4bb2650b35b9293ed05eb7586aa49e3dc7[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 15:46:51 2024 -0500
+
+    moved all files in hook folder to a folder outside of components
+
+[33mcommit c496045c5b54b99363d35ef844e9525d6b40a6a0[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 15:42:35 2024 -0500
+
+    String to move hooks out of components folder
+
+[33mcommit 4823ce25bd38fc70481348894a9da8282d0945c6[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 15:31:39 2024 -0500
+
+    Moved over api call folder
+
+[33mcommit 182d8032b3fbb9c19b2d89d5327972ac47acc98a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Mar 29 15:14:55 2024 -0500
+
+    Updating file structure
+
+[33mcommit 9a8f39752deb8a3a3e1d1e90eda8b6cc938cb2fe[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Mar 25 16:21:33 2024 -0500
+
+    Started spereating the Views into diff. files, re-wrote 'get' for account view.
+
+[33mcommit ff0dee83f42daeb49675a5f4dd4843ba6cd9ca0a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Feb 27 16:33:10 2024 -0600
+
+    Fixed the publish button messing up the tags, and moved article filtering to a hook.
+
+[33mcommit 1593eab5954db056f504b06ecce81407eac61faf[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Feb 26 14:10:16 2024 -0600
+
+    Update article works for the most part.
+
+[33mcommit dd65c3a02e18284e2e86e6db224a6e2bb839c7db[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Nov 13 16:31:52 2023 -0600
+
+    Starting working on Edit account page. Need to finish functionality.
+
+[33mcommit c0a5265da785ddaaf71db68298c7ae400b7501d0[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Nov 13 14:55:22 2023 -0600
+
+    Fixed bug for Profile page not upadting(news refac later)
+
+[33mcommit 56440bfab5250bb382786f9c300be6a55400793a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Nov 13 14:03:28 2023 -0600
+
+    Added the base funcationality for profile panels
+
+[33mcommit c89ef545e82d7d6c8c453672a1f58ccc61943606[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Sat Nov 11 09:50:01 2023 -0600
+
+    Start of account pages.
+
+[33mcommit c290e1a51f110855daa8314b8a2f2b046ad7fe86[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Nov 10 12:16:51 2023 -0600
+
+    Removed useless items from state
+
+[33mcommit 9d1479d171c39ae722531c4f7b9914b1d2d7c456[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Nov 3 16:33:31 2023 -0500
+
+    Finished tag sorting stuff and added validation for article fields. Done(I think)
+
+[33mcommit 4aa6de2dd98c1c5c0eda67ca61ee6fd3f682c98d[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Nov 2 21:21:19 2023 -0500
+
+    Added tagList as well as tag hook.
+
+[33mcommit 2670ac43d1f21f202f124fdfb311096dfda31e3d[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Oct 30 20:07:07 2023 -0500
+
+    Moved article/comments innit calls to hooks. Refactored comment api calls on frontend and backend.
+
+[33mcommit c50e3fc1bd51b0729c1c6fd930c27a6dc8b52b88[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Oct 23 16:52:12 2023 -0500
+
+    Refactor on comment api. Also updated frontend api calls to match refactor.
+
+[33mcommit 3001b7bafab5eda90129da20f95c99857b786a31[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Oct 18 18:43:57 2023 -0500
+
+    Refactor on Article/Bookmark views. Changed how to send request. Still need to swap frontend over
+
+[33mcommit 57fc9261f48b06b9c83a8b7a87049f47e89ae742[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Oct 18 15:56:21 2023 -0500
+
+    Added a couple new files also started api refac
+
+[33mcommit 3b79e5a5daf880ef159ca4b412be364eab3f3d90[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Oct 18 15:55:41 2023 -0500
+
+    Create Article frontend worked on
+
+[33mcommit a5d0948f567669d4b3f7e33e219526137a7919d0[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Oct 2 15:38:03 2023 -0500
+
+    Moved files around for comment/articleID
+
+[33mcommit 7d3a2baa9583a975fac41b2da1b01b63607af095[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Oct 2 13:16:09 2023 -0500
+
+    Moved article/articleentry
+
+[33mcommit e311499ebe3d85bc4e2a1f050832256f6c207035[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Oct 2 12:49:23 2023 -0500
+
+    Started changing file setup Login/Signup
+
+[33mcommit 27fc3a77780aa695e5d25adef993379ca88aee0e[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Sep 25 17:00:31 2023 -0500
+
+    Fixed bug where child/child comments wouldnt refresh when adding or deleting comment
+
+[33mcommit 1d5035275558e4a3412b6bcbf1727317c51c3384[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Sep 25 16:07:56 2023 -0500
+
+    Fixed bug comments now show up for each article
+
+[33mcommit 0f435fb8e9489e0b6097b5030820b4c6a60b0dd8[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Sep 25 15:31:50 2023 -0500
+
+    Updated login(weird no account/has token), add reply functionality (doesnt update on delete)
+
+[33mcommit bf29c4df22604c05c48c186dad03874d23649309[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Aug 15 17:26:12 2023 -0500
+
+    Made it so you can only vote once but its alittle buggy.
+
+[33mcommit 228c11cae3149feea156069ef4d1664bfececa26[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Aug 15 16:10:55 2023 -0500
+
+    Updated views to include who has voted for what comment. Still need to update frontend.
+
+[33mcommit b59d21cf6014b02d81e1312ce5aa94900608b891[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 14 18:45:53 2023 -0500
+
+    Fixed some of the clipping issues with comments (still needs work). Also save before model update.
+
+[33mcommit 0e16b728b75db710adf082f90b74c957d227b508[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 14 18:36:13 2023 -0500
+
+    Rebuilt database because one line broken everything. Should be setup to handle one vote count.
+
+[33mcommit d02dceabca5ff1eab6e0dc896821e29662857113[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 14 16:49:35 2023 -0500
+
+    Added rating for comments.
+
+[33mcommit 02d6b00f65d5b65d5099a7477757fd56b55903c3[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 14 16:31:44 2023 -0500
+
+    Add/Update/Delete funtional for comments.
+
+[33mcommit aa328df96e0bb06101de19a5bfa63db34c3a3bdd[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 7 17:10:33 2023 -0500
+
+    Fixed comment section hiding when not logged in. Hiding follow button when logged on to the same accout that created the article.
+
+[33mcommit 06bf0450e9bb99ffde36e894f1c371ba79822bcb[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 7 16:09:13 2023 -0500
+
+    Forgot to toggle loading off.
+
+[33mcommit d67b81eef834a6e193681c66b2f24025cf6cb9d4[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 7 16:05:21 2023 -0500
+
+    Fixed signup page
+
+[33mcommit 3b8620288d204c559956e66c581724f821b49061[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jul 13 17:56:20 2023 -0500
+
+    Fixed clipping issue with the sub header
+
+[33mcommit 5b9a96ab7f3377e0dd2316b2e8c35087230dcb6b[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jul 13 17:24:26 2023 -0500
+
+    Fixed some of the css issues realted to the article main page and split some of the files to not have so much on one file
+
+[33mcommit 260c34348dd3b2b0ae7c2cb8b03f7de2e454f30e[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jul 13 15:22:07 2023 -0500
+
+    Changed the look of get started button on header
+
+[33mcommit 265d3220b1f5228ba57307cde2e300b0904c308f[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jul 13 14:33:23 2023 -0500
+
+    Comment section is built however some functionalities are not there (add, delete, edit) also fixed login page
+
+[33mcommit 058b6b449c036d080f8710c26a8a5ddef13de29a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Jul 10 17:13:00 2023 -0500
+
+    2nd part of the comment section stuff
+
+[33mcommit 1613a17b6dbc6d2b4e8977b8d0960f5dcaf640ee[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Jul 10 17:12:00 2023 -0500
+
+    Finished what the comment section looks like. Need to add update/delete/reply functionality
+
+[33mcommit 1fe414f16aaa4d1554518ac29c68c75091c30886[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Jun 30 18:47:57 2023 -0500
+
+    Setup files for comment funtionality (idk why the first did't add the files)
+
+[33mcommit 2ac1854cc8c8eadb575d5e09d3095075bab56955[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Jun 30 18:45:19 2023 -0500
+
+    Setup for comment function
+
+[33mcommit 2b18af35285678b70d780501bbbf44058907e29d[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Jun 30 16:21:25 2023 -0500
+
+    Added bookmark button to article page
+
+[33mcommit bcb6aca3b1cf464e4365b2eb731fc667a798aed6[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jun 29 18:40:40 2023 -0500
+
+    Worked on the left panel mainly the tts
+
+[33mcommit 888f4575ef491aaf0cce70e1a72167dfb81c2dcd[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Jun 21 16:42:04 2023 -0500
+
+    Finished the look of the article page. Need to add functionality for buttons and look into weird css stuff related to index.css
+
+[33mcommit fad20cc3df42577e888e03456302a2cda76bbaac[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Jun 20 15:05:03 2023 -0500
+
+    Updated right panel
+
+[33mcommit 6bc260f43b2cacaeea2ef00d3b51409a6559ac19[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jun 1 17:22:13 2023 -0500
+
+    Refactored ArticleViews to include correct status codes(I think), corret request types, and creating article tag feature
+
+[33mcommit a4107961b3c32f3948a955678064151c16410faf[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Jun 1 14:55:27 2023 -0500
+
+    Refactor of AccountViews
+
+[33mcommit 134a418431dbf6c168e8af86ed15dd4d26b8be5b[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon May 15 16:37:10 2023 -0500
+
+    More refactors
+
+[33mcommit b09a56f6734b503024407477a44a61e0f1150de5[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Apr 18 17:05:19 2023 -0500
+
+    Refactor of header and article files
+
+[33mcommit 21899fc8358970daafa7587902dae5328c0c67d6[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Apr 18 17:02:48 2023 -0500
+
+    Refactor of header and article files
+
+[33mcommit 8279d13049ad647a018207801ee06cf07ad9a374[m
+Merge: addaff6 9302222
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Apr 17 18:12:27 2023 -0500
+
+    Merge branch 'test' of https://github.com/AseemBrickhouse/News-Website into test
+
+[33mcommit addaff68132f10e9859716ce7ed9c269fe0a1c96[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Apr 17 18:12:24 2023 -0500
+
+    Before dependency fix
+
+[33mcommit 9302222a535126abc664b692f3cf65bd3027cfd4[m
+Merge: 517922f 36c22c8
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Nov 15 21:43:30 2022 -0600
+
+    Merge pull request #4 from AseemBrickhouse/dependabot/npm_and_yarn/news_website/frontend/loader-utils-1.4.2
+    
+    Bump loader-utils from 1.4.0 to 1.4.2 in /news_website/frontend
+
+[33mcommit 36c22c89a2ef75f189ff0eeb2da90a546c67c0db[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Nov 16 03:42:08 2022 +0000
+
+    Bump loader-utils from 1.4.0 to 1.4.2 in /news_website/frontend
+    
+    Bumps [loader-utils](https://github.com/webpack/loader-utils) from 1.4.0 to 1.4.2.
+    - [Release notes](https://github.com/webpack/loader-utils/releases)
+    - [Changelog](https://github.com/webpack/loader-utils/blob/v1.4.2/CHANGELOG.md)
+    - [Commits](https://github.com/webpack/loader-utils/compare/v1.4.0...v1.4.2)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: loader-utils
+      dependency-type: indirect
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit 517922f0ae17f9043385fbb4a22e1c45c5ea7610[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Oct 3 17:42:08 2022 -0500
+
+    Update 1.0.7
+    
+    -Added Article Image field
+    -Rewrote profile Article view
+    -Added saved articles page
+    -Finished right panel for Article ID
+    
+    -TODO: combine Article cards to one component
+    -Add ability to upload images to profile and articles
+    -Format create article page
+    -Add the ability to edit articles
+    -
+
+[33mcommit 110af897ecc33814f4d92f179f9dbbe3a6c1e6c6[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Sep 30 19:05:14 2022 -0500
+
+    Update 1.0.6
+    
+    -Added get Person api call
+    -Fixed AllArticles api call to include more info
+    -Updated ArticleID page
+    -Updated Bookmarks for landing page
+    -Created Card component (findpeople, following, and followers uses this reduced duplicated code)
+    -Included BASE_URL
+
+[33mcommit cd5d3e263700a26d4c2bcd5a0107ecfbc68d88fd[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Sep 26 16:35:54 2022 -0500
+
+    Update1.0.5
+    
+    -Added profile pictures(unable to upload yet)
+    -Removed most unused imports
+    -Deleted unnecessary  files
+    -Added Following page
+    //TODO: Create a new component for displaying cards for Following, Followers, and find people to minimize duplicated code
+
+[33mcommit f3c1b2e33fb10fba987b4d2e9c6e4d0056f91f1d[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Sep 23 16:09:30 2022 -0500
+
+    Update 1.0.4
+    
+    -Update Viewing a profile page from both the landingpage and the find accounts page
+    -Added bookmarking functionality on account page
+    -Changed AllArticles api call to put more info into each article for the reporter account
+    -Added getUserArticle api call for profile page
+    -Added isFollowing key in myFollowers api call to check whether or not someone is following
+
+[33mcommit 302bffbbeea714b90d71a19f9573982c19e24f82[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Sep 21 18:56:17 2022 -0500
+
+    Header update
+    
+    changed the way the header looks
+
+[33mcommit e80b4f97bd540dd153b33892ed81bcb74020a414[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Sep 20 17:34:12 2022 -0500
+
+    Update 1.0.3
+    
+    Added bookmaked articles to the store
+    Added saved article api call
+
+[33mcommit 2ae4ee610c8a1b18f8baaf0455b9aa7db60ba6ff[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Sep 19 19:00:55 2022 -0500
+
+    Update 1.0.2
+    
+    -Added bookmarking articles(Still kinda jank)
+    -Added more following checks for api
+
+[33mcommit 88f4d227c6b1808c9527bcdf69b0722b6acc840e[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Sun Sep 18 03:34:41 2022 -0500
+
+    refac
+
+[33mcommit cdf27d9584da06a8fa4151b63e53274c5c54c6fe[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Sep 15 19:55:34 2022 -0500
+
+    Update 1.0.2
+    
+    -Made a state for all articles
+
+[33mcommit c559126d8c8b76ff20f0cc46c5a6963b86b35275[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Sep 14 14:26:59 2022 -0500
+
+    Update 1.0.1
+    
+    -Fixed follower count issues
+    -Ability to unfollow users
+    -Added keys to users
+    -
+
+[33mcommit f180e277290d9f8d462262f308ef2e2f78e6143b[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Sep 13 23:41:29 2022 -0500
+
+    test
+    
+    test
+
+[33mcommit 7b22a6d859c7f1929926dc439224871c33d4fb9c[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Sep 13 23:24:40 2022 -0500
+
+    Update 1.0.0
+    
+    -Created a basic following system(Not complete)
+    -Fixed fields for following/followers to correctly update
+    -Refactored ArticleID page
+    -Added getFollow to APIUttil
+    -Added new command for getCurrentUser
+
+[33mcommit 909190231353bea97bdbad652c792732411b9b13[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Sep 13 20:19:55 2022 -0500
+
+    Find people edits
+
+[33mcommit c63891c5da1d58b325c73948d64e02735974ce7c[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Sep 12 19:04:25 2022 -0500
+
+    Article views
+    
+    -Created a way to delete newly created articles
+    -Added the functionality to update articles
+    -Removed using the id of articles-> replaced by a new Key field in models
+
+[33mcommit ce41dfc0b72e688a33f0e5c030514d89e51e0760[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Sep 9 22:11:48 2022 -0500
+
+    Update profiles
+    
+    -Added Accounts menu
+    -Started Account search and Viewing accounts
+    -Updated main page
+
+[33mcommit cfc3941f90cccdc6e4e01bb34c865d1abff8de3e[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Sep 9 01:07:58 2022 -0500
+
+    Created APIUTILITY
+    
+    created the file to help remove duplicated code and to simplify some of the calls.
+
+[33mcommit bdb6eee8497b4d60a68b354f6730ef7cba50fd5f[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Sep 8 23:34:07 2022 -0500
+
+    Home page updates
+
+[33mcommit 70aa40fbffdaed932622bf909b0dc327567842b8[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Sep 8 02:20:49 2022 -0500
+
+    Moved some files
+    
+    Moved some files around for code to be easier to read.
+    Also stared created a Util file so that the program can minimize the use of duplicated code.- Kinda wanna put common fetch request in but thats not working atm
+
+[33mcommit c4f8a5f16eea12ccd6d6d70beb1ea5649d7c4f04[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Sep 8 01:00:05 2022 -0500
+
+    Changing Articles on main page
+
+[33mcommit 8b0e3009563abe0cbdcf851da295fd097d80098d[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Sep 7 01:58:49 2022 -0500
+
+    Create README.md
+
+[33mcommit ab98d85cb44359873d83f71af28de1c989536b38[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Sep 2 18:01:37 2022 -0500
+
+    changing homepage
+
+[33mcommit 3c76fa0f3c6e4894d3b0dbf7a3ad50ef53b9f27c[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Sep 1 14:31:54 2022 -0500
+
+    Fixed header menu
+    
+    Added the drop down menu for profile. Weird bud happens when on the profile pages where a white box shows up on the left side on the screen.
+
+[33mcommit e080ce9cef3c0a898621202a253f767a783124e4[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Aug 31 15:57:33 2022 -0500
+
+    header menu
+    
+    Fixing header menu to have more functionality
+
+[33mcommit c23828b36bf787ee9eea3ebd8dbbadaa157a956b[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Aug 30 15:12:03 2022 -0500
+
+    updated pfrofile articles
+    
+    started working on viewing articles from profile
+
+[33mcommit b138928635571a39db08c6e66744ceba3f4335bb[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 29 22:53:09 2022 -0500
+
+    formatting login and signup page
+
+[33mcommit 9c6b3d6f3eb327ceb1d3633c858b8597bc5b7bc6[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 29 17:39:14 2022 -0500
+
+    Changing view profile page
+
+[33mcommit 8ea3672e09d4fd09c16a726a5805dcfcac0a6c37[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Fri Aug 26 17:09:57 2022 -0500
+
+    Fixed Signup/ Altered ArticleID and edit account
+    
+    -Fixed white spaces on Article/id and dates formatting
+    -Fixed Signup not properly creating accounts
+    -Created base for editing accounts
+    -
+
+[33mcommit 6612e7b294e9d7d91c652cb708a486217aa4f53b[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Aug 25 20:04:12 2022 -0500
+
+    article page update
+    
+    updating specific article page
+
+[33mcommit e0225ce81c1f2bf26960885081755fed57f0f556[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Aug 24 14:34:25 2022 -0500
+
+    Starting View Articles
+    
+    setting up urls and creating pages to help view a specific article
+
+[33mcommit 6cd7a62e1364efeec660e421427f45d1037bd26f[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 22 17:49:55 2022 -0500
+
+    create article page updates
+
+[33mcommit e3b70bb006036efc5d8cf051fd22e6ec38e637f8[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Thu Aug 18 20:05:36 2022 -0500
+
+    profile articles update
+    
+    change a couple color to better match the theme
+
+[33mcommit aa0340b4ec4e383d4fed6764bb212307a27aa1dc[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Aug 17 18:14:57 2022 -0500
+
+    Account
+    
+    Started working on account page
+
+[33mcommit c54fa5b527504df5b30d09b14bc6d8451106da2a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Aug 16 14:40:10 2022 -0500
+
+    Removed/ Update api
+
+[33mcommit b7f2a39ec9019ece58010bd074059b22e4ba0b80[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Aug 16 14:35:46 2022 -0500
+
+    Removed/Moved Frontend files
+    
+    deleted code snippets form comments/
+    move files/ updated imports/
+    removed unused files
+
+[33mcommit 5869c0699e381088be2c4c4e7fb8f3f6eba7a510[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Tue Aug 16 13:57:05 2022 -0500
+
+    Remove before
+    
+    Before::/
+    Removing all unused imports
+    all unused files
+    all code snippet comments
+
+[33mcommit feb867b87dcba8631f289cff5891b5dc4f40443a[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Mon Aug 15 20:17:11 2022 -0500
+
+    signup fixed
+
+[33mcommit b4133edb79e782810cffddaaea1ba5ef28894d3e[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Wed Aug 10 16:40:58 2022 -0500
+
+    LogOut
+    
+    Fixed the Logout ish
+    //Error handle with login needs to be fixed
+
+[33mcommit 2e97d668b5d1f104b32d479bf4bd41320b91aa7f[m
+Author: AseemBrickhouse <aseembrickhouse55@gmail.com>
+Date:   Sun Aug 7 00:37:43 2022 -0500
+
+    updated login
+
+[33mcommit ce3d50157d0301170d856450cafb696c730b0e7e[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Fri Apr 1 19:27:16 2022 -0500
+
+    7
+
+[33mcommit 58a1b04a57464501628fc7bae848c5f7d63be4f7[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Wed Mar 30 16:35:39 2022 -0500
+
+    new
+
+[33mcommit a8c010f7a445237ae205d2dddc93e8898e5a81aa[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Wed Mar 30 00:10:25 2022 -0500
+
+    6
+    
+    new
+
+[33mcommit a0810703e12d1fd200d2c2979fe5f8d0341a3bcb[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Sat Mar 19 20:57:24 2022 -0500
+
+    new
+
+[33mcommit 36ff8e96c867049cb7d78a71c5ec772d4558ee14[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Fri Mar 11 19:13:57 2022 -0600
+
+    fixed tag box
+
+[33mcommit 350cf5db07fd8a3e25a7d7402e98326d9c67eff5[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Wed Mar 9 22:38:48 2022 -0600
+
+    2
+
+[33mcommit 185444ff7445fc4817a2197646fce06f555d539b[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Fri Oct 22 03:14:39 2021 -0500
+
+    Update front
+    
+    Fixed a couple django table errors
+    Got updated header
+    Fix some of the css not working properly
+    Updated some of the article display
+
+[33mcommit 62cfb48e3721ef9621bf370791c0d6087a85e992[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Fri Oct 22 00:42:47 2021 -0500
+
+    change header
+
+[33mcommit 758fa4e60d55bb612729d897a0c7c0aabb111f49[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Wed Sep 8 20:29:37 2021 -0500
+
+    2
+
+[33mcommit fb9c8d443fdc6e53736cfa86d8d32341e303f664[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Fri Aug 13 19:13:59 2021 -0500
+
+    1
+
+[33mcommit 7c545bfe225b6b679bbac00c9fec29dde05f5bb3[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Tue Aug 10 16:23:01 2021 -0500
+
+    1
+
+[33mcommit 0e011f276c3c8e7227123b6b0675583bf6e5d4b7[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Tue Aug 10 15:42:11 2021 -0500
+
+    1
+
+[33mcommit 711f353d83467d6e408fa5eed2b89c2019d5eecd[m
+Author: AseemBrickhouse <60155095+AseemBrickhouse@users.noreply.github.com>
+Date:   Tue Aug 10 15:40:54 2021 -0500
+
+    1

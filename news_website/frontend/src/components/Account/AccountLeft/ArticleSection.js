@@ -11,6 +11,9 @@ import { connect } from "react-redux";
 import * as articleAPI from "../../../Services/ApiCalls/ArticleApi";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const Clicked = Object.freeze({
   SELECTED: "selected",
@@ -21,16 +24,17 @@ const ArticleSection = ({ field, condition, person, account }) => {
   //Need to fix the time: When published it needs to update the date as well
   //Add "Are you sure prompt when deleting an article"
   const [isLoading, setIsLoading] = useState(true);
-  const { account_articles } = useAccountArticleFetcher(person.key);
+  const { articles } = useAccountArticleFetcher(person);
   useEffect(() => {
-    if (account_articles === undefined) {
+    if (articles === undefined) {
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
-  }, [account_articles]);
+  }, [articles]);
+
   const [filteredArticles, setAccountArticles] = useArticleFilter(
-    account_articles,
+    articles,
     field,
     condition
   );
@@ -44,7 +48,6 @@ const ArticleSection = ({ field, condition, person, account }) => {
     const response = await articleAPI.DeleteArticle({ ...article });
   };
 
-
   //Had to flipflop the tags because im too lazy to fix it
   //In edit/create its tags: selected or unselected
   //Here its 0-n: tag because of how im printing them (don't need to know if they're selected)
@@ -55,11 +58,11 @@ const ArticleSection = ({ field, condition, person, account }) => {
       return { ...newAccountArticles };
     });
     const swapKV = (obj) => {
-      return Object.keys(obj).reduce((ret,k)=>{
-        ret[obj[k]] = Clicked.SELECTED
+      return Object.keys(obj).reduce((ret, k) => {
+        ret[obj[k]] = Clicked.SELECTED;
         return ret;
-      },{})
-    }
+      }, {});
+    };
     article.tags = swapKV(article.tags);
     const response = await articleAPI.UpdateArticle({
       ...article,
@@ -69,10 +72,13 @@ const ArticleSection = ({ field, condition, person, account }) => {
   return (
     <div>
       {isLoading ? (
-        <Box>
-          {" "}
-          <CircularProgress />
-        </Box>
+        <Stack spacing={1}>
+          <Skeleton variant="rounded" height={180} />
+          <Skeleton variant="rounded" height={180} />
+          <Skeleton variant="rounded" height={180} />
+          <Skeleton variant="rounded" height={180} />
+          <Skeleton variant="rounded" height={180} />
+        </Stack>
       ) : (
         filteredArticles &&
         Object.entries(filteredArticles).map(([key, article]) => {
@@ -145,9 +151,26 @@ const ArticleSection = ({ field, condition, person, account }) => {
                           </div>
                         </button>
                       </Link>
+                      <button
+                        className="articles-delete"
+                        style={{ backgroundColor: "#AD343E" }}
+                        onClick={() => handleDelete(key, article)}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <PublishIcon sx={{ marginRight: "10px" }} />
+                          <span>Delete</span>
+                        </div>
+                      </button>
                     </div>
                   )}
-                  <button
+                  {/* <button
                     className="articles-delete"
                     style={{ backgroundColor: "#AD343E" }}
                     onClick={() => handleDelete(key, article)}
@@ -163,7 +186,7 @@ const ArticleSection = ({ field, condition, person, account }) => {
                       <DeleteIcon sx={{ marginRight: "10px" }} />
                       <span>Delete</span>
                     </div>
-                  </button>
+                  </button> */}
                 </div>
               )}
             </Box>
